@@ -1,6 +1,7 @@
 ﻿import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
+import { importSourceModule } from "./module-loader.mjs";
 
 function readJson(path, fallback) {
   if (!existsSync(path)) return fallback;
@@ -69,12 +70,12 @@ export async function loadJobHandlers({ root = process.cwd() } = {}) {
   const jobsDir = path.join(root, "app", "jobs");
   const handlers = new Map();
   if (!fs.existsSync(jobsDir)) return handlers;
-  const files = fs.readdirSync(jobsDir).filter((f) => /\.(js|mjs|cjs)$/.test(f));
+  const files = fs.readdirSync(jobsDir).filter((f) => /\.(fs|js|mjs|cjs)$/.test(f));
   for (const file of files) {
-    if (file === "schedules.js") continue;
-    const full = path.join(jobsDir, file).replace(/\\/g, "/");
-    const mod = await import(`${new URL(`file://${full}`).href}?t=${Date.now()}`);
-    const name = mod.name || file.replace(/\.(js|mjs|cjs)$/, "");
+    if (file === "schedules.js" || file === "schedules.fs") continue;
+    const full = path.join(jobsDir, file);
+    const mod = await importSourceModule(full, { platform: "node" });
+    const name = mod.name || file.replace(/\.(fs|js|mjs|cjs)$/, "");
     const handle = mod.handle || mod.default;
     if (typeof handle === "function") handlers.set(name, handle);
   }
@@ -84,9 +85,11 @@ export async function loadJobHandlers({ root = process.cwd() } = {}) {
 export async function loadSchedules({ root = process.cwd() } = {}) {
   const fs = await import("node:fs");
   const path = await import("node:path");
-  const file = path.join(root, "app", "jobs", "schedules.js");
+  const jsFile = path.join(root, "app", "jobs", "schedules.js");
+  const fsFile = path.join(root, "app", "jobs", "schedules.fs");
+  const file = fs.existsSync(fsFile) ? fsFile : jsFile;
   if (!fs.existsSync(file)) return [];
-  const mod = await import(`${new URL(`file://${file.replace(/\\/g, "/")}`).href}?t=${Date.now()}`);
+  const mod = await importSourceModule(file, { platform: "node" });
   return mod.schedules || mod.default || [];
 }
 

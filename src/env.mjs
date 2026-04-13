@@ -1,6 +1,7 @@
 ﻿import { appendFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
+import { importSourceModule } from "./module-loader.mjs";
 
 function parseDotEnv(raw) {
   const out = {};
@@ -68,9 +69,13 @@ export function validateEnv(schema = {}, env = process.env) {
 }
 
 export async function validateAppEnv({ root = process.cwd() } = {}) {
-  const schemaPath = join(root, "app", "env.schema.js");
+  const fsSchema = join(root, "app", "env.schema.fs");
+  const jsSchema = join(root, "app", "env.schema.js");
+  const schemaPath = existsSync(fsSchema) ? fsSchema : jsSchema;
   if (!existsSync(schemaPath)) return null;
-  const mod = await import(`${pathToFileURL(schemaPath).href}?t=${Date.now()}`);
+  const mod = schemaPath.endsWith('.fs')
+    ? await importSourceModule(schemaPath, { platform: "node" })
+    : await import(`${pathToFileURL(schemaPath).href}?t=${Date.now()}`);
   const schema = mod.schema || mod.default || {};
   return validateEnv(schema, process.env);
 }

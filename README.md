@@ -1,4 +1,4 @@
-# FastScript
+﻿# FastScript
 
 FastScript is a JavaScript-first full-stack framework focused on three things:
 
@@ -42,8 +42,8 @@ npm run pack:check
 - `npm run export:js`: export `.fs` app source to plain `.js` project
 - `npm run export:ts`: export `.fs` app source to `.ts` project
 - `npm run compat`: run ESM/CJS/FS interop smoke checks
-- `npm run db:migrate`: run database migrations from `app/db/migrations`
-- `npm run db:seed`: seed database from `app/db/seed.js`
+- `npm run db:migrate`: run database migrations from `app/db/migrations` (`.fs`/`.js`)
+- `npm run db:seed`: seed database from `app/db/seed.fs`
 - `npm run validate`: run full quality gate (check/build/bench/compat/db/export)
 - `npm run smoke:dev`: automated SSR/API/auth/middleware smoke test
 - `npm run smoke:start`: production `fastscript start` smoke test
@@ -71,12 +71,12 @@ app/
     index.fs
     404.fs
   api/
-    hello.js
-    auth.js
+    hello.fs
+    auth.fs
   db/
     migrations/
-      001_init.js
-    seed.js
+      001_init.fs
+    seed.fs
   middleware.fs
   styles.css
 ```
@@ -100,3 +100,4 @@ app/
 ## Why this reset
 
 This repo was reset intentionally to rebuild from ground up around a JavaScript-first model with minimal syntax friction.
+
