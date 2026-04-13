@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.fastscript/
+.DS_Store
+.fastscript-tmp-compat/
+.tmp-*/
+exported-*/
+benchmarks/latest-report.md
