@@ -76,7 +76,7 @@ export default function Governance() {
         </div>
         <div class="story-cell">
           <p class="story-cell-title">LTS policy</p>
-          <p class="story-cell-copy">Each stable major version receives 18 months of active maintenance and 6 months of security-only fixes. The current v1 line is actively maintained; pre-v1 legacy releases are archived.</p>
+          <p class="story-cell-copy">Each stable major version receives 18 months of active maintenance and 6 months of security-only fixes. The current v2 line is actively maintained; pre-v2 legacy releases are archived.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">Breaking changes</p>
