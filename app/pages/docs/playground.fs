@@ -53,6 +53,14 @@ export function hydrate({root}) {
     page: `export async fn load(ctx) {\n  const user = await ctx.db.get("users", ctx.params.id)\n  if (!user) return { notFound: true }\n  return { user }\n}\n\nexport default fn UserPage({ user }) {\n  return \`<h1>\${user.name}</h1>\`\n}`,
     api: `// POST /api/items\nexport async fn POST(ctx, h) {\n  const body = await ctx.input.validateBody({\n    name: "string",\n    qty:  "number"\n  })\n  const item = await ctx.db.insert("items", body)\n  return h.json({ ok: true, item }, 201)\n}`
   };
+  const compile = () => {
+    const src = input.value || "";
+    let out = src;
+    out = out.replace(/^(\s*)~(\s*)(\w+)\s*=/gm, "$1let $3 =");
+    out = out.replace(/^(\s*)state\s+(\w+)\s*=/gm, "$1let $2 =");
+    out = out.replace(/\bfn\s+(\w+)\s*\(/g, "function $1(");
+    output.textContent = "// compiled .js output\n" + out;
+  };
   root.querySelectorAll("[data-pg-example]").forEach(btn => {
     btn.addEventListener("click", () => {
       const key = btn.getAttribute("data-pg-example");
@@ -62,17 +70,6 @@ export function hydrate({root}) {
       }
     });
   });
-  function escape(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-  function compile() {
-    const src = input.value || "";
-    let out = src;
-    out = out.replace(/^(\s*)~(\s*)(\w+)\s*=/gm, "$1let $3 =");
-    out = out.replace(/^(\s*)state\s+(\w+)\s*=/gm, "$1let $2 =");
-    out = out.replace(/\bfn\s+(\w+)\s*\(/g, "function $1(");
-    output.textContent = "// compiled .js output\n" + out;
-  }
   if (runBtn) runBtn.addEventListener("click", compile);
   if (clrBtn) clrBtn.addEventListener("click", () => {
     input.value = "";

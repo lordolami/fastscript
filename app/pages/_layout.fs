@@ -133,8 +133,6 @@ export default function Layout({content, pathname}) {
   `;
 }
 export function hydrate() {
-  if (window.__fsLayoutHydrated) return;
-  window.__fsLayoutHydrated = true;
   const toggle = document.getElementById("menu-toggle");
   const panel = document.getElementById("mobile-panel");
   if (toggle && panel) {
@@ -148,27 +146,32 @@ export function hydrate() {
         toggle.setAttribute("aria-expanded", "false");
       });
     });
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape" && panel.classList.contains("is-open")) {
-        panel.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.focus();
-      }
-    });
+    if (!window.__fsEscapeBound) {
+      window.__fsEscapeBound = true;
+      document.addEventListener("keydown", e => {
+        const livePanel = document.getElementById("mobile-panel");
+        const liveToggle = document.getElementById("menu-toggle");
+        if (e.key === "Escape" && livePanel && liveToggle && livePanel.classList.contains("is-open")) {
+          livePanel.classList.remove("is-open");
+          liveToggle.setAttribute("aria-expanded", "false");
+          liveToggle.focus();
+        }
+      });
+    }
   }
   const themeBtn = document.getElementById("theme-toggle");
   const themeIcon = themeBtn && themeBtn.querySelector(".theme-icon");
   const applyTheme = t => {
     document.documentElement.setAttribute("data-theme", t);
     try {
-      localStorage.setItem("fs-theme", t);
+      window.localStorage.setItem("fs-theme", t);
     } catch (_) {}
     if (themeIcon) themeIcon.innerHTML = t === "light" ? "&#9788;" : "&#9790;";
   };
   if (themeBtn) {
     let saved = null;
     try {
-      saved = localStorage.getItem("fs-theme");
+      saved = window.localStorage.getItem("fs-theme");
     } catch (_) {}
     saved = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
     applyTheme(saved);
@@ -193,63 +196,66 @@ export function hydrate() {
     document.body.removeChild(area);
     return ok;
   };
-  document.addEventListener("click", async event => {
-    const btn = event.target && event.target.closest ? event.target.closest("[data-copy]") : null;
-    if (!btn) return;
-    const text = btn.getAttribute("data-copy") || "";
-    if (!text) return;
-    event.preventDefault();
-    if (btn.dataset.copyBusy === "true") return;
-    btn.dataset.copyBusy = "true";
-    try {
-      let copied = false;
+  if (!window.__fsCopyBound) {
+    window.__fsCopyBound = true;
+    document.addEventListener("click", async event => {
+      const btn = event.target && event.target.closest ? event.target.closest("[data-copy]") : null;
+      if (!btn) return;
+      const text = btn.getAttribute("data-copy") || "";
+      if (!text) return;
+      event.preventDefault();
+      if (btn.dataset.copyBusy === "true") return;
+      btn.dataset.copyBusy = "true";
       try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-          copied = true;
+        let copied = false;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            copied = true;
+          }
+        } catch (_) {}
+        if (!copied) copied = fallbackCopy(text);
+        if (!copied) return;
+        btn.classList.add("copied");
+        const prev = btn.innerHTML;
+        btn.innerHTML = "&#10003; Copied";
+        window.setTimeout(() => {
+          btn.innerHTML = prev;
+          btn.classList.remove("copied");
+          delete btn.dataset.copyBusy;
+        }, 1500);
+      } finally {
+        if (btn.dataset.copyBusy === "true") {
+          delete btn.dataset.copyBusy;
         }
-      } catch (_) {}
-      if (!copied) copied = fallbackCopy(text);
-      if (!copied) return;
-      btn.classList.add("copied");
-      const prev = btn.innerHTML;
-      btn.innerHTML = "&#10003; Copied";
-      setTimeout(() => {
-        btn.innerHTML = prev;
-        btn.classList.remove("copied");
-        delete btn.dataset.copyBusy;
-      }, 1500);
-    } finally {
-      if (btn.dataset.copyBusy === "true") {
-        delete btn.dataset.copyBusy;
       }
-    }
-  });
+    });
+  }
   if (window.IntersectionObserver) {
-    const obs = new IntersectionObserver(entries => {
+    const revealObserver = new window.IntersectionObserver((entries, observer) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add("revealed");
-          obs.unobserve(e.target);
+          observer.unobserve(e.target);
         }
       });
     }, {
       threshold: 0.08,
       rootMargin: "0px 0px -40px 0px"
     });
-    document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
-    const obs2 = new IntersectionObserver(entries => {
+    document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+    const childRevealObserver = new window.IntersectionObserver((entries, observer) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add("revealed-children");
-          obs2.unobserve(e.target);
+          observer.unobserve(e.target);
         }
       });
     }, {
       threshold: 0.06,
       rootMargin: "0px 0px -40px 0px"
     });
-    document.querySelectorAll(".reveal-children").forEach(el => obs2.observe(el));
+    document.querySelectorAll(".reveal-children").forEach(el => childRevealObserver.observe(el));
   } else {
     document.querySelectorAll(".reveal").forEach(el => el.classList.add("revealed"));
     document.querySelectorAll(".reveal-children").forEach(el => el.classList.add("revealed-children"));

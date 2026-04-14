@@ -1,73 +1,505 @@
 # FastScript
 
-FastScript is a full-stack framework with a first-class `.fs` language and compiler pipeline.
+FastScript is a JavaScript-first full-stack language runtime built around a first-class `.fs` file format.
 
-- Simpler than heavy framework stacks
-- Faster build and runtime pipeline
-- Compatible with existing JavaScript ecosystem
-- `.fs` first, `.js` interoperability always supported
-- Canonical repo lock: `github.com/lordolami/fastscript` (`npm run repo:lock`)
+It is designed to feel easier to read than heavyweight framework stacks while staying compatible with the JavaScript ecosystem developers already use.
 
-## Commands
+- Write pages, APIs, middleware, jobs, and database workflows in `.fs`
+- Keep compatibility with normal `.js` packages and modules
+- Compile to optimized JavaScript for production deployment
+- Deploy the same app to Node, Vercel, or Cloudflare
+- Run one quality gate for formatting, linting, typecheck, tests, smoke checks, benchmarks, and interop
+
+FastScript is not trying to lock developers into an isolated toy ecosystem. The goal is a simpler, faster, more unified way to build real products while keeping access to the ground-level JavaScript platform.
+
+## What FastScript Is
+
+FastScript combines:
+
+1. A source language: `.fs`
+2. A compiler and CLI
+3. A full-stack app runtime
+4. A deployment pipeline for multiple targets
+5. A bridge back to standard JavaScript and TypeScript export paths
+
+That means a single project can contain:
+
+- UI pages
+- API handlers
+- middleware
+- database migrations
+- seed scripts
+- jobs and workers
+- deploy adapters
+
+## Core Positioning
+
+FastScript is built to be:
+
+- Simpler than stacking TypeScript + framework + glue code everywhere
+- Faster to build and ship than heavier framework pipelines
+- Compatible with existing JavaScript libraries
+- Friendly to AI-assisted generation because the language surface is smaller and more regular
+- Easy to migrate into and easy to export back out
+
+## Current Measured Numbers
+
+These are the real measured numbers from the current repo benchmark report:
+
+- Build time: `702.98ms`
+- JS first-load gzip: `2.71KB`
+- Routes in benchmark app: `16`
+- API routes in benchmark app: `5`
+- Interop matrix: `13/13` passing
+- Current website deploy target: Node, Vercel, and Cloudflare adapters supported
+
+See:
+
+- `benchmarks/latest-report.md`
+- `benchmarks/suite-latest.json`
+- `benchmarks/interop-latest.json`
+
+## Install
 
 ```bash
 npm install
+```
+
+To use the CLI directly during development:
+
+```bash
+node ./src/cli.mjs --help
+```
+
+If you publish or link the package locally, the command is:
+
+```bash
+fastscript
+```
+
+## Quick Start
+
+### Create a project
+
+```bash
 npm run create
+```
+
+Or use one of the included templates:
+
+```bash
+npm run create:fullstack
+npm run create:startup-mvp
+```
+
+### Run locally
+
+```bash
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+### Start the production build
+
+```bash
+npm run start
+```
+
+### Run the full quality gate
+
+```bash
+npm run qa:all
+```
+
+## The `.fs` Language At A Glance
+
+FastScript keeps normal JavaScript module structure and adds a few core forms:
+
+- `fn` for functions
+- `state` for named stateful declarations
+- `~name = ...` for lightweight reactive-style declarations
+- type syntax that can be stripped at compile time
+- file conventions for pages, APIs, and runtime hooks
+
+### Example: basic page
+
+```fs
+export default fn Page() {
+  state title = "FastScript"
+  ~subtitle = "Write once. Ship anywhere."
+
+  return `
+    <section>
+      <h1>${title}</h1>
+      <p>${subtitle}</p>
+    </section>
+  `
+}
+```
+
+### Example: load data for a page
+
+```fs
+export async fn load(ctx) {
+  const user = await ctx.db.get("users", ctx.params.id)
+  if (!user) return { notFound: true }
+  return { user }
+}
+
+export default fn Page({ user }) {
+  return `<h1>${user.name}</h1>`
+}
+```
+
+### Example: API route
+
+```fs
+export const schemas = {
+  POST: { sku: "string", qty: "int" }
+}
+
+export async fn POST(ctx) {
+  const body = await ctx.input.validateBody(schemas.POST)
+  const order = { id: Date.now().toString(36), ...body }
+  ctx.db.collection("orders").set(order.id, order)
+  ctx.queue.enqueue("send-order-email", { orderId: order.id })
+  return ctx.helpers.json({ ok: true, order })
+}
+```
+
+### Example: middleware
+
+```fs
+export async fn middleware(ctx, next) {
+  ctx.state.requestStartedAt = Date.now()
+
+  if (ctx.url.pathname.startsWith("/private") && !ctx.session?.user) {
+    return ctx.helpers.redirect("/")
+  }
+
+  return next()
+}
+```
+
+### Example: hydration hook for client behavior
+
+```fs
+export function hydrate({ root }) {
+  const button = root.querySelector("[data-action]")
+  if (!button) return
+
+  button.addEventListener("click", () => {
+    console.log("hydrated")
+  })
+}
+```
+
+## Page Contract
+
+A FastScript page can export any of the following:
+
+- `export default fn Page(...)` or `export default function Page(...)`
+- `export async fn load(ctx)` for server-side data loading
+- `export function hydrate({ root, ...ctx })` for client behavior
+- HTTP method handlers like `POST`, `PUT`, `PATCH`, `DELETE`
+
+### Minimal page
+
+```fs
+export default fn Page() {
+  return `<h1>Hello</h1>`
+}
+```
+
+### Page with loader
+
+```fs
+export async fn load(ctx) {
+  return { now: new Date().toISOString() }
+}
+
+export default fn Page({ now }) {
+  return `<p>${now}</p>`
+}
+```
+
+## Routing
+
+FastScript uses file-based routing under `app/pages`.
+
+### Route examples
+
+- `app/pages/index.fs` -> `/`
+- `app/pages/blog/index.fs` -> `/blog`
+- `app/pages/blog/[slug].fs` -> `/blog/:slug`
+- `app/pages/docs/[...slug].fs` -> `/docs/:slug*`
+- `app/pages/[[...slug]].fs` -> optional catch-all
+- `app/pages/blog/[id:int].fs` -> typed param route
+- `app/pages/404.fs` -> not-found page
+- `app/pages/_layout.fs` -> global layout wrapper
+
+## Full-Stack Surface Area
+
+FastScript currently includes first-party support for:
+
+- pages
+- layouts
+- API routes
+- middleware
+- auth/session flows
+- database migrations
+- database seed scripts
+- storage and upload handlers
+- jobs and worker runtime
+- deploy targets
+- benchmark and interop reporting
+- docs indexing and API reference generation
+
+## Interop Story
+
+FastScript is designed to sit on top of the JavaScript ecosystem, not replace it with an isolated wall.
+
+### What works
+
+- normal `.js` dependencies
+- ESM/CJS compatibility checks
+- export from `.fs` to `.js`
+- export from `.fs` to `.ts`
+- migration tooling from page-based JS/TS apps into `.fs`
+
+### Why that matters
+
+Developers should be able to:
+
+1. migrate into FastScript without rewriting the whole world
+2. use existing libraries
+3. export back out when needed
+4. keep real production optionality
+
+## Commands
+
+### Main app lifecycle
+
+```bash
 npm run dev
 npm run start
 npm run build
+npm run build:ssg
+npm run create
 npm run check
+npm run validate
+```
+
+### Language and migration
+
+```bash
 npm run migrate
-npm run bench
+npm run wizard:migrate
 npm run export:js
 npm run export:ts
 npm run compat
-npm run validate
-npm run repo:lock
+npm run typecheck
+npm run typecheck:pass
+npm run lint:fs
+npm run lint:fs:pass
+npm run format
+npm run format:check
+```
+
+### Database and data
+
+```bash
 npm run db:migrate
 npm run db:seed
+npm run db:rollback
+```
+
+### Deploy and runtime
+
+```bash
+npm run deploy:node
+npm run deploy:vercel
+npm run deploy:cloudflare
+npm run worker
+npm run worker:replay-dead-letter
+```
+
+### Quality and testing
+
+```bash
 npm run smoke:dev
 npm run smoke:start
 npm run test:core
 npm run test:conformance
 npm run test:plugins
-npm run bench:report
+npm run test:routes
+npm run test:interop-matrix
+npm run test:vscode-language
+npm run qa:gate
 npm run qa:all
-npm run worker
-npm run deploy:node
-npm run deploy:vercel
-npm run deploy:cloudflare
+```
+
+### Benchmarks, reports, and ops
+
+```bash
+npm run bench
+npm run bench:report
+npm run benchmark:suite
+npm run interop:report
+npm run sbom:generate
+npm run proof:publish
+npm run backup:create
+npm run backup:restore
+npm run backup:verify
+npm run retention:sweep
+npm run kpi:track
+npm run deploy:zero-downtime
+```
+
+### Release and tooling
+
+```bash
 npm run release:patch
+npm run release:minor
+npm run release:major
 npm run pack:check
 npm run hooks:install
+npm run repo:lock
+npm run plugins:marketplace-sync
+npm run docs:index
+npm run docs:api-ref
 npm run style:generate
 npm run style:check
 ```
 
-- `npm run migrate`: convert `app/pages` files (`.js/.jsx/.ts/.tsx`) to `.fs`
-- `npm run bench`: enforce 3G-oriented gzip budgets on built output
-- `npm run export:js`: export `.fs` app source to plain `.js` project
-- `npm run export:ts`: export `.fs` app source to `.ts` project
-- `npm run compat`: run ESM/CJS/FS interop smoke checks
-- `npm run db:migrate`: run database migrations from `app/db/migrations` (`.fs`/`.js`)
-- `npm run db:seed`: seed database from `app/db/seed.fs`
-- `npm run validate`: run full quality gate (check/build/bench/compat/db/export)
-- `npm run smoke:dev`: automated SSR/API/auth/middleware smoke test
-- `npm run smoke:start`: production `fastscript start` smoke test
-- `npm run test:core`: core platform/unit/integration suite
-- `npm run test:conformance`: language parser/codegen/diagnostic snapshot suite
-- `npm run test:plugins`: plugin hook + middleware integration tests
-- `npm run bench:report`: writes benchmark report to `benchmarks/latest-report.md`
-- `npm run qa:all`: full quality sweep in one command
-- `npm run worker`: run queue worker runtime
-- `npm run deploy:*`: generate deploy adapters for node/vercel/cloudflare
-- `npm run release:*`: semver bump + changelog append
-- `npm run pack:check`: npm publish dry-run
-- `npm run hooks:install`: configure local git hooks (`pre-push` runs `qa:all`)
-- `npm run style:generate`: generate token utilities (`app/styles.generated.css`)
-- `npm run style:check`: validate class/token constraints
+## Recommended Developer Flow
 
-## Additional Docs
+For normal development:
+
+```bash
+npm install
+npm run dev
+```
+
+Before shipping:
+
+```bash
+npm run qa:all
+```
+
+For deployment:
+
+```bash
+npm run deploy:cloudflare
+```
+
+Or:
+
+```bash
+npm run deploy:node
+npm run deploy:vercel
+```
+
+## Project Layout
+
+```txt
+app/
+  api/
+    auth.fs
+    docs-search.fs
+    hello.fs
+    upload.fs
+    webhook.fs
+  db/
+    migrations/
+      001_init.fs
+    seed.fs
+  design/
+    class-allowlist.json
+    tokens.json
+  pages/
+    _layout.fs
+    index.fs
+    learn.fs
+    examples.fs
+    benchmarks.fs
+    roadmap.fs
+    docs/
+      index.fs
+      latest.fs
+      playground.fs
+      search.fs
+      v1/
+        index.fs
+      v1.1/
+        index.fs
+    blog/
+      index.fs
+      [slug].fs
+  env.schema.fs
+  middleware.fs
+  styles.css
+  styles.generated.css
+src/
+  cli.mjs
+  build.mjs
+  server-runtime.mjs
+examples/
+  fullstack/
+  startup-mvp/
+spec/
+  LANGUAGE_V1_SPEC.md
+  MASTER_TODO.md
+```
+
+## Example Projects Included
+
+### `examples/fullstack`
+A production-style full-stack starter with:
+
+- pages
+- API route
+- migration
+- seed script
+- job handler
+- layout
+
+### `examples/startup-mvp`
+A more startup-shaped example with:
+
+- cart + checkout APIs
+- dashboard page
+- migrations
+- email job flow
+
+## Deploy Targets
+
+FastScript currently has deploy adapters for:
+
+- Node
+- Vercel
+- Cloudflare
+
+The long-term direction is one language, many targets:
+
+- web
+- server
+- mobile
+- desktop
+
+That roadmap is tracked in:
+
+- `spec/MULTI_TARGET_APP_PLAN.md`
+- `app/pages/roadmap.fs`
+
+## Documentation Map
+
+Key docs in this repo:
 
 - `spec/LANGUAGE_V1_SPEC.md`
 - `docs/GOVERNANCE_VERSIONING_POLICY.md`
@@ -83,50 +515,60 @@ npm run style:check
 - `docs/ARCHITECTURE_OVERVIEW.md`
 - `docs/KNOWN_LIMITATIONS.md`
 - `docs/CONTRIBUTING.md`
-- `docs/RELEASE_SCOPE_V1.md`
-- `docs/RELEASE_SIGNOFF_TEMPLATE.md`
 - `docs/OBSERVABILITY.md`
 - `docs/ROLLOUT_GUIDE.md`
-- `spec/MASTER_TODO.md`
 
-## Project layout
+## How To Think About Protection From Other AI Companies
 
-```txt
-app/
-  pages/
-    _layout.fs
-    index.fs
-    404.fs
-  api/
-    hello.fs
-    auth.fs
-  db/
-    migrations/
-      001_init.fs
-    seed.fs
-  middleware.fs
-  styles.css
+If this repo is published under MIT, other companies can legally use the code.
+MIT is excellent for adoption, but it does not stop commercial reuse.
+
+If the goal is to stop other AI companies from taking and using the code directly, the strongest options are:
+
+1. do not keep the core under MIT
+2. use a proprietary license for the compiler/runtime
+3. use dual licensing
+4. keep the hosted platform, premium runtime features, or model layer closed
+5. protect the FastScript name and branding with trademarks
+6. keep your best data, generation workflows, prompts, and infrastructure private
+
+The realistic strategy is usually:
+
+- open-source the part that drives adoption
+- keep the defensible platform and operational advantage private
+
+If you stay MIT, you can still protect:
+
+- trademarked name/logo
+- hosted deployment platform
+- private AI generation system
+- private training data and evals
+- enterprise-only runtime features
+
+## Contributing
+
+FastScript is evolving quickly. If you contribute:
+
+1. keep the canonical repo lock intact
+2. run `npm run qa:all`
+3. keep `.fs` and `.js` interop working
+4. avoid unnecessary ecosystem lock-in
+5. preserve the language goal: simpler, faster, still grounded in JavaScript
+
+## Canonical Repo
+
+Canonical repo lock:
+
+`github.com/lordolami/fastscript`
+
+The repo lock script is:
+
+```bash
+npm run repo:lock
 ```
 
-## Page contract
+## License
 
-- `export default function Page(ctx) { return htmlString }`
-- Optional `export async function load(ctx) { return data }`
-- Optional method actions in page files: `POST/PUT/PATCH/DELETE`
-- `.fs` supports FastScript declarations such as `~name = value`, `state name = value`, and `fn name(...)`
-- Optional `export function hydrate({ root, ...ctx })` for client hydration
+Current repo license: `MIT`
 
-## Routing
-
-- `app/pages/index.fs` or `index.js` -> `/`
-- `app/pages/blog/index.fs` or `index.js` -> `/blog`
-- `app/pages/blog/[slug].fs` or `[slug].js` -> `/blog/:slug`
-- `app/pages/docs/[...slug].fs` -> `/docs/:slug*`
-- `app/pages/[[...slug]].fs` -> `/docs/:slug*?`
-- `app/pages/blog/[id:int].fs` -> `/blog/:id` with typed params in generated route types
-- `app/pages/404.fs` or `404.js` -> not found view
-- `app/pages/_layout.fs` or `_layout.js` -> global layout wrapper
-
-## Language Baseline
-
-Language v1 syntax, semantics, diagnostics contract, and compatibility guarantees are specified in `spec/LANGUAGE_V1_SPEC.md`.
+That means this repository is open for reuse under MIT terms unless you change the licensing model.

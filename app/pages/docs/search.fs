@@ -1,7 +1,7 @@
-const DOC_ROUTE_FALLBACKS = new Set(["/docs", "/docs/latest", "/docs/playground", "/docs/search", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks"]);
+const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/playground", "/docs/search", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks"];
 function resolveDocRoute(item) {
   const direct = String(item?.path || "").trim();
-  if (DOC_ROUTE_FALLBACKS.has(direct)) return direct;
+  if (DOC_ROUTE_FALLBACKS.includes(direct)) return direct;
   const haystack = `${item?.title || ""} ${item?.summary || ""} ${direct}`.toLowerCase();
   if (haystack.includes("playground")) return "/docs/playground";
   if (haystack.includes("interop") || haystack.includes("migration")) return "/docs/v1.1";
@@ -53,14 +53,17 @@ export function hydrate({root}) {
   async function search() {
     const raw = String(q.value || "").trim();
     const query = encodeURIComponent(raw);
-    out.innerHTML = `<div class="docs-card"><p class="docs-card-title">Searching…</p><p class="docs-card-copy">Checking the generated docs index for relevant guides and references.</p></div>`;
+    out.innerHTML = `<div class="docs-card"><p class="docs-card-title">Searching...</p><p class="docs-card-copy">Checking the generated docs index for relevant guides and references.</p></div>`;
     try {
       const res = await fetch(`/api/docs-search?q=${query}`, {
         headers: {
           accept: "application/json"
         }
       });
-      if (!res.ok) throw new Error(`search failed (${res.status})`);
+      if (!res.ok) {
+        out.innerHTML = `<div class="docs-card"><p class="docs-card-title">Search unavailable</p><p class="docs-card-copy">The docs index returned status ${res.status}. Open <a class="docs-card-link" href="/docs/latest">Docs latest</a> or try again in a moment.</p></div>`;
+        return;
+      }
       const json = await res.json();
       renderResults(out, json.items || []);
     } catch (_) {
