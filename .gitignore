@@ -13,5 +13,6 @@ vscode/fastscript-language/*.vsix
 .fastscript-dev*.log
 style-errors.txt
 dist-public/
+yomiru/
 yomiru/.fastscript/
 yomiru/dist/
