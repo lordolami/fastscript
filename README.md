@@ -507,7 +507,7 @@ Key docs in this repo:
 - `docs/COMPILER_ERROR_CODES.md`
 - `docs/AI_CONTEXT_PACK_V1.md`
 - `docs/PLUGIN_API_CONTRACT.md`
-- `docs/INCIDENT_PLAYBOOK.md`
+- `docs/INCIDENT_PLAYBOOK.md` (public stub; full version lives in private core)
 - `docs/DEPLOY_GUIDE.md`
 - `docs/SUPPORT_MATRIX.md`
 - `docs/RELEASE_PROCESS.md`
@@ -515,8 +515,8 @@ Key docs in this repo:
 - `docs/ARCHITECTURE_OVERVIEW.md`
 - `docs/KNOWN_LIMITATIONS.md`
 - `docs/CONTRIBUTING.md`
-- `docs/OBSERVABILITY.md`
-- `docs/ROLLOUT_GUIDE.md`
+- `docs/OBSERVABILITY.md` (public stub; full version lives in private core)
+- `docs/ROLLOUT_GUIDE.md` (public stub; full version lives in private core)
 - `SECURITY.md`
 
 ## Protection, Licensing, and Commercial Use
@@ -546,7 +546,7 @@ FastScript is evolving quickly. If you contribute:
 
 Contribution review does not grant any right to commercially reuse the platform outside the repository license.
 
-## Canonical Repo
+## Public/Private Boundary`r`n`r`nThis public repository is the developer-facing FastScript surface. Sensitive compiler/runtime/platform materials are now mirrored into a separate private workspace at `C:\Users\Codechef\Desktop\fastscript-core-private` and tracked by `docs/PRIVATE_CORE_SPLIT.md`.`r`n`r`n## Canonical Repo
 
 Canonical repo lock:
 
@@ -567,3 +567,4 @@ See:
 - `LICENSE`
 - `SECURITY.md`
 - `app/pages/license.fs`
+

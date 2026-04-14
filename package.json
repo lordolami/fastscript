@@ -101,7 +101,8 @@
                     "release:major":  "node ./scripts/release.mjs major",
                     "pack:check":  "npm pack --dry-run",
                     "hooks:install":  "node ./scripts/install-hooks.mjs",
-                    "public:bundle":  "node ./scripts/prepare-public-docs-bundle.mjs"
+                    "public:bundle":  "node ./scripts/prepare-public-docs-bundle.mjs",
+                    "private:sync":  "node ./scripts/sync-private-core.mjs"
                 },
     "engines":  {
                     "node":  "\u003e=20.0.0"
