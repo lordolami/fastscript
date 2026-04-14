@@ -72,6 +72,7 @@ export default function Layout({content, pathname, user}) {
 
           <div class="nav-actions">
             <a class="btn btn-ghost" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub</a>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">Dark</button>
             <a class="btn btn-primary" href="/learn">Start</a>
             <button type="button" class="menu-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle menu">Menu</button>
           </div>
@@ -104,9 +105,38 @@ export default function Layout({content, pathname, user}) {
 export function hydrate() {
   const toggle = document.querySelector("[data-nav-toggle]");
   const panel = document.querySelector("[data-mobile-panel]");
+  const themeToggle = document.querySelector("[data-theme-toggle]");
+  const rootEl = document.documentElement;
+  function applyTheme(theme) {
+    rootEl.dataset.theme = theme;
+    if (themeToggle) themeToggle.textContent = theme === "light" ? "Light" : "Dark";
+  }
+  try {
+    const persisted = window.localStorage ? window.localStorage.getItem("fs-theme") : "";
+    const prefersLight = !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches);
+    applyTheme(persisted || (prefersLight ? "light" : "dark"));
+  } catch {
+    applyTheme("dark");
+  }
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const current = rootEl.dataset.theme === "light" ? "light" : "dark";
+      const next = current === "light" ? "dark" : "light";
+      applyTheme(next);
+      try {
+        if (window.localStorage) window.localStorage.setItem("fs-theme", next);
+      } catch {}
+    });
+  }
   if (!toggle || !panel) return;
   toggle.addEventListener("click", () => {
     const open = panel.classList.toggle("is-open");
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  panel.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      panel.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    });
   });
 }
