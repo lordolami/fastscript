@@ -546,7 +546,7 @@ FastScript is evolving quickly. If you contribute:
 
 Contribution review does not grant any right to commercially reuse the platform outside the repository license.
 
-## Public/Private Boundary`r`n`r`nThis public repository is the developer-facing FastScript surface. Sensitive compiler/runtime/platform materials are now mirrored into a separate private workspace at `C:\Users\Codechef\Desktop\fastscript-core-private` and tracked by `docs/PRIVATE_CORE_SPLIT.md`.`r`n`r`n## Canonical Repo
+## Public/Private Boundary`r`n`r`nThis public repository is the developer-facing FastScript surface. Sensitive compiler/runtime/platform materials are now mirrored into the protected private repository `github.com/lordolami/fastscript-core-private` and tracked by `docs/PRIVATE_CORE_SPLIT.md`.`r`n`r`n## Canonical Repo
 
 Canonical repo lock:
 
@@ -567,4 +567,5 @@ See:
 - `LICENSE`
 - `SECURITY.md`
 - `app/pages/license.fs`
+
 

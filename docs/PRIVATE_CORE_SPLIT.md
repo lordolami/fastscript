@@ -28,3 +28,4 @@ This public repo remains the home for:
 ## Next hard split
 
 The next real extraction step is dependency inversion so public packages consume private-core modules rather than defining those modules inline in this repo.
+
