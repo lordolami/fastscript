@@ -12,3 +12,4 @@ app/styles.generated.css
 vscode/fastscript-language/*.vsix
 .fastscript-dev*.log
 style-errors.txt
+dist-public/

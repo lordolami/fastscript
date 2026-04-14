@@ -1,6 +1,6 @@
 const TEAM = [{
   name: "Olamilekan Akinuli",
-  role: "Founder — Product + Platform",
+  role: "Founder � Product + Platform",
   copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v1 scope freeze and release governance."
 }, {
   name: "Compiler lane",
@@ -28,14 +28,14 @@ export default function DevsPage() {
       <header class="sec-header">
         <p class="kicker">About the builders</p>
         <h1 class="h1">Team architecture behind FastScript.</h1>
-        <p class="lead">FastScript is built as a product system, not just a compiler experiment. Each lane ships against measurable output: test evidence, runtime parity, and deploy reliability.</p>
+        <p class="lead">FastScript is built as a product system, not just a compiler experiment. Each lane ships against measurable output: test evidence, runtime parity, deploy reliability, and protection of the language core as part of the wider FastScript AI platform.</p>
       </header>
 
       <div class="team-grid">${cells}</div>
 
       <div class="action-row">
         <a class="btn btn-primary btn-lg" href="/changelog">Release history</a>
-        <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub source →</a>
+        <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub source ?</a>
       </div>
     </section>
 
@@ -48,19 +48,24 @@ export default function DevsPage() {
       </header>
       <div class="feature-grid">
         <div class="feature-cell">
-          <div class="feature-icon">📐</div>
+          <div class="feature-icon">??</div>
           <p class="feature-title">Spec-driven language</p>
           <p class="feature-copy">Every language change updates the formal spec, conformance snapshots, diagnostics, and formatter tests before merging. No informal grammar drift.</p>
         </div>
         <div class="feature-cell">
-          <div class="feature-icon">🧪</div>
+          <div class="feature-icon">??</div>
           <p class="feature-title">Evidence over intuition</p>
-          <p class="feature-copy">Benchmarks, smoke tests, interop matrices, and proof packs are produced for every release — not just when something breaks.</p>
+          <p class="feature-copy">Benchmarks, smoke tests, interop matrices, and proof packs are produced for every release � not just when something breaks.</p>
         </div>
         <div class="feature-cell">
-          <div class="feature-icon">🔒</div>
+          <div class="feature-icon">??</div>
           <p class="feature-title">Stability guarantees</p>
           <p class="feature-copy">v1 parser spans, diagnostic codes, and formatter output are stable across patch releases. Breaking changes require major version and migration docs.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon">�</div>
+          <p class="feature-title">Protected core</p>
+          <p class="feature-copy">The FastScript name, branding, language core, and commercial platform rights are protected by Lakesbim Infotechnology. Public review does not grant competing product rights.</p>
         </div>
       </div>
     </section>
