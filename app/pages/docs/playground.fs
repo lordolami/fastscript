@@ -42,31 +42,29 @@ export default fn Page({ user }) {
     </section>
   `;
 }
-
-export function hydrate({ root }) {
-  const input  = root.querySelector("[data-pg-input]");
+export function hydrate({root}) {
+  const input = root.querySelector("[data-pg-input]");
   const output = root.querySelector("[data-pg-output]");
   const runBtn = root.querySelector("[data-pg-run]");
   const clrBtn = root.querySelector("[data-pg-clear]");
   if (!input || !output) return;
-
   const EXAMPLES = {
     reactive: `// Reactive binding\n~count = 0\n~doubled = count * 2\n\nfn increment() {\n  count += 1\n}`,
     page: `export async fn load(ctx) {\n  const user = await ctx.db.get("users", ctx.params.id)\n  if (!user) return { notFound: true }\n  return { user }\n}\n\nexport default fn UserPage({ user }) {\n  return \`<h1>\${user.name}</h1>\`\n}`,
     api: `// POST /api/items\nexport async fn POST(ctx, h) {\n  const body = await ctx.input.validateBody({\n    name: "string",\n    qty:  "number"\n  })\n  const item = await ctx.db.insert("items", body)\n  return h.json({ ok: true, item }, 201)\n}`
   };
-
   root.querySelectorAll("[data-pg-example]").forEach(btn => {
     btn.addEventListener("click", () => {
       const key = btn.getAttribute("data-pg-example");
-      if (EXAMPLES[key]) { input.value = EXAMPLES[key]; compile(); }
+      if (EXAMPLES[key]) {
+        input.value = EXAMPLES[key];
+        compile();
+      }
     });
   });
-
   function escape(str) {
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
-
   function compile() {
     const src = input.value || "";
     let out = src;
@@ -75,19 +73,16 @@ export function hydrate({ root }) {
     out = out.replace(/\bfn\s+(\w+)\s*\(/g, "function $1(");
     output.textContent = "// compiled .js output\n" + out;
   }
-
   if (runBtn) runBtn.addEventListener("click", compile);
   if (clrBtn) clrBtn.addEventListener("click", () => {
     input.value = "";
     output.textContent = "// Compiled output will appear here";
   });
-
   input.addEventListener("keydown", e => {
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
       e.preventDefault();
       compile();
     }
   });
-
   compile();
 }

@@ -1,35 +1,16 @@
-const DOC_ROUTE_FALLBACKS = new Set([
-  "/docs",
-  "/docs/latest",
-  "/docs/playground",
-  "/docs/search",
-  "/docs/v1",
-  "/docs/v1.1",
-  "/learn",
-  "/benchmarks"
-]);
-
+const DOC_ROUTE_FALLBACKS = new Set(["/docs", "/docs/latest", "/docs/playground", "/docs/search", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks"]);
 function resolveDocRoute(item) {
   const direct = String(item?.path || "").trim();
   if (DOC_ROUTE_FALLBACKS.has(direct)) return direct;
-
   const haystack = `${item?.title || ""} ${item?.summary || ""} ${direct}`.toLowerCase();
   if (haystack.includes("playground")) return "/docs/playground";
   if (haystack.includes("interop") || haystack.includes("migration")) return "/docs/v1.1";
   if (haystack.includes("spec") || haystack.includes("error code")) return "/docs/v1";
-  if (
-    haystack.includes("deploy") ||
-    haystack.includes("release") ||
-    haystack.includes("rollout") ||
-    haystack.includes("api reference") ||
-    haystack.includes("plugin") ||
-    haystack.includes("cli")
-  ) {
+  if (haystack.includes("deploy") || haystack.includes("release") || haystack.includes("rollout") || haystack.includes("api reference") || haystack.includes("plugin") || haystack.includes("cli")) {
     return "/docs/latest";
   }
   return "/docs/latest";
 }
-
 function renderResults(root, items) {
   if (!items.length) {
     root.innerHTML = `<div class="docs-card"><p class="docs-card-title">No results found</p><p class="docs-card-copy">Try a broader query such as routing, deploy, interop, or typecheck.</p></div>`;
@@ -43,7 +24,6 @@ function renderResults(root, items) {
     </div>
   `).join("");
 }
-
 export default function DocsSearchPage() {
   return `
     <section class="docs-search-page">
@@ -63,21 +43,23 @@ export default function DocsSearchPage() {
     </section>
   `;
 }
-
-export function hydrate({ root }) {
-  const q   = root.querySelector("[data-docs-q]");
+export function hydrate({root}) {
+  const q = root.querySelector("[data-docs-q]");
   const btn = root.querySelector("[data-docs-search]");
   const out = root.querySelector("[data-docs-results]");
   if (!q || !btn || !out) return;
   const initial = new URLSearchParams(location.search).get("q") || "";
   q.value = initial;
-
   async function search() {
     const raw = String(q.value || "").trim();
     const query = encodeURIComponent(raw);
     out.innerHTML = `<div class="docs-card"><p class="docs-card-title">Searching…</p><p class="docs-card-copy">Checking the generated docs index for relevant guides and references.</p></div>`;
     try {
-      const res = await fetch(`/api/docs-search?q=${query}`, { headers: { accept: "application/json" } });
+      const res = await fetch(`/api/docs-search?q=${query}`, {
+        headers: {
+          accept: "application/json"
+        }
+      });
       if (!res.ok) throw new Error(`search failed (${res.status})`);
       const json = await res.json();
       renderResults(out, json.items || []);
@@ -85,8 +67,9 @@ export function hydrate({ root }) {
       out.innerHTML = `<div class="docs-card"><p class="docs-card-title">Search unavailable</p><p class="docs-card-copy">The docs index could not be reached right now. Open <a class="docs-card-link" href="/docs/latest">Docs latest</a> or try again in a moment.</p></div>`;
     }
   }
-
   btn.addEventListener("click", search);
-  q.addEventListener("keydown", e => { if (e.key === "Enter") search(); });
+  q.addEventListener("keydown", e => {
+    if (e.key === "Enter") search();
+  });
   search();
 }

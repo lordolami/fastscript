@@ -1,12 +1,28 @@
-const EXAMPLES = [
-  { title: "Startup MVP",             copy: "Commerce starter with SSR pages, checkout API, queue jobs for receipts, and dashboard routes with auth gate.", tags: ["Full-stack", "Payments", "Queue"] },
-  { title: "Internal ops dashboard",  copy: "Typed route loaders, filtered data tables, and auth middleware for internal tooling at scale.",                tags: ["Admin", "Auth", "Data"] },
-  { title: "Webhook control plane",   copy: "Signature validation, replay protection, audit logs, and dead-letter retries in one app repository.",          tags: ["Security", "Webhooks", "Reliability"] },
-  { title: "Content + blog engine",   copy: "Dynamic routes with slug params, docs search index API, and static-friendly SEO output via SSG.",              tags: ["Routing", "SEO", "Docs"] },
-  { title: "Multi-tenant API backend",copy: "Tenant-scoped DB and cache helpers with session policies and request-level observability hooks.",              tags: ["Tenant", "DB", "Metrics"] },
-  { title: "Interop migration project",copy: "Migrate incrementally from JavaScript modules while preserving full deployment parity and zero lock-in.",     tags: ["Migration", "Interop", "No lock-in"] }
-];
-
+const EXAMPLES = [{
+  title: "Startup MVP",
+  copy: "Commerce starter with SSR pages, checkout API, queue jobs for receipts, and dashboard routes with auth gate.",
+  tags: ["Full-stack", "Payments", "Queue"]
+}, {
+  title: "Internal ops dashboard",
+  copy: "Typed route loaders, filtered data tables, and auth middleware for internal tooling at scale.",
+  tags: ["Admin", "Auth", "Data"]
+}, {
+  title: "Webhook control plane",
+  copy: "Signature validation, replay protection, audit logs, and dead-letter retries in one app repository.",
+  tags: ["Security", "Webhooks", "Reliability"]
+}, {
+  title: "Content + blog engine",
+  copy: "Dynamic routes with slug params, docs search index API, and static-friendly SEO output via SSG.",
+  tags: ["Routing", "SEO", "Docs"]
+}, {
+  title: "Multi-tenant API backend",
+  copy: "Tenant-scoped DB and cache helpers with session policies and request-level observability hooks.",
+  tags: ["Tenant", "DB", "Metrics"]
+}, {
+  title: "Interop migration project",
+  copy: "Migrate incrementally from JavaScript modules while preserving full deployment parity and zero lock-in.",
+  tags: ["Migration", "Interop", "No lock-in"]
+}];
 export default function ExamplesPage() {
   const cards = EXAMPLES.map(ex => `
     <div class="product-card">
@@ -16,7 +32,6 @@ export default function ExamplesPage() {
       <div class="tag-row">${ex.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
     </div>
   `).join("");
-
   return `
     <section class="examples-page">
       <header class="sec-header">

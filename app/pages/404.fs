@@ -1,4 +1,4 @@
-export default function NotFound({ pathname }) {
+export default function NotFound({pathname}) {
   return `
     <div class="not-found">
       <p class="not-found-code">404</p>

@@ -1,26 +1,20 @@
-const TEAM = [
-  {
-    name: "Olamilekan Akinuli",
-    role: "Founder — Product + Platform",
-    copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v1 scope freeze and release governance."
-  },
-  {
-    name: "Compiler lane",
-    role: "Parser + Typecheck",
-    copy: "Owns route typing, diagnostics, source maps, and stability of .fs to JavaScript compilation. Maintains the conformance snapshot harness and semantic type checker."
-  },
-  {
-    name: "Runtime lane",
-    role: "Server + Deploy",
-    copy: "Owns middleware pipeline, auth, job queue, storage, worker orchestration, and deploy adapters for Node, Vercel, and Cloudflare Workers."
-  },
-  {
-    name: "DX lane",
-    role: "Editor + Docs",
-    copy: "Owns VS Code language extension, LSP server, documentation quality, and adoption loops for developers and AI systems consuming FastScript context packs."
-  }
-];
-
+const TEAM = [{
+  name: "Olamilekan Akinuli",
+  role: "Founder — Product + Platform",
+  copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v1 scope freeze and release governance."
+}, {
+  name: "Compiler lane",
+  role: "Parser + Typecheck",
+  copy: "Owns route typing, diagnostics, source maps, and stability of .fs to JavaScript compilation. Maintains the conformance snapshot harness and semantic type checker."
+}, {
+  name: "Runtime lane",
+  role: "Server + Deploy",
+  copy: "Owns middleware pipeline, auth, job queue, storage, worker orchestration, and deploy adapters for Node, Vercel, and Cloudflare Workers."
+}, {
+  name: "DX lane",
+  role: "Editor + Docs",
+  copy: "Owns VS Code language extension, LSP server, documentation quality, and adoption loops for developers and AI systems consuming FastScript context packs."
+}];
 export default function DevsPage() {
   const cells = TEAM.map(m => `
     <div class="team-cell">
@@ -29,7 +23,6 @@ export default function DevsPage() {
       <p class="team-copy">${m.copy}</p>
     </div>
   `).join("");
-
   return `
     <section class="devs-hero">
       <header class="sec-header">

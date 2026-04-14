@@ -1,5 +1,5 @@
-export default function PrivatePage({ user }) {
-  const name = (user && (user.name || user.email)) || "builder";
+export default function PrivatePage({user}) {
+  const name = user && (user.name || user.email) || "builder";
   return `
     <section class="private-page">
       <header class="sec-header">
@@ -16,11 +16,13 @@ export default function PrivatePage({ user }) {
     </section>
   `;
 }
-
 export async function GET(ctx) {
   try {
     const user = ctx.auth.requireUser();
-    return ctx.helpers.json({ ok: true, user });
+    return ctx.helpers.json({
+      ok: true,
+      user
+    });
   } catch {
     return ctx.helpers.redirect("/");
   }

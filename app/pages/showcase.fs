@@ -1,12 +1,40 @@
-const PROJECTS = [
-  { title: "FastScript Commerce Starter",  copy: "Checkout flow with queue-based receipts, upload API, and multi-tenant readiness.", meta: "starter",   detail: "8 routes - 4 APIs - queue worker", kind: "starter"     },
-  { title: "Realtime Ops Dashboard",       copy: "Authenticated data workspace using route loaders and cache-scoped tenant data.",   meta: "full-app",  detail: "12 routes - auth middleware",    kind: "full-app"    },
-  { title: "Webhook Reliability Console",  copy: "Signature verification, dead-letter replay, and alert hooks for high-trust integrations.", meta: "infra", detail: "security + observability", kind: "infra"    },
-  { title: "FastScript Language Website",  copy: "The site you are viewing: docs, benchmarks, blog, dev profiles, and deploy adapters.", meta: "meta",   detail: "meta project",                kind: "meta"        },
-  { title: "Migration Bridge App",         copy: "Incremental migration from JS modules with interop guarantees and proof-pack outputs.", meta: "migration", detail: "interop-first",           kind: "migration"   },
-  { title: "Your startup next",            copy: "Ship your own product with this stack and get listed in the public showcase.",      meta: "open",      detail: "open submissions",              kind: "placeholder" }
-];
-
+const PROJECTS = [{
+  title: "FastScript Commerce Starter",
+  copy: "Checkout flow with queue-based receipts, upload API, and multi-tenant readiness.",
+  meta: "starter",
+  detail: "8 routes - 4 APIs - queue worker",
+  kind: "starter"
+}, {
+  title: "Realtime Ops Dashboard",
+  copy: "Authenticated data workspace using route loaders and cache-scoped tenant data.",
+  meta: "full-app",
+  detail: "12 routes - auth middleware",
+  kind: "full-app"
+}, {
+  title: "Webhook Reliability Console",
+  copy: "Signature verification, dead-letter replay, and alert hooks for high-trust integrations.",
+  meta: "infra",
+  detail: "security + observability",
+  kind: "infra"
+}, {
+  title: "FastScript Language Website",
+  copy: "The site you are viewing: docs, benchmarks, blog, dev profiles, and deploy adapters.",
+  meta: "meta",
+  detail: "meta project",
+  kind: "meta"
+}, {
+  title: "Migration Bridge App",
+  copy: "Incremental migration from JS modules with interop guarantees and proof-pack outputs.",
+  meta: "migration",
+  detail: "interop-first",
+  kind: "migration"
+}, {
+  title: "Your startup next",
+  copy: "Ship your own product with this stack and get listed in the public showcase.",
+  meta: "open",
+  detail: "open submissions",
+  kind: "placeholder"
+}];
 function cardNormal(p) {
   return `
     <div class="product-card" data-project data-kind="${p.kind}" data-title="${p.title.toLowerCase()}">
@@ -18,7 +46,6 @@ function cardNormal(p) {
     </div>
   `;
 }
-
 function cardPlaceholder(p) {
   return `
     <div class="product-card product-placeholder" data-project data-kind="${p.kind}" data-title="${p.title.toLowerCase()}">
@@ -30,12 +57,10 @@ function cardPlaceholder(p) {
     </div>
   `;
 }
-
 function card(p) {
   if (p.kind === "placeholder") return cardPlaceholder(p);
   return cardNormal(p);
 }
-
 export default function Showcase() {
   return `
     <section class="showcase-page">
@@ -70,17 +95,16 @@ export default function Showcase() {
     </div>
   `;
 }
-
-export function hydrate({ root }) {
-  const search  = root.querySelector("[data-showcase-search]");
-  const grid    = root.querySelector("[data-showcase-grid]");
+export function hydrate({root}) {
+  const search = root.querySelector("[data-showcase-search]");
+  const grid = root.querySelector("[data-showcase-grid]");
   const buttons = [...root.querySelectorAll("[data-filter]")];
   if (!search || !grid) return;
   let filter = "all";
   function apply() {
     const q = String(search.value || "").toLowerCase().trim();
     for (const c of grid.querySelectorAll("[data-project]")) {
-      const kind  = c.dataset.kind  || "";
+      const kind = c.dataset.kind || "";
       const title = c.dataset.title || "";
       c.hidden = !((filter === "all" || kind === filter) && (!q || title.includes(q)));
     }
@@ -89,7 +113,9 @@ export function hydrate({ root }) {
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
       filter = btn.dataset.filter || "all";
-      buttons.forEach(b => { b.className = b === btn ? "btn btn-primary btn-sm" : "btn btn-ghost btn-sm"; });
+      buttons.forEach(b => {
+        b.className = b === btn ? "btn btn-primary btn-sm" : "btn btn-ghost btn-sm";
+      });
       apply();
     });
   });

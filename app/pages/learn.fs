@@ -1,17 +1,45 @@
-const STEPS = [
-  { n: "01", title: "Install FastScript",      copy: "Install the compiler and CLI globally once. Works on Node 20+.",                                                                            cmd: "npm install -g fastscript-lang" },
-  { n: "02", title: "Create a project",        copy: "Bootstrap with pages, APIs, DB migrations, middleware, and docs routing pre-wired.",                                                         cmd: "fastscript create my-startup" },
-  { n: "03", title: "Run local development",   copy: "Start the dev runtime with HMR, route hydration, diagnostics overlay, and middleware execution.",                                           cmd: "cd my-startup\nfastscript dev" },
-  { n: "04", title: "Add product logic",       copy: "Build route loaders, API handlers, queue workers, and storage workflows in .fs. Everything shares one context object.",                     cmd: "app/pages/*.fs\napp/api/*.fs\napp/db/migrations/*.fs" },
-  { n: "05", title: "Quality gate + deploy",   copy: "One command runs the full health check — lint, typecheck, tests, smoke, benchmarks. Then generate a deploy adapter.",                       cmd: "npm run qa:all\nfastscript deploy --target cloudflare" }
-];
-
-const NEXT = [
-  { title: "Route + loader contracts", copy: "Use inferred route param and loader data types to remove runtime guesswork on every page.", href: "/docs/v1.1", cta: "Read routing deep-dive" },
-  { title: "Interop expansion",        copy: "Bring existing npm packages and framework APIs while keeping .fs as your app source of truth.", href: "/benchmarks", cta: "View interop matrix" },
-  { title: "Production adapters",      copy: "Generate hardened Node, Vercel, and Cloudflare outputs with default cache, security, and routing policies.", href: "/docs/latest", cta: "Open deploy guide" }
-];
-
+const STEPS = [{
+  n: "01",
+  title: "Install FastScript",
+  copy: "Install the compiler and CLI globally once. Works on Node 20+.",
+  cmd: "npm install -g fastscript-lang"
+}, {
+  n: "02",
+  title: "Create a project",
+  copy: "Bootstrap with pages, APIs, DB migrations, middleware, and docs routing pre-wired.",
+  cmd: "fastscript create my-startup"
+}, {
+  n: "03",
+  title: "Run local development",
+  copy: "Start the dev runtime with HMR, route hydration, diagnostics overlay, and middleware execution.",
+  cmd: "cd my-startup\nfastscript dev"
+}, {
+  n: "04",
+  title: "Add product logic",
+  copy: "Build route loaders, API handlers, queue workers, and storage workflows in .fs. Everything shares one context object.",
+  cmd: "app/pages/*.fs\napp/api/*.fs\napp/db/migrations/*.fs"
+}, {
+  n: "05",
+  title: "Quality gate + deploy",
+  copy: "One command runs the full health check — lint, typecheck, tests, smoke, benchmarks. Then generate a deploy adapter.",
+  cmd: "npm run qa:all\nfastscript deploy --target cloudflare"
+}];
+const NEXT = [{
+  title: "Route + loader contracts",
+  copy: "Use inferred route param and loader data types to remove runtime guesswork on every page.",
+  href: "/docs/v1.1",
+  cta: "Read routing deep-dive"
+}, {
+  title: "Interop expansion",
+  copy: "Bring existing npm packages and framework APIs while keeping .fs as your app source of truth.",
+  href: "/benchmarks",
+  cta: "View interop matrix"
+}, {
+  title: "Production adapters",
+  copy: "Generate hardened Node, Vercel, and Cloudflare outputs with default cache, security, and routing policies.",
+  href: "/docs/latest",
+  cta: "Open deploy guide"
+}];
 export default function LearnPage() {
   const steps = STEPS.map(s => `
     <div class="step">
@@ -23,7 +51,6 @@ export default function LearnPage() {
       </div>
     </div>
   `).join("");
-
   const next = NEXT.map(n => `
     <div class="docs-card">
       <p class="docs-card-title">${n.title}</p>
@@ -31,7 +58,6 @@ export default function LearnPage() {
       <a class="docs-card-link" href="${n.href}">${n.cta} &#8594;</a>
     </div>
   `).join("");
-
   return `
     <section class="learn-page">
       <header class="sec-header">

@@ -1,27 +1,84 @@
-const SECTIONS = [
-  { label: "Overview", links: [{ label: "Introduction", href: "/docs" }, { label: "Language spec v1", href: "/docs/v1" }, { label: "What is new in v1.1", href: "/docs/v1.1" }] },
-  { label: "Guides",   links: [{ label: "Quickstart", href: "/learn" }, { label: "Deploy guide", href: "/docs/latest" }, { label: "Migration", href: "/docs/v1.1" }, { label: "Interop", href: "/benchmarks" }] },
-  { label: "Reference",links: [{ label: "CLI commands", href: "/docs/latest" }, { label: "Error codes", href: "/docs/v1" }, { label: "Plugin API", href: "/docs/latest" }, { label: "Playground", href: "/docs/playground" }] }
-];
-
-const CARDS = [
-  { title: "Language v1 spec",    copy: "Grammar, desugaring semantics, type system, diagnostic codes, and compatibility guarantees.", href: "/docs/v1",        cta: "Read spec" },
-  { title: "Quickstart",          copy: "Install, create, build, and deploy a FastScript app in 15 minutes.",                         href: "/learn",           cta: "Get started" },
-  { title: "Playground",          copy: "Try FastScript syntax, see compiled output, and explore diagnostic messages in the browser.", href: "/docs/playground", cta: "Open playground" },
-  { title: "CLI reference",       copy: "All commands: create, dev, build, deploy, migrate, export, validate, qa:all.",               href: "/docs/latest",     cta: "View reference" },
-  { title: "Interop + migration", copy: "Use npm packages in .fs files and migrate existing JS codebases module by module.",          href: "/docs/v1.1",       cta: "Learn interop" },
-  { title: "Plugin API",          copy: "Hook into build and request lifecycle with typed plugin contracts and middleware.",           href: "/docs/latest",     cta: "Plugin docs" }
-];
-
+const SECTIONS = [{
+  label: "Overview",
+  links: [{
+    label: "Introduction",
+    href: "/docs"
+  }, {
+    label: "Language spec v1",
+    href: "/docs/v1"
+  }, {
+    label: "What is new in v1.1",
+    href: "/docs/v1.1"
+  }]
+}, {
+  label: "Guides",
+  links: [{
+    label: "Quickstart",
+    href: "/learn"
+  }, {
+    label: "Deploy guide",
+    href: "/docs/latest"
+  }, {
+    label: "Migration",
+    href: "/docs/v1.1"
+  }, {
+    label: "Interop",
+    href: "/benchmarks"
+  }]
+}, {
+  label: "Reference",
+  links: [{
+    label: "CLI commands",
+    href: "/docs/latest"
+  }, {
+    label: "Error codes",
+    href: "/docs/v1"
+  }, {
+    label: "Plugin API",
+    href: "/docs/latest"
+  }, {
+    label: "Playground",
+    href: "/docs/playground"
+  }]
+}];
+const CARDS = [{
+  title: "Language v1 spec",
+  copy: "Grammar, desugaring semantics, type system, diagnostic codes, and compatibility guarantees.",
+  href: "/docs/v1",
+  cta: "Read spec"
+}, {
+  title: "Quickstart",
+  copy: "Install, create, build, and deploy a FastScript app in 15 minutes.",
+  href: "/learn",
+  cta: "Get started"
+}, {
+  title: "Playground",
+  copy: "Try FastScript syntax, see compiled output, and explore diagnostic messages in the browser.",
+  href: "/docs/playground",
+  cta: "Open playground"
+}, {
+  title: "CLI reference",
+  copy: "All commands: create, dev, build, deploy, migrate, export, validate, qa:all.",
+  href: "/docs/latest",
+  cta: "View reference"
+}, {
+  title: "Interop + migration",
+  copy: "Use npm packages in .fs files and migrate existing JS codebases module by module.",
+  href: "/docs/v1.1",
+  cta: "Learn interop"
+}, {
+  title: "Plugin API",
+  copy: "Hook into build and request lifecycle with typed plugin contracts and middleware.",
+  href: "/docs/latest",
+  cta: "Plugin docs"
+}];
 function navLinkActive(href, pathname) {
   return `<a class="docs-nav-link is-active" href="${href}">${href}</a>`;
 }
-
 function navLinkInactive(href, label) {
   return `<a class="docs-nav-link" href="${href}">${label}</a>`;
 }
-
-export default function DocsIndex({ pathname }) {
+export default function DocsIndex({pathname}) {
   const sidebar = SECTIONS.map(s => {
     const links = s.links.map(l => {
       if (l.href === pathname) return navLinkActive(l.href, l.label);
@@ -29,7 +86,6 @@ export default function DocsIndex({ pathname }) {
     }).join("");
     return `<div class="docs-nav-section"><p class="docs-nav-label">${s.label}</p>${links}</div>`;
   }).join("");
-
   const cards = CARDS.map(c => `
     <div class="docs-card">
       <p class="docs-card-title">${c.title}</p>
@@ -37,7 +93,6 @@ export default function DocsIndex({ pathname }) {
       <a class="docs-card-link" href="${c.href}">${c.cta} &#8594;</a>
     </div>
   `).join("");
-
   return `
     <div class="docs-layout">
       <aside class="docs-sidebar">${sidebar}</aside>

@@ -1,12 +1,28 @@
-const RELEASES = [
-  { version: "v1.0.0", date: "April 2026", copy: "FastScript v1 stable release: language baseline locked, website polished, deploy adapters hardened, and interop guarantees published." },
-  { version: "v0.1.4", date: "April 2026", copy: "Canonical repo lock, quality gate hardening, proof-pack publishing, and benchmark suite stabilization." },
-  { version: "v0.1.3", date: "April 2026", copy: "VS Code language toolkit refresh and extension packaging improvements for .fs editor workflows." },
-  { version: "v0.1.2", date: "April 2026", copy: "Full-stack platform baseline: routing, SSR, middleware, auth, DB, jobs, storage, and deploy adapter outputs." },
-  { version: "v0.1.1", date: "April 2026", copy: "Release prep and scaffolding improvements. Initial QA pipeline foundation." },
-  { version: "v0.1.0", date: "April 2026", copy: "Initial FastScript public release with JavaScript ecosystem compatibility and core build pipeline." }
-];
-
+const RELEASES = [{
+  version: "v1.0.0",
+  date: "April 2026",
+  copy: "FastScript v1 stable release: language baseline locked, website polished, deploy adapters hardened, and interop guarantees published."
+}, {
+  version: "v0.1.4",
+  date: "April 2026",
+  copy: "Canonical repo lock, quality gate hardening, proof-pack publishing, and benchmark suite stabilization."
+}, {
+  version: "v0.1.3",
+  date: "April 2026",
+  copy: "VS Code language toolkit refresh and extension packaging improvements for .fs editor workflows."
+}, {
+  version: "v0.1.2",
+  date: "April 2026",
+  copy: "Full-stack platform baseline: routing, SSR, middleware, auth, DB, jobs, storage, and deploy adapter outputs."
+}, {
+  version: "v0.1.1",
+  date: "April 2026",
+  copy: "Release prep and scaffolding improvements. Initial QA pipeline foundation."
+}, {
+  version: "v0.1.0",
+  date: "April 2026",
+  copy: "Initial FastScript public release with JavaScript ecosystem compatibility and core build pipeline."
+}];
 export default function ChangelogPage() {
   const items = RELEASES.map(r => `
     <div class="list-item">
@@ -18,7 +34,6 @@ export default function ChangelogPage() {
       <span class="list-item-arrow">&#8594;</span>
     </div>
   `).join("");
-
   return `
     <section class="changelog-page">
       <header class="sec-header">

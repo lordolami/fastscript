@@ -1,21 +1,41 @@
-const NAV = [
-  { href: "/docs",       label: "Docs" },
-  { href: "/learn",      label: "Quickstart" },
-  { href: "/examples",   label: "Examples" },
-  { href: "/benchmarks", label: "Benchmarks" },
-  { href: "/showcase",   label: "Showcase" },
-  { href: "/blog",       label: "Blog" },
-  { href: "/changelog",  label: "Changelog" },
-  { href: "/devs",       label: "About" }
-];
-
-const FOOTER_COLS = [
-  { title: "Product",   links: [["Overview","/"],["Quickstart","/learn"],["Examples","/examples"],["Showcase","/showcase"],["Benchmarks","/benchmarks"],["Playground","/docs/playground"]] },
-  { title: "Language",  links: [["Docs","/docs"],["Changelog","/changelog"],["Roadmap","/roadmap"],["Interop","/docs/v1.1"],["Spec","/docs/v1"]] },
-  { title: "Community", links: [["Blog","/blog"],["About","/devs"],["Contribute","/contribute"],["GitHub","https://github.com/lordolami/fastscript"],["Discord","https://discord.gg/fastscript"]] },
-  { title: "Legal",     links: [["License","/license"],["Privacy","/privacy"],["Terms","/terms"],["Security","/security"]] }
-];
-
+const NAV = [{
+  href: "/docs",
+  label: "Docs"
+}, {
+  href: "/learn",
+  label: "Quickstart"
+}, {
+  href: "/examples",
+  label: "Examples"
+}, {
+  href: "/benchmarks",
+  label: "Benchmarks"
+}, {
+  href: "/showcase",
+  label: "Showcase"
+}, {
+  href: "/blog",
+  label: "Blog"
+}, {
+  href: "/changelog",
+  label: "Changelog"
+}, {
+  href: "/devs",
+  label: "About"
+}];
+const FOOTER_COLS = [{
+  title: "Product",
+  links: [["Overview", "/"], ["Quickstart", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"], ["Playground", "/docs/playground"]]
+}, {
+  title: "Language",
+  links: [["Docs", "/docs"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"], ["Interop", "/docs/v1.1"], ["Spec", "/docs/v1"]]
+}, {
+  title: "Community",
+  links: [["Blog", "/blog"], ["About", "/devs"], ["Contribute", "/contribute"], ["GitHub", "https://github.com/lordolami/fastscript"], ["Discord", "https://discord.gg/fastscript"]]
+}, {
+  title: "Legal",
+  links: [["License", "/license"], ["Privacy", "/privacy"], ["Terms", "/terms"], ["Security", "/security"]]
+}];
 function navLinkActive(href, label) {
   return `<a class="nav-link is-active" href="${href}" aria-current="page">${label}</a>`;
 }
@@ -33,16 +53,9 @@ function isActive(pathname, href) {
   if (href === "/") return p === "/";
   return p === href || p.startsWith(href + "/");
 }
-
-export default function Layout({ content, pathname }) {
-  const navLinks = NAV.map(({ href, label }) =>
-    isActive(pathname, href) ? navLinkActive(href, label) : navLinkInactive(href, label)
-  ).join("");
-
-  const mobileLinks = NAV.map(({ href, label }) =>
-    isActive(pathname, href) ? mobileLinkActive(href, label) : mobileLinkInactive(href, label)
-  ).join("");
-
+export default function Layout({content, pathname}) {
+  const navLinks = NAV.map(({href, label}) => isActive(pathname, href) ? navLinkActive(href, label) : navLinkInactive(href, label)).join("");
+  const mobileLinks = NAV.map(({href, label}) => isActive(pathname, href) ? mobileLinkActive(href, label) : mobileLinkInactive(href, label)).join("");
   const footerCols = FOOTER_COLS.map(col => {
     const links = col.links.map(([label, href]) => {
       const ext = href.startsWith("http");
@@ -50,7 +63,6 @@ export default function Layout({ content, pathname }) {
     }).join("");
     return `<div class="footer-col"><p class="footer-col-title">${col.title}</p>${links}</div>`;
   }).join("");
-
   return `
     <a class="skip-link" href="#main-content">Skip to content</a>
 
@@ -120,14 +132,11 @@ export default function Layout({ content, pathname }) {
     </footer>
   `;
 }
-
 export function hydrate() {
   if (window.__fsLayoutHydrated) return;
   window.__fsLayoutHydrated = true;
-
-  /* Mobile nav toggle */
   const toggle = document.getElementById("menu-toggle");
-  const panel  = document.getElementById("mobile-panel");
+  const panel = document.getElementById("mobile-panel");
   if (toggle && panel) {
     toggle.addEventListener("click", () => {
       const open = panel.classList.toggle("is-open");
@@ -147,11 +156,9 @@ export function hydrate() {
       }
     });
   }
-
-  /* Theme toggle */
-  const themeBtn  = document.getElementById("theme-toggle");
+  const themeBtn = document.getElementById("theme-toggle");
   const themeIcon = themeBtn && themeBtn.querySelector(".theme-icon");
-  const applyTheme = (t) => {
+  const applyTheme = t => {
     document.documentElement.setAttribute("data-theme", t);
     try {
       localStorage.setItem("fs-theme", t);
@@ -169,9 +176,7 @@ export function hydrate() {
       applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light");
     });
   }
-
-  /* Copy buttons */
-  const fallbackCopy = (text) => {
+  const fallbackCopy = text => {
     const area = document.createElement("textarea");
     area.value = text;
     area.setAttribute("readonly", "true");
@@ -188,8 +193,7 @@ export function hydrate() {
     document.body.removeChild(area);
     return ok;
   };
-
-  document.addEventListener("click", async (event) => {
+  document.addEventListener("click", async event => {
     const btn = event.target && event.target.closest ? event.target.closest("[data-copy]") : null;
     if (!btn) return;
     const text = btn.getAttribute("data-copy") || "";
@@ -197,7 +201,6 @@ export function hydrate() {
     event.preventDefault();
     if (btn.dataset.copyBusy === "true") return;
     btn.dataset.copyBusy = "true";
-
     try {
       let copied = false;
       try {
@@ -222,17 +225,30 @@ export function hydrate() {
       }
     }
   });
-
-  /* Global scroll-reveal */
   if (window.IntersectionObserver) {
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed"); obs.unobserve(e.target); } });
-    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("revealed");
+          obs.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: "0px 0px -40px 0px"
+    });
     document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
-
     const obs2 = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed-children"); obs2.unobserve(e.target); } });
-    }, { threshold: 0.06, rootMargin: "0px 0px -40px 0px" });
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("revealed-children");
+          obs2.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: 0.06,
+      rootMargin: "0px 0px -40px 0px"
+    });
     document.querySelectorAll(".reveal-children").forEach(el => obs2.observe(el));
   } else {
     document.querySelectorAll(".reveal").forEach(el => el.classList.add("revealed"));

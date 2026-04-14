@@ -1,5 +1,5 @@
-import { rankDocs } from "../../src/docs-search.mjs";
-import { DOC_SEARCH_INDEX } from "../../src/generated/docs-search-index.mjs";
+import {rankDocs} from "../../src/docs-search.mjs";
+import {DOC_SEARCH_INDEX} from "../../src/generated/docs-search-index.mjs";
 const DOC_INDEX = Array.isArray(DOC_SEARCH_INDEX) ? DOC_SEARCH_INDEX : [];
 export const schemas = {
   GET: {
