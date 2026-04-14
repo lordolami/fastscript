@@ -14,12 +14,20 @@ function size(path) {
 const manifest = existsSync(join(dist, "fastscript-manifest.json"))
   ? JSON.parse(readFileSync(join(dist, "fastscript-manifest.json"), "utf8"))
   : { routes: [] };
+const assets = existsSync(join(dist, "asset-manifest.json"))
+  ? JSON.parse(readFileSync(join(dist, "asset-manifest.json"), "utf8"))
+  : { mapping: {} };
+
+function asset(name) {
+  return assets.mapping?.[name] || name;
+}
 
 const metrics = {
   generatedAt: new Date().toISOString(),
-  js: size(join(dist, "router.js")),
-  css: size(join(dist, "styles.css")),
+  js: size(join(dist, asset("router.js"))),
+  css: size(join(dist, asset("styles.css"))),
   routes: manifest.routes.length,
+  apiRoutes: manifest.apiRoutes?.length ?? 0,
 };
 
 writeFileSync(join(outDir, "suite-latest.json"), JSON.stringify(metrics, null, 2), "utf8");

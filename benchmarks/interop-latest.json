@@ -1,0 +1,110 @@
+{
+  "generatedAt": "2026-04-14T02:17:05.800Z",
+  "profile": "report",
+  "summary": {
+    "total": 9,
+    "pass": 9,
+    "fail": 0
+  },
+  "cases": [
+    {
+      "id": "react-core-fs",
+      "target": "react",
+      "kind": "framework",
+      "platform": "browser",
+      "status": "pass",
+      "durationMs": 71.56,
+      "bundleBytes": 618,
+      "note": "FastScript module imports React + react-dom/client.",
+      "error": ""
+    },
+    {
+      "id": "next-link-fs",
+      "target": "next",
+      "kind": "framework",
+      "platform": "browser",
+      "status": "pass",
+      "durationMs": 15.8,
+      "bundleBytes": 226,
+      "note": "FastScript module imports next/link shape.",
+      "error": ""
+    },
+    {
+      "id": "vue-core-fs",
+      "target": "vue",
+      "kind": "framework",
+      "platform": "browser",
+      "status": "pass",
+      "durationMs": 20.07,
+      "bundleBytes": 365,
+      "note": "FastScript module imports Vue createApp/h API.",
+      "error": ""
+    },
+    {
+      "id": "svelte-store-fs",
+      "target": "svelte",
+      "kind": "framework",
+      "platform": "browser",
+      "status": "pass",
+      "durationMs": 17.41,
+      "bundleBytes": 528,
+      "note": "FastScript module imports svelte/store writable.",
+      "error": ""
+    },
+    {
+      "id": "node-cjs-npm-fs",
+      "target": "left-pad",
+      "kind": "npm",
+      "platform": "node",
+      "status": "pass",
+      "durationMs": 14.04,
+      "bundleBytes": 1809,
+      "note": "FastScript module imports CommonJS npm package.",
+      "error": ""
+    },
+    {
+      "id": "node-builtins-fs",
+      "target": "node:crypto,node:path",
+      "kind": "node",
+      "platform": "node",
+      "status": "pass",
+      "durationMs": 10.95,
+      "bundleBytes": 209,
+      "note": "FastScript module imports Node built-ins.",
+      "error": ""
+    },
+    {
+      "id": "real-acorn-js",
+      "target": "acorn",
+      "kind": "npm",
+      "platform": "node",
+      "status": "pass",
+      "durationMs": 39.4,
+      "bundleBytes": 200464,
+      "note": "Real npm package from FastScript dependencies.",
+      "error": ""
+    },
+    {
+      "id": "real-astring-js",
+      "target": "astring",
+      "kind": "npm",
+      "platform": "node",
+      "status": "pass",
+      "durationMs": 18.95,
+      "bundleBytes": 31834,
+      "note": "Real npm package from FastScript dependencies.",
+      "error": ""
+    },
+    {
+      "id": "real-acorn-walk-js",
+      "target": "acorn-walk",
+      "kind": "npm",
+      "platform": "node",
+      "status": "pass",
+      "durationMs": 11.95,
+      "bundleBytes": 9438,
+      "note": "Real npm package from FastScript dependencies.",
+      "error": ""
+    }
+  ]
+}

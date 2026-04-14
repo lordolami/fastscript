@@ -1,6 +1,7 @@
 {
-  "generatedAt": "2026-04-14T02:04:16.098Z",
-  "js": 0,
-  "css": 0,
-  "routes": 13
+  "generatedAt": "2026-04-14T02:17:04.639Z",
+  "js": 2216,
+  "css": 1215,
+  "routes": 13,
+  "apiRoutes": 5
 }
