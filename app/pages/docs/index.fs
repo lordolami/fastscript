@@ -54,7 +54,7 @@ const CARDS = [{
   cta: "Read spec"
 }, {
   title: "Quickstart",
-  copy: "Clone, install, link the CLI, create, build, and deploy a FastScript app in 15 minutes.",
+  copy: "Install the CLI, create, build, and deploy a FastScript app in 15 minutes. Clone the repo when you want to work on the language itself.",
   href: "/learn",
   cta: "Get started"
 }, {

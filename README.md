@@ -61,9 +61,16 @@ See:
 
 ## Install
 
-FastScript v2.0 currently ships as a repo-first toolchain while the protected core remains split from the public shell.
+### Option 1: npm install
 
-### Option 1: local repo workflow
+```bash
+npm install -g fastscript
+fastscript --help
+```
+
+The published npm package is generated as a self-contained release bundle, so the CLI works without a second private npm package.
+
+### Option 2: local repo workflow
 
 ```bash
 git clone https://github.com/lordolami/fastscript.git
@@ -71,7 +78,7 @@ cd fastscript
 npm install
 ```
 
-### Option 2: global CLI link for daily use
+### Option 3: global CLI link for daily use
 
 ```bash
 git clone https://github.com/lordolami/fastscript.git
@@ -83,7 +90,7 @@ fastscript --help
 
 This gives you a global `fastscript` command backed by your local clone.
 
-Public npm packaging is not the default install path yet because the protected core is still split from the public repo. The public release surface is frozen and documented; the npm publish model is the remaining packaging step.
+The source repos remain split for development, but npm users get a clean self-contained public package.
 
 To use the CLI directly during development:
 

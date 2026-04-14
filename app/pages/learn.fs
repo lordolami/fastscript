@@ -1,8 +1,8 @@
 const STEPS = [{
   n: "01",
   title: "Install FastScript",
-  copy: "Clone the repo, install dependencies, and optionally link the CLI globally from your local checkout. Works on Node 20+.",
-  cmd: "git clone https://github.com/lordolami/fastscript.git\ncd fastscript\nnpm install\nnpm link"
+  copy: "Install the public CLI directly from npm. For core development on FastScript itself, the repo workflow still works too. Node 20+.",
+  cmd: "npm install -g fastscript\nfastscript --help"
 }, {
   n: "02",
   title: "Create a project",

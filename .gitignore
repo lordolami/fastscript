@@ -1,10 +1,12 @@
 node_modules/
 dist/
+.release/
 .fastscript/
 .DS_Store
 .fastscript-tmp-compat/
 .tmp-*/
 exported-*/
+*.tgz
 benchmarks/latest-report.md
 app/styles.generated.css
 .agents/

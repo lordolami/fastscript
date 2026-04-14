@@ -21,8 +21,8 @@ export default function Home() {
 
           <div class="install-row">
             <span class="install-row-prefix">$</span>
-            <span class="install-row-cmd" id="install-cmd">git clone https://github.com/lordolami/fastscript.git && cd fastscript && npm i && npm link</span>
-            <button class="copy-btn" data-copy="git clone https://github.com/lordolami/fastscript.git && cd fastscript && npm i && npm link" aria-label="Copy install command">
+            <span class="install-row-cmd" id="install-cmd">npm install -g fastscript</span>
+            <button class="copy-btn" data-copy="npm install -g fastscript" aria-label="Copy install command">
               &#9112; Copy
             </button>
           </div>
@@ -67,7 +67,7 @@ export default function Home() {
           <div class="social-item">
             <span aria-hidden="true">&#128230;</span>
             <span class="social-item-n">CLI</span>
-            <span>repo-first install</span>
+            <span>npm-first install</span>
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128101;</span>

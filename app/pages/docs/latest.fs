@@ -9,8 +9,8 @@ export default function DocsLatest() {
 
       <div class="docs-card-grid">
         <div class="docs-card">
-          <p class="docs-card-title">Repo install + npm link</p>
-          <p class="docs-card-copy">The current shipping path is repo-first: clone FastScript, run npm install, then npm link for a global CLI backed by your local checkout.</p>
+          <p class="docs-card-title">npm install</p>
+          <p class="docs-card-copy">The current shipping path is npm-first: install FastScript globally and use the self-contained CLI right away. Repo clone remains the workflow for language development.</p>
           <a class="docs-card-link" href="/learn">Open install flow &#8594;</a>
         </div>
         <div class="docs-card">

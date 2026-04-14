@@ -4,6 +4,10 @@
   "description": "JavaScript-first full-stack language runtime with first-class .fs source.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "bin": {
     "fastscript": "src/cli.mjs"
   },
@@ -111,9 +115,11 @@
     "release:patch": "node ./scripts/release.mjs patch",
     "release:minor": "node ./scripts/release.mjs minor",
     "release:major": "node ./scripts/release.mjs major",
-    "pack:check": "npm pack --dry-run",
+    "pack:check": "node ./scripts/prepare-npm-release.mjs --pack-dry-run",
     "hooks:install": "node ./scripts/install-hooks.mjs",
-    "public:bundle": "node ./scripts/prepare-public-docs-bundle.mjs"
+    "public:bundle": "node ./scripts/prepare-public-docs-bundle.mjs",
+    "release:npm:prepare": "node ./scripts/prepare-npm-release.mjs",
+    "publish:npm": "node ./scripts/prepare-npm-release.mjs --pack && npm publish ./.release/npm-public --access public"
   },
   "engines": {
     "node": ">=20.0.0"
