@@ -1,47 +1,87 @@
-﻿# Security Policy
+# Security Policy
+
+FastScript is a protected commercial codebase built as part of a larger AI platform strategy. This repository is source-available for review and evaluation, but it is not released under a permissive open-source license.
 
 ## Supported Versions
-- Active stable: `0.1.x`
-- Security patches: latest patch on active stable line
-- Planned LTS line: `1.0.x` (policy in `docs/LTS_POLICY.md`)
+
+| Version | Security fixes | Status |
+| --- | --- | --- |
+| v1.x | Yes | Active |
+| v0.x | No | Archived |
 
 ## Reporting a Vulnerability
-Report privately to maintainers before public disclosure:
-- Email: `security@lakesbim.com`
-- Backup: open a private advisory through GitHub Security Advisories.
 
-Please include:
-1. Affected version(s)
-2. Repro steps / PoC
-3. Impact assessment
-4. Suggested mitigation if available
+Do not open a public issue for security problems.
 
-## Disclosure Timeline
-- Acknowledge report: within 24 hours
-- Triage + severity assignment: within 72 hours
-- Fix target:
-  - Critical: 24-72 hours
-  - High: 7 days
-  - Medium: 30 days
-  - Low: next scheduled patch
+Report privately to:
 
-## Severity Model
-- Critical: RCE, auth bypass, broad data exposure
-- High: privilege escalation, signature bypass, SSRF with impact
-- Medium: scoped data leakage, hardened-path bypass
-- Low: defense-in-depth gaps with limited exploitability
+- `security@fastscript.dev`
+- `legal@fastscript.dev`
 
-## Coordinated Disclosure
-- We prefer coordinated disclosure after patch release.
-- Advisory includes: affected range, fixed version, migration notes, and rollback guidance.
+Include as much of the following as possible:
 
-## Security Baseline Controls
-- Secure headers in deploy adapters (`vercel.json`)
-- Session/auth primitives with rotation and revocation support
-- Webhook signature verification + replay protection
-- Backup/restore/verify scripts and retention sweeps
+- affected component or file
+- reproduction steps
+- expected vs actual behavior
+- impact assessment
+- proof-of-concept if safe to share
+- environment and version details
 
-## References
-- Threat model: `docs/THREAT_MODEL.md`
-- Incident handling: `docs/INCIDENT_PLAYBOOK.md`
-- Release process: `docs/RELEASE_PROCESS.md`
+## Response Targets
+
+- Acknowledgement target: within 48 hours
+- Initial triage target: within 5 business days
+- Critical issue patch target: as fast as reasonably possible, typically within 14 days
+
+These are targets, not guarantees.
+
+## Disclosure Rules
+
+Until we confirm remediation and approve disclosure, do not publicly share:
+
+- exploit steps
+- working payloads
+- bypass details
+- private repository content
+- internal platform details
+
+## Product Security Scope
+
+Security review may include:
+
+- compiler and runtime behavior
+- CLI and deploy adapters
+- website and hosted docs/playground behavior
+- auth/session flows
+- upload, webhook, storage, and queue paths
+- supply-chain and build artifacts
+
+## Commercial and AI Restrictions
+
+Without prior written permission, you may not use FastScript source or related materials to:
+
+- build or ship a competing AI product
+- train, fine-tune, improve, or benchmark a commercial AI model
+- redistribute FastScript core code in commercial tooling
+
+## Security Research Recognition
+
+FastScript does not currently run a public paid bug bounty program.
+
+At maintainer discretion, valid reports may receive:
+
+- acknowledgement in release notes or a security advisory
+- direct thanks in private communication
+- follow-up contact for coordinated disclosure
+
+## Legal
+
+This policy complements, but does not replace:
+
+- `LICENSE`
+- website terms at `/terms`
+- website license page at `/license`
+
+For commercial licensing or legal questions:
+
+- `legal@fastscript.dev`

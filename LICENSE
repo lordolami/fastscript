@@ -1,21 +1,33 @@
-﻿MIT License
+FASTSCRIPT SOURCE-AVAILABLE LICENSE v1
+Copyright (c) 2026 Lakesbim Infotechnology. All rights reserved.
 
-Copyright (c) 2026 FastScript
+1. Grant of access
+You may view, clone, and internally evaluate this repository for research, review, and compatibility testing.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+2. No production or commercial use without permission
+Unless you have prior written permission from Lakesbim Infotechnology, you may not:
+- use this software or any substantial portion of it in a commercial product or hosted service;
+- offer this software as part of a competing AI product, code generation platform, compiler product, runtime, framework, or developer platform;
+- copy, modify, distribute, sublicense, sell, lease, publish, or relicense this software or derivative works;
+- use this repository or its contents to train, fine-tune, improve, or evaluate a commercial AI model or AI coding product.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+3. No trademark rights
+This license does not grant any right to use the FastScript name, logo, trade dress, branding, or other marks. All trademark rights are reserved.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+4. Feedback
+If you voluntarily provide feedback, Lakesbim Infotechnology may use that feedback without restriction or compensation.
+
+5. Ownership
+The software, documentation, design assets, and related materials remain the exclusive property of Lakesbim Infotechnology.
+
+6. Termination
+Any use that violates this license immediately terminates your rights under it.
+
+7. Warranty disclaimer
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NONINFRINGEMENT.
+
+8. Limitation of liability
+IN NO EVENT SHALL LAKESBIM INFOTECHNOLOGY OR ITS LICENSORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF THE SOFTWARE.
+
+9. Commercial licensing
+For commercial licensing, platform integration, partnership, or other permitted use, contact: legal@fastscript.dev

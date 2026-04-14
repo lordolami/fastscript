@@ -109,7 +109,7 @@ export default function Layout({content, pathname}) {
               <span class="brand-mark footer-brand-mark" aria-hidden="true">FS</span>
               FastScript
             </div>
-            <p class="footer-brand-copy">Full-stack language runtime with <code class="ic">.fs</code> source and <code class="ic">.js</code> ecosystem compatibility. This website is built and shipped with FastScript itself.</p>
+            <p class="footer-brand-copy">Full-stack language runtime with <code class="ic">.fs</code> source and <code class="ic">.js</code> ecosystem compatibility. This website is built and shipped with FastScript itself. Core platform rights are protected and commercially licensed by Lakesbim Infotechnology.</p>
             <div class="footer-social">
               <a class="footer-social-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
               <a class="footer-social-link" href="https://discord.gg/fastscript" target="_blank" rel="noreferrer" aria-label="Discord">DC</a>
@@ -120,7 +120,7 @@ export default function Layout({content, pathname}) {
           </div>
         </div>
         <div class="footer-bottom">
-          <p class="footer-copyright">&#169; 2026 Lakesbim Infotechnology &mdash; <a class="footer-bottom-link" href="/license">MIT License</a></p>
+          <p class="footer-copyright">&#169; 2026 Lakesbim Infotechnology &mdash; <a class="footer-bottom-link" href="/license">Source-Available License</a></p>
           <div class="footer-bottom-links">
             <a class="footer-bottom-link" href="/docs">Docs</a>
             <a class="footer-bottom-link" href="/changelog">Changelog</a>
@@ -261,3 +261,4 @@ export function hydrate() {
     document.querySelectorAll(".reveal-children").forEach(el => el.classList.add("revealed-children"));
   }
 }
+

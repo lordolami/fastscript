@@ -19,14 +19,14 @@ export default function Terms() {
         <li>Publish false, misleading, or defamatory content through our community channels.</li>
       </ul>
 
-      <h2 class="h2">Open-source software</h2>
-      <p class="body-copy">The FastScript compiler, CLI, and runtime are released under the <a class="prose-link" href="/license">MIT License</a>. The MIT License governs your use of those software artefacts; these Terms govern your use of this website and associated hosted services.</p>
+      <h2 class="h2">Repository license</h2>
+      <p class="body-copy">The FastScript compiler, CLI, and runtime are distributed under the <a class="prose-link" href="/license">FastScript Source-Available License v1</a>, not a permissive open-source license. That license governs repository access and code use; these Terms govern your use of this website and associated hosted services.</p>
 
       <h2 class="h2">Playground &amp; hosted services</h2>
       <p class="body-copy">The in-browser playground executes code entirely in your browser with no server-side execution. We do not store or review playground code unless you explicitly share a permalink. We reserve the right to disable any shared playground link that violates these Terms.</p>
 
       <h2 class="h2">Intellectual property</h2>
-      <p class="body-copy">The FastScript name, logo, and marketing copy are the property of Lakesbim Infotechnology. You may reference FastScript by name for educational, review, or compatibility purposes without prior permission. Commercial use of the logo or wordmark requires written consent.</p>
+      <p class="body-copy">The FastScript name, logo, source code, branding, and marketing copy are the property of Lakesbim Infotechnology. You may reference FastScript by name for educational, review, or compatibility purposes. Commercial use of the logo, wordmark, or repository contents requires written consent unless separately licensed.</p>
 
       <h2 class="h2">Disclaimer of warranties</h2>
       <p class="body-copy">The Service is provided &ldquo;as is&rdquo; without warranty of any kind. We make no guarantee of uptime, data integrity, or fitness for a particular purpose.</p>

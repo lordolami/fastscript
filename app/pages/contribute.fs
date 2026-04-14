@@ -1,7 +1,7 @@
 export default function Contribute() {
   return `
     <div class="page-hero reveal">
-      <p class="kicker">Open Source</p>
+      <p class="kicker">Community</p>
       <h1 class="h1">Contribution Guide</h1>
       <p class="page-sub">Everything you need to contribute code, docs, tests, or ideas to FastScript.</p>
     </div>
@@ -74,3 +74,5 @@ export default function Contribute() {
     </div>
   `;
 }
+
+

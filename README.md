@@ -10,7 +10,7 @@ It is designed to feel easier to read than heavyweight framework stacks while st
 - Deploy the same app to Node, Vercel, or Cloudflare
 - Run one quality gate for formatting, linting, typecheck, tests, smoke checks, benchmarks, and interop
 
-FastScript is not trying to lock developers into an isolated toy ecosystem. The goal is a simpler, faster, more unified way to build real products while keeping access to the ground-level JavaScript platform.
+FastScript is built for product teams that want a simpler, faster full-stack pipeline without surrendering compatibility with the ground-level JavaScript platform.
 
 ## What FastScript Is
 
@@ -517,33 +517,22 @@ Key docs in this repo:
 - `docs/CONTRIBUTING.md`
 - `docs/OBSERVABILITY.md`
 - `docs/ROLLOUT_GUIDE.md`
+- `SECURITY.md`
 
-## How To Think About Protection From Other AI Companies
+## Protection, Licensing, and Commercial Use
 
-If this repo is published under MIT, other companies can legally use the code.
-MIT is excellent for adoption, but it does not stop commercial reuse.
+FastScript is being built as the core language layer for a larger AI product. Because of that, the repository is not licensed under a permissive open-source license.
 
-If the goal is to stop other AI companies from taking and using the code directly, the strongest options are:
+What that means in practice:
 
-1. do not keep the core under MIT
-2. use a proprietary license for the compiler/runtime
-3. use dual licensing
-4. keep the hosted platform, premium runtime features, or model layer closed
-5. protect the FastScript name and branding with trademarks
-6. keep your best data, generation workflows, prompts, and infrastructure private
+- you can review the repository and evaluate it internally;
+- you cannot commercially use, redistribute, relicense, or build competing products on top of this code without written permission;
+- you cannot use this repository to train, fine-tune, improve, or evaluate a commercial AI product without written permission;
+- trademark rights in the FastScript name, logo, and branding are reserved.
 
-The realistic strategy is usually:
+If you need commercial use, partnership, integration, or platform rights, contact:
 
-- open-source the part that drives adoption
-- keep the defensible platform and operational advantage private
-
-If you stay MIT, you can still protect:
-
-- trademarked name/logo
-- hosted deployment platform
-- private AI generation system
-- private training data and evals
-- enterprise-only runtime features
+- `legal@fastscript.dev`
 
 ## Contributing
 
@@ -554,6 +543,8 @@ FastScript is evolving quickly. If you contribute:
 3. keep `.fs` and `.js` interop working
 4. avoid unnecessary ecosystem lock-in
 5. preserve the language goal: simpler, faster, still grounded in JavaScript
+
+Contribution review does not grant any right to commercially reuse the platform outside the repository license.
 
 ## Canonical Repo
 
@@ -569,6 +560,10 @@ npm run repo:lock
 
 ## License
 
-Current repo license: `MIT`
+This repository is licensed under the FastScript Source-Available License v1.
 
-That means this repository is open for reuse under MIT terms unless you change the licensing model.
+See:
+
+- `LICENSE`
+- `SECURITY.md`
+- `app/pages/license.fs`

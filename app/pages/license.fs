@@ -1,57 +1,59 @@
 export default function License() {
   return `
     <div class="page-hero reveal">
-      <p class="kicker">Open Source</p>
-      <h1 class="h1">MIT License</h1>
-      <p class="page-sub">FastScript is free and open-source software, released under the MIT License.</p>
+      <p class="kicker">Licensing</p>
+      <h1 class="h1">FastScript Source-Available License v1</h1>
+      <p class="page-sub">FastScript source is available for review and evaluation, but commercial use and competing platform use require written permission.</p>
     </div>
 
     <div class="prose-section reveal">
       <div class="license-block">
-        <p class="license-text">Copyright &copy; 2026 Lakesbim Infotechnology</p>
-        <p class="license-text">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &ldquo;Software&rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-        <p class="license-text">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-        <p class="license-text">THE SOFTWARE IS PROVIDED &ldquo;AS IS&rdquo;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <p class="license-text">Copyright &copy; 2026 Lakesbim Infotechnology. All rights reserved.</p>
+        <p class="license-text">You may view, clone, and internally evaluate this repository for research, review, and compatibility testing.</p>
+        <p class="license-text">Without prior written permission, you may not commercially use, redistribute, sublicense, sell, relicense, modify for distribution, or use FastScript source code to build a competing compiler, framework, runtime, AI platform, or hosted developer product.</p>
+        <p class="license-text">You also may not use this repository or its contents to train, fine-tune, improve, or evaluate a commercial AI model or AI coding product without written permission.</p>
+        <p class="license-text">Trademark rights in the FastScript name, wordmark, logo, and branding are fully reserved.</p>
       </div>
 
       <h2 class="h2">What this means</h2>
       <div class="feature-grid">
         <div class="feature-cell">
           <div class="feature-icon">&#10003;</div>
-          <p class="feature-title">Free to use</p>
-          <p class="feature-copy">Use FastScript in personal, commercial, or government projects at no cost.</p>
+          <p class="feature-title">Review and evaluate</p>
+          <p class="feature-copy">You can inspect the codebase, evaluate it internally, and test compatibility in a non-production setting.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">&#10003;</div>
-          <p class="feature-title">Modify freely</p>
-          <p class="feature-copy">Fork, patch, and extend the framework however you need.</p>
-        </div>
-        <div class="feature-cell">
-          <div class="feature-icon">&#10003;</div>
-          <p class="feature-title">Redistribute</p>
-          <p class="feature-copy">Ship derivatives as part of your own product, with or without source.</p>
-        </div>
-        <div class="feature-cell">
-          <div class="feature-icon">&#10003;</div>
-          <p class="feature-title">Private use</p>
-          <p class="feature-copy">Build and run internal apps with no obligation to open-source them.</p>
+          <p class="feature-title">Request commercial rights</p>
+          <p class="feature-copy">Partnerships, commercial licensing, and approved platform integrations can be discussed directly with the FastScript team.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon" aria-hidden="true">&#9888;</div>
-          <p class="feature-title">Keep the notice</p>
-          <p class="feature-copy">Include the copyright notice and license text in all copies or substantial portions of the Software.</p>
+          <p class="feature-title">No competing use</p>
+          <p class="feature-copy">You cannot build or ship a competing language, AI platform, framework product, or hosted service from this code without permission.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#9888;</div>
+          <p class="feature-title">No AI training use</p>
+          <p class="feature-copy">You cannot use FastScript code or materials to train, fine-tune, improve, or benchmark a commercial AI product without permission.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#9888;</div>
+          <p class="feature-title">Brand reserved</p>
+          <p class="feature-copy">The FastScript name, logo, and wordmark remain protected brand assets and are not included in the code license grant.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon" aria-hidden="true">&#9888;</div>
           <p class="feature-title">No warranty</p>
-          <p class="feature-copy">Provided &ldquo;as is&rdquo; with no guarantees. Use in production is at your own discretion.</p>
+          <p class="feature-copy">The software is provided as-is, without warranties, commitments, or suitability guarantees.</p>
         </div>
       </div>
 
       <div class="cta-block reveal">
-        <h2 class="cta-title">Read the full license on GitHub</h2>
+        <h2 class="cta-title">Need commercial licensing or integration rights?</h2>
         <div class="cta-actions">
-          <a class="btn btn-primary btn-lg" href="https://github.com/lordolami/fastscript/blob/main/LICENSE" target="_blank" rel="noreferrer">View LICENSE file</a>
+          <a class="btn btn-primary btn-lg" href="mailto:legal@fastscript.dev">Contact legal</a>
+          <a class="btn btn-secondary btn-lg" href="https://github.com/lordolami/fastscript/blob/main/LICENSE" target="_blank" rel="noreferrer">View LICENSE file</a>
         </div>
       </div>
     </div>

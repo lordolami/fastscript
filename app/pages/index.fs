@@ -62,7 +62,7 @@ export default function Home() {
           <div class="social-item">
             <span aria-hidden="true">&#11088;</span>
             <span class="social-item-n">GitHub</span>
-            <span>open-source momentum</span>
+            <span>developer momentum</span>
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128230;</span>
@@ -81,8 +81,8 @@ export default function Home() {
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128275;</span>
-            <span class="social-item-n">MIT</span>
-            <span>MIT licensed</span>
+            <span class="social-item-n">Protected</span>
+            <span>commercial rights reserved</span>
           </div>
         </div>
       </div>
@@ -409,3 +409,6 @@ export default function Home() {
     </section>
   `;
 }
+
+
+
