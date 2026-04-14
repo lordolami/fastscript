@@ -821,6 +821,7 @@ function createParserError({ source, file, diagnostics }) {
   const lines = diagnostics.map((diagnostic) => formatDiagnostic(diagnostic));
   const head = `${primary.file || file || "<memory>"}:${primary.line}:${primary.column} ${primary.code} ${primary.message}`;
   const error = new Error(`${head}\n${lines.join("\n")}`);
+  error.code = primary.code || "FS1000";
   error.status = 1;
   error.details = diagnostics;
   error.source = source;
