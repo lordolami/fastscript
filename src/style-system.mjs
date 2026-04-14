@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { validatePrimitiveMarkup } from "@fastscript/core-private/style-primitives";
 
 const TOKENS_PATH = join("app", "design", "tokens.json");
 const CLASS_ALLOWLIST_PATH = join("app", "design", "class-allowlist.json");
@@ -120,6 +121,123 @@ function utilityRules(tokens) {
   }
   for (const key of Object.keys(tokens?.radius || {})) {
     lines.push(`.u-radius-${key} { border-radius: var(--fs-radius-${key}); }`);
+  }
+  return lines.join("\n");
+}
+
+function primitiveRules(tokens) {
+  const lines = [
+    ".fs-box,.fs-stack,.fs-row,.fs-grid,.fs-section,.fs-container,.fs-screen,.fs-card,.fs-panel,.fs-field,.fs-alert,.fs-empty{box-sizing:border-box;min-width:0;}",
+    ".fs-stack{display:flex;flex-direction:column;}",
+    ".fs-row{display:flex;flex-direction:row;}",
+    ".fs-grid{display:grid;grid-template-columns:repeat(var(--fs-grid-cols,1),minmax(0,1fr));}",
+    ".fs-container{width:min(100%,72rem);margin-inline:auto;}",
+    ".fs-screen{min-height:100dvh;}",
+    ".fs-text,.fs-label,.fs-badge,.fs-link,.fs-code{margin:0;color:var(--fs-color-text);}",
+    ".fs-heading{margin:0;color:var(--fs-color-text);line-height:1.05;letter-spacing:-0.03em;}",
+    ".fs-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}",
+    ".fs-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;border-radius:999px;border:1px solid var(--fs-color-border);background:var(--fs-color-surface);font-size:.78rem;}",
+    ".fs-link{text-decoration:none;color:var(--fs-color-accent);}",
+    ".fs-link:hover{text-decoration:underline;}",
+    ".fs-card,.fs-panel,.fs-field,.fs-alert,.fs-empty{border:1px solid var(--fs-color-border);background:var(--fs-color-surface);border-radius:var(--fs-radius-md);}",
+    ".fs-card,.fs-panel{box-shadow:var(--fs-shadow-soft);}",
+    ".fs-alert{border-color:var(--fs-color-accent);}",
+    ".fs-input,.fs-textarea,.fs-select{width:100%;border:1px solid var(--fs-color-border);background:var(--fs-color-surface);color:var(--fs-color-text);border-radius:var(--fs-radius-md);padding:.82rem 1rem;outline:none;}",
+    ".fs-input:focus,.fs-textarea:focus,.fs-select:focus{border-color:var(--fs-color-accent);box-shadow:0 0 0 3px rgba(159,146,255,.18);}",
+    ".fs-textarea{min-height:8rem;resize:vertical;}",
+    ".fs-button{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border-radius:999px;border:1px solid transparent;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease,color .18s ease;}",
+    ".fs-button:hover{transform:translateY(-1px);}",
+    ".fs-button-tone-primary{background:var(--fs-color-accent);color:var(--fs-color-bg);box-shadow:var(--fs-shadow-soft);}",
+    ".fs-button-tone-secondary{background:var(--fs-color-surface);color:var(--fs-color-text);border-color:var(--fs-color-border);}",
+    ".fs-button-tone-accent{background:var(--fs-color-accentSoft,var(--fs-color-accent));color:var(--fs-color-bg);}",
+    ".fs-button-tone-success{background:var(--fs-color-green,var(--fs-color-accent));color:var(--fs-color-bg);}",
+    ".fs-button-tone-warning{background:var(--fs-color-amber,var(--fs-color-accent));color:var(--fs-color-bg);}",
+    ".fs-button-tone-error{background:var(--fs-color-danger,var(--fs-color-accent));color:var(--fs-color-bg);}",
+    ".fs-button-tone-ghost{background:transparent;color:var(--fs-color-text);border-color:var(--fs-color-border);}",
+    ".fs-button-tone-muted{background:var(--fs-color-surface);color:var(--fs-color-muted);border-color:var(--fs-color-border);}",
+    ".fs-button-size-xs{padding:.45rem .72rem;font-size:.78rem;}",
+    ".fs-button-size-sm{padding:.58rem .9rem;font-size:.88rem;}",
+    ".fs-button-size-md{padding:.78rem 1.15rem;font-size:.98rem;}",
+    ".fs-button-size-lg{padding:.95rem 1.35rem;font-size:1.05rem;}",
+    ".fs-button-size-xl{padding:1.08rem 1.55rem;font-size:1.12rem;}",
+    ".fs-align-start{align-items:flex-start;}",
+    ".fs-align-center{align-items:center;}",
+    ".fs-align-end{align-items:flex-end;}",
+    ".fs-align-stretch{align-items:stretch;}",
+    ".fs-justify-start{justify-content:flex-start;}",
+    ".fs-justify-center{justify-content:center;}",
+    ".fs-justify-end{justify-content:flex-end;}",
+    ".fs-justify-between{justify-content:space-between;}",
+    ".fs-justify-around{justify-content:space-around;}",
+    ".fs-surface-plain{background:transparent;border-color:transparent;box-shadow:none;}",
+    ".fs-surface-subtle{background:var(--fs-color-surface2,var(--fs-color-surface));}",
+    ".fs-surface-panel{background:var(--fs-color-surface);}",
+    ".fs-surface-card{background:var(--fs-color-surface2,var(--fs-color-surface));}",
+    ".fs-surface-elevated{background:var(--fs-color-surface3,var(--fs-color-surface));box-shadow:var(--fs-shadow-glow,var(--fs-shadow-soft));}",
+    ".fs-surface-inverted{background:var(--fs-color-text);color:var(--fs-color-bg);}",
+    ".fs-tone-default{color:var(--fs-color-text);}",
+    ".fs-tone-muted{color:var(--fs-color-muted);}",
+    ".fs-tone-primary,.fs-tone-accent{color:var(--fs-color-accent);}",
+    ".fs-tone-secondary{color:var(--fs-color-accentSoft,var(--fs-color-accent));}",
+    ".fs-tone-success{color:var(--fs-color-green,var(--fs-color-accent));}",
+    ".fs-tone-warning{color:var(--fs-color-amber,var(--fs-color-accent));}",
+    ".fs-tone-error{color:var(--fs-color-danger,var(--fs-color-accent));}",
+    ".fs-tone-inverse{color:var(--fs-color-bg);}",
+    ".fs-weight-thin{font-weight:100;}",
+    ".fs-weight-light{font-weight:300;}",
+    ".fs-weight-normal{font-weight:400;}",
+    ".fs-weight-medium{font-weight:500;}",
+    ".fs-weight-semibold{font-weight:600;}",
+    ".fs-weight-bold{font-weight:700;}",
+    ".fs-weight-extrabold{font-weight:800;}",
+    ".fs-weight-black{font-weight:900;}",
+    ".fs-heading-size-xs{font-size:1rem;}",
+    ".fs-heading-size-sm{font-size:1.15rem;}",
+    ".fs-heading-size-md{font-size:1.35rem;}",
+    ".fs-heading-size-lg{font-size:1.7rem;}",
+    ".fs-heading-size-xl{font-size:2.15rem;}",
+    ".fs-heading-size-2xl{font-size:2.75rem;}",
+    ".fs-heading-size-3xl{font-size:3.4rem;}",
+    ".fs-heading-size-4xl{font-size:4.35rem;}",
+    ".fs-heading-size-5xl{font-size:5.5rem;}",
+    ".fs-text-size-xs{font-size:.75rem;line-height:1.45;}",
+    ".fs-text-size-sm{font-size:.9rem;line-height:1.55;}",
+    ".fs-text-size-md{font-size:1rem;line-height:1.65;}",
+    ".fs-text-size-lg{font-size:1.1rem;line-height:1.7;}",
+    ".fs-text-size-xl{font-size:1.25rem;line-height:1.75;}",
+    ".fs-text-size-2xl{font-size:1.5rem;line-height:1.45;}",
+    ".fs-text-size-3xl{font-size:1.85rem;line-height:1.35;}",
+    ".fs-text-size-4xl{font-size:2.3rem;line-height:1.25;}",
+    ".fs-text-size-5xl{font-size:3rem;line-height:1.15;}",
+    ".fs-enter-fade{animation:fs-fade-in .35s ease both;}",
+    ".fs-enter-fade-up{animation:fs-fade-up .45s cubic-bezier(.16,1,.3,1) both;}",
+    ".fs-enter-scale-in{animation:fs-scale-in .35s ease both;}",
+    ".fs-enter-slide{animation:fs-slide-in .42s cubic-bezier(.16,1,.3,1) both;}",
+    ".fs-hover-lift{transition:transform .18s ease,box-shadow .18s ease;}",
+    ".fs-hover-lift:hover{transform:translateY(-2px);box-shadow:var(--fs-shadow-glow,var(--fs-shadow-soft));}",
+    ".fs-hover-pulse:hover{animation:fs-pulse 1.2s ease infinite;}",
+    ".fs-loader{display:inline-flex;width:1.1rem;height:1.1rem;border-radius:999px;border:2px solid var(--fs-color-border);border-top-color:var(--fs-color-accent);animation:fs-spin .8s linear infinite;}",
+    ".fs-spacer{flex:1 1 auto;}",
+    "@keyframes fs-fade-in{from{opacity:0}to{opacity:1}}",
+    "@keyframes fs-fade-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}",
+    "@keyframes fs-scale-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}",
+    "@keyframes fs-slide-in{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}",
+    "@keyframes fs-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}",
+    "@keyframes fs-spin{to{transform:rotate(360deg)}}",
+  ];
+
+  for (const key of Object.keys(tokens?.space || {})) {
+    lines.push(`.fs-pad-${key}{padding:var(--fs-space-${key});}`);
+    lines.push(`.fs-gap-${key}{gap:var(--fs-space-${key});}`);
+  }
+  for (const key of Object.keys(tokens?.radius || {})) {
+    lines.push(`.fs-radius-${key}{border-radius:var(--fs-radius-${key});}`);
+  }
+  for (const key of Object.keys(tokens?.shadow || {})) {
+    lines.push(`.fs-shadow-${key}{box-shadow:var(--fs-shadow-${key});}`);
+  }
+  for (let cols = 1; cols <= 12; cols += 1) {
+    lines.push(`.fs-grid-cols-${cols}{--fs-grid-cols:${cols};}`);
   }
   return lines.join("\n");
 }
@@ -285,7 +403,7 @@ export function ensureDesignSystem({ root = process.cwd() } = {}) {
   }
 
   const tokens = readJson(tokenPath, DEFAULT_TOKENS);
-  const css = `:root {\n${toCssVars(tokens.color, "color")}\n${toCssVars(tokens.space, "space")}\n${toCssVars(tokens.radius, "radius")}\n${toCssVars(tokens.shadow, "shadow")}\n}\n\n${utilityRules(tokens)}\n`;
+  const css = `:root {\n${toCssVars(tokens.color, "color")}\n${toCssVars(tokens.space, "space")}\n${toCssVars(tokens.radius, "radius")}\n${toCssVars(tokens.shadow, "shadow")}\n}\n\n${utilityRules(tokens)}\n\n${primitiveRules(tokens)}\n`;
   const current = existsSync(generatedPath) ? readFileSync(generatedPath, "utf8") : null;
   if (current !== css) {
     writeFileSync(generatedPath, css, "utf8");
@@ -294,6 +412,7 @@ export function ensureDesignSystem({ root = process.cwd() } = {}) {
 }
 
 export function validateAppStyles({ root = process.cwd() } = {}) {
+  const tokens = readJson(resolve(root, TOKENS_PATH), DEFAULT_TOKENS);
   const allowlist = new Set(readJson(resolve(root, CLASS_ALLOWLIST_PATH), DEFAULT_CLASS_ALLOWLIST));
   const files = [
     ...walk(resolve(root, "app", "pages")).filter((f) => /\.(fs|js|mjs|cjs)$/.test(f)),
@@ -318,6 +437,7 @@ export function validateAppStyles({ root = process.cwd() } = {}) {
       }
       validateStyleBlockContent(block.content, file, errors);
     }
+    validatePrimitiveMarkup(source, file, tokens, errors);
     const classes = classNamesIn(source);
     for (const cls of classes) {
       if (cls.startsWith("u-")) continue;

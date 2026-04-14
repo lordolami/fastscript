@@ -20,6 +20,7 @@
 - Security defaults include headers, rate limit, and CSRF (can be tuned by env).
 
 ## Styling Guardrails
+- Permanent styling direction is defined in `spec/STYLING_V1_SPEC.md`.
 - Tokens live in `app/design/tokens.json`.
 - Allowed non-utility classes live in `app/design/class-allowlist.json`.
 - Utility classes are `u-*` and generated in `app/styles.generated.css`.
