@@ -241,8 +241,7 @@ export async function runBuild(options = {}) {
     await compileFile(file, out, "browser");
 
     if (isLayoutFile(file, PAGES_DIR)) {
-      const routeMeta = inferRouteMeta(file, PAGES_DIR);
-      if (routeMeta.routePath === "/" && !manifest.layout) manifest.layout = `./${relModule}`;
+      if (!manifest.layout) manifest.layout = `./${relModule}`;
       continue;
     }
 
