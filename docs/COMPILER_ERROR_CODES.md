@@ -30,6 +30,7 @@
 - `FS4105`: Return type mismatch.
 - `FS4106`: Non-callable value invoked.
 - `FS4107`: Invalid operator operand types.
+- `FS4201`: Symbol used outside available runtime context.
 
 ## Modes
 

@@ -1,0 +1,18 @@
+[
+  "header", "header-inner", "logo", "logo-icon", "nav", "nav-link", "active", "search-btn",
+  "container", "hero", "hero-slide", "hero-bg", "hero-overlay", "hero-content", "hero-badge",
+  "hero-title", "hero-meta", "hero-desc", "hero-actions", "hero-controls", "hero-nav-btn",
+  "btn", "btn-primary", "btn-secondary", "section", "section-header", "section-title", "section-link",
+  "anime-grid", "anime-card", "anime-card-poster", "anime-card-overlay", "anime-card-overlay-title",
+  "anime-card-overlay-meta", "anime-card-info", "anime-card-title", "anime-card-meta",
+  "badge", "badge-score", "badge-format", "badge-adult",
+  "page", "page-header", "page-title", "page-subtitle",
+  "anime-details", "anime-banner", "anime-banner-overlay", "anime-details-content",
+  "anime-poster", "anime-info", "anime-title", "anime-title-native", "anime-meta-grid",
+  "anime-meta-item", "meta-label", "meta-value", "anime-actions", "anime-desc",
+  "genre-tags", "genre-tag",
+  "footer", "footer-content", "footer-brand", "footer-desc", "footer-col", "footer-bottom",
+  "search-form", "search-input", "search-empty", "search-results-count",
+  "studios-text", "trailer-container", "characters-grid", "character-item", "character-img", "character-name",
+  "recommendations-grid", "recommendation-link", "recommendation-img", "recommendation-title"
+]

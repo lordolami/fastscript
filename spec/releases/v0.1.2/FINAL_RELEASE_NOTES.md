@@ -20,3 +20,10 @@
 ## Scope
 - Stable scope remains locked to `docs/RELEASE_SCOPE_V1.md`.
 - Non-v1 work remains frozen per `spec/releases/v0.1.2/SCOPE_FREEZE.md`.
+
+## Post-Release v2.0 Ratification References
+- `spec/LANGUAGE_V2_SPEC.md`
+- `spec/V2_0_RATIFICATION_RECORD.md`
+- `spec/V2_0_EXECUTION_TRACKER.md`
+- `spec/V2_0_MIGRATION_PROOF_REPORT.md`
+- `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`

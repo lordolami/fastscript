@@ -87,5 +87,925 @@
       "type-erasure.fs"
     ],
     "formatterIdempotent": true
+  },
+  "v2-array-find-last.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const xs = [1, 2, 3, 4, 5]\nconst a = xs.find((n) => n > 2)\nconst b = xs.findLast((n) => n > 2)\nconst c = xs.findIndex((n) => n > 2)\nconst d = xs.findLastIndex((n) => n > 2)\n\nexport default function ArrayFindLast() {\n  return `${a}:${b}:${c}:${d}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-array-find-last.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-array-iteration.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const xs = [1, 2, 3, 4]\nlet sum = 0\nxs.forEach((n) => { sum = sum + n })\nconst evens = xs.filter((n) => n % 2 === 0)\nconst gt2 = xs.some((n) => n > 2)\nconst allPos = xs.every((n) => n > 0)\n\nexport default function ArrayIteration() {\n  return `${sum}:${evens.length}:${gt2}:${allPos}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-array-iteration.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-array-methods.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const base = [1, 2, 3]\nconst copy = base.slice(0)\ncopy.push(4)\nconst trimmed = copy.filter((n) => n > 1)\nconst mapped = trimmed.map((n) => n * 2)\nconst reduced = mapped.reduce((acc, n) => acc + n, 0)\nconst found = mapped.find((n) => n > 2)\nconst idx = mapped.findIndex((n) => n > 2)\nconst flat = [[1], [2]].flat()\nconst flatMapped = [1, 2].flatMap((n) => [n, n + 10])\n\nexport default function ArrayMethods() {\n  return `${reduced}:${found}:${idx}:${flat.length}:${flatMapped.length}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-array-methods.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-array-mutating.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const xs = [1, 2, 3]\nxs.push(4)\nconst last = xs.pop()\nxs.unshift(0)\nconst first = xs.shift()\nxs.splice(1, 0, 9)\nxs.reverse()\nxs.sort()\nxs.fill(7, 0, 1)\nxs.copyWithin(1, 0, 1)\n\nexport default function ArrayMutating() {\n  return `${first}:${last}:${xs.length}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-array-mutating.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-array-nonmutating.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const base = [1, 2, 3]\nconst conc = base.concat([4, 5])\nconst sl = conc.slice(1, 4)\nconst joined = sl.join(\",\")\nconst txt = sl.toString()\nconst has = sl.includes(3)\nconst i1 = sl.indexOf(3)\nconst i2 = sl.lastIndexOf(3)\n\nexport default function ArrayNonMutating() {\n  return `${joined}:${txt}:${has}:${i1}:${i2}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-array-nonmutating.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-array-reduce-right.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const xs = [1, 2, 3]\nconst left = xs.reduce((acc, n) => acc + n, 0)\nconst right = xs.reduceRight((acc, n) => acc + n, 0)\n\nexport default function ArrayReduceRight() {\n  return `${left}:${right}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-array-reduce-right.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-array-to-locale.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const xs = [1, 2, 3]\nconst txt = xs.toLocaleString()\nconst arr = Array.from(\"abc\")\n\nexport default function ArrayToLocale() {\n  return `${txt}:${arr.length}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-array-to-locale.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-browser-storage-history.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const wloc = window.location\nconst h = window.history\nhistory.pushState({}, \"\", \"/x\")\nhistory.replaceState({}, \"\", \"/y\")\nlocalStorage.setItem(\"k\", \"v\")\nsessionStorage.setItem(\"a\", \"b\")\nconst a = localStorage.getItem(\"k\")\nconst b = sessionStorage.getItem(\"a\")\nwindow.scrollTo(0, 100)\nwindow.scrollBy(0, -50)\n\nexport default function BrowserStorageHistory() {\n  return `${Boolean(wloc)}:${Boolean(h)}:${a}:${b}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-browser-storage-history.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-date-instance.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const d = new Date(\"2025-01-01T00:00:00.000Z\")\nconst y = d.getFullYear()\nconst m = d.getMonth()\nconst day = d.getDate()\nconst ms = d.getTime()\nconst iso = d.toISOString()\nd.setUTCSeconds(10)\n\nexport default function DateInstance() {\n  return `${y}:${m}:${day}:${ms}:${iso}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-date-instance.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-date-promise.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const now = Date.now()\nconst parsed = Date.parse(\"2025-01-01T00:00:00.000Z\")\nconst utc = Date.UTC(2025, 0, 1)\nconst p1 = Promise.resolve(1)\nconst p2 = Promise.resolve(\"x\")\nconst all = Promise.all([p1, p2])\nconst race = Promise.race([p1, p2])\n\nexport default function DatePromise() {\n  return `${now + parsed + utc}:${String(Boolean(all && race))}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-date-promise.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-date-utc-getters.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const d = new Date(\"2025-01-01T00:00:00.000Z\")\nconst y = d.getUTCFullYear()\nconst m = d.getUTCMonth()\nconst dd = d.getUTCDate()\nconst h = d.getUTCHours()\n\nexport default function DateUtcGetters() {\n  return `${y}:${m}:${dd}:${h}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-date-utc-getters.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-dom-patterns.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const node = document.querySelector(\"#app\")\nconst many = document.querySelectorAll(\".item\")\nconst byId = document.getElementById(\"root\")\nconst href = location.href\nwindow.addEventListener(\"click\", (event) => {\n  const target = event?.target\n  if (target?.closest) {\n    const btn = target.closest(\"button\")\n    if (btn) btn.setAttribute(\"data-seen\", \"1\")\n  }\n})\nhistory.pushState({}, \"\", \"/docs\")\nlocalStorage.setItem(\"x\", \"1\")\nconst stored = localStorage.getItem(\"x\")\n\nexport default function DomPatternsFixture() {\n  return `${Boolean(node)}:${many.length}:${Boolean(byId)}:${href}:${stored}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-dom-patterns.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-error-regexp.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const err = new Error(\"boom\")\nconst rex = new RegExp(\"a\", \"g\")\nconst tested = rex.test(\"abc\")\nconst executed = rex.exec(\"abc\")\n\nexport default function ErrorRegExp() {\n  return `${err.message}:${tested}:${Boolean(executed)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-error-regexp.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-error-variants.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const e1 = new TypeError(\"a\")\nconst e2 = new ReferenceError(\"b\")\nconst e3 = new SyntaxError(\"c\")\nconst e4 = new RangeError(\"d\")\n\nexport default function ErrorVariants() {\n  return `${e1.message}:${e2.message}:${e3.message}:${e4.message}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-error-variants.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-formdata-headers.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const headers = new Headers()\nheaders.set(\"x-k\", \"v\")\nconst val = headers.get(\"x-k\")\nconst form = new FormData()\nform.append(\"name\", \"fs\")\nform.set(\"name\", \"fastscript\")\nconst has = form.has(\"name\")\nconst got = form.get(\"name\")\nconst all = form.getAll(\"name\")\n\nexport default function FormHeaders() {\n  return `${val}:${has}:${got}:${all.length}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-formdata-headers.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-guard-nullability.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "FunctionDeclaration",
+      "FunctionDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "function pick(value) {\n  if (typeof value === \"string\") return value.toUpperCase()\n  if (Array.isArray(value)) return value.length\n  return null\n}\n\nfunction nameOf(user) {\n  return user?.name ?? \"Unknown\"\n}\n\nconst a = pick(\"abc\")\nconst b = pick([1, 2, 3])\nconst c = nameOf({ name: \"FastScript\" })\n\nexport default function GuardNullability() {\n  return `${a}:${b}:${c}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-guard-nullability.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-hof-inference.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "FunctionDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "function twice(fn) {\n  return (x) => fn(fn(x))\n}\n\nconst addTwo = (n) => n + 2\nconst addFour = twice(addTwo)\nconst out = addFour(5)\n\nexport default function HofInference() {\n  return `${out}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-hof-inference.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-inference-patterns.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "FunctionDeclaration",
+      "FunctionDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const user = { name: \"A\", age: 20 }\nconst { name, age } = user\nconst [first, second] = [1, 2]\nconst doubled = [1, 2, 3].map((n) => n * 2)\nconst total = doubled.reduce((acc, n) => acc + n, 0)\n\nfunction pick(v) {\n  if (typeof v === \"string\") return v.toUpperCase()\n  if (Array.isArray(v)) return v.length\n  return null\n}\n\nfunction twice(fn) {\n  return (x) => fn(fn(x))\n}\nconst addTwo = (n) => n + 2\nconst addFour = twice(addTwo)\nconst out = addFour(5)\n\nexport default function InferencePatternsFixture() {\n  return `${name}:${age}:${first + second}:${total}:${pick(\"x\")}:${out}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-inference-patterns.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-intl-encoding.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const dtf = new Intl.DateTimeFormat(\"en-US\")\nconst nf = new Intl.NumberFormat(\"en-US\")\nconst enc = new TextEncoder()\nconst dec = new TextDecoder()\nconst bytes = enc.encode(\"hello\")\nconst text = dec.decode(bytes)\n\nexport default function IntlEncoding() {\n  return `${Boolean(dtf)}:${Boolean(nf)}:${text}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-intl-encoding.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-intl-more.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const c = new Intl.Collator(\"en\")\nconst pr = new Intl.PluralRules(\"en\")\nconst rf = new Intl.RelativeTimeFormat(\"en\")\nconst lf = new Intl.ListFormat(\"en\")\nconst loc = new Intl.Locale(\"en-US\")\n\nexport default function IntlMore() {\n  return `${Boolean(c)}:${Boolean(pr)}:${Boolean(rf)}:${Boolean(lf)}:${Boolean(loc)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-intl-more.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-map-iteration.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const m = new Map([[\"a\", 1], [\"b\", 2]])\nconst e = m.entries()\nconst k = m.keys()\nconst v = m.values()\nm.forEach((val) => val)\n\nexport default function MapIteration() {\n  return `${Boolean(e)}:${Boolean(k)}:${Boolean(v)}:${m.size}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-map-iteration.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-math-surface.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const a = Math.abs(-2)\nconst b = Math.min(1, 2)\nconst c = Math.max(1, 2)\nconst d = Math.pow(2, 3)\nconst e = Math.sqrt(16)\n\nexport default function MathSurface() {\n  return `${a}:${b}:${c}:${d}:${e}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-math-surface.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-number-constants.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const e = Number.EPSILON\nconst max = Number.MAX_SAFE_INTEGER\nconst min = Number.MIN_SAFE_INTEGER\nconst nan = Number.NaN\n\nexport default function NumberConstants() {\n  return `${Boolean(e)}:${Boolean(max)}:${Boolean(min)}:${Number.isNaN(nan)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-number-constants.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-object-create-define.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const base = { z: 1 }\nconst made = Object.create(base)\nObject.defineProperty(made, \"a\", { value: 1, enumerable: true })\nObject.defineProperties(made, { b: { value: 2, enumerable: true } })\n\nexport default function ObjectCreateDefine() {\n  return `${made.a}:${made.b}:${Boolean(made)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-object-create-define.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-object-freeze-seal.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const row = { a: 1 }\nObject.freeze(row)\nObject.seal(row)\nObject.preventExtensions(row)\nconst a = Object.isFrozen(row)\nconst b = Object.isSealed(row)\nconst c = Object.isExtensible(row)\n\nexport default function ObjectFreezeSeal() {\n  return `${a}:${b}:${c}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-object-freeze-seal.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-object-introspection.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const row = { a: 1, b: 2 }\nconst proto = Object.getPrototypeOf(row)\nObject.setPrototypeOf(row, proto)\nconst desc = Object.getOwnPropertyDescriptor(row, \"a\")\nconst descs = Object.getOwnPropertyDescriptors(row)\nconst names = Object.getOwnPropertyNames(row)\nconst frozen = Object.isFrozen(row)\nconst sealed = Object.isSealed(row)\nconst extensible = Object.isExtensible(row)\n\nexport default function ObjectIntrospection() {\n  return `${Boolean(desc)}:${Boolean(descs)}:${names.length}:${frozen}:${sealed}:${extensible}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-object-introspection.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-object-methods.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const row = { a: 1, b: 2 }\nconst keys = Object.keys(row)\nconst values = Object.values(row)\nconst entries = Object.entries(row)\nconst merged = Object.assign({}, row, { c: 3 })\nconst fromEntries = Object.fromEntries(entries)\nconst hasA = Object.hasOwn(row, \"a\")\n\nexport default function ObjectMethods() {\n  return `${keys.length}:${values.length}:${entries.length}:${merged.c}:${fromEntries.a}:${hasA}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-object-methods.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-promise-instance.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const p = Promise.resolve(1)\nconst a = p.then((n) => n + 1)\nconst b = a.catch((e) => e)\nconst c = b.finally(() => \"done\")\n\nexport default function PromiseInstance() {\n  return `${Boolean(c)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-promise-instance.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-promise-variants.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const a = Promise.resolve(1)\nconst b = Promise.resolve(2)\nconst all = Promise.all([a, b])\nconst settled = Promise.allSettled([a, b])\nconst any = Promise.any([a, b])\nconst race = Promise.race([a, b])\nconst rej = Promise.reject(new Error(\"x\")).catch((e) => e?.message || \"err\")\n\nexport default function PromiseVariants() {\n  return `${Boolean(all)}:${Boolean(settled)}:${Boolean(any)}:${Boolean(race)}:${Boolean(rej)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-promise-variants.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-regexp-props.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const re = new RegExp(\"ab\", \"gi\")\nconst source = re.source\nconst flags = re.flags\nconst global = re.global\nconst ignore = re.ignoreCase\nconst multi = re.multiline\nconst ok = re.test(\"xxabyy\")\n\nexport default function RegExpProps() {\n  return `${source}:${flags}:${global}:${ignore}:${multi}:${ok}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-regexp-props.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-regexp-tostring.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const r = /abc/gi\nconst txt = r.toString()\nconst src = r.source\nconst flg = r.flags\n\nexport default function RegExpToString() {\n  return `${txt}:${src}:${flg}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-regexp-tostring.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-runtime-contexts.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const g = globalThis\nconst r = new Request(\"https://example.com\")\nconst h = new Headers()\nh.set(\"x-test\", \"1\")\nconst f = new FormData()\nf.append(\"k\", \"v\")\nconst c = new AbortController()\nconst sig = c.signal\nconst tm = setTimeout(() => \"ok\", 1)\nclearTimeout(tm)\n\nexport default function RuntimeContextsFixture() {\n  return `${Boolean(g)}:${Boolean(r)}:${h.get(\"x-test\")}:${f.get(\"k\")}:${Boolean(sig)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-runtime-contexts.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-runtime-globals.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const g = globalThis\nconst headers = new Headers()\nheaders.set(\"x-fastscript\", \"1\")\nconst form = new FormData()\nform.append(\"hello\", \"world\")\nconst timer = setTimeout(() => \"ok\", 1)\nclearTimeout(timer)\n\nexport default function RuntimeGlobals() {\n  const envName = process?.env?.NODE_ENV || \"unknown\"\n  return `${Boolean(g)}:${headers.get(\"x-fastscript\")}:${envName}:${form.get(\"hello\")}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-runtime-globals.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-set-iteration.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const s = new Set([1, 2, 3])\nconst entries = s.entries()\nconst keys = s.keys()\nconst values = s.values()\ns.forEach((v) => v)\n\nexport default function SetIteration() {\n  return `${Boolean(entries)}:${Boolean(keys)}:${Boolean(values)}:${s.size}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-set-iteration.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-set-map.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const set = new Set([1, 2, 3])\nset.add(4)\nconst hasTwo = set.has(2)\nconst map = new Map([[\"a\", 1]])\nmap.set(\"b\", 2)\nconst val = map.get(\"a\")\n\nexport default function SetMap() {\n  return `${hasTwo}:${val}:${set.size}:${map.size}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-set-map.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-stdlib-surface.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const nums = Array.from([1, 2, 3])\nconst isList = Array.isArray(nums)\nconst entries = Object.entries({ a: 1, b: 2 })\nconst joined = JSON.stringify({ nums, isList, entries })\nconst parsed = JSON.parse(joined)\nconst now = Date.now()\nconst biggest = Math.max(now, 0)\nconst waitAll = Promise.all([Promise.resolve(1), Promise.resolve(2)])\n\nexport default function StdlibSurface() {\n  return `${biggest}:${parsed?.nums?.length}:${String(waitAll)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-stdlib-surface.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-string-codepoints.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const a = String.fromCharCode(65)\nconst b = String.fromCodePoint(0x1F600)\nconst c = \"abc\".charCodeAt(0)\nconst d = \"abc\".codePointAt(0)\n\nexport default function StringCodePoints() {\n  return `${a}:${Boolean(b)}:${c}:${d}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-string-codepoints.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-string-number-methods.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const raw = \" Hello FastScript \"\nconst normalized = raw.trim().toUpperCase()\nconst starts = normalized.startsWith(\"HELLO\")\nconst split = normalized.split(\" \")\nconst finite = Number.isFinite(10)\nconst parsedF = Number.parseFloat(\"10.5\")\nconst parsedI = Number.parseInt(\"20\")\n\nexport default function StringNumberMethods() {\n  return `${normalized}:${starts}:${split.length}:${finite}:${parsedF + parsedI}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-string-number-methods.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-string-padding-repeat.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const s = \"x\"\nconst a = s.padStart(3, \"0\")\nconst b = s.padEnd(3, \"0\")\nconst c = s.repeat(3)\n\nexport default function StringPaddingRepeat() {\n  return `${a}:${b}:${c}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-string-padding-repeat.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-string-search-replace.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const s = \"fastscript fastscript\"\nconst r1 = s.replace(\"fast\", \"FAST\")\nconst r2 = s.replaceAll(\"script\", \"SCRIPT\")\nconst i = s.search(\"script\")\nconst m = s.match(\"fast\")\n\nexport default function StringSearchReplace() {\n  return `${r1}:${r2}:${i}:${Boolean(m)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-string-search-replace.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-textdecoder-options.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const bytes = new TextEncoder().encode(\"fastscript\")\nconst dec = new TextDecoder(\"utf-8\", { fatal: false, ignoreBOM: true })\nconst txt = dec.decode(bytes)\n\nexport default function TextDecoderOptions() {\n  return `${txt}:${dec.encoding}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-textdecoder-options.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-timers-microtask.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const id1 = setTimeout(() => \"x\", 10)\nclearTimeout(id1)\nconst id2 = setInterval(() => \"y\", 20)\nclearInterval(id2)\nqueueMicrotask(() => \"z\")\n\nexport default function TimersMicrotask() {\n  return `${id1}:${id2}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-timers-microtask.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-url-and-searchparams.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const url = new URL(\"https://example.com/path?a=1\")\nconst sp = new URLSearchParams(url.search)\nsp.set(\"a\", \"2\")\nconst query = sp.toString()\nconst href = url.toString()\n\nexport default function UrlParams() {\n  return `${href}:${query}:${url.pathname}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-url-and-searchparams.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-url-props.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const u = new URL(\"https://user:pass@example.com:443/a/b?x=1#h\")\nconst p = u.protocol\nconst host = u.host\nconst path = u.pathname\nconst search = u.search\nconst hash = u.hash\nconst json = u.toJSON()\n\nexport default function UrlProps() {\n  return `${p}:${host}:${path}:${search}:${hash}:${json}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-url-props.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-url-static.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const blob = new Blob([\"hello\"])\nconst id = URL.createObjectURL(blob)\nURL.revokeObjectURL(id)\n\nexport default function UrlStatic() {\n  return `${Boolean(id)}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-url-static.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "v2-urlsearchparams-iter.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExpressionStatement",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "const p = new URLSearchParams(\"a=1&b=2\")\nconst e = p.entries()\nconst k = p.keys()\nconst v = p.values()\np.sort()\n\nexport default function UrlSearchParamsIter() {\n  return `${Boolean(e)}:${Boolean(k)}:${Boolean(v)}:${p.toString()}`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "v2-urlsearchparams-iter.fs"
+    ],
+    "formatterIdempotent": true
   }
 }

@@ -7,6 +7,12 @@
   - AST-based formatter and linter with idempotence and safe autofixes
   - formal language spec and governance/versioning policy
   - conformance fixtures + snapshot regression harness + CI language gates
+- FastScript Language v2.0 ratification artifacts published:
+  - `spec/LANGUAGE_V2_SPEC.md` (status: `ratified`, version: `2.0.0`)
+  - `spec/V2_0_RATIFICATION_RECORD.md`
+  - `spec/V2_0_EXECUTION_TRACKER.md`
+  - `spec/V2_0_MIGRATION_PROOF_REPORT.md`
+  - `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`
 
 ## v0.1.0 - 2026-04-13
 - FastScript JS-first full-stack core
