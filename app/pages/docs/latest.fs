@@ -9,6 +9,16 @@ export default function DocsLatest() {
 
       <div class="docs-card-grid">
         <div class="docs-card">
+          <p class="docs-card-title">Repo install + npm link</p>
+          <p class="docs-card-copy">Today the cleanest developer flow is repo-first: clone FastScript, run npm install, then npm link for a global CLI backed by your local checkout.</p>
+          <a class="docs-card-link" href="/learn">Open install flow &#8594;</a>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Styling primitives</p>
+          <p class="docs-card-copy">Box, Stack, Row, Text, Heading, Button, semantic spacing, tones, surfaces, and generated primitive CSS now form the permanent styling direction.</p>
+          <a class="docs-card-link" href="/docs/primitives">Read primitive guide &#8594;</a>
+        </div>
+        <div class="docs-card">
           <p class="docs-card-title">v1.1 additions</p>
           <p class="docs-card-copy">Route priority sorting, loader data type inference, and expanded deploy adapter hardening.</p>
           <a class="docs-card-link" href="/docs/v1.1">Open v1.1 &#8594;</a>

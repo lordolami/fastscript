@@ -1,12 +1,12 @@
 const STEPS = [{
   n: "01",
   title: "Install FastScript",
-  copy: "Install the compiler and CLI globally once. Works on Node 20+.",
-  cmd: "npm install -g fastscript-lang"
+  copy: "Clone the repo, install dependencies, and optionally link the CLI globally from your local checkout. Works on Node 20+.",
+  cmd: "git clone https://github.com/lordolami/fastscript.git\ncd fastscript\nnpm install\nnpm link"
 }, {
   n: "02",
   title: "Create a project",
-  copy: "Bootstrap with pages, APIs, DB migrations, middleware, and docs routing pre-wired.",
+  copy: "Bootstrap with pages, APIs, DB migrations, middleware, and the new styling primitives already wired.",
   cmd: "fastscript create my-startup"
 }, {
   n: "03",
@@ -16,12 +16,12 @@ const STEPS = [{
 }, {
   n: "04",
   title: "Add product logic",
-  copy: "Build route loaders, API handlers, queue workers, and storage workflows in .fs. Everything shares one context object.",
-  cmd: "app/pages/*.fs\napp/api/*.fs\napp/db/migrations/*.fs"
+  copy: "Build route loaders, API handlers, queue workers, storage workflows, and UI primitives in .fs. Everything shares one context object.",
+  cmd: "app/pages/*.fs\napp/api/*.fs\napp/db/migrations/*.fs\n<Stack> <Row> <Text> <Button>"
 }, {
   n: "05",
   title: "Quality gate + deploy",
-  copy: "One command runs the full health check — lint, typecheck, tests, smoke, benchmarks. Then generate a deploy adapter.",
+  copy: "One command runs the full health check - lint, typecheck, tests, smoke, benchmarks. Then generate a deploy adapter.",
   cmd: "npm run qa:all\nfastscript deploy --target cloudflare"
 }];
 const NEXT = [{
@@ -29,6 +29,11 @@ const NEXT = [{
   copy: "Use inferred route param and loader data types to remove runtime guesswork on every page.",
   href: "/docs/v1.1",
   cta: "Read routing deep-dive"
+}, {
+  title: "Styling primitives",
+  copy: "Use Box, Stack, Row, Heading, Text, Button, and token-backed semantic props instead of raw CSS trivia.",
+  href: "/docs/primitives",
+  cta: "Open primitive guide"
 }, {
   title: "Interop expansion",
   copy: "Bring existing npm packages and framework APIs while keeping .fs as your app source of truth.",

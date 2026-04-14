@@ -1,7 +1,11 @@
 const EXAMPLES = [{
   title: "Startup MVP",
-  copy: "Commerce starter with SSR pages, checkout API, queue jobs for receipts, and dashboard routes with auth gate.",
+  copy: "Commerce starter with SSR pages, checkout API, queue jobs for receipts, dashboard routes with auth gate, and primitive-first UI.",
   tags: ["Full-stack", "Payments", "Queue"]
+}, {
+  title: "Primitive UI starter",
+  copy: "Box, Stack, Row, Text, Heading, Button, token-backed semantic props, and generated primitive CSS from the first commit.",
+  tags: ["Primitives", "UI", "Starter"]
 }, {
   title: "Internal ops dashboard",
   copy: "Typed route loaders, filtered data tables, and auth middleware for internal tooling at scale.",
@@ -37,12 +41,13 @@ export default function ExamplesPage() {
       <header class="sec-header">
         <p class="kicker">Example blueprints</p>
         <h1 class="h1">Battle-tested patterns built in .fs.</h1>
-        <p class="lead">These blueprints map directly to production concerns — auth, data integrity, observability, and shipping speed. Not toy samples.</p>
+        <p class="lead">These blueprints map directly to production concerns - auth, data integrity, observability, and shipping speed. Not toy samples.</p>
       </header>
 
       <div class="card-grid-3">${cards}</div>
 
       <div class="action-row">
+        <a class="btn btn-secondary btn-lg" href="/docs/primitives">Read primitive guide</a>
         <a class="btn btn-primary btn-lg" href="/docs">Open architecture docs</a>
         <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript/tree/master/examples" target="_blank" rel="noreferrer">Browse repo examples</a>
       </div>

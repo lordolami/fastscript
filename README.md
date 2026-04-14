@@ -61,9 +61,27 @@ See:
 
 ## Install
 
+FastScript currently ships best as a repo-first toolchain while the protected core remains split from the public shell.
+
+### Option 1: local repo workflow
+
 ```bash
+git clone https://github.com/lordolami/fastscript.git
+cd fastscript
 npm install
 ```
+
+### Option 2: global CLI link for daily use
+
+```bash
+git clone https://github.com/lordolami/fastscript.git
+cd fastscript
+npm install
+npm link
+fastscript --help
+```
+
+This gives you a global `fastscript` command backed by your local clone.
 
 To use the CLI directly during development:
 
@@ -96,6 +114,13 @@ npm run create:startup-mvp
 
 ```bash
 npm run dev
+```
+
+### Link the CLI globally from your clone
+
+```bash
+npm link
+fastscript create my-app
 ```
 
 ### Build for production
@@ -502,6 +527,7 @@ That roadmap is tracked in:
 Key docs in this repo:
 
 - `spec/LANGUAGE_V1_SPEC.md`
+- `spec/STYLING_V1_SPEC.md`
 - `docs/GOVERNANCE_VERSIONING_POLICY.md`
 - `docs/LANGUAGE_V1_MIGRATION.md`
 - `docs/COMPILER_ERROR_CODES.md`

@@ -16,6 +16,9 @@ const SECTIONS = [{
     label: "Quickstart",
     href: "/learn"
   }, {
+    label: "Styling primitives",
+    href: "/docs/primitives"
+  }, {
     label: "Deploy guide",
     href: "/docs/latest"
   }, {
@@ -48,9 +51,14 @@ const CARDS = [{
   cta: "Read spec"
 }, {
   title: "Quickstart",
-  copy: "Install, create, build, and deploy a FastScript app in 15 minutes.",
+  copy: "Clone, install, link the CLI, create, build, and deploy a FastScript app in 15 minutes.",
   href: "/learn",
   cta: "Get started"
+}, {
+  title: "Styling primitives",
+  copy: "Primitive-first UI authoring with Box, Stack, Row, Text, Heading, Button, semantic props, and token-backed variants.",
+  href: "/docs/primitives",
+  cta: "Learn primitives"
 }, {
   title: "Playground",
   copy: "Try FastScript syntax, see compiled output, and explore diagnostic messages in the browser.",
