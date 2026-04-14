@@ -261,4 +261,3 @@ export function hydrate() {
     document.querySelectorAll(".reveal-children").forEach(el => el.classList.add("revealed-children"));
   }
 }
-
