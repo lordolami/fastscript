@@ -283,6 +283,7 @@ ul, ol { list-style: none; }
   color: var(--c-muted);
   max-width: 54ch;
   line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 
 .body-copy {
@@ -309,6 +310,7 @@ ul, ol { list-style: none; }
   max-width: 56ch;
   line-height: 1.7;
   margin-top: 16px;
+  overflow-wrap: anywhere;
 }
 
 /* ─── PROSE ──────────────────────────────────────────────────────── */
@@ -624,6 +626,7 @@ ul, ol { list-style: none; }
   max-width: 50ch;
   line-height: 1.75;
   margin-bottom: 36px;
+  overflow-wrap: anywhere;
 }
 
 .hero-actions {
@@ -959,6 +962,16 @@ ul, ol { list-style: none; }
   -webkit-overflow-scrolling: touch;
 }
 
+.compare-table-3 .compare-header,
+.compare-table-3 .compare-row {
+  grid-template-columns: minmax(180px, 1.35fr) minmax(120px, 0.85fr) minmax(180px, 1.4fr);
+}
+
+.compare-table-4 .compare-header,
+.compare-table-4 .compare-row {
+  grid-template-columns: minmax(180px, 1.5fr) repeat(3, minmax(120px, 1fr));
+}
+
 .compare-header {
   display: grid;
   grid-template-columns: 1.5fr repeat(3, 1fr);
@@ -1176,6 +1189,7 @@ ul, ol { list-style: none; }
   font-size: 0.875rem;
   color: var(--c-muted);
   line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 
 .list-item-arrow {
@@ -1715,6 +1729,7 @@ ul, ol { list-style: none; }
   color: var(--c-dim);
   max-width: 36ch;
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
 .footer-links {
@@ -1758,6 +1773,7 @@ ul, ol { list-style: none; }
 .footer-bottom-links {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .footer-bottom-link {
@@ -1863,7 +1879,8 @@ ul, ol { list-style: none; }
   .nav-links { display: none; }
   .menu-toggle { display: grid; }
   .split-section { grid-template-columns: 1fr; }
-  .compare-header, .compare-row { grid-template-columns: 1.5fr 1fr 1fr; }
+  .compare-table-4 .compare-header,
+  .compare-table-4 .compare-row { grid-template-columns: minmax(180px, 1.35fr) repeat(3, minmax(112px, 1fr)); }
   .hero-inner { grid-template-columns: 1fr; }
   .hero-right { display: none; }
   .home-compare { overflow: visible; }
@@ -1905,7 +1922,10 @@ ul, ol { list-style: none; }
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x pan-y pinch-zoom;
   }
-  .compare-header, .compare-row { min-width: 580px; }
+  .compare-table-3 .compare-header,
+  .compare-table-3 .compare-row { min-width: 480px; }
+  .compare-table-4 .compare-header,
+  .compare-table-4 .compare-row { min-width: 640px; }
   .playground-wrap,
   .code-block-body,
   .post-body pre,
@@ -1928,6 +1948,16 @@ ul, ol { list-style: none; }
   }
   .cta-block { padding: 48px 20px; }
   .cta-title { font-size: clamp(1.5rem, 6vw, 2.25rem); }
+  .rfc-item { grid-template-columns: 1fr; gap: 10px; }
+  .rfc-item-status { justify-self: start; }
+  .contact-card,
+  .story-cell,
+  .team-cell,
+  .docs-card,
+  .feature-cell,
+  .how-cell,
+  .blog-card,
+  .product-card { padding: 24px; }
 }
 
 /* ── 520px small mobile ── */
@@ -1943,6 +1973,63 @@ ul, ol { list-style: none; }
   .mobile-panel { padding-left: 12px; padding-right: 12px; }
   .bento-cell { padding: 20px; }
   .feature-cell { padding: 20px; }
+  .brand-ver { display: none; }
+  .playground-head,
+  .playground-actions,
+  .filter-row,
+  .tag-row {
+    overflow: visible;
+    flex-wrap: wrap;
+  }
+  .pg-example-row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .playground-note {
+    margin-left: 0;
+    width: 100%;
+  }
+  .filter-input {
+    flex: 1 1 100%;
+    max-width: none;
+    min-width: 0;
+  }
+  .filter-row .btn {
+    flex: 1 1 calc(50% - 8px);
+    justify-content: center;
+  }
+  .action-row,
+  .cta-actions {
+    align-items: stretch;
+  }
+  .action-row .btn,
+  .cta-actions .btn,
+  .contact-card .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .footer-bottom-links {
+    width: 100%;
+    gap: 12px;
+  }
+  .footer-bottom-link,
+  .footer-copyright,
+  .prose-link {
+    overflow-wrap: anywhere;
+  }
+  .story-cell,
+  .team-cell,
+  .blog-card,
+  .docs-card,
+  .contact-card,
+  .how-cell,
+  .product-card,
+  .feature-cell,
+  .split-cell,
+  .license-block {
+    padding: 20px;
+  }
 }
 
 /* ── 380px extra-small (iPhone SE, Galaxy A) ── */

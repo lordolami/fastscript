@@ -8,7 +8,7 @@ export default function Security() {
 
     <div class="prose-section reveal">
       <h2 class="h2">Supported versions</h2>
-      <div class="compare-table">
+      <div class="compare-table compare-table-3">
         <div class="compare-header">
           <div class="compare-col-head">Version</div>
           <div class="compare-col-head is-ours">Security fixes</div>

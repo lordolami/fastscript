@@ -8,7 +8,7 @@ export default function Privacy() {
 
     <div class="prose-section reveal">
       <h2 class="h2">What we collect</h2>
-      <div class="compare-table">
+      <div class="compare-table compare-table-3">
         <div class="compare-header">
           <div class="compare-col-head">Data</div>
           <div class="compare-col-head is-ours">Collected?</div>

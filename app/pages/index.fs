@@ -344,7 +344,7 @@ export default function Home() {
         <p class="kicker">Why FastScript</p>
         <h2 class="h2">Less stack, more product.</h2>
       </header>
-      <div class="compare-table">
+      <div class="compare-table compare-table-4">
         <div class="compare-header">
           <div class="compare-col-head">Feature</div>
           <div class="compare-col-head is-ours">FastScript</div>

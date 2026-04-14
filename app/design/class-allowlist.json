@@ -23,7 +23,7 @@
   "bento", "bento-cell", "bento-wide", "bento-narrow", "bento-half", "bento-third",
   "bento-quarter", "bento-full", "bento-bt", "bento-label", "bento-num", "bento-num-sub",
   "bento-copy", "bento-title", "bento-title-lg",
-  "compare-table", "compare-header", "compare-col-head", "compare-row", "compare-cell",
+  "compare-table", "compare-table-3", "compare-table-4", "compare-header", "compare-col-head", "compare-row", "compare-cell",
   "is-label", "is-ours", "check", "cross", "partial",
   "bar-chart", "bar-row", "bar-label", "bar-track", "bar-fill", "bar-value",
   "bar-w-2", "bar-w-6", "bar-w-16", "bar-w-63", "bar-w-100",

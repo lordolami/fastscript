@@ -86,7 +86,7 @@ export default function Benchmarks() {
         <h2 class="h2">13/13 ESM, CJS, .fs combinations passing.</h2>
       </header>
 
-      <div class="compare-table">
+      <div class="compare-table compare-table-4">
         <div class="compare-header">
           <div class="compare-col-head">Combination</div>
           <div class="compare-col-head is-ours">Status</div>

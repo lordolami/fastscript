@@ -30,7 +30,7 @@ export default function DocsInterop() {
           <p class="kicker">Interop matrix</p>
           <h2 class="h2">Current guaranteed lanes.</h2>
         </header>
-        <div class="compare-table">
+        <div class="compare-table compare-table-3">
           <div class="compare-header">
             <div class="compare-col-head">Case</div>
             <div class="compare-col-head is-ours">Status</div>
