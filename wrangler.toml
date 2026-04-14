@@ -1,3 +1,9 @@
-﻿name = "fastscript-web"
-pages_build_output_dir = "dist"
-compatibility_date = "2026-01-01"
+name = "fastscript-app"
+main = "dist/worker.js"
+compatibility_date = "2026-04-14"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[assets]
+directory = "dist"
+binding = "ASSETS"

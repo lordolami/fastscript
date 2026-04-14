@@ -3,8 +3,8 @@
 ## Runtime Targets
 - Node HTTP runtime: supported
 - PM2 process manager: supported
-- Vercel adapter: starter/experimental
-- Cloudflare adapter: starter/experimental
+- Vercel adapter: supported (catch-all SSR/API)
+- Cloudflare adapter: supported (worker SSR/API + static assets)
 
 ## Language Surface
 - `.fs` files with `~state`, `state`, `fn`: supported

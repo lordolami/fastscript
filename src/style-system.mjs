@@ -46,6 +46,38 @@ const DEFAULT_CLASS_ALLOWLIST = [
   "grid",
 ];
 
+const ALLOWED_STYLE_PROPERTIES = new Set([
+  "padding",
+  "margin",
+  "gap",
+  "top",
+  "right",
+  "bottom",
+  "left",
+  "bg",
+  "text",
+  "border",
+  "size",
+  "weight",
+  "display",
+  "direction",
+  "align",
+  "justify",
+]);
+
+const SPACING_PROPS = new Set(["padding", "margin", "gap", "top", "right", "bottom", "left"]);
+const COLOR_PROPS = new Set(["bg", "text", "border"]);
+const ALLOWED_SPACING_VALUES = new Set(Array.from({ length: 14 }, (_, i) => String(i)));
+const ALLOWED_COLOR_NAMES = new Set(["primary", "secondary", "accent", "neutral", "success", "warning", "error"]);
+const ALLOWED_COLOR_SHADES = new Set(["50", "100", "200", "300", "400", "500", "600", "700", "800", "900"]);
+const ALLOWED_TEXT_SIZES = new Set(["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"]);
+const ALLOWED_FONT_WEIGHTS = new Set(["thin", "light", "normal", "medium", "semibold", "bold", "extrabold", "black"]);
+const ALLOWED_DISPLAYS = new Set(["flex", "grid", "block", "inline", "inline-block", "none"]);
+const ALLOWED_DIRECTIONS = new Set(["row", "column"]);
+const ALLOWED_ALIGN = new Set(["start", "center", "end", "stretch"]);
+const ALLOWED_JUSTIFY = new Set(["start", "center", "end", "between", "around"]);
+const ALLOWED_BREAKPOINTS = new Set(["sm", "md", "lg", "xl"]);
+
 function walk(dir) {
   const out = [];
   if (!existsSync(dir)) return out;
@@ -104,6 +136,140 @@ function classNamesIn(source) {
   return out;
 }
 
+function extractStyleBlocks(source) {
+  const blocks = [];
+  const text = String(source || "");
+  const matcher = /\bstyle\s*\{/g;
+  let match = null;
+  while ((match = matcher.exec(text)) !== null) {
+    const open = text.indexOf("{", match.index);
+    if (open < 0) continue;
+    let depth = 0;
+    let close = -1;
+    for (let i = open; i < text.length; i += 1) {
+      const ch = text[i];
+      if (ch === "{") depth += 1;
+      else if (ch === "}") {
+        depth -= 1;
+        if (depth === 0) {
+          close = i;
+          break;
+        }
+      }
+    }
+    if (close < 0) {
+      blocks.push({ content: text.slice(open + 1), broken: true });
+      continue;
+    }
+    blocks.push({ content: text.slice(open + 1, close), broken: false });
+    matcher.lastIndex = close + 1;
+  }
+  return blocks;
+}
+
+function validateStyleDeclaration(prop, value, file, errors) {
+  const key = String(prop || "").trim();
+  const raw = String(value || "").trim();
+  if (!ALLOWED_STYLE_PROPERTIES.has(key)) {
+    errors.push(`${file}: style block uses unsupported property "${key}"`);
+    return;
+  }
+
+  if (SPACING_PROPS.has(key)) {
+    if (!ALLOWED_SPACING_VALUES.has(raw)) {
+      errors.push(`${file}: style "${key}" must be one of 0..13 (got "${raw}")`);
+    }
+    return;
+  }
+
+  if (COLOR_PROPS.has(key)) {
+    const m = /^([a-z]+)-(\d{2,3})$/.exec(raw);
+    if (!m || !ALLOWED_COLOR_NAMES.has(m[1]) || !ALLOWED_COLOR_SHADES.has(m[2])) {
+      errors.push(`${file}: style "${key}" must match {color}-{shade} using approved tokens (got "${raw}")`);
+    }
+    return;
+  }
+
+  if (key === "size" && !ALLOWED_TEXT_SIZES.has(raw)) {
+    errors.push(`${file}: style "size" must be one of ${[...ALLOWED_TEXT_SIZES].join(", ")} (got "${raw}")`);
+    return;
+  }
+  if (key === "weight" && !ALLOWED_FONT_WEIGHTS.has(raw)) {
+    errors.push(`${file}: style "weight" must be one of ${[...ALLOWED_FONT_WEIGHTS].join(", ")} (got "${raw}")`);
+    return;
+  }
+  if (key === "display" && !ALLOWED_DISPLAYS.has(raw)) {
+    errors.push(`${file}: style "display" must be one of ${[...ALLOWED_DISPLAYS].join(", ")} (got "${raw}")`);
+    return;
+  }
+  if (key === "direction" && !ALLOWED_DIRECTIONS.has(raw)) {
+    errors.push(`${file}: style "direction" must be one of ${[...ALLOWED_DIRECTIONS].join(", ")} (got "${raw}")`);
+    return;
+  }
+  if (key === "align" && !ALLOWED_ALIGN.has(raw)) {
+    errors.push(`${file}: style "align" must be one of ${[...ALLOWED_ALIGN].join(", ")} (got "${raw}")`);
+    return;
+  }
+  if (key === "justify" && !ALLOWED_JUSTIFY.has(raw)) {
+    errors.push(`${file}: style "justify" must be one of ${[...ALLOWED_JUSTIFY].join(", ")} (got "${raw}")`);
+  }
+}
+
+function validateStyleBlockContent(content, file, errors) {
+  const text = String(content || "");
+  let i = 0;
+
+  function skipWs() {
+    while (i < text.length && /\s/.test(text[i])) i += 1;
+  }
+
+  function parseBlock(expectClose) {
+    while (i < text.length) {
+      skipWs();
+      if (i >= text.length) break;
+
+      if (text[i] === "}") {
+        if (!expectClose) {
+          errors.push(`${file}: style block has unexpected "}"`);
+        }
+        i += 1;
+        return;
+      }
+
+      const chunk = text.slice(i);
+      const bp = /^@([a-zA-Z][\w-]*)\s*\{/.exec(chunk);
+      if (bp) {
+        const name = bp[1];
+        if (!ALLOWED_BREAKPOINTS.has(name)) {
+          errors.push(`${file}: style breakpoint "@${name}" is invalid (allowed: @sm @md @lg @xl)`);
+        }
+        i += bp[0].length;
+        parseBlock(true);
+        continue;
+      }
+
+      const decl = /^([a-zA-Z][\w-]*)\s*:\s*([^@;{}\n]+)\s*;?/.exec(chunk);
+      if (decl) {
+        validateStyleDeclaration(decl[1], decl[2], file, errors);
+        i += decl[0].length;
+        continue;
+      }
+
+      let lineEnd = text.indexOf("\n", i);
+      if (lineEnd < 0) lineEnd = text.length;
+      const snippet = text.slice(i, Math.min(i + 60, lineEnd)).trim();
+      if (snippet) errors.push(`${file}: invalid style syntax near "${snippet}"`);
+      i = lineEnd === i ? i + 1 : lineEnd + 1;
+    }
+
+    if (expectClose) {
+      errors.push(`${file}: style breakpoint block is missing closing "}"`);
+    }
+  }
+
+  parseBlock(false);
+}
+
 export function ensureDesignSystem({ root = process.cwd() } = {}) {
   const tokenPath = resolve(root, TOKENS_PATH);
   const allowlistPath = resolve(root, CLASS_ALLOWLIST_PATH);
@@ -140,6 +306,14 @@ export function validateAppStyles({ root = process.cwd() } = {}) {
     const source = readFileSync(file, "utf8");
     if (/\bstyle\s*=/.test(source)) {
       errors.push(`${file}: inline style attributes are not allowed`);
+    }
+    const styleBlocks = extractStyleBlocks(source);
+    for (const block of styleBlocks) {
+      if (block.broken) {
+        errors.push(`${file}: style block is missing closing "}"`);
+        continue;
+      }
+      validateStyleBlockContent(block.content, file, errors);
     }
     const classes = classNamesIn(source);
     for (const cls of classes) {

@@ -63,15 +63,54 @@ function assetPath(name, mapping = {}) {
   return `/${mapping[name] || name}`;
 }
 
+function parseRouteToken(token) {
+  const m = /^:([A-Za-z_$][\w$]*)(\*)?(\?)?$/.exec(token || "");
+  if (!m) return null;
+  return { name: m[1], catchAll: Boolean(m[2]), optional: Boolean(m[3]) };
+}
+
 function match(routePath, pathname) {
-  const a = routePath.split("/").filter(Boolean);
-  const b = pathname.split("/").filter(Boolean);
-  if (a.length !== b.length) return null;
+  const routeParts = routePath.split("/").filter(Boolean);
+  const pathParts = pathname.split("/").filter(Boolean);
   const params = {};
-  for (let i = 0; i < a.length; i += 1) {
-    if (a[i].startsWith(":")) params[a[i].slice(1)] = b[i];
-    else if (a[i] !== b[i]) return null;
+  let ri = 0;
+  let pi = 0;
+
+  while (ri < routeParts.length) {
+    const token = routeParts[ri];
+    const dyn = parseRouteToken(token);
+
+    if (dyn?.catchAll) {
+      const rest = pathParts.slice(pi);
+      if (!rest.length && !dyn.optional) return null;
+      params[dyn.name] = rest;
+      pi = pathParts.length;
+      ri = routeParts.length;
+      break;
+    }
+
+    if (dyn) {
+      const value = pathParts[pi];
+      if (value === undefined) {
+        if (dyn.optional) {
+          params[dyn.name] = undefined;
+          ri += 1;
+          continue;
+        }
+        return null;
+      }
+      params[dyn.name] = value;
+      ri += 1;
+      pi += 1;
+      continue;
+    }
+
+    if (pathParts[pi] !== token) return null;
+    ri += 1;
+    pi += 1;
   }
+
+  if (pi !== pathParts.length) return null;
   return params;
 }
 

@@ -24,6 +24,11 @@
 - Allowed non-utility classes live in `app/design/class-allowlist.json`.
 - Utility classes are `u-*` and generated in `app/styles.generated.css`.
 - Raw hex values in `app/styles.css` are blocked by style validation.
+- `style { ... }` blocks are finite-token only:
+  - Spacing props (`padding`, `margin`, `gap`, `top`, `right`, `bottom`, `left`) accept only `0..13`.
+  - Colors (`bg`, `text`, `border`) accept only `{color}-{shade}` with colors `primary|secondary|accent|neutral|success|warning|error` and shades `50..900` by approved steps.
+  - `size`, `weight`, `display`, `direction`, `align`, `justify` accept only framework enums.
+  - Only responsive breakpoints `@sm`, `@md`, `@lg`, `@xl` are allowed.
 
 ## Quality Gates
 - `npm run validate`

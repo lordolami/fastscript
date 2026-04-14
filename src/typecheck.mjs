@@ -121,6 +121,10 @@ function makeArrayType(elementType = T_UNKNOWN) {
   return { kind: "array", elementType };
 }
 
+function makeObjectType(properties = {}) {
+  return { kind: "object", properties: { ...properties } };
+}
+
 function typeFromLiteral(value) {
   if (value === null) return T_NULL;
   if (value === undefined) return T_UNDEFINED;
@@ -136,6 +140,11 @@ function typeToString(type) {
   if (!type) return "unknown";
   if (type.kind === "union") return type.types.map(typeToString).join(" | ");
   if (type.kind === "array") return `${typeToString(type.elementType)}[]`;
+  if (type.kind === "object") {
+    const entries = Object.entries(type.properties || {});
+    if (!entries.length) return "object";
+    return `{ ${entries.map(([k, v]) => `${k}: ${typeToString(v)}`).join("; ")} }`;
+  }
   if (type.kind === "function") {
     return `(${type.params.map(typeToString).join(", ")}) => ${typeToString(type.returnType)}`;
   }
@@ -152,6 +161,16 @@ function typeEquals(a, b) {
       if (!typeEquals(a.params[i], b.params[i])) return false;
     }
     return typeEquals(a.returnType, b.returnType);
+  }
+  if (a.kind === "object") {
+    const aKeys = Object.keys(a.properties || {}).sort();
+    const bKeys = Object.keys(b.properties || {}).sort();
+    if (aKeys.length !== bKeys.length) return false;
+    for (let i = 0; i < aKeys.length; i += 1) {
+      if (aKeys[i] !== bKeys[i]) return false;
+      if (!typeEquals(a.properties[aKeys[i]], b.properties[bKeys[i]])) return false;
+    }
+    return true;
   }
   if (a.kind === "union") {
     if (a.types.length !== b.types.length) return false;
@@ -182,6 +201,11 @@ function copyType(type) {
   if (!type || typeof type !== "object") return T_UNKNOWN;
   if (type.kind === "union") return unionTypes(type.types.map(copyType));
   if (type.kind === "array") return makeArrayType(copyType(type.elementType));
+  if (type.kind === "object") {
+    const out = {};
+    for (const [key, value] of Object.entries(type.properties || {})) out[key] = copyType(value);
+    return makeObjectType(out);
+  }
   if (type.kind === "function") return makeFnType(type.params.map(copyType), copyType(type.returnType), type.minArgs, type.maxArgs);
   return { ...type };
 }
@@ -194,6 +218,15 @@ function isAssignable(source, target) {
   if (source.kind === "union") return source.types.every((candidate) => isAssignable(candidate, target));
   if (source.kind === target.kind) {
     if (source.kind === "array") return isAssignable(source.elementType, target.elementType);
+    if (source.kind === "object") {
+      const targetProps = target.properties || {};
+      const sourceProps = source.properties || {};
+      for (const [key, targetType] of Object.entries(targetProps)) {
+        if (!(key in sourceProps)) return false;
+        if (!isAssignable(sourceProps[key], targetType)) return false;
+      }
+      return true;
+    }
     if (source.kind === "function") {
       if (source.minArgs > target.maxArgs) return false;
       if (source.maxArgs < target.minArgs) return false;
@@ -399,13 +432,22 @@ function inferExpression(node, scope, state, fnContext) {
       return makeArrayType(elementTypes.length ? unionTypes(elementTypes) : T_UNKNOWN);
     }
     case "ObjectExpression": {
+      const props = {};
       for (const property of node.properties || []) {
         if (property.type === "Property") {
-          if (property.computed) inferExpression(property.key, scope, state, fnContext);
-          inferExpression(property.value, scope, state, fnContext);
+          let keyName = null;
+          if (property.computed) {
+            inferExpression(property.key, scope, state, fnContext);
+          } else if (property.key.type === "Identifier") {
+            keyName = property.key.name;
+          } else if (property.key.type === "Literal") {
+            keyName = String(property.key.value);
+          }
+          const valueType = inferExpression(property.value, scope, state, fnContext);
+          if (keyName) props[keyName] = valueType;
         }
       }
-      return T_OBJECT;
+      return makeObjectType(props);
     }
     case "UnaryExpression": {
       const argType = inferExpression(node.argument, scope, state, fnContext);
@@ -508,6 +550,24 @@ function inferExpression(node, scope, state, fnContext) {
         } else {
           symbol.type = unionTypes([symbol.type, valueType]);
         }
+      } else if (node.left.type === "MemberExpression") {
+        const objectType = inferExpression(node.left.object, scope, state, fnContext);
+        const propName = !node.left.computed && node.left.property?.type === "Identifier"
+          ? node.left.property.name
+          : (node.left.property?.type === "Literal" ? String(node.left.property.value) : null);
+        if (propName && objectType.kind === "object") {
+          const current = objectType.properties[propName];
+          objectType.properties[propName] = current ? unionTypes([current, valueType]) : valueType;
+        } else if (objectType.kind === "array" && propName === "length" && !isAssignable(valueType, T_NUMBER)) {
+          state.diagnostics.push(createDiagnostic({
+            file: state.file,
+            source: state.source,
+            lineStarts: state.lineStarts,
+            code: "FS4103",
+            span: spanFromNode(node.right, state.source.length),
+            message: `Cannot assign ${typeToString(valueType)} to array length (number).`,
+          }));
+        }
       } else {
         inferExpression(node.left, scope, state, fnContext);
       }
@@ -533,8 +593,37 @@ function inferExpression(node, scope, state, fnContext) {
       return T_NUMBER;
     }
     case "CallExpression": {
-      const calleeType = inferExpression(node.callee, scope, state, fnContext);
       const argTypes = (node.arguments || []).map((arg) => inferExpression(arg, scope, state, fnContext));
+      if (node.callee?.type === "MemberExpression") {
+        const objectType = inferExpression(node.callee.object, scope, state, fnContext);
+        const propName = !node.callee.computed && node.callee.property?.type === "Identifier"
+          ? node.callee.property.name
+          : (node.callee.property?.type === "Literal" ? String(node.callee.property.value) : null);
+        if (objectType.kind === "array" && propName) {
+          if (propName === "push") {
+            for (let i = 0; i < argTypes.length; i += 1) {
+              if (!isAssignable(argTypes[i], objectType.elementType)) {
+                state.diagnostics.push(createDiagnostic({
+                  file: state.file,
+                  source: state.source,
+                  lineStarts: state.lineStarts,
+                  code: "FS4103",
+                  span: spanFromNode(node.arguments[i], state.source.length),
+                  message: `Array push expects ${typeToString(objectType.elementType)}, got ${typeToString(argTypes[i])}.`,
+                }));
+              }
+            }
+            return T_NUMBER;
+          }
+          if (propName === "map") return makeArrayType(T_UNKNOWN);
+          if (propName === "filter") return makeArrayType(objectType.elementType);
+          if (propName === "slice") return makeArrayType(objectType.elementType);
+          if (propName === "join") return T_STRING;
+          if (propName === "includes") return T_BOOLEAN;
+          if (propName === "pop") return unionTypes([objectType.elementType, T_UNDEFINED]);
+        }
+      }
+      const calleeType = inferExpression(node.callee, scope, state, fnContext);
       if (calleeType.kind !== "function") {
         if (calleeType.kind !== "unknown" && calleeType.kind !== "any") {
           state.diagnostics.push(createDiagnostic({
@@ -577,9 +666,25 @@ function inferExpression(node, scope, state, fnContext) {
     case "ArrowFunctionExpression":
       return inferFunctionFromNode(node, scope, state);
     case "MemberExpression":
-      inferExpression(node.object, scope, state, fnContext);
-      if (node.computed) inferExpression(node.property, scope, state, fnContext);
-      return T_UNKNOWN;
+      {
+        const objectType = inferExpression(node.object, scope, state, fnContext);
+        if (node.computed) {
+          const propType = inferExpression(node.property, scope, state, fnContext);
+          if (objectType.kind === "array" && isAssignable(propType, T_NUMBER)) return objectType.elementType;
+          return T_UNKNOWN;
+        }
+        const propName = node.property?.type === "Identifier" ? node.property.name : null;
+        if (!propName) return T_UNKNOWN;
+        if (objectType.kind === "array") {
+          if (propName === "length") return T_NUMBER;
+          return T_UNKNOWN;
+        }
+        if (objectType.kind === "string" && propName === "length") return T_NUMBER;
+        if (objectType.kind === "object" && objectType.properties?.[propName]) {
+          return copyType(objectType.properties[propName]);
+        }
+        return T_UNKNOWN;
+      }
     case "AwaitExpression":
       return inferExpression(node.argument, scope, state, fnContext);
     case "NewExpression":
@@ -809,7 +914,7 @@ function buildTypeFile(routes) {
   lines.push("/* auto-generated by fastscript typecheck */");
   lines.push("export type FastScriptRouteParams = {");
   for (const route of routes) {
-    const params = inferRouteParamTypes(route.routePath);
+    const params = inferRouteParamTypes(route.routePath, route.paramTypes);
     const body = Object.keys(params).length
       ? `{ ${Object.entries(params).map(([k, v]) => `${k}: ${v}`).join("; ")} }`
       : "{}";

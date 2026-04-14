@@ -1,15 +1,38 @@
 {
   "version": 2,
-  "builds": [
+  "functions": {
+    "api/[[...fastscript]].mjs": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 30
+    }
+  },
+  "headers": [
     {
-      "src": "package.json",
-      "use": "@vercel/node"
+      "source": "/(.*\\.[a-f0-9]{8}\\.(js|css))",
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ],
   "routes": [
     {
+      "src": "/(.*\\.(js|css|json|map|webmanifest|png|jpg|jpeg|svg|gif|woff|woff2|ttf|otf))",
+      "dest": "/dist/$1"
+    },
+    {
+      "src": "/service-worker.js",
+      "dest": "/dist/service-worker.js"
+    },
+    {
+      "src": "/manifest.webmanifest",
+      "dest": "/dist/manifest.webmanifest"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/src/cli.mjs"
+      "dest": "/api/[[...fastscript]].mjs"
     }
   ]
 }

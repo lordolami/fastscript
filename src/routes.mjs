@@ -13,13 +13,50 @@ function isParallelSegment(segment) {
   return segment.startsWith("@");
 }
 
+function normalizeParamType(type) {
+  const raw = String(type || "string").toLowerCase();
+  if (raw === "int" || raw === "float" || raw === "number") return "number";
+  if (raw === "bool" || raw === "boolean") return "boolean";
+  if (raw === "str" || raw === "string") return "string";
+  return "string";
+}
+
 function routeSegmentValue(segment) {
   if (!segment) return null;
   if (isGroupSegment(segment)) return null;
   if (isParallelSegment(segment)) return null;
   if (segment === "index") return null;
-  if (segment.startsWith("[") && segment.endsWith("]")) return `:${segment.slice(1, -1)}`;
-  return segment;
+  const optionalCatchAll = /^\[\[\.\.\.([A-Za-z_$][\w$]*)\]\]$/.exec(segment);
+  if (optionalCatchAll) {
+    return {
+      value: `:${optionalCatchAll[1]}*?`,
+      param: { name: optionalCatchAll[1], type: "string[] | undefined", optional: true, catchAll: true },
+    };
+  }
+  const requiredCatchAll = /^\[\.\.\.([A-Za-z_$][\w$]*)\]$/.exec(segment);
+  if (requiredCatchAll) {
+    return {
+      value: `:${requiredCatchAll[1]}*`,
+      param: { name: requiredCatchAll[1], type: "string[]", optional: false, catchAll: true },
+    };
+  }
+  const optionalTyped = /^\[\[([A-Za-z_$][\w$]*)(?::([A-Za-z]+))?\]\]$/.exec(segment);
+  if (optionalTyped) {
+    const type = normalizeParamType(optionalTyped[2]);
+    return {
+      value: `:${optionalTyped[1]}?`,
+      param: { name: optionalTyped[1], type: `${type} | undefined`, optional: true, catchAll: false },
+    };
+  }
+  const simpleTyped = /^\[([A-Za-z_$][\w$]*)(?::([A-Za-z]+))?\]$/.exec(segment);
+  if (simpleTyped) {
+    const type = normalizeParamType(simpleTyped[2]);
+    return {
+      value: `:${simpleTyped[1]}`,
+      param: { name: simpleTyped[1], type, optional: false, catchAll: false },
+    };
+  }
+  return { value: segment, param: null };
 }
 
 export function inferRouteMeta(file, pagesDir) {
@@ -29,12 +66,16 @@ export function inferRouteMeta(file, pagesDir) {
   const slot = parallel ? parallel.slice(1) : null;
   const routeParts = [];
   const params = [];
+  const paramTypes = {};
 
   for (const part of parts) {
     const mapped = routeSegmentValue(part);
-    if (!mapped) continue;
-    routeParts.push(mapped);
-    if (mapped.startsWith(":")) params.push(mapped.slice(1));
+    if (!mapped?.value) continue;
+    routeParts.push(mapped.value);
+    if (mapped.param) {
+      params.push(mapped.param.name);
+      paramTypes[mapped.param.name] = mapped.param.type;
+    }
   }
 
   const routePath = routeParts.length ? `/${routeParts.join("/")}` : "/";
@@ -45,16 +86,28 @@ export function inferRouteMeta(file, pagesDir) {
     pageFile,
     routePath,
     params,
+    paramTypes,
     slot,
     segments: normalizedParts,
     directory: dirname(relative(pagesDir, file).replace(/\\/g, "/")),
   };
 }
 
-export function inferRouteParamTypes(routePath) {
+export function inferRouteParamTypes(routePath, paramTypes = null) {
+  if (paramTypes && typeof paramTypes === "object" && Object.keys(paramTypes).length) {
+    return { ...paramTypes };
+  }
   const params = {};
   for (const segment of String(routePath || "").split("/")) {
-    if (segment.startsWith(":")) params[segment.slice(1)] = "string";
+    const token = /^:([A-Za-z_$][\w$]*)(\*)?(\?)?$/.exec(segment);
+    if (!token) continue;
+    const name = token[1];
+    const catchAll = Boolean(token[2]);
+    const optional = Boolean(token[3]);
+    if (catchAll && optional) params[name] = "string[] | undefined";
+    else if (catchAll) params[name] = "string[]";
+    else if (optional) params[name] = "string | undefined";
+    else params[name] = "string";
   }
   return params;
 }
@@ -62,7 +115,7 @@ export function inferRouteParamTypes(routePath) {
 export function inferRouteLayouts(file, pagesDir, layoutFiles = new Set()) {
   const relDir = dirname(relative(pagesDir, file).replace(/\\/g, "/"));
   const chain = [];
-  const dirs = relDir === "." ? [""] : relDir.split("/").filter(Boolean);
+  const dirs = relDir === "." ? [] : relDir.split("/").filter(Boolean);
   const probes = [""];
   for (const dir of dirs) {
     probes.push(probes[probes.length - 1] ? `${probes[probes.length - 1]}/${dir}` : dir);

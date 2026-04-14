@@ -6,6 +6,7 @@ FastScript is a full-stack framework with a first-class `.fs` language and compi
 - Faster build and runtime pipeline
 - Compatible with existing JavaScript ecosystem
 - `.fs` first, `.js` interoperability always supported
+- Canonical repo lock: `github.com/lordolami/fastscript` (`npm run repo:lock`)
 
 ## Commands
 
@@ -22,6 +23,7 @@ npm run export:js
 npm run export:ts
 npm run compat
 npm run validate
+npm run repo:lock
 npm run db:migrate
 npm run db:seed
 npm run smoke:dev
@@ -119,6 +121,9 @@ app/
 - `app/pages/index.fs` or `index.js` -> `/`
 - `app/pages/blog/index.fs` or `index.js` -> `/blog`
 - `app/pages/blog/[slug].fs` or `[slug].js` -> `/blog/:slug`
+- `app/pages/docs/[...slug].fs` -> `/docs/:slug*`
+- `app/pages/[[...slug]].fs` -> `/docs/:slug*?`
+- `app/pages/blog/[id:int].fs` -> `/blog/:id` with typed params in generated route types
 - `app/pages/404.fs` or `404.js` -> not found view
 - `app/pages/_layout.fs` or `_layout.js` -> global layout wrapper
 

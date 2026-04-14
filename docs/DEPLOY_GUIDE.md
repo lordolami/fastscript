@@ -2,8 +2,8 @@
 
 ## Support Levels
 - `node/pm2`: stable
-- `vercel`: adapter starter (review before production use)
-- `cloudflare`: adapter starter (review before production use)
+- `vercel`: stable catch-all SSR/API adapter
+- `cloudflare`: stable worker SSR/API adapter
 
 ## Node/PM2 (Stable Path)
 1. `npm run qa:all`
@@ -16,20 +16,20 @@ Required env:
 - `PORT`
 - `SESSION_SECRET` (required in production)
 
-## Vercel (Starter Adapter)
+## Vercel
 1. `npm run deploy:vercel`
-2. Review generated `vercel.json` for your project shape
+2. Commit generated `vercel.json` + `api/[[...fastscript]].mjs`
 3. Import project in Vercel
 
 Notes:
-- Generated adapter is a starter scaffold.
-- Validate routing/runtime behavior with `npm run smoke:start`.
+- Uses one catch-all serverless handler for SSR + API.
+- Has immutable cache headers for hashed assets.
 
-## Cloudflare (Starter Adapter)
+## Cloudflare
 1. `npm run deploy:cloudflare`
-2. Review generated `wrangler.toml` and `dist/worker.js`
+2. Commit generated `wrangler.toml` and `dist/worker.js`
 3. `wrangler deploy`
 
 Notes:
-- Generated adapter is a starter scaffold.
-- Validate behavior against your SSR/API requirements.
+- Worker handles SSR routes, API routes, middleware, and static asset pass-through.
+- Requires current build artifacts (`dist/fastscript-manifest.json`).

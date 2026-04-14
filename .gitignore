@@ -9,3 +9,4 @@ benchmarks/latest-report.md
 app/styles.generated.css
 .agents/
 .backups/
+vscode/fastscript-language/*.vsix
