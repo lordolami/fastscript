@@ -1,4 +1,8 @@
 const RELEASES = [{
+  version: "v2.0.0",
+  date: "April 2026",
+  copy: "FastScript v2.0 ratified: ambient runtime and standard library completed, zero-JS authored app proof gates passed, public/private boundary frozen, and the formal execution tracker published."
+}, {
   version: "v1.0.0",
   date: "April 2026",
   copy: "FastScript v1 stable release: language baseline locked, website polished, deploy adapters hardened, and interop guarantees published."

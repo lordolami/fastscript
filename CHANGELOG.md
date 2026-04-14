@@ -14,6 +14,12 @@
   - `spec/V2_0_MIGRATION_PROOF_REPORT.md`
   - `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`
 
+## v2.0.0 - 2026-04-14
+- Ratify the FastScript v2.0 language/runtime surface and freeze the public spec pack
+- Complete ambient runtime, standard library, DOM/platform, inference, and zero-JS authored app proof gates
+- Publish the v2.0 execution tracker, ratification record, migration proof report, and performance protocol report
+- Freeze the public/private repository boundary and exclude Yomiru proof artifacts from the public release tree
+
 ## v0.1.0 - 2026-04-13
 - FastScript JS-first full-stack core
 

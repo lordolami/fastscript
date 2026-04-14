@@ -28,7 +28,7 @@ const FOOTER_COLS = [{
   links: [["Overview", "/"], ["Quickstart", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"], ["Playground", "/docs/playground"]]
 }, {
   title: "Language",
-  links: [["Docs", "/docs"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"], ["Interop", "/docs/v1.1"], ["Spec", "/docs/v1"]]
+  links: [["Docs", "/docs"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"], ["Interop", "/benchmarks"], ["Spec", "/docs/v2"]]
 }, {
   title: "Community",
   links: [["Blog", "/blog"], ["About", "/devs"], ["Contribute", "/contribute"], ["GitHub", "https://github.com/lordolami/fastscript"], ["Discord", "https://discord.gg/fastscript"]]
@@ -71,7 +71,7 @@ export default function Layout({content, pathname}) {
         <a class="brand" href="/" aria-label="FastScript home">
           <span class="brand-mark" aria-hidden="true">FS</span>
           <span class="brand-name">FastScript</span>
-          <span class="brand-ver">v1.0</span>
+          <span class="brand-ver">v2.0</span>
         </a>
 
         <nav class="nav-links" aria-label="Primary navigation">

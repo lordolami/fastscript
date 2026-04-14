@@ -27,8 +27,8 @@ const STEPS = [{
 const NEXT = [{
   title: "Route + loader contracts",
   copy: "Use inferred route param and loader data types to remove runtime guesswork on every page.",
-  href: "/docs/v1.1",
-  cta: "Read routing deep-dive"
+  href: "/docs/v2",
+  cta: "Read v2.0 spec"
 }, {
   title: "Styling primitives",
   copy: "Use Box, Stack, Row, Heading, Text, Button, and token-backed semantic props instead of raw CSS trivia.",
@@ -89,7 +89,7 @@ export default function LearnPage() {
 
     <div class="cta-block">
       <h2 class="cta-title">Ready to ship?</h2>
-      <p class="cta-copy">Everything you need is in the framework. No extra services, no plugin hunting, no configuration sprawl.</p>
+      <p class="cta-copy">Everything you need is in the language runtime. No parallel framework stack, no plugin hunting, no configuration sprawl.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="/docs">Open the docs</a>
         <a class="btn btn-ghost btn-lg" href="/examples">Browse examples</a>

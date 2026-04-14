@@ -2,7 +2,7 @@
 
 FastScript is a JavaScript-first full-stack language runtime built around a first-class `.fs` file format.
 
-It is designed to feel easier to read than heavyweight framework stacks while staying compatible with the JavaScript ecosystem developers already use.
+It is designed to feel easier to read than heavyweight stack combinations while staying compatible with the JavaScript ecosystem developers already use.
 
 - Write pages, APIs, middleware, jobs, and database workflows in `.fs`
 - Keep compatibility with normal `.js` packages and modules
@@ -10,7 +10,7 @@ It is designed to feel easier to read than heavyweight framework stacks while st
 - Deploy the same app to Node, Vercel, or Cloudflare
 - Run one quality gate for formatting, linting, typecheck, tests, smoke checks, benchmarks, and interop
 
-FastScript is built for product teams that want a simpler, faster full-stack pipeline without surrendering compatibility with the ground-level JavaScript platform.
+FastScript v2.0 is built for product teams that want a simpler, faster full-stack pipeline without surrendering compatibility with the ground-level JavaScript platform.
 
 ## What FastScript Is
 
@@ -37,7 +37,7 @@ That means a single project can contain:
 FastScript is built to be:
 
 - Simpler than stacking TypeScript + framework + glue code everywhere
-- Faster to build and ship than heavier framework pipelines
+- Faster to build and ship than heavier pipeline combinations
 - Compatible with existing JavaScript libraries
 - Friendly to AI-assisted generation because the language surface is smaller and more regular
 - Easy to migrate into and easy to export back out
@@ -61,7 +61,7 @@ See:
 
 ## Install
 
-FastScript currently ships best as a repo-first toolchain while the protected core remains split from the public shell.
+FastScript v2.0 currently ships as a repo-first toolchain while the protected core remains split from the public shell.
 
 ### Option 1: local repo workflow
 
@@ -82,6 +82,8 @@ fastscript --help
 ```
 
 This gives you a global `fastscript` command backed by your local clone.
+
+Public npm packaging is not the default install path yet because the protected core is still split from the public repo. The public release surface is frozen and documented; the npm publish model is the remaining packaging step.
 
 To use the CLI directly during development:
 

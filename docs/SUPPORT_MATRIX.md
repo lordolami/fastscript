@@ -26,5 +26,5 @@
 - CLI + formatter + linter + typecheck stable under `qa:gate`
 
 ## Release Support
-- Current stable line: `0.1.x`
+- Current stable line: `2.0.x`
 - LTS policy reference: `docs/LTS_POLICY.md`

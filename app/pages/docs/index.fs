@@ -4,10 +4,13 @@ const SECTIONS = [{
     label: "Introduction",
     href: "/docs"
   }, {
+    label: "Language spec v2.0",
+    href: "/docs/v2"
+  }, {
     label: "Language spec v1",
     href: "/docs/v1"
   }, {
-    label: "What is new in v1.1",
+    label: "Legacy v1.1 additions",
     href: "/docs/v1.1"
   }]
 }, {
@@ -45,9 +48,9 @@ const SECTIONS = [{
   }]
 }];
 const CARDS = [{
-  title: "Language v1 spec",
-  copy: "Grammar, desugaring semantics, type system, diagnostic codes, and compatibility guarantees.",
-  href: "/docs/v1",
+  title: "Language v2.0 spec",
+  copy: "Ratified language/runtime surface, ambient stdlib, runtime scope rules, zero-JS authored app proof, and execution tracker.",
+  href: "/docs/v2",
   cta: "Read spec"
 }, {
   title: "Quickstart",
@@ -71,7 +74,7 @@ const CARDS = [{
   cta: "View reference"
 }, {
   title: "Interop + migration",
-  copy: "Use npm packages in .fs files and migrate existing JS codebases module by module.",
+  copy: "Use npm packages in .fs files and migrate existing JS codebases module by module, with older v1.1 notes preserved for reference.",
   href: "/docs/v1.1",
   cta: "Learn interop"
 }, {
@@ -109,7 +112,7 @@ export default function DocsIndex({pathname}) {
         <header class="sec-header">
           <p class="kicker">Documentation</p>
           <h1 class="h1">FastScript docs.</h1>
-          <p class="lead">Everything you need to build, validate, and ship full-stack FastScript applications.</p>
+          <p class="lead">Everything you need to build, validate, and ship full-stack FastScript applications on the ratified v2.0 line.</p>
         </header>
 
         <div class="docs-card-grid docs-entry-cards">${cards}</div>
@@ -119,7 +122,7 @@ export default function DocsIndex({pathname}) {
         <section class="docs-syntax">
           <header class="sec-header-sm">
             <p class="kicker">Language baseline</p>
-            <h2 class="h2">FastScript v1 syntax at a glance.</h2>
+            <h2 class="h2">FastScript v2.0 syntax at a glance.</h2>
           </header>
           <div class="code-pair">
             <div class="code-block">

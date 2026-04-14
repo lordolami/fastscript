@@ -5,7 +5,7 @@ export default function Home() {
         <div class="hero-left">
           <div class="hero-badge">
             <span class="hero-badge-dot" aria-hidden="true"></span>
-            v1.0 &mdash; <a href="/changelog" class="hero-badge-link">See what&rsquo;s new</a>
+            v2.0 &mdash; <a href="/changelog" class="hero-badge-link">See what&rsquo;s new</a>
           </div>
 
           <h1 class="hero-title">
@@ -16,13 +16,13 @@ export default function Home() {
           <p class="hero-desc">
             Write your app in <code class="ic">.fs</code>, keep full <code class="ic">.js</code> package compatibility,
             compile to optimized JavaScript, and ship to Node, Vercel, or Cloudflare with one command.
-            Zero runtime deps. 1.8KB client bundle.
+            Ambient runtime complete. Zero-JS authored apps proven. 2.71KB first-load gzip.
           </p>
 
           <div class="install-row">
             <span class="install-row-prefix">$</span>
-            <span class="install-row-cmd" id="install-cmd">npm i -g fastscript-lang</span>
-            <button class="copy-btn" data-copy="npm i -g fastscript-lang" aria-label="Copy install command">
+            <span class="install-row-cmd" id="install-cmd">git clone github.com/lordolami/fastscript.git && cd fastscript && npm i && npm link</span>
+            <button class="copy-btn" data-copy="git clone github.com/lordolami/fastscript.git && cd fastscript && npm i && npm link" aria-label="Copy install command">
               &#9112; Copy
             </button>
           </div>
@@ -66,8 +66,8 @@ export default function Home() {
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128230;</span>
-            <span class="social-item-n">npm</span>
-            <span>CLI ready</span>
+            <span class="social-item-n">CLI</span>
+            <span>repo-first install</span>
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128101;</span>
@@ -76,7 +76,7 @@ export default function Home() {
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128204;</span>
-            <span class="social-item-n">v1.0</span>
+            <span class="social-item-n">v2.0</span>
             <span>latest stable</span>
           </div>
           <div class="social-item">
@@ -90,8 +90,8 @@ export default function Home() {
       <div class="shell">
         <div class="hero-stats" role="list">
           <div class="hero-stat" role="listitem">
-            <span class="hero-stat-n">1.8<span class="hero-stat-n-sub">KB</span></span>
-            <span class="hero-stat-l">Client runtime</span>
+            <span class="hero-stat-n">2.71<span class="hero-stat-n-sub">KB</span></span>
+            <span class="hero-stat-l">First-load gzip</span>
           </div>
           <div class="hero-stat" role="listitem">
             <span class="hero-stat-n">&lt;1<span class="hero-stat-n-sub">s</span></span>
@@ -116,14 +116,14 @@ export default function Home() {
         <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
         <span class="ticker-item">No framework lock-in</span>
         <span class="ticker-item">13/13 interop</span>
-        <span class="ticker-item">1.8KB runtime</span>
+        <span class="ticker-item">2.71KB first-load gzip</span>
         <span class="ticker-item">SSR + ISR + Streaming</span>
         <span class="ticker-item">FastScript</span>
         <span class="ticker-item">Full-stack .fs language</span>
         <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
         <span class="ticker-item">No framework lock-in</span>
         <span class="ticker-item">13/13 interop</span>
-        <span class="ticker-item">1.8KB runtime</span>
+        <span class="ticker-item">2.71KB first-load gzip</span>
         <span class="ticker-item">SSR + ISR + Streaming</span>
       </div>
     </div>
