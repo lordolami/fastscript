@@ -1,11 +1,11 @@
 # FastScript Proof Pack
 
-- Generated: 2026-04-14T02:42:11.909Z
+- Generated: 2026-04-14T06:57:05.570Z
 
 ## Summary
-- Routes: 13
+- Routes: 16
 - JS gzip: 2382 bytes
-- CSS gzip: 1215 bytes
+- CSS gzip: 6135 bytes
 - JS budget (30KB): PASS
 - CSS budget (10KB): PASS
 - Interop cases: 13
@@ -16,10 +16,10 @@
 
 # FastScript Benchmark Report
 
-- Build time: 601.39ms
-- Routes: 13
+- Build time: 701.36ms
+- Routes: 16
 - API routes: 5
-- JS first-load gzip: 0.42KB
+- JS first-load gzip: 2.71KB
 - CSS first-load gzip: 0.00KB
 
 ## Budgets
@@ -38,7 +38,7 @@ See full matrix: `docs/INTEROP_MATRIX.md`
 
 # FastScript Interop Matrix
 
-- Generated: 2026-04-14T02:42:11.069Z
+- Generated: 2026-04-14T06:57:04.533Z
 - Profile: report
 - Total: 13
 - Pass: 13

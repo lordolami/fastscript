@@ -293,13 +293,17 @@ function declareBuiltins(scope, file) {
   scope.declare(createSymbol({ name: "Number", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: makeFnType([T_UNKNOWN], T_NUMBER, 1, 1) }));
   scope.declare(createSymbol({ name: "String", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: makeFnType([T_UNKNOWN], T_STRING, 1, 1) }));
   scope.declare(createSymbol({ name: "Boolean", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: makeFnType([T_UNKNOWN], T_BOOLEAN, 1, 1) }));
+  scope.declare(createSymbol({ name: "Object", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
   scope.declare(createSymbol({ name: "JSON", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
   scope.declare(createSymbol({ name: "Math", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
   scope.declare(createSymbol({ name: "process", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
   scope.declare(createSymbol({ name: "Buffer", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
+  scope.declare(createSymbol({ name: "window", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
+  scope.declare(createSymbol({ name: "document", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
   scope.declare(createSymbol({ name: "location", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
   scope.declare(createSymbol({ name: "navigator", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
   scope.declare(createSymbol({ name: "console", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: T_OBJECT }));
+  scope.declare(createSymbol({ name: "URLSearchParams", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: makeFnType([T_UNKNOWN], T_OBJECT, 1, 1) }));
   scope.declare(createSymbol({ name: "fetch", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: makeFnType([T_UNKNOWN], T_UNKNOWN, 1, Number.MAX_SAFE_INTEGER) }));
   scope.declare(createSymbol({ name: "atob", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: makeFnType([T_UNKNOWN], T_STRING, 1, 1) }));
   scope.declare(createSymbol({ name: "btoa", kind: "builtin", mutable: false, span: { start: 0, end: 0 }, file, type: makeFnType([T_UNKNOWN], T_STRING, 1, 1) }));

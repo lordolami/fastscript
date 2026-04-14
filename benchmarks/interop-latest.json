@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-14T02:42:11.069Z",
+  "generatedAt": "2026-04-14T06:57:04.533Z",
   "profile": "report",
   "summary": {
     "total": 13,
@@ -13,7 +13,7 @@
       "kind": "framework",
       "platform": "browser",
       "status": "pass",
-      "durationMs": 92.41,
+      "durationMs": 81.56,
       "bundleBytes": 618,
       "note": "FastScript module imports React + react-dom/client.",
       "error": ""
@@ -24,7 +24,7 @@
       "kind": "framework",
       "platform": "browser",
       "status": "pass",
-      "durationMs": 18.24,
+      "durationMs": 17.29,
       "bundleBytes": 226,
       "note": "FastScript module imports next/link shape.",
       "error": ""
@@ -35,7 +35,7 @@
       "kind": "framework",
       "platform": "browser",
       "status": "pass",
-      "durationMs": 22.79,
+      "durationMs": 21.24,
       "bundleBytes": 365,
       "note": "FastScript module imports Vue createApp/h API.",
       "error": ""
@@ -46,7 +46,7 @@
       "kind": "framework",
       "platform": "browser",
       "status": "pass",
-      "durationMs": 17.66,
+      "durationMs": 15.35,
       "bundleBytes": 528,
       "note": "FastScript module imports svelte/store writable.",
       "error": ""
@@ -57,7 +57,7 @@
       "kind": "framework",
       "platform": "browser",
       "status": "pass",
-      "durationMs": 16.63,
+      "durationMs": 13.74,
       "bundleBytes": 340,
       "note": "FastScript module imports preact h/render API.",
       "error": ""
@@ -68,7 +68,7 @@
       "kind": "framework",
       "platform": "browser",
       "status": "pass",
-      "durationMs": 16.28,
+      "durationMs": 17.25,
       "bundleBytes": 386,
       "note": "FastScript module imports solid-js signals.",
       "error": ""
@@ -79,7 +79,7 @@
       "kind": "npm",
       "platform": "node",
       "status": "pass",
-      "durationMs": 14.69,
+      "durationMs": 14.38,
       "bundleBytes": 174,
       "note": "FastScript module imports scoped package subpath export.",
       "error": ""
@@ -90,7 +90,7 @@
       "kind": "npm",
       "platform": "node",
       "status": "pass",
-      "durationMs": 11.34,
+      "durationMs": 17.54,
       "bundleBytes": 163,
       "note": "FastScript module imports dual-mode package through ESM export condition.",
       "error": ""
@@ -101,7 +101,7 @@
       "kind": "npm",
       "platform": "node",
       "status": "pass",
-      "durationMs": 15.12,
+      "durationMs": 16.52,
       "bundleBytes": 1809,
       "note": "FastScript module imports CommonJS npm package.",
       "error": ""
@@ -112,7 +112,7 @@
       "kind": "node",
       "platform": "node",
       "status": "pass",
-      "durationMs": 10.23,
+      "durationMs": 12.63,
       "bundleBytes": 209,
       "note": "FastScript module imports Node built-ins.",
       "error": ""
@@ -123,7 +123,7 @@
       "kind": "npm",
       "platform": "node",
       "status": "pass",
-      "durationMs": 35.04,
+      "durationMs": 58.58,
       "bundleBytes": 200464,
       "note": "Real npm package from FastScript dependencies.",
       "error": ""
@@ -134,7 +134,7 @@
       "kind": "npm",
       "platform": "node",
       "status": "pass",
-      "durationMs": 14.28,
+      "durationMs": 20.95,
       "bundleBytes": 31834,
       "note": "Real npm package from FastScript dependencies.",
       "error": ""
@@ -145,7 +145,7 @@
       "kind": "npm",
       "platform": "node",
       "status": "pass",
-      "durationMs": 13.2,
+      "durationMs": 14.78,
       "bundleBytes": 9438,
       "note": "Real npm package from FastScript dependencies.",
       "error": ""
