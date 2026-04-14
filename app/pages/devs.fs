@@ -1,6 +1,6 @@
 const TEAM = [{
   name: "Olamilekan Akinuli",
-  role: "Founder � Product + Platform",
+  role: "Founder &mdash; Product + Platform",
   copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v1 scope freeze and release governance."
 }, {
   name: "Compiler lane",
@@ -35,7 +35,7 @@ export default function DevsPage() {
 
       <div class="action-row">
         <a class="btn btn-primary btn-lg" href="/changelog">Release history</a>
-        <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub source ?</a>
+        <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub source &rarr;</a>
       </div>
     </section>
 
@@ -48,22 +48,22 @@ export default function DevsPage() {
       </header>
       <div class="feature-grid">
         <div class="feature-cell">
-          <div class="feature-icon">??</div>
+          <div class="feature-icon">&#128208;</div>
           <p class="feature-title">Spec-driven language</p>
           <p class="feature-copy">Every language change updates the formal spec, conformance snapshots, diagnostics, and formatter tests before merging. No informal grammar drift.</p>
         </div>
         <div class="feature-cell">
-          <div class="feature-icon">??</div>
+          <div class="feature-icon">&#129514;</div>
           <p class="feature-title">Evidence over intuition</p>
-          <p class="feature-copy">Benchmarks, smoke tests, interop matrices, and proof packs are produced for every release � not just when something breaks.</p>
+          <p class="feature-copy">Benchmarks, smoke tests, interop matrices, and proof packs are produced for every release &mdash; not just when something breaks.</p>
         </div>
         <div class="feature-cell">
-          <div class="feature-icon">??</div>
+          <div class="feature-icon">&#128274;</div>
           <p class="feature-title">Stability guarantees</p>
           <p class="feature-copy">v1 parser spans, diagnostic codes, and formatter output are stable across patch releases. Breaking changes require major version and migration docs.</p>
         </div>
         <div class="feature-cell">
-          <div class="feature-icon">�</div>
+          <div class="feature-icon">TM</div>
           <p class="feature-title">Protected core</p>
           <p class="feature-copy">The FastScript name, branding, language core, and commercial platform rights are protected by Lakesbim Infotechnology. Public review does not grant competing product rights.</p>
         </div>
