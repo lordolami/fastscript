@@ -15,8 +15,8 @@ else
   exit 1
 fi
 
-echo "[fastscript] running pre-push quality gate: qa:all"
-"$NPM_CMD" run qa:all
+echo "[fastscript] running pre-push quality gate: qa:gate"
+"$NPM_CMD" run qa:gate
 echo "[fastscript] running release merge gate"
 "$NPM_CMD" run merge:gate
 echo "[fastscript] pre-push quality gate passed"

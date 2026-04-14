@@ -452,12 +452,15 @@ export async function runInteropMatrix(args = []) {
     cases,
   };
 
-  writeFileSync(JSON_PATH, `${JSON.stringify(report, null, 2)}\n`, "utf8");
-  writeFileSync(DOC_PATH, markdown(report), "utf8");
+  if (mode !== "test") {
+    writeFileSync(JSON_PATH, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+    writeFileSync(DOC_PATH, markdown(report), "utf8");
+    console.log(`interop matrix written: ${JSON_PATH}`);
+    console.log(`interop doc written: ${DOC_PATH}`);
+  } else {
+    console.log("interop matrix test mode: no artifact files written");
+  }
   await safeRm(TMP_DIR);
-
-  console.log(`interop matrix written: ${JSON_PATH}`);
-  console.log(`interop doc written: ${DOC_PATH}`);
 
   if (mode === "test" && report.summary.fail > 0) {
     const error = new Error(`interop matrix failed: ${report.summary.fail} case(s)`);

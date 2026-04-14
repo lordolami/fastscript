@@ -1,7 +1,7 @@
 # FastScript Interop Matrix
 
-- Generated: 2026-04-14T06:58:20.066Z
-- Profile: report
+- Generated: 2026-04-14T07:04:23.711Z
+- Profile: test
 - Total: 13
 - Pass: 13
 - Fail: 0
