@@ -15,6 +15,18 @@ const APP_DIR = resolve("app");
 const PAGES_DIR = join(APP_DIR, "pages");
 const API_DIR = join(APP_DIR, "api");
 const DIST_DIR = resolve("dist");
+const DETERMINISTIC_BUILD_STAMP = "1970-01-01T00:00:00.000Z";
+
+function resolveBuildStamp() {
+  const explicit = process.env.FASTSCRIPT_BUILD_TIMESTAMP || process.env.SOURCE_DATE_EPOCH;
+  if (!explicit) return DETERMINISTIC_BUILD_STAMP;
+  if (/^\d+$/.test(String(explicit))) {
+    const millis = Number(explicit) * (String(explicit).length <= 10 ? 1000 : 1);
+    return new Date(millis).toISOString();
+  }
+  const parsed = new Date(String(explicit));
+  return Number.isNaN(parsed.getTime()) ? DETERMINISTIC_BUILD_STAMP : parsed.toISOString();
+}
 
 function walk(dir) {
   const out = [];
@@ -223,7 +235,7 @@ export async function runBuild(options = {}) {
     middleware: null,
     mode: options.mode || "build",
     compilerMode: (process.env.FASTSCRIPT_COMPILER_MODE || "strict").toLowerCase() === "lenient" ? "lenient" : "strict",
-    generatedAt: new Date().toISOString(),
+    generatedAt: resolveBuildStamp(),
     devMode: (process.env.NODE_ENV || "development") !== "production",
     i18n: getI18nConfig(process.env),
   };
@@ -308,7 +320,7 @@ export async function runBuild(options = {}) {
   generatePwaArtifacts({
     routerAsset,
     stylesAsset,
-    cacheVersion: `${manifest.generatedAt}-${routerAsset}-${stylesAsset}`.replace(/[^a-zA-Z0-9.-]/g, "-"),
+    cacheVersion: `${routerAsset}-${stylesAsset}`.replace(/[^a-zA-Z0-9.-]/g, "-"),
   });
   writeFileSync(join(DIST_DIR, "fastscript-manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
   writeFileSync(
