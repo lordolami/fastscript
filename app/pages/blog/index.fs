@@ -1,43 +1,48 @@
-const POSTS = [{
-  slug: "fastscript-v0-1-5-platform-hardening",
-  title: "FastScript v0.1.5: Platform hardening without losing speed",
-  excerpt: "How we shipped LSP intelligence, deploy adapter reliability, and interop expansion in one integrated release.",
-  date: "April 2026",
-  tag: "Release",
-  read: "8 min"
-}, {
-  slug: "why-route-priority-matters",
-  title: "Why route priority logic matters in real products",
-  excerpt: "Static and dynamic route conflicts are subtle. Here is the scoring strategy FastScript now uses across runtimes.",
-  date: "April 2026",
-  tag: "Routing",
-  read: "7 min"
-}, {
-  slug: "interop-without-lock-in",
-  title: "Interop without lock-in: the FastScript compatibility stance",
-  excerpt: "Use npm and existing modules while migrating incrementally to .fs where it brings leverage.",
-  date: "April 2026",
-  tag: "Interop",
-  read: "9 min"
-}];
+const POSTS = [
+  {
+    slug: "why-we-built-fastscript",
+    title: "Why we built FastScript instead of using an existing framework",
+    date: "April 14, 2026",
+    excerpt: "Every major framework we evaluated forced a trade-off we were not willing to make: speed, control, or deployment freedom. So we built our own."
+  },
+  {
+    slug: "fs-language-v1-spec",
+    title: "Introducing the FastScript Language v1 specification",
+    date: "April 13, 2026",
+    excerpt: "The v1 spec locks the parser, diagnostic codes, formatter output, and compatibility guarantees for the first stable FastScript language baseline."
+  },
+  {
+    slug: "1-8kb-runtime",
+    title: "How we got the client runtime down to 1.8KB",
+    date: "April 12, 2026",
+    excerpt: "Most frameworks ship 80-140KB of JavaScript to the browser by default. Here is the architectural decision that made 1.8KB possible."
+  },
+  {
+    slug: "deploy-adapter-architecture",
+    title: "One codebase, three deploy adapters: Node, Vercel, Cloudflare",
+    date: "April 11, 2026",
+    excerpt: "We generate hardened deploy artifacts for three platforms from a single .fs codebase without any per-platform logic branches in user code."
+  }
+];
+
 export default function BlogIndex() {
+  const cards = POSTS.map(p => `
+    <a class="blog-card" href="/blog/${p.slug}">
+      <p class="blog-card-date">${p.date}</p>
+      <p class="blog-card-title">${p.title}</p>
+      <p class="blog-card-excerpt">${p.excerpt}</p>
+    </a>
+  `).join("");
+
   return `
-    <section class="section">
-      <header class="section-head">
-        <p class="section-kicker">Blog</p>
-        <h1 class="section-title">Engineering notes from the FastScript build lane.</h1>
-        <p class="section-copy">Release debriefs, architecture decisions, and production lessons from building a language + runtime platform that stays practical.</p>
+    <section class="blog-index">
+      <header class="sec-header">
+        <p class="kicker">Blog</p>
+        <h1 class="h1">From the FastScript team.</h1>
+        <p class="lead">Technical deep-dives on language design, runtime architecture, performance, and the thinking behind every major decision.</p>
       </header>
 
-      <div class="blog-list">
-        ${POSTS.map(post => `
-          <article class="blog-item">
-            <span class="blog-meta">${post.tag} - ${post.date} - ${post.read}</span>
-            <h2 class="blog-title"><a href="/blog/${post.slug}">${post.title}</a></h2>
-            <p class="blog-excerpt">${post.excerpt}</p>
-          </article>
-        `).join("")}
-      </div>
+      <div class="blog-grid">${cards}</div>
     </section>
   `;
 }

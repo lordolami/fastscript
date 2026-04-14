@@ -1,8 +1,10 @@
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const docsDir = resolve("docs");
 const outPath = resolve("docs", "search-index.json");
+const generatedDir = resolve("src", "generated");
+const moduleOutPath = resolve(generatedDir, "docs-search-index.mjs");
 
 function tokenize(text) {
   return String(text || "")
@@ -37,4 +39,11 @@ for (const name of files) {
 }
 
 writeFileSync(outPath, JSON.stringify(items, null, 2), "utf8");
+mkdirSync(generatedDir, { recursive: true });
+writeFileSync(
+  moduleOutPath,
+  `export const DOC_SEARCH_INDEX = ${JSON.stringify(items, null, 2)};\nexport default DOC_SEARCH_INDEX;\n`,
+  "utf8",
+);
 console.log(`docs search index built: ${outPath}`);
+console.log(`docs search module built: ${moduleOutPath}`);

@@ -27,6 +27,31 @@ function walk(dir) {
   return out;
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function ensureEmptyDir(dir, { retries = 6, delayMs = 40 } = {}) {
+  mkdirSync(dir, { recursive: true });
+  const entries = readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const target = join(dir, entry.name);
+    let lastError = null;
+    for (let attempt = 0; attempt <= retries; attempt += 1) {
+      try {
+        rmSync(target, { recursive: true, force: true });
+        lastError = null;
+        break;
+      } catch (error) {
+        lastError = error;
+        if (attempt === retries) break;
+        await sleep(delayMs * (attempt + 1));
+      }
+    }
+    if (lastError) throw lastError;
+  }
+}
+
 function fsLoaderPlugin() {
   const compilerMode = (process.env.FASTSCRIPT_COMPILER_MODE || "strict").toLowerCase() === "lenient" ? "lenient" : "strict";
   return {
@@ -122,6 +147,10 @@ function applyAssetFingerprinting(manifest) {
     const mapTo = join(DIST_DIR, `${nextRel}.map`);
     if (existsSync(mapFrom)) renameSync(mapFrom, mapTo);
     mapping[rel] = nextRel;
+    const logicalRel = rel.replace(/\.[a-f0-9]{8}(\.[mc]?js|\.css)$/i, "$1");
+    if (logicalRel !== rel && !mapping[logicalRel]) {
+      mapping[logicalRel] = nextRel;
+    }
   }
 
   rewriteManifestAssetPaths(manifest, mapping);
@@ -144,16 +173,18 @@ async function runSsg(manifest, { stylesAsset, routerAsset }) {
       content: html,
       stylesAsset,
       routerAsset,
+      devMode: false,
     });
     writeFileSync(target, wrapped, "utf8");
   }
 }
 
-function generatePwaArtifacts({ routerAsset, stylesAsset }) {
+function generatePwaArtifacts({ routerAsset, stylesAsset, cacheVersion = "v1" }) {
   const assets = walk(DIST_DIR)
     .map((file) => relDist(file))
     .filter((rel) => /\.(js|css|json|html)$/.test(rel))
     .map((rel) => `/${rel}`);
+  const cacheName = `fastscript-${cacheVersion}`;
   const webmanifest = {
     name: "FastScript App",
     short_name: "FastScript",
@@ -164,7 +195,7 @@ function generatePwaArtifacts({ routerAsset, stylesAsset }) {
     icons: [],
   };
   writeFileSync(join(DIST_DIR, "manifest.webmanifest"), JSON.stringify(webmanifest, null, 2), "utf8");
-  const sw = `const CACHE_NAME = "fastscript-v1";\nconst ASSETS = ${JSON.stringify([...new Set(["/", `/${routerAsset}`, `/${stylesAsset}`, ...assets])], null, 2)};\nself.addEventListener("install", (event) => { event.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting())); });\nself.addEventListener("activate", (event) => { event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });\nself.addEventListener("fetch", (event) => { if (event.request.method !== "GET") return; event.respondWith(caches.match(event.request).then((hit) => hit || fetch(event.request).then((res) => { const copy = res.clone(); caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {}); return res; }))); });\n`;
+  const sw = `const CACHE_NAME = "${cacheName}";\nconst ASSETS = ${JSON.stringify([...new Set(["/", `/${routerAsset}`, `/${stylesAsset}`, ...assets])], null, 2)};\nconst FASTSCRIPT_CACHE_PREFIX = "fastscript-";\nself.addEventListener("install", (event) => {\n  event.waitUntil(\n    caches.open(CACHE_NAME)\n      .then((c) => c.addAll(ASSETS))\n      .then(() => self.skipWaiting())\n  );\n});\nself.addEventListener("activate", (event) => {\n  event.waitUntil(\n    caches.keys()\n      .then((keys) => Promise.all(keys.filter((k) => k.startsWith(FASTSCRIPT_CACHE_PREFIX) && k !== CACHE_NAME).map((k) => caches.delete(k))))\n      .then(() => self.clients.claim())\n  );\n});\nself.addEventListener("fetch", (event) => {\n  if (event.request.method !== "GET") return;\n  const req = event.request;\n  const accept = req.headers.get("accept") || "";\n  const isHtml = req.mode === "navigate" || accept.includes("text/html");\n\n  if (isHtml) {\n    event.respondWith(\n      fetch(req)\n        .then((res) => {\n          if (res && res.ok) {\n            const copy = res.clone();\n            caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)).catch(() => {});\n          }\n          return res;\n        })\n        .catch(() => caches.match(req).then((hit) => hit || caches.match("/")))\n    );\n    return;\n  }\n\n  event.respondWith(\n    caches.match(req).then((hit) => {\n      if (hit) return hit;\n      return fetch(req).then((res) => {\n        const copy = res.clone();\n        caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)).catch(() => {});\n        return res;\n      });\n    })\n  );\n});\n`;
   writeFileSync(join(DIST_DIR, "service-worker.js"), sw, "utf8");
 }
 
@@ -181,8 +212,7 @@ export async function runBuild(options = {}) {
   const plugins = await createPluginRuntime({ logger: pluginLogger });
   await plugins.onBuildStart({ appDir: APP_DIR, distDir: DIST_DIR });
 
-  rmSync(DIST_DIR, { recursive: true, force: true });
-  mkdirSync(DIST_DIR, { recursive: true });
+  await ensureEmptyDir(DIST_DIR);
 
   const manifest = {
     routes: [],
@@ -276,9 +306,17 @@ export async function runBuild(options = {}) {
   }
   writeFileSync(join(DIST_DIR, "router.js"), buildRouterRuntime(), "utf8");
   const { routerAsset, stylesAsset } = applyAssetFingerprinting(manifest);
-  generatePwaArtifacts({ routerAsset, stylesAsset });
+  generatePwaArtifacts({
+    routerAsset,
+    stylesAsset,
+    cacheVersion: `${manifest.generatedAt}-${routerAsset}-${stylesAsset}`.replace(/[^a-zA-Z0-9.-]/g, "-"),
+  });
   writeFileSync(join(DIST_DIR, "fastscript-manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
-  writeFileSync(join(DIST_DIR, "index.html"), buildIndexHtml(hasStyles, { stylesAsset, routerAsset }), "utf8");
+  writeFileSync(
+    join(DIST_DIR, "index.html"),
+    buildIndexHtml(hasStyles, { stylesAsset, routerAsset, devMode: manifest.devMode }),
+    "utf8",
+  );
 
   if (options.mode === "ssg") {
     await runSsg(manifest, { stylesAsset, routerAsset });
@@ -289,20 +327,51 @@ export async function runBuild(options = {}) {
   console.log(`built FastScript app with ${manifest.routes.length} page route(s) and ${manifest.apiRoutes.length} api route(s)`);
 }
 
-function buildIndexHtml(hasStyles, { stylesAsset = "styles.css", routerAsset = "router.js", content = "" } = {}) {
+function buildIndexHtml(hasStyles, { stylesAsset = "styles.css", routerAsset = "router.js", content = "", devMode = false } = {}) {
+  const faviconSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23000'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='16' fill='%23fff'>FS</text></svg>`;
+  const faviconUrl = `data:image/svg+xml,${faviconSvg}`;
   return `<!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FastScript</title>
+    <title>FastScript — Full-stack .fs language runtime</title>
+    <meta name="description" content="Write product code in .fs, compile to optimized JavaScript, and ship to Node, Vercel, or Cloudflare with one command pipeline." />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="${faviconUrl}" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FastScript — Full-stack .fs language runtime" />
+    <meta property="og:description" content="Write .fs, compile to JS, ship anywhere. 1.8KB runtime. &lt;1s builds. 3 deploy targets." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FastScript" />
+    <meta name="twitter:description" content="Full-stack .fs language runtime. Write once, ship to Node, Vercel, or Cloudflare." />
     ${hasStyles ? `<link rel="stylesheet" href="/${stylesAsset}" />` : ""}
   </head>
   <body>
     <div id="app">${content}</div>
     <script type="module" src="/${routerAsset}"></script>
-    <script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/service-worker.js").catch(() => {}); }</script>
+    <script>
+      (function () {
+        if (!("serviceWorker" in navigator)) return;
+        const isDevMode = ${devMode ? "true" : "false"};
+        const host = (location && location.hostname) || "";
+        const isLocalhost = host === "localhost" || host === "127.0.0.1" || host === "::1";
+        if (isDevMode || isLocalhost) {
+          navigator.serviceWorker.getRegistrations()
+            .then((regs) => Promise.all(regs.map((r) => r.unregister())))
+            .catch(() => {});
+          if (window.caches && typeof window.caches.keys === "function") {
+            window.caches.keys()
+              .then((keys) => Promise.all(keys.filter((k) => String(k).indexOf("fastscript-") === 0).map((k) => window.caches.delete(k))))
+              .catch(() => {});
+          }
+          return;
+        }
+        navigator.serviceWorker.register("/service-worker.js").catch(() => {});
+      })();
+    </script>
   </body>
 </html>`;
 }
@@ -435,6 +504,16 @@ async function hydrate(mod, ctx) {
   }
 }
 
+async function hydrateLayouts(route, ctx) {
+  const layouts = route?.layouts && route.layouts.length ? route.layouts : (manifest.layout ? [manifest.layout] : []);
+  for (const layoutPath of layouts) {
+    const layout = await import(layoutPath);
+    if (typeof layout.hydrate === "function") {
+      await layout.hydrate({ ...ctx, root: app });
+    }
+  }
+}
+
 async function applyLayouts(html, route, ctx, slots = {}) {
   const layouts = route?.layouts && route.layouts.length ? route.layouts : (manifest.layout ? [manifest.layout] : []);
   if (!layouts.length) return html;
@@ -497,6 +576,11 @@ async function render(pathname, force = false) {
     }
 
     bindLinks();
+    if (matched) {
+      await hydrateLayouts(matched.route, { pathname: routePath, locale: localeInfo.locale, params, data, slots });
+    } else if (!matched && manifest.notFound) {
+      await hydrateLayouts({ layouts: manifest.layout ? [manifest.layout] : [] }, { pathname: routePath, locale: localeInfo.locale, params, data, slots });
+    }
     if (mod) await hydrate(mod, { pathname: routePath, locale: localeInfo.locale, params, data, slots });
     globalThis.__FASTSCRIPT_SSR = null;
   } catch (error) {
@@ -517,10 +601,13 @@ function bindLinks() {
         href = href === "/" ? "/" + localeInfo.locale : "/" + localeInfo.locale + href;
       }
       history.pushState({}, "", href);
+      window.scrollTo(0, 0);
       render(location.pathname, true);
     });
   }
 }
+
+if (history.scrollRestoration) history.scrollRestoration = "manual";
 
 function connectHmr() {
   if (!manifest.devMode) return;

@@ -21,6 +21,10 @@ jobs:
       - run: npm run test:sourcemap-fidelity
       - run: npm run test:typecheck
       - run: npm run test:format-lint
+      - run: npm run test:runtime-contract
+      - run: npm run test:determinism
+      - run: npm run test:parser-fuzz
+      - run: npm run test:security-baseline
       - run: npm run test:conformance
 
   test:
@@ -38,4 +42,4 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
-      - run: npm run qa:all
+      - run: npm run qa:gate

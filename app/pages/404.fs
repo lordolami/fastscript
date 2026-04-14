@@ -1,14 +1,14 @@
-export default function NotFound({pathname}) {
+export default function NotFound({ pathname }) {
   return `
-    <section class="not-found">
-      <p class="not-code">404</p>
-      <h1 class="not-title">That route is not part of this FastScript app.</h1>
-      <p class="not-copy">No matching file exists under <code>app/pages</code> for <code>${pathname || "/unknown"}</code>.</p>
-      <div class="not-links">
-        <a class="btn btn-primary" href="/">Back home</a>
-        <a class="btn btn-ghost" href="/docs">Open docs</a>
-        <a class="btn btn-outline" href="/showcase">View showcase</a>
+    <div class="not-found">
+      <p class="not-found-code">404</p>
+      <h1 class="not-found-title">Page not found</h1>
+      <p class="not-found-copy">The page <code class="nf-ic">${pathname || ""}</code> does not exist or has been moved.</p>
+      <div class="not-found-actions">
+        <a class="btn btn-primary" href="/">Go home</a>
+        <a class="btn btn-ghost" href="/docs">Documentation</a>
+        <a class="btn btn-ghost" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub</a>
       </div>
-    </section>
+    </div>
   `;
 }

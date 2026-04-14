@@ -1,35 +1,43 @@
-# FastScript Release Process
+﻿# FastScript Release Process
 
-## No-Billing CI Mode
-When hosted CI is unavailable, local gate is mandatory.
-
+## Fast Path (every PR/push)
 1. `npm run hooks:install`
-2. `npm run qa:all`
+2. `npm run qa:gate`
+3. `npm run merge:gate`
+
+`pre-push` hook policy:
+- Runs `qa:gate` + `merge:gate`.
+- Temporary bypass only for emergency hotfix: `SKIP_QA_HOOK=1 git push`.
+
+## Full Release Path (RC/stable)
+1. `npm run qa:all`
+2. `npm run sbom:generate`
 3. `npm run pack:check`
 4. `npm run release:patch|minor|major`
 5. Re-run `npm run qa:all`
-
-`pre-push` hook:
-- Runs `qa:all` automatically.
-- Temporary bypass: `SKIP_QA_HOOK=1 git push` (hotfix-only policy).
 
 ## Required Language v1 Gates
 - `npm run test:fs-diag`
 - `npm run test:sourcemap-fidelity`
 - `npm run test:typecheck`
-- `npm run test:format-lint`
 - `npm run test:conformance`
+- `npm run test:determinism`
+- `npm run test:parser-fuzz`
+- `npm run test:runtime-contract`
+- `npm run test:security-baseline`
 
-## Stable Gate
-- All items in `spec/STABLE_RELEASE_CHECKLIST.md` complete.
-- `spec/LANGUAGE_V1_SPEC.md` and governance policy are current.
+## Stable Gate Definition
+- All items in `spec/STABLE_RELEASE_CHECKLIST.md` are checked.
+- `docs/V1_FOREVER_READINESS.md` is current.
 - No open blocker defects.
-- Production smoke (`npm run smoke:start`) passes.
+- `npm run smoke:start` passes in production-like mode.
 
 ## Governance
-- Versioning, deprecation, and RFC workflow: `docs/GOVERNANCE_VERSIONING_POLICY.md`.
-- Breaking changes require major release and migration notes.
+- SemVer/deprecation/RFC policy: `docs/GOVERNANCE_VERSIONING_POLICY.md`
+- LTS support policy: `docs/LTS_POLICY.md`
+- Threat/security policy: `docs/THREAT_MODEL.md`, `SECURITY.md`
 
 ## Release Execution Helpers
-- `npm run rollback:drill`: validates rollback from bad deploy artifact to previous good artifact.
-- `npm run soak:window`: runs staged smoke cycles and emits `/.release/soak-window/report.json`.
+- `npm run rollback:drill`
+- `npm run soak:window`
+- `npm run deploy:zero-downtime`

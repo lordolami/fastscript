@@ -1,321 +1,411 @@
-const FEATURES = [{
-  id: "01",
-  title: "Readable .fs syntax",
-  text: "Keep JavaScript ergonomics, remove framework ceremony. State, routes, APIs, and jobs stay in one language.",
-  chip: "state users = []"
-}, {
-  id: "02",
-  title: "Sub-second build loops",
-  text: "FastScript compiles route modules and runtime assets with aggressive caching and low cold-start overhead.",
-  chip: "fastscript build"
-}, {
-  id: "03",
-  title: "Deploy anywhere",
-  text: "Generate Node, Vercel, and Cloudflare adapters from one command, with production headers and route fallbacks.",
-  chip: "fastscript deploy --target vercel"
-}, {
-  id: "04",
-  title: "Interop-first by design",
-  text: "Import npm ESM, CJS, scoped packages, framework APIs, and migrate gradually without codebase rewrites.",
-  chip: "import x from \"dual-mode-lib\""
-}, {
-  id: "05",
-  title: "Typed route intelligence",
-  text: "Route params and loader return shapes are inferred into generated route context types for safer app code.",
-  chip: "FastScriptRouteContext"
-}, {
-  id: "06",
-  title: "AI-friendly structure",
-  text: "Consistent file conventions, explicit diagnostics, and constrained style rules make generated code far more reliable.",
-  chip: "qa:all"
-}];
-const DENSITY = [{
-  label: "Cold start",
-  value: "17ms worker startup"
-}, {
-  label: "Interop",
-  value: "13/13 matrix passing"
-}, {
-  label: "Runtime",
-  value: "1.8KB client core"
-}, {
-  label: "Ship gate",
-  value: "qa:gate + merge gate"
-}];
 export default function Home() {
-  const featureCards = FEATURES.map(item => `
-    <article class="feature-card reveal-up" data-reveal>
-      <span class="feature-index">${item.id}</span>
-      <h3 class="feature-title">${item.title}</h3>
-      <p class="feature-text">${item.text}</p>
-      <span class="feature-chip">${item.chip}</span>
-    </article>
-  `).join("");
-  const densityCards = DENSITY.map(entry => `
-    <article class="density-item reveal-up" data-reveal>
-      <p class="density-label">${entry.label}</p>
-      <p class="density-value">${entry.value}</p>
-    </article>
-  `).join("");
   return `
-    <section class="home-hero">
-      <div class="orb-wrap" aria-hidden="true">
-        <span class="orb orb-a"></span>
-        <span class="orb orb-b"></span>
-        <span class="orb orb-c"></span>
-      </div>
+    <section class="hero">
+      <div class="shell hero-inner">
+        <div class="hero-left">
+          <div class="hero-badge">
+            <span class="hero-badge-dot" aria-hidden="true"></span>
+            v1.0 &mdash; <a href="/changelog" class="hero-badge-link">See what&rsquo;s new</a>
+          </div>
 
-      <div class="hero-grid">
-        <article class="hero-copy">
-          <p class="hero-badge"><span class="pulse-dot"></span> FastScript v0.1.5 is live with production deploy adapters</p>
-          <h1 class="hero-title">Build full-stack products in <span class="hero-gradient">one readable language.</span></h1>
-          <p class="hero-description">FastScript gives you pages, APIs, auth, queues, storage, and deploy adapters with JavaScript ecosystem compatibility. You ship faster without locking into one framework runtime.</p>
+          <h1 class="hero-title">
+            The full-stack<br>
+            <span class="hero-title-muted">language runtime.</span>
+          </h1>
+
+          <p class="hero-desc">
+            Write your app in <code class="ic">.fs</code>, keep full <code class="ic">.js</code> package compatibility,
+            compile to optimized JavaScript, and ship to Node, Vercel, or Cloudflare with one command.
+            Zero runtime deps. 1.8KB client bundle.
+          </p>
+
+          <div class="install-row">
+            <span class="install-row-prefix">$</span>
+            <span class="install-row-cmd" id="install-cmd">npm i -g fastscript-lang</span>
+            <button class="copy-btn" data-copy="npm i -g fastscript-lang" aria-label="Copy install command">
+              &#9112; Copy
+            </button>
+          </div>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="/learn">Start in 15 minutes</a>
-            <a class="btn btn-outline" href="/docs">Read docs</a>
-            <button type="button" class="btn btn-ghost" data-demo-open>Open launch blueprint</button>
+            <a class="btn btn-primary btn-lg" href="/learn">Get Started</a>
+            <a class="btn btn-secondary btn-lg" href="/docs">View Docs</a>
           </div>
+        </div>
 
-          <p class="hero-note"><b>Current quality gate:</b> interop matrix, deploy adapter tests, language smoke tests, conformance, and full QA are all green.</p>
-
-          <div class="hero-quickstats">
-            <p><span>1.8KB</span> runtime core</p>
-            <p><span>&lt;1s</span> warm builds</p>
-            <p><span>13/13</span> interop matrix</p>
-          </div>
-        </article>
-
-        <article class="hero-stack">
-          <div class="hero-terminal reveal-up" data-reveal>
-            <div class="terminal-header">
-              <span class="terminal-dot terminal-dot-red"></span>
-              <span class="terminal-dot terminal-dot-amber"></span>
-              <span class="terminal-dot terminal-dot-green"></span>
+        <div class="hero-right" aria-hidden="true">
+          <div class="hero-visual">
+            <div class="terminal-bar">
+              <span class="terminal-dot-r"></span>
+              <span class="terminal-dot-y"></span>
+              <span class="terminal-dot-g"></span>
+              <span class="terminal-title">fastscript deploy --target cloudflare</span>
             </div>
-            <pre class="terminal-body"><span class="terminal-line">$ npm i -g fastscript-lang</span><span class="terminal-line">$ fastscript create my-app</span><span class="terminal-line">$ fastscript dev</span><span class="terminal-line">ready on http://localhost:4173<span class="terminal-cursor">|</span></span></pre>
+            <div class="terminal-body">
+              <span class="t-prompt">$ </span><span class="t-cmd">fastscript create my-app</span><br>
+              <span class="t-out">&nbsp; &#10003; scaffolded in 0.4s</span><br>
+              <br>
+              <span class="t-prompt">$ </span><span class="t-cmd">npm run qa:all</span><br>
+              <span class="t-out">&nbsp; &#10003; lint &middot; types &middot; tests &middot; bench</span><br>
+              <br>
+              <span class="t-prompt">$ </span><span class="t-cmd">fastscript deploy --target cloudflare</span><br>
+              <span class="t-success">&nbsp; &#10003; ready &rarr; workers.dev (~19ms)</span><br>
+              <br>
+              <span class="t-prompt">$ </span><span class="t-cursor"></span>
+            </div>
           </div>
-
-          <div class="signal-cloud" aria-hidden="true">
-            <span class="signal-pill signal-pill-a">SSR + API from one codebase</span>
-            <span class="signal-pill signal-pill-b">Node, Vercel, Cloudflare</span>
-            <span class="signal-pill signal-pill-c">Type-safe route context</span>
-          </div>
-
-          <div class="hero-metrics">
-            <article class="metric reveal-up" data-reveal>
-              <span class="metric-label">Runtime footprint</span>
-              <strong class="metric-value">1.8 KB</strong>
-              <p class="metric-delta">Minified core runtime</p>
-            </article>
-            <article class="metric reveal-up" data-reveal>
-              <span class="metric-label">Interop matrix</span>
-              <strong class="metric-value">13 / 13</strong>
-              <p class="metric-delta">Framework and npm scenarios</p>
-            </article>
-            <article class="metric reveal-up" data-reveal>
-              <span class="metric-label">Routes and APIs</span>
-              <strong class="metric-value">13 + 5</strong>
-              <p class="metric-delta">Current site in production mode</p>
-            </article>
-            <article class="metric reveal-up" data-reveal>
-              <span class="metric-label">Core QA</span>
-              <strong class="metric-value">100%</strong>
-              <p class="metric-delta">qa:all passing</p>
-            </article>
-          </div>
-        </article>
+        </div>
       </div>
 
-      <div class="hero-rail" aria-hidden="true">
-        <div class="rail-track">
-          <span>FS FULL STACK</span><span>FAST BUILD LOOPS</span><span>NO FRAMEWORK LOCK-IN</span><span>DEPLOY ANYWHERE</span><span>FS FULL STACK</span><span>FAST BUILD LOOPS</span><span>NO FRAMEWORK LOCK-IN</span><span>DEPLOY ANYWHERE</span>
+      <div class="shell">
+        <div class="social-strip">
+          <div class="social-item">
+            <span aria-hidden="true">&#11088;</span>
+            <span class="social-item-n">GitHub</span>
+            <span>open-source momentum</span>
+          </div>
+          <div class="social-item">
+            <span aria-hidden="true">&#128230;</span>
+            <span class="social-item-n">npm</span>
+            <span>CLI ready</span>
+          </div>
+          <div class="social-item">
+            <span aria-hidden="true">&#128101;</span>
+            <span class="social-item-n">Contributors</span>
+            <span>community-led</span>
+          </div>
+          <div class="social-item">
+            <span aria-hidden="true">&#128204;</span>
+            <span class="social-item-n">v1.0</span>
+            <span>latest stable</span>
+          </div>
+          <div class="social-item">
+            <span aria-hidden="true">&#128275;</span>
+            <span class="social-item-n">MIT</span>
+            <span>MIT licensed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="shell">
+        <div class="hero-stats" role="list">
+          <div class="hero-stat" role="listitem">
+            <span class="hero-stat-n">1.8<span class="hero-stat-n-sub">KB</span></span>
+            <span class="hero-stat-l">Client runtime</span>
+          </div>
+          <div class="hero-stat" role="listitem">
+            <span class="hero-stat-n">&lt;1<span class="hero-stat-n-sub">s</span></span>
+            <span class="hero-stat-l">Build time</span>
+          </div>
+          <div class="hero-stat" role="listitem">
+            <span class="hero-stat-n">13<span class="hero-stat-n-sub">/13</span></span>
+            <span class="hero-stat-l">Interop tests</span>
+          </div>
+          <div class="hero-stat" role="listitem">
+            <span class="hero-stat-n">3</span>
+            <span class="hero-stat-l">Deploy targets</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section momentum-section">
-      <header class="section-head">
-        <p class="section-kicker">Execution signal</p>
-        <h2 class="section-title">FastScript is built for production pressure, not demos.</h2>
-      </header>
+    <div class="ticker-strip" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item">FastScript</span>
+        <span class="ticker-item">Full-stack .fs language</span>
+        <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
+        <span class="ticker-item">No framework lock-in</span>
+        <span class="ticker-item">13/13 interop</span>
+        <span class="ticker-item">1.8KB runtime</span>
+        <span class="ticker-item">SSR + ISR + Streaming</span>
+        <span class="ticker-item">FastScript</span>
+        <span class="ticker-item">Full-stack .fs language</span>
+        <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
+        <span class="ticker-item">No framework lock-in</span>
+        <span class="ticker-item">13/13 interop</span>
+        <span class="ticker-item">1.8KB runtime</span>
+        <span class="ticker-item">SSR + ISR + Streaming</span>
+      </div>
+    </div>
 
-      <div class="momentum-grid">
-        <article class="momentum-copy reveal-up" data-reveal>
-          <p class="section-copy">The platform combines compiler performance, adapter reliability, and ecosystem compatibility. Teams can keep npm workflows while moving critical routes to .fs and shipping through one gate.</p>
-          <div class="hero-actions">
-            <a class="btn btn-soft" href="/benchmarks">Inspect benchmark proof</a>
-            <a class="btn btn-outline" href="/docs/latest">Read deploy track</a>
+    <section class="home-how">
+      <header class="sec-header reveal">
+        <p class="kicker">How it works</p>
+        <h2 class="h2">Three steps from idea to production.</h2>
+      </header>
+      <div class="how-grid reveal-children">
+        <div class="how-cell">
+          <p class="how-num">01 &mdash; Write</p>
+          <p class="how-title">Author in .fs</p>
+          <p class="how-copy">Use the FastScript language: ES modules plus <code class="ic">fn</code>, <code class="ic">state</code>, and <code class="ic">~</code>. Pages, APIs, middleware, jobs &mdash; all in one file format with full type stripping at compile time.</p>
+        </div>
+        <div class="how-cell">
+          <p class="how-num">02 &mdash; Verify</p>
+          <p class="how-title">Run the QA gate</p>
+          <p class="how-copy"><code class="ic">npm run qa:all</code> runs format check, lint, typecheck, full test suite, smoke test, benchmarks, interop report, and proof publish in one command. All must pass before you ship.</p>
+        </div>
+        <div class="how-cell">
+          <p class="how-num">03 &mdash; Deploy</p>
+          <p class="how-title">Ship to your target</p>
+          <p class="how-copy"><code class="ic">fastscript deploy --target cloudflare</code> (or <code class="ic">node</code>, <code class="ic">vercel</code>) generates a hardened adapter and deploys. No per-platform config. One codebase, three outputs.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-split reveal">
+      <div class="split-section">
+        <div class="split-cell">
+          <p class="kicker">Developer experience</p>
+          <h2 class="h2 split-h2">Write once.<br>Ship anywhere.</h2>
+          <p class="body-copy split-copy">One language. One pipeline. No parallel framework stacks, no config sprawl. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
+          <div class="terminal">
+            <div class="terminal-bar">
+              <span class="terminal-dot-r"></span><span class="terminal-dot-y"></span><span class="terminal-dot-g"></span>
+              <span class="terminal-title">terminal</span>
+            </div>
+            <div class="terminal-body">
+              <span class="t-prompt">$ </span><span class="t-cmd">fastscript create my-app</span><br>
+              <span class="t-out">&nbsp; &#10003; scaffolded 16 routes, 5 API handlers</span><br>
+              <span class="t-prompt">$ </span><span class="t-cmd">fastscript deploy --target vercel</span><br>
+              <span class="t-success">&nbsp; &#10003; ready &rarr; production (~19ms startup)</span><br>
+              <span class="t-prompt">$ </span><span class="t-cursor"></span>
+            </div>
           </div>
-        </article>
-
-        <article class="momentum-visual reveal-up" data-reveal>
-          <div class="spiral-ring spiral-ring-a"></div>
-          <div class="spiral-ring spiral-ring-b"></div>
-          <div class="spiral-ring spiral-ring-c"></div>
-          <div class="density-grid">${densityCards}</div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <header class="section-head">
-        <p class="section-kicker">Execution model</p>
-        <h2 class="section-title">How FastScript flows from code to production.</h2>
-      </header>
-      <div class="home-flow">
-        <article class="flow-item reveal-up" data-reveal>
-          <p class="flow-step">Step 01</p>
-          <h3 class="flow-title">Write .fs source</h3>
-          <p class="flow-text">Pages, API routes, middleware, migrations, and workers use the same readable syntax.</p>
-        </article>
-        <article class="flow-item reveal-up" data-reveal>
-          <p class="flow-step">Step 02</p>
-          <h3 class="flow-title">Compile + typecheck</h3>
-          <p class="flow-text">Route priority, loader data inference, diagnostics, and source maps are generated automatically.</p>
-        </article>
-        <article class="flow-item reveal-up" data-reveal>
-          <p class="flow-step">Step 03</p>
-          <h3 class="flow-title">Deploy adapters</h3>
-          <p class="flow-text">Node, Vercel, and Cloudflare outputs are generated with hardened headers, routing, and static caching policies.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <header class="section-head">
-        <p class="section-kicker">Why teams switch</p>
-        <h2 class="section-title">A stack that stays simple while scaling complexity.</h2>
-      </header>
-      <div class="feature-grid">${featureCards}</div>
-    </section>
-
-    <section class="section">
-      <header class="section-head">
-        <p class="section-kicker">Code view</p>
-        <h2 class="section-title">One language from UI to server handlers.</h2>
-      </header>
-      <div class="code-split">
-        <article class="code-panel reveal-up" data-reveal>
-          <h3 class="code-title">Route + loader - app/pages/product/[slug].fs</h3>
-          <pre class="code-block">export async function load(ctx) {
-  const product = await ctx.db.get("products", ctx.params.slug)
-  if (!product) return { notFound: true }
-  return { product }
+        </div>
+        <div class="split-cell">
+          <p class="kicker">Language syntax</p>
+          <h2 class="h2 split-h2">Familiar syntax.<br>New power.</h2>
+          <p class="body-copy split-copy">All of JavaScript ESM &mdash; plus three new forms: <code class="ic">fn</code>, <code class="ic">state</code>, and <code class="ic">~</code>. Type annotations strip at compile time. Full npm ecosystem compatibility.</p>
+          <div class="code-block">
+            <div class="code-block-head">
+              <span class="code-block-file">app/pages/product/[slug].fs</span>
+              <span class="code-block-lang">.fs</span>
+            </div>
+            <div class="code-block-body"><span class="code-kw">export</span> <span class="code-kw">async</span> <span class="code-fn">fn</span> <span class="code-fn">load</span>(ctx) {
+  state product = <span class="code-kw">await</span> ctx.db.get(
+    <span class="code-str">"products"</span>, ctx.params.slug
+  )
+  <span class="code-kw">if</span> (!product) <span class="code-kw">return</span> { notFound: <span class="code-kw">true</span> }
+  <span class="code-kw">return</span> { product }
 }
 
-export default function ProductPage({ product }) {
-  return '&lt;article&gt;&lt;h1&gt;\${product.name}&lt;/h1&gt;&lt;/article&gt;'
-}</pre>
-        </article>
-        <article class="code-panel reveal-up" data-reveal>
-          <h3 class="code-title">API + validation - app/api/orders.fs</h3>
-          <pre class="code-block">export const schemas = {
-  POST: { email: "string", items: "array" }
-}
-
-export async function POST(ctx) {
-  const body = await ctx.input.validateBody(schemas.POST)
-  const order = await ctx.db.insert("orders", body)
-  await ctx.queue.enqueue("send-order-email", { orderId: order.id })
-  return ctx.helpers.json({ ok: true, order }, 201)
-}</pre>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="bench-grid">
-        <article class="bench-card reveal-up" data-reveal>
-          <h3 class="bench-heading">Bundle profile</h3>
-          <div class="bar-list">
-            <div class="bar-row"><span class="bar-label">React baseline</span><div class="bar-track"><span class="bar-fill bar-fill-react"></span></div><span class="bar-value">142 KB</span></div>
-            <div class="bar-row"><span class="bar-label">Next app shell</span><div class="bar-track"><span class="bar-fill bar-fill-next"></span></div><span class="bar-value">89 KB</span></div>
-            <div class="bar-row"><span class="bar-label">FastScript runtime</span><div class="bar-track"><span class="bar-fill bar-fill-fastscript"></span></div><span class="bar-value">1.8 KB</span></div>
+<span class="code-kw">export</span> <span class="code-kw">default</span> <span class="code-fn">fn</span> <span class="code-fn">Page</span>({ product }) {
+  <span class="code-kw">return</span> <span class="code-str">\`&lt;h1&gt;\${product.name}&lt;/h1&gt;\`</span>
+}</div>
           </div>
-        </article>
-
-        <article class="bench-card reveal-up" data-reveal>
-          <h3 class="bench-heading">Build + test signal</h3>
-          <p class="feature-text">The website itself runs through repo lock, lint and typecheck, docs indexing, interoperability reports, and backup verification.</p>
-          <div class="bench-highlight">
-            <p class="bench-highlight-title">Latest proof pack</p>
-            <p class="bench-highlight-value">QA all green</p>
-            <p class="bench-highlight-note">Generated from benchmark and interop artifacts</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="cta-band reveal-up" data-reveal>
-        <h2 class="cta-band-title">Ship your next startup in FastScript.</h2>
-        <p class="cta-band-copy">Start with docs, fork the examples, run deploy adapters, and push production from one codebase.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/learn">Get started</a>
-          <a class="btn btn-ghost" href="/examples">Open example projects</a>
-          <a class="btn btn-outline" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">Star on GitHub</a>
         </div>
       </div>
     </section>
 
-    <section class="demo-modal" data-demo-modal aria-hidden="true">
-      <button type="button" class="demo-backdrop" data-demo-close aria-label="Close launch blueprint"></button>
-      <article class="demo-panel" role="dialog" aria-modal="true" aria-labelledby="launch-blueprint-title">
-        <p class="section-kicker">Launch blueprint</p>
-        <h2 class="demo-title" id="launch-blueprint-title">How to ship a production app in FastScript this week.</h2>
-        <p class="demo-copy">Use this as the no-fluff path: create, build route contracts, pass qa:gate, then deploy to your adapter target.</p>
-        <ul class="demo-list">
-          <li>Day 1: scaffold app, auth policy, route skeleton.</li>
-          <li>Day 2: build API contracts and DB flows with validation.</li>
-          <li>Day 3: queue jobs, webhook handlers, observability hooks.</li>
-          <li>Day 4: benchmark, proof-pack, deploy adapter rollout.</li>
-        </ul>
-        <pre class="timeline-code">npm install -g fastscript-lang
-fastscript create my-startup
-npm run qa:gate
-fastscript deploy --target cloudflare</pre>
-        <div class="demo-actions">
-          <a class="btn btn-primary" href="/learn">Open quickstart</a>
-          <button type="button" class="btn btn-ghost demo-close" data-demo-close>Close</button>
+    <section class="home-features">
+      <header class="sec-header reveal">
+        <p class="kicker">Platform capabilities</p>
+        <h2 class="h2">Everything you need. Nothing you don&rsquo;t.</h2>
+      </header>
+      <div class="feature-grid reveal-children">
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#9889;</div>
+          <p class="feature-title">File-based routing</p>
+          <p class="feature-copy">Priority-scored dynamic routing with typed params, catch-all segments, layouts, and parallel route slots.</p>
         </div>
-      </article>
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#128274;</div>
+          <p class="feature-title">Auth + sessions</p>
+          <p class="feature-copy">Session manager, cookie policies, OAuth providers, rotation, and audit log built into every request context.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#128451;</div>
+          <p class="feature-title">DB + storage</p>
+          <p class="feature-copy">File-based or Postgres driver, S3-compatible storage, tenant scoping, and migration runner via <code class="ic">ctx.db</code>.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#128260;</div>
+          <p class="feature-title">Job queue + workers</p>
+          <p class="feature-copy">Distributed job queue with dead-letter replay, scheduler, retention sweep, and webhook delivery included.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#128640;</div>
+          <p class="feature-title">SSR + ISR + Streaming</p>
+          <p class="feature-copy">Server-side render, incremental static regen with cache tags, and streaming response switchable per route.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#129169;</div>
+          <p class="feature-title">Plugin hooks</p>
+          <p class="feature-copy">Build start/end, request start/end hooks. Composable middleware pipeline with security headers and rate limiting.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-story reveal">
+      <header class="sec-header">
+        <p class="kicker">Brand story</p>
+        <h2 class="h2">Why FastScript exists.</h2>
+      </header>
+      <div class="story-grid">
+        <div class="story-cell">
+          <p class="story-cell-title">The problem</p>
+          <p class="story-cell-copy">Modern JavaScript stacks require you to assemble 5&ndash;10 libraries before you write a single line of product code: a router, an auth library, a job runner, a validation system, a deploy config. Every new project starts with a week of plumbing.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">The insight</p>
+          <p class="story-cell-copy">The best teams don&rsquo;t pick better libraries &mdash; they pick a coherent system. FastScript is that system: a single language and runtime where the router, auth, queue, and deploy adapter speak the same language because they were designed together.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">The approach</p>
+          <p class="story-cell-copy">Compile-first: every <code class="ic">.fs</code> file goes through a strict QA gate before it ever runs. No runtime surprises, no silent failures. Ship with confidence because the toolchain proves correctness before you deploy.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">The promise</p>
+          <p class="story-cell-copy">FastScript will never require you to learn a proprietary DSL that doesn&rsquo;t map back to JavaScript. Every compilation output is readable, standard JS. You own your code &mdash; always.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-bento">
+      <header class="sec-header reveal">
+        <p class="kicker">Proof by numbers</p>
+        <h2 class="h2">Built to ship. Measured to prove it.</h2>
+      </header>
+      <div class="bento reveal">
+        <div class="bento-cell bento-quarter">
+          <p class="bento-label">Client runtime</p>
+          <p class="bento-num">1.8<span class="bento-num-sub">KB</span></p>
+          <p class="bento-copy">gzip budget. React baseline is 142KB.</p>
+        </div>
+        <div class="bento-cell bento-quarter">
+          <p class="bento-label">Build time</p>
+          <p class="bento-num">&lt;1<span class="bento-num-sub">s</span></p>
+          <p class="bento-copy">Warm build for this full website project.</p>
+        </div>
+        <div class="bento-cell bento-quarter">
+          <p class="bento-label">Interop matrix</p>
+          <p class="bento-num">13<span class="bento-num-sub">/13</span></p>
+          <p class="bento-copy">ESM, CJS, and .fs combinations passing.</p>
+        </div>
+        <div class="bento-cell bento-quarter">
+          <p class="bento-label">Cloudflare startup</p>
+          <p class="bento-num">~19<span class="bento-num-sub">ms</span></p>
+          <p class="bento-copy">Cold start on Cloudflare Workers.</p>
+        </div>
+        <div class="bento-cell bento-half bento-bt">
+          <p class="bento-label">Quality gate</p>
+          <p class="bento-title-lg">One command. Full proof.</p>
+          <p class="bento-copy">npm run qa:all runs format check, lint, typecheck, docs index, full test suite, smoke dev + start, benchmarks, interop report, proof publish, and backup verification in sequence.</p>
+        </div>
+        <div class="bento-cell bento-half bento-bt">
+          <p class="bento-label">Deploy adapters</p>
+          <p class="bento-title-lg">Write once, generate three adapters.</p>
+          <p class="bento-copy">Node, Vercel, and Cloudflare Workers outputs from one codebase. No per-platform logic branches.</p>
+          <div class="tag-row">
+            <span class="tag">Node.js</span>
+            <span class="tag">Vercel</span>
+            <span class="tag">Cloudflare Workers</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-ai reveal">
+      <header class="sec-header">
+        <p class="kicker">AI-generated code</p>
+        <h2 class="h2">Built for the AI coding era.</h2>
+      </header>
+      <div class="split-section">
+        <div class="split-cell">
+          <p class="body-copy split-copy">AI code generators produce volume. FastScript provides the safety net. The compiler&rsquo;s strict diagnostic pass catches hallucination patterns &mdash; undefined references, type mismatches, unreachable code, bad import shapes &mdash; before they reach production.</p>
+          <p class="body-copy split-copy">The QA gate runs automatically on every <code class="ic">fastscript build</code>. AI-generated routes, handlers, and middleware all go through the same pipeline as hand-written code. Same rules. No exceptions.</p>
+          <div class="tag-row">
+            <span class="tag">Strict diagnostics</span>
+            <span class="tag">Compile-time proof</span>
+            <span class="tag">Zero runtime surprises</span>
+          </div>
+        </div>
+        <div class="split-cell">
+          <div class="code-block">
+            <div class="code-block-head">
+              <span class="code-block-file">fs-diagnostics output</span>
+              <span class="code-block-lang">AI mode</span>
+            </div>
+            <div class="code-block-body"><span class="t-out">Checking app/pages/products.fs...</span>
+<span class="t-success">  &#10003; imports resolved (3/3)</span>
+<span class="t-success">  &#10003; fn signatures validated</span>
+<span class="t-success">  &#10003; ctx.db calls type-safe</span>
+<span class="t-success">  &#10003; no unreachable returns</span>
+<span class="t-success">  &#10003; auth guards in place</span>
+<span class="t-out"></span>
+<span class="t-success">All checks passed. Safe to deploy.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-compare reveal">
+      <header class="sec-header">
+        <p class="kicker">Why FastScript</p>
+        <h2 class="h2">Less stack, more product.</h2>
+      </header>
+      <div class="compare-table">
+        <div class="compare-header">
+          <div class="compare-col-head">Feature</div>
+          <div class="compare-col-head is-ours">FastScript</div>
+          <div class="compare-col-head">Next.js</div>
+          <div class="compare-col-head">Remix</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell is-label">Own language + compiler</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> .fs first-class</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> JS/TS only</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> JS/TS only</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell is-label">Client runtime size</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> 1.8 KB gzip</div>
+          <div class="compare-cell"><span class="cross">&#10007;</span> 89 KB+</div>
+          <div class="compare-cell"><span class="cross">&#10007;</span> ~40 KB+</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell is-label">Build speed</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> &lt;1s warm</div>
+          <div class="compare-cell"><span class="partial">~</span> 5&ndash;18s</div>
+          <div class="compare-cell"><span class="partial">~</span> 3&ndash;10s</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell is-label">Auth + session built-in</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> Included</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> Bring your own</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> Bring your own</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell is-label">Job queue + workers</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> Included</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> External service</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> External service</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell is-label">Multi-target deploy</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> Node/Vercel/CF</div>
+          <div class="compare-cell"><span class="partial">~</span> Vercel-first</div>
+          <div class="compare-cell"><span class="partial">~</span> Adapter plugins</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell is-label">AI reliability mode</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> Built-in</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> Not available</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> Not available</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-cta reveal">
+      <div class="cta-block">
+        <h2 class="cta-title">Build once in .fs. Ship anywhere.</h2>
+        <p class="cta-copy">FastScript keeps the JavaScript ecosystem while removing stack sprawl. Use <code class="ic">.fs</code> as your source of truth, keep <code class="ic">.js</code> compatibility, and start your next production app in under 15 minutes.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="/learn">Start in 15 minutes</a>
+          <a class="btn btn-secondary btn-lg" href="/examples">Browse examples</a>
+          <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub &rarr;</a>
+        </div>
+      </div>
     </section>
   `;
-}
-export function hydrate({root}) {
-  const modal = root.querySelector("[data-demo-modal]");
-  const openers = root.querySelectorAll("[data-demo-open]");
-  const closers = root.querySelectorAll("[data-demo-close]");
-  function setModal(open) {
-    if (!modal) return;
-    modal.classList.toggle("is-open", open);
-    modal.setAttribute("aria-hidden", open ? "false" : "true");
-    document.body.classList.toggle("modal-open", open);
-  }
-  openers.forEach(el => {
-    el.addEventListener("click", () => setModal(true));
-  });
-  closers.forEach(el => {
-    el.addEventListener("click", () => setModal(false));
-  });
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") setModal(false);
-  });
-  const revealNodes = root.querySelectorAll("[data-reveal]");
-  if (!revealNodes.length) return;
-  if (!window.IntersectionObserver) {
-    revealNodes.forEach(node => node.classList.add("is-revealed"));
-    return;
-  }
-  const observer = new window.IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-revealed");
-      obs.unobserve(entry.target);
-    });
-  }, {
-    threshold: 0.16
-  });
-  revealNodes.forEach(node => observer.observe(node));
 }

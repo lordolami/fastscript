@@ -28,12 +28,20 @@ const DB_DIR = resolve(".fastscript");
 function setupAppWatcher(onChange, logger) {
   const appRoot = resolve("app");
   if (!existsSync(appRoot)) return () => {};
+  const shouldIgnore = (filename) => {
+    const rel = String(filename || "").replace(/\\/g, "/");
+    return rel.endsWith("styles.generated.css");
+  };
+  const handleChange = (eventType, filename) => {
+    if (shouldIgnore(filename)) return;
+    onChange(eventType, filename);
+  };
   try {
-    const watcher = watch(appRoot, { recursive: true }, onChange);
+    const watcher = watch(appRoot, { recursive: true }, handleChange);
     return () => watcher.close();
   } catch (error) {
     logger.warn("recursive_watch_unavailable", { error: error?.message || String(error) });
-    const watcher = watch(appRoot, onChange);
+    const watcher = watch(appRoot, handleChange);
     return () => watcher.close();
   }
 }
@@ -195,18 +203,38 @@ function writeResponse(res, payload) {
 
 function htmlDoc(content, ssrData, { hasStyles = false, stylesHref = "/styles.css", routerHref = "/router.js" } = {}) {
   const safe = JSON.stringify(ssrData ?? {}).replace(/</g, "\\u003c");
+  const faviconSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23000'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='16' fill='%23fff'>FS</text></svg>`;
+  const faviconUrl = `data:image/svg+xml,${faviconSvg}`;
   return `<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FastScript</title>
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="${faviconUrl}" />
     ${hasStyles ? `<link rel="stylesheet" href="${stylesHref}" />` : ""}
   </head>
   <body>
     <div id="app">${content}</div>
     <script>window.__FASTSCRIPT_SSR=${safe}</script>
     <script type="module" src="${routerHref}"></script>
+    <script>
+      (function () {
+        if (!("serviceWorker" in navigator)) return;
+        const host = (location && location.hostname) || "";
+        const isLocalhost = host === "localhost" || host === "127.0.0.1" || host === "::1";
+        if (!isLocalhost) return;
+        navigator.serviceWorker.getRegistrations()
+          .then((regs) => Promise.all(regs.map((r) => r.unregister())))
+          .catch(() => {});
+        if (window.caches && typeof window.caches.keys === "function") {
+          window.caches.keys()
+            .then((keys) => Promise.all(keys.filter((k) => String(k).indexOf("fastscript-") === 0).map((k) => window.caches.delete(k))))
+            .catch(() => {});
+        }
+      })();
+    </script>
   </body>
 </html>`;
 }
@@ -279,9 +307,16 @@ export async function runServer({ mode = "development", watchMode = false, build
 
   if (watchMode) {
     let timer = null;
+    let rebuildRunning = false;
+    let rebuildQueued = false;
     stopWatching = setupAppWatcher(() => {
       clearTimeout(timer);
       timer = setTimeout(async () => {
+        if (rebuildRunning) {
+          rebuildQueued = true;
+          return;
+        }
+        rebuildRunning = true;
         try {
           await runBuild();
           logger.info("rebuild complete");
@@ -289,6 +324,16 @@ export async function runServer({ mode = "development", watchMode = false, build
         } catch (error) {
           logger.error("rebuild failed", { error: error.message });
           pushHmr({ type: "rebuild_error", error: error?.message || String(error), ts: Date.now() });
+        } finally {
+          rebuildRunning = false;
+          if (rebuildQueued) {
+            rebuildQueued = false;
+            setTimeout(() => {
+              try {
+                pushHmr({ type: "reload", ts: Date.now() });
+              } catch {}
+            }, 10);
+          }
         }
       }, 120);
     }, logger);
@@ -421,6 +466,12 @@ export async function runServer({ mode = "development", watchMode = false, build
       }
 
       const target = join(DIST_DIR, pathname === "/" ? "index.html" : pathname.slice(1));
+      const isStaticAssetRequest =
+        /\.[a-zA-Z0-9]+$/.test(pathname) ||
+        pathname === "/manifest.webmanifest" ||
+        pathname === "/service-worker.js" ||
+        pathname === "/fastscript-manifest.json" ||
+        pathname === "/asset-manifest.json";
       if (pathname === "/__hmr" && watchMode) {
         res.writeHead(200, {
           "content-type": "text/event-stream",
@@ -536,7 +587,7 @@ export async function runServer({ mode = "development", watchMode = false, build
         span.end({ status: 200, kind: "storage" });
         return;
       }
-      if (existsSync(target) && statSync(target).isFile() && !pathname.endsWith(".html")) {
+      if (isStaticAssetRequest && existsSync(target) && statSync(target).isFile() && !pathname.endsWith(".html")) {
         const body = readFileSync(target);
         const immutable = /\.[a-f0-9]{8}\.(js|css)$/.test(pathname);
         res.writeHead(200, {
@@ -673,11 +724,13 @@ export async function runServer({ mode = "development", watchMode = false, build
         responseStatus = out.status ?? 200;
         responseKind = "stream";
         res.writeHead(responseStatus, { "content-type": "text/html; charset=utf-8", "transfer-encoding": "chunked" });
-        res.write(`<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>FastScript</title>${hasStyles ? `<link rel="stylesheet" href="${stylesHref}" />` : ""}</head><body><div id="app">`);
+        const faviconSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23000'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='16' fill='%23fff'>FS</text></svg>`;
+        const faviconUrl = `data:image/svg+xml,${faviconSvg}`;
+        res.write(`<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>FastScript</title><meta name="theme-color" content="#000000"/><link rel="icon" type="image/svg+xml" href="${faviconUrl}"/>${hasStyles ? `<link rel="stylesheet" href="${stylesHref}" />` : ""}</head><body><div id="app">`);
         for await (const chunk of out.stream) {
           res.write(String(chunk ?? ""));
         }
-        res.write(`</div><script>window.__FASTSCRIPT_SSR=${safe}</script><script type="module" src="${routerHref}"></script></body></html>`);
+        res.write(`</div><script>window.__FASTSCRIPT_SSR=${safe}</script><script type="module" src="${routerHref}"></script><script>(function(){if(!("serviceWorker" in navigator))return;const host=(location&&location.hostname)||"";const isLocalhost=host==="localhost"||host==="127.0.0.1"||host==="::1";if(!isLocalhost)return;navigator.serviceWorker.getRegistrations().then((regs)=>Promise.all(regs.map((r)=>r.unregister()))).catch(()=>{});if(window.caches&&typeof window.caches.keys==="function"){window.caches.keys().then((keys)=>Promise.all(keys.filter((k)=>String(k).indexOf("fastscript-")===0).map((k)=>window.caches.delete(k)))).catch(()=>{});}})();</script></body></html>`);
         res.end();
         logger.info("ssr_stream", { requestId, path: pathname, status: responseStatus, ms: Date.now() - start });
         span.end({ status: responseStatus, kind: "stream" });

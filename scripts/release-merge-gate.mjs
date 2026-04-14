@@ -11,11 +11,23 @@ function assertChecklistComplete(path) {
   }
 }
 
+function assertFiles(paths) {
+  for (const path of paths) {
+    if (!existsSync(path)) throw new Error(`Missing required release artifact: ${path}`);
+  }
+}
+
 function runVulnerabilityScan() {
   execSync("npm audit --omit=dev --audit-level=high", { stdio: "inherit" });
 }
 
 const checklist = resolve("spec", "STABLE_RELEASE_CHECKLIST.md");
 assertChecklistComplete(checklist);
+assertFiles([
+  resolve("SECURITY.md"),
+  resolve("docs", "THREAT_MODEL.md"),
+  resolve("docs", "LTS_POLICY.md"),
+  resolve("docs", "V1_FOREVER_READINESS.md"),
+]);
 runVulnerabilityScan();
 console.log("release merge gate passed");

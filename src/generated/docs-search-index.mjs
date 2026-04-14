@@ -1,4 +1,4 @@
-[
+export const DOC_SEARCH_INDEX = [
   {
     "id": "ai_context_pack_v1",
     "title": "AI_CONTEXT_PACK_V1",
@@ -3178,4 +3178,5 @@
       "items": 1
     }
   }
-]
+];
+export default DOC_SEARCH_INDEX;

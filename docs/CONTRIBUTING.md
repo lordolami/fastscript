@@ -3,12 +3,12 @@
 ## Local Setup
 1. `npm install`
 2. `npm run hooks:install`
-3. `npm run qa:all`
+3. `npm run qa:gate`
 
 ## Definition of Done
 - Feature includes tests.
 - Docs updated for public behavior changes.
-- `qa:all` passes locally.
+- `qa:gate` passes locally (`qa:all` for release candidates/stable cuts).
 - No unchecked security regressions.
 - Language changes update `spec/LANGUAGE_V1_SPEC.md` and conformance snapshots.
 

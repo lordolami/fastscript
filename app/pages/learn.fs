@@ -1,68 +1,68 @@
-const STEPS = [{
-  title: "Install FastScript",
-  copy: "Install the compiler globally once, then use the same CLI for app creation, validation, and deploy adapters.",
-  code: "npm install -g fastscript-lang"
-}, {
-  title: "Create a project",
-  copy: "Bootstrap with pages, APIs, migrations, middleware, and docs routing pre-wired.",
-  code: "fastscript create my-startup"
-}, {
-  title: "Run local development",
-  copy: "Start the dev runtime with route hydration, diagnostics overlay, and middleware execution.",
-  code: "cd my-startup\nfastscript dev"
-}, {
-  title: "Add product logic",
-  copy: "Build route loaders, API handlers, queue workers, and storage workflows using one .fs language.",
-  code: "app/pages/*.fs\napp/api/*.fs\napp/jobs/*.fs"
-}, {
-  title: "Quality gate + deploy",
-  copy: "Run one command for full health checks, then generate your target platform adapter.",
-  code: "npm run qa:all\nfastscript deploy --target cloudflare"
-}];
+const STEPS = [
+  { n: "01", title: "Install FastScript",      copy: "Install the compiler and CLI globally once. Works on Node 20+.",                                                                            cmd: "npm install -g fastscript-lang" },
+  { n: "02", title: "Create a project",        copy: "Bootstrap with pages, APIs, DB migrations, middleware, and docs routing pre-wired.",                                                         cmd: "fastscript create my-startup" },
+  { n: "03", title: "Run local development",   copy: "Start the dev runtime with HMR, route hydration, diagnostics overlay, and middleware execution.",                                           cmd: "cd my-startup\nfastscript dev" },
+  { n: "04", title: "Add product logic",       copy: "Build route loaders, API handlers, queue workers, and storage workflows in .fs. Everything shares one context object.",                     cmd: "app/pages/*.fs\napp/api/*.fs\napp/db/migrations/*.fs" },
+  { n: "05", title: "Quality gate + deploy",   copy: "One command runs the full health check — lint, typecheck, tests, smoke, benchmarks. Then generate a deploy adapter.",                       cmd: "npm run qa:all\nfastscript deploy --target cloudflare" }
+];
+
+const NEXT = [
+  { title: "Route + loader contracts", copy: "Use inferred route param and loader data types to remove runtime guesswork on every page.", href: "/docs/v1.1", cta: "Read routing deep-dive" },
+  { title: "Interop expansion",        copy: "Bring existing npm packages and framework APIs while keeping .fs as your app source of truth.", href: "/benchmarks", cta: "View interop matrix" },
+  { title: "Production adapters",      copy: "Generate hardened Node, Vercel, and Cloudflare outputs with default cache, security, and routing policies.", href: "/docs/latest", cta: "Open deploy guide" }
+];
+
 export default function LearnPage() {
-  const timeline = STEPS.map(step => `
-    <article class="timeline-step">
-      <span class="timeline-dot"></span>
-      <div class="timeline-content">
-        <h3 class="timeline-title">${step.title}</h3>
-        <p class="timeline-copy">${step.copy}</p>
-        <pre class="timeline-code">${step.code}</pre>
+  const steps = STEPS.map(s => `
+    <div class="step">
+      <div class="step-num">${s.n}</div>
+      <div class="step-body">
+        <p class="step-title">${s.title}</p>
+        <p class="step-copy">${s.copy}</p>
+        <code class="step-cmd">${s.cmd}</code>
       </div>
-    </article>
+    </div>
   `).join("");
+
+  const next = NEXT.map(n => `
+    <div class="docs-card">
+      <p class="docs-card-title">${n.title}</p>
+      <p class="docs-card-copy">${n.copy}</p>
+      <a class="docs-card-link" href="${n.href}">${n.cta} &#8594;</a>
+    </div>
+  `).join("");
+
   return `
-    <section class="section">
-      <header class="section-head">
-        <p class="section-kicker">Quickstart</p>
-        <h1 class="section-title">From zero to live deployment in one FastScript flow.</h1>
-        <p class="section-copy">This path is tuned for startup shipping speed: shortest route to production, with hard quality gates enabled from day one.</p>
+    <section class="learn-page">
+      <header class="sec-header">
+        <p class="kicker">Quickstart</p>
+        <h1 class="h1">From zero to live deployment in one flow.</h1>
+        <p class="lead">Shortest path to production with hard QA gates enabled from day one.</p>
       </header>
 
-      <div class="timeline">${timeline}</div>
+      <div class="steps">${steps}</div>
     </section>
 
-    <section class="section">
-      <header class="section-head">
-        <p class="section-kicker">Next steps</p>
-        <h2 class="section-title">After quickstart, deepen the stack.</h2>
+    <hr class="section-divider">
+
+    <section class="learn-next">
+      <header class="sec-header-sm">
+        <p class="kicker">Next steps</p>
+        <h2 class="h2">After quickstart, deepen the stack.</h2>
       </header>
-      <div class="docs-grid">
-        <article class="docs-card">
-          <h3 class="docs-title">Route + loader contracts</h3>
-          <p class="docs-copy">Use inferred route param and loader data types to remove runtime guesswork.</p>
-          <a class="docs-arrow" href="/docs/v1.1">Read routing deep dive -></a>
-        </article>
-        <article class="docs-card">
-          <h3 class="docs-title">Interop expansion</h3>
-          <p class="docs-copy">Bring existing npm packages and framework APIs while keeping .fs as your app source.</p>
-          <a class="docs-arrow" href="/benchmarks">View interop matrix -></a>
-        </article>
-        <article class="docs-card">
-          <h3 class="docs-title">Production adapters</h3>
-          <p class="docs-copy">Generate Vercel, Cloudflare, or Node outputs with hardened defaults and caching behavior.</p>
-          <a class="docs-arrow" href="/docs/latest">Open deploy guide -></a>
-        </article>
+
+      <div class="docs-card-grid">${next}</div>
+    </section>
+
+    <hr class="section-divider">
+
+    <div class="cta-block">
+      <h2 class="cta-title">Ready to ship?</h2>
+      <p class="cta-copy">Everything you need is in the framework. No extra services, no plugin hunting, no configuration sprawl.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="/docs">Open the docs</a>
+        <a class="btn btn-ghost btn-lg" href="/examples">Browse examples</a>
       </div>
-    </section>
+    </div>
   `;
 }

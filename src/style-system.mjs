@@ -286,7 +286,10 @@ export function ensureDesignSystem({ root = process.cwd() } = {}) {
 
   const tokens = readJson(tokenPath, DEFAULT_TOKENS);
   const css = `:root {\n${toCssVars(tokens.color, "color")}\n${toCssVars(tokens.space, "space")}\n${toCssVars(tokens.radius, "radius")}\n${toCssVars(tokens.shadow, "shadow")}\n}\n\n${utilityRules(tokens)}\n`;
-  writeFileSync(generatedPath, css, "utf8");
+  const current = existsSync(generatedPath) ? readFileSync(generatedPath, "utf8") : null;
+  if (current !== css) {
+    writeFileSync(generatedPath, css, "utf8");
+  }
   return { tokenPath, allowlistPath, generatedPath, tokens };
 }
 
