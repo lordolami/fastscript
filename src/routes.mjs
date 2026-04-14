@@ -21,6 +21,24 @@ function normalizeParamType(type) {
   return "string";
 }
 
+function segmentPriority(segment) {
+  if (!segment) return 0;
+  const token = /^:([A-Za-z_$][\w$]*)(\*)?(\?)?$/.exec(segment);
+  if (!token) return 40;
+  const catchAll = Boolean(token[2]);
+  const optional = Boolean(token[3]);
+  if (catchAll && optional) return 5;
+  if (catchAll) return 10;
+  if (optional) return 20;
+  return 30;
+}
+
+function routePriority(pathname) {
+  const parts = String(pathname || "/").split("/").filter(Boolean);
+  if (!parts.length) return 1000;
+  return parts.reduce((sum, part) => sum + segmentPriority(part), 0) + parts.length;
+}
+
 function routeSegmentValue(segment) {
   if (!segment) return null;
   if (isGroupSegment(segment)) return null;
@@ -128,6 +146,25 @@ export function inferRouteLayouts(file, pagesDir, layoutFiles = new Set()) {
     else if (layoutFiles.has(jsLayout)) chain.push(jsLayout);
   }
   return chain;
+}
+
+export function compareRoutePriority(a, b) {
+  const scoreA = routePriority(a?.path || a?.routePath || "/");
+  const scoreB = routePriority(b?.path || b?.routePath || "/");
+  if (scoreA !== scoreB) return scoreB - scoreA;
+
+  const lenA = String(a?.path || a?.routePath || "/").split("/").filter(Boolean).length;
+  const lenB = String(b?.path || b?.routePath || "/").split("/").filter(Boolean).length;
+  if (lenA !== lenB) return lenB - lenA;
+
+  const slotA = String(a?.slot || "default");
+  const slotB = String(b?.slot || "default");
+  if (slotA !== slotB) return slotA.localeCompare(slotB);
+  return String(a?.path || a?.routePath || "/").localeCompare(String(b?.path || b?.routePath || "/"));
+}
+
+export function sortRoutesByPriority(routes = []) {
+  return [...routes].sort(compareRoutePriority);
 }
 
 export function isLayoutFile(file, pagesDir) {

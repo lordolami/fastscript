@@ -216,11 +216,13 @@ Auto-generated from `src/*.mjs`.
 
 ## routes.mjs
 
+- `compareRoutePriority`
 - `inferRouteLayouts`
 - `inferRouteMeta`
 - `inferRouteParamTypes`
 - `isLayoutFile`
 - `isNotFoundFile`
+- `sortRoutesByPriority`
 
 ## scheduler.mjs
 

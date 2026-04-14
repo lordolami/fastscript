@@ -2,7 +2,7 @@
 import { extname, join, resolve } from "node:path";
 import { parseFastScript } from "./fs-parser.mjs";
 import { resolveErrorMeta } from "./fs-error-codes.mjs";
-import { inferRouteMeta, inferRouteParamTypes } from "./routes.mjs";
+import { inferRouteMeta, inferRouteParamTypes, sortRoutesByPriority } from "./routes.mjs";
 
 const APP_DIR = resolve("app");
 const PAGES_DIR = resolve("app/pages");
@@ -922,6 +922,18 @@ function buildTypeFile(routes) {
   }
   lines.push("};");
   lines.push("");
+  lines.push("export type FastScriptRouteLoaderData = {");
+  for (const route of routes) {
+    lines.push(`  \"${route.routePath}\": ${route.loaderDataType || "{}"};`);
+  }
+  lines.push("};");
+  lines.push("");
+  lines.push("export type FastScriptRouteContext<P extends keyof FastScriptRouteParams = keyof FastScriptRouteParams> = {");
+  lines.push("  path: P;");
+  lines.push("  params: FastScriptRouteParams[P];");
+  lines.push("  data: FastScriptRouteLoaderData[P];");
+  lines.push("};");
+  lines.push("");
   return lines.join("\n");
 }
 
@@ -975,6 +987,151 @@ function usageHints(routes) {
   return hints;
 }
 
+function mergePropertyType(map, key, type) {
+  const existing = map[key];
+  if (!existing) {
+    map[key] = type;
+    return;
+  }
+  if (existing === type) return;
+  const left = existing.split("|").map((part) => part.trim()).filter(Boolean);
+  const right = String(type).split("|").map((part) => part.trim()).filter(Boolean);
+  map[key] = [...new Set([...left, ...right])].sort().join(" | ");
+}
+
+function astTypeLiteral(node) {
+  if (!node) return "unknown";
+  switch (node.type) {
+    case "Literal":
+      if (node.value === null) return "null";
+      if (typeof node.value === "string") return "string";
+      if (typeof node.value === "number") return "number";
+      if (typeof node.value === "boolean") return "boolean";
+      return "unknown";
+    case "TemplateLiteral":
+      return "string";
+    case "ArrayExpression": {
+      const itemTypes = (node.elements || []).filter(Boolean).map((entry) => astTypeLiteral(entry));
+      const unique = [...new Set(itemTypes)];
+      return `${(unique.length ? unique.join(" | ") : "unknown")}[]`;
+    }
+    case "ObjectExpression": {
+      const props = [];
+      for (const property of node.properties || []) {
+        if (property.type !== "Property") continue;
+        let key = null;
+        if (!property.computed && property.key?.type === "Identifier") key = property.key.name;
+        else if (property.key?.type === "Literal") key = String(property.key.value);
+        if (!key) continue;
+        props.push(`${key}: ${astTypeLiteral(property.value)}`);
+      }
+      if (!props.length) return "{}";
+      return `{ ${props.join("; ")} }`;
+    }
+    case "Identifier":
+      if (node.name === "undefined") return "undefined";
+      return "unknown";
+    case "UnaryExpression":
+      if (node.operator === "!") return "boolean";
+      if (node.operator === "typeof") return "string";
+      if (["+", "-", "~"].includes(node.operator)) return "number";
+      return astTypeLiteral(node.argument);
+    case "BinaryExpression":
+      if (["==", "!=", "===", "!==", "<", ">", "<=", ">="].includes(node.operator)) return "boolean";
+      if (node.operator === "+" && (astTypeLiteral(node.left) === "string" || astTypeLiteral(node.right) === "string")) return "string";
+      return "number";
+    case "LogicalExpression":
+      return `${astTypeLiteral(node.left)} | ${astTypeLiteral(node.right)}`;
+    case "ConditionalExpression":
+      return `${astTypeLiteral(node.consequent)} | ${astTypeLiteral(node.alternate)}`;
+    case "ArrowFunctionExpression":
+    case "FunctionExpression":
+      return "function";
+    case "NewExpression":
+      return "object";
+    default:
+      return "unknown";
+  }
+}
+
+function collectReturnObjects(node, out = []) {
+  if (!node || typeof node !== "object") return out;
+  if (node.type === "ReturnStatement" && node.argument?.type === "ObjectExpression") {
+    out.push(node.argument);
+  }
+  for (const value of Object.values(node)) {
+    if (!value) continue;
+    if (Array.isArray(value)) {
+      for (const entry of value) collectReturnObjects(entry, out);
+    } else if (typeof value === "object") {
+      collectReturnObjects(value, out);
+    }
+  }
+  return out;
+}
+
+function inferRouteLoaderDataShape(file) {
+  let source = "";
+  try {
+    source = readFileSync(file, "utf8");
+  } catch {
+    return { hasLoader: false, typeLiteral: "unknown", fields: {} };
+  }
+
+  let ast = null;
+  try {
+    ast = parseFastScript(source, { file, mode: "lenient", recover: true });
+  } catch {
+    return { hasLoader: false, typeLiteral: "unknown", fields: {} };
+  }
+
+  const body = ast?.estree?.body || [];
+  let loadNode = null;
+  for (const node of body) {
+    if (node.type === "ExportNamedDeclaration") {
+      const decl = node.declaration;
+      if (decl?.type === "FunctionDeclaration" && decl.id?.name === "load") {
+        loadNode = decl;
+        break;
+      }
+      if (decl?.type === "VariableDeclaration") {
+        for (const entry of decl.declarations || []) {
+          if (entry.id?.type === "Identifier" && entry.id.name === "load" && entry.init && ["ArrowFunctionExpression", "FunctionExpression"].includes(entry.init.type)) {
+            loadNode = entry.init;
+            break;
+          }
+        }
+      }
+    }
+    if (node.type === "FunctionDeclaration" && node.id?.name === "load") {
+      loadNode = node;
+      break;
+    }
+  }
+
+  if (!loadNode) return { hasLoader: false, typeLiteral: "{}", fields: {} };
+
+  const returns = collectReturnObjects(loadNode.body || loadNode, []);
+  if (!returns.length) return { hasLoader: true, typeLiteral: "unknown", fields: {} };
+
+  const fields = {};
+  for (const objectNode of returns) {
+    for (const property of objectNode.properties || []) {
+      if (property.type !== "Property") continue;
+      let key = null;
+      if (!property.computed && property.key?.type === "Identifier") key = property.key.name;
+      else if (property.key?.type === "Literal") key = String(property.key.value);
+      if (!key) continue;
+      mergePropertyType(fields, key, astTypeLiteral(property.value));
+    }
+  }
+
+  const entries = Object.entries(fields);
+  if (!entries.length) return { hasLoader: true, typeLiteral: "{}", fields };
+  const typeLiteral = `{ ${entries.map(([key, value]) => `${key}: ${value}`).join("; ")} }`;
+  return { hasLoader: true, typeLiteral, fields };
+}
+
 function formatTypeDiagnostic(diagnostic) {
   const path = diagnostic.file || "<memory>";
   const base = `${path}:${diagnostic.line || 1}:${diagnostic.column || 1} ${diagnostic.code} ${diagnostic.severity || "error"} ${diagnostic.message}`;
@@ -1026,24 +1183,36 @@ export async function runTypeCheck(args = []) {
   const routes = pageFiles
     .filter((file) => !file.endsWith("_layout.fs") && !file.endsWith("_layout.js"))
     .filter((file) => !file.endsWith("404.fs") && !file.endsWith("404.js"))
-    .map((file) => inferRouteMeta(file, pagesDir));
+    .map((file) => {
+      const route = inferRouteMeta(file, pagesDir);
+      const loader = inferRouteLoaderDataShape(file);
+      return {
+        ...route,
+        hasLoader: loader.hasLoader,
+        loaderDataType: loader.typeLiteral,
+        loaderDataFields: loader.fields,
+      };
+    });
 
-  diagnostics.push(...routeConflicts(routes), ...usageHints(routes));
+  const sortedRoutes = sortRoutesByPriority(routes.map((route) => ({ ...route, path: route.routePath })))
+    .map((route) => ({ ...route, routePath: route.path }));
+
+  diagnostics.push(...routeConflicts(sortedRoutes), ...usageHints(sortedRoutes));
   const dedupedDiagnostics = dedupeDiagnostics(diagnostics);
   const severity = summarizeSeverity(dedupedDiagnostics);
 
   mkdirSync(OUT_DIR, { recursive: true });
-  writeFileSync(TYPES_PATH, buildTypeFile(routes), "utf8");
+  writeFileSync(TYPES_PATH, buildTypeFile(sortedRoutes), "utf8");
 
   const report = {
     mode: options.mode,
     generatedAt: new Date().toISOString(),
     files: fileReports,
-    routes,
+    routes: sortedRoutes,
     diagnostics: dedupedDiagnostics,
     summary: {
       files: files.length,
-      routeCount: routes.length,
+      routeCount: sortedRoutes.length,
       errors: severity.error,
       warnings: severity.warning,
     },
@@ -1062,5 +1231,5 @@ export async function runTypeCheck(args = []) {
     throw error;
   }
 
-  console.log(`typecheck complete: files=${files.length}, routes=${routes.length}, errors=${severity.error}, warnings=${severity.warning}, mode=${options.mode}`);
+  console.log(`typecheck complete: files=${files.length}, routes=${sortedRoutes.length}, errors=${severity.error}, warnings=${severity.warning}, mode=${options.mode}`);
 }

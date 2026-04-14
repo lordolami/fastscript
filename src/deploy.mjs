@@ -67,28 +67,73 @@ export default handler;
     JSON.stringify(
       {
         version: 2,
+        cleanUrls: false,
+        trailingSlash: false,
         functions: {
           "api/[[...fastscript]].mjs": {
             runtime: "nodejs20.x",
             maxDuration: 30,
+            memory: 1024,
           },
         },
         headers: [
           {
+            source: "/(.*)",
+            headers: [
+              { key: "x-content-type-options", value: "nosniff" },
+              { key: "x-frame-options", value: "SAMEORIGIN" },
+              { key: "referrer-policy", value: "strict-origin-when-cross-origin" },
+            ],
+          },
+          {
             source: "/(.*\\.[a-f0-9]{8}\\.(js|css))",
             headers: [{ key: "cache-control", value: "public, max-age=31536000, immutable" }],
+          },
+          {
+            source: "/(.*\\.(woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|avif))",
+            headers: [{ key: "cache-control", value: "public, max-age=31536000, immutable" }],
+          },
+          {
+            source: "/(fastscript-manifest\\.json|asset-manifest\\.json|manifest\\.webmanifest)",
+            headers: [{ key: "cache-control", value: "no-store, max-age=0" }],
+          },
+          {
+            source: "/service-worker\\.js",
+            headers: [{ key: "cache-control", value: "no-cache, max-age=0" }],
           },
         ],
         routes: [
           { src: "/(.*\\.(js|css|json|map|webmanifest|png|jpg|jpeg|svg|gif|woff|woff2|ttf|otf))", dest: "/dist/$1" },
           { src: "/service-worker.js", dest: "/dist/service-worker.js" },
           { src: "/manifest.webmanifest", dest: "/dist/manifest.webmanifest" },
+          { src: "/fastscript-manifest.json", dest: "/dist/fastscript-manifest.json" },
+          { src: "/asset-manifest.json", dest: "/dist/asset-manifest.json" },
           { src: "/(.*)", dest: "/api/[[...fastscript]].mjs" },
         ],
       },
       null,
       2,
     ),
+    "utf8",
+  );
+
+  writeFileSync(
+    join(root, "vercel.env.example"),
+    `# FastScript production defaults
+NODE_ENV=production
+PORT=4173
+FASTSCRIPT_DEPLOY_TARGET=vercel
+
+# Optional drivers
+# DB_DRIVER=postgres
+# DATABASE_URL=postgres://...
+# CACHE_DRIVER=redis
+# REDIS_URL=redis://...
+# STORAGE_DRIVER=s3
+# STORAGE_S3_BUCKET=...
+# STORAGE_S3_ENDPOINT=...
+# STORAGE_S3_PRESIGN_BASE_URL=...
+`,
     "utf8",
   );
 }
@@ -181,12 +226,34 @@ function match(routePath, pathname) {
   return params;
 }
 
+function routePriorityScore(routePath) {
+  const parts = String(routePath || "/").split("/").filter(Boolean);
+  if (!parts.length) return 1000;
+  let score = parts.length;
+  for (const part of parts) {
+    const dyn = parseRouteToken(part);
+    if (!dyn) score += 40;
+    else if (dyn.catchAll && dyn.optional) score += 5;
+    else if (dyn.catchAll) score += 10;
+    else if (dyn.optional) score += 20;
+    else score += 30;
+  }
+  return score;
+}
+
 function resolveRoute(routes, pathname) {
+  let best = null;
   for (const route of routes || []) {
     const params = match(route.path, pathname);
-    if (params) return { route, params };
+    if (!params) continue;
+    if (!best) {
+      best = { route, params, score: routePriorityScore(route.path) };
+      continue;
+    }
+    const score = routePriorityScore(route.path);
+    if (score > best.score) best = { route, params, score };
   }
-  return null;
+  return best ? { route: best.route, params: best.params } : null;
 }
 
 function parseCookies(header) {
@@ -290,10 +357,17 @@ function makeHelpers(responseCookies) {
   };
 }
 
+function applySecurityHeaders(headers) {
+  headers.set("x-content-type-options", "nosniff");
+  headers.set("x-frame-options", "SAMEORIGIN");
+  headers.set("referrer-policy", "strict-origin-when-cross-origin");
+  return headers;
+}
+
 function toResponse(payload, responseCookies = []) {
   if (!payload) return new Response(null, { status: 204 });
   const status = payload.status ?? 200;
-  const headers = new Headers(payload.headers || {});
+  const headers = applySecurityHeaders(new Headers(payload.headers || {}));
   for (const cookie of responseCookies) headers.append("set-cookie", cookie);
   if (payload.json !== undefined) {
     headers.set("content-type", "application/json; charset=utf-8");
@@ -337,7 +411,17 @@ async function maybeServeStatic(request, env, pathname) {
   const staticLike = /\\.[a-zA-Z0-9]+$/.test(pathname) || pathname === "/manifest.webmanifest" || pathname === "/service-worker.js";
   if (!staticLike) return null;
   const res = await env.ASSETS.fetch(request);
-  if (res && res.status !== 404) return res;
+  if (res && res.status !== 404) {
+    const headers = applySecurityHeaders(new Headers(res.headers));
+    if (/\\.[a-f0-9]{8}\\.(js|css)$/.test(pathname) || /\\.(woff2?|ttf|otf|svg|png|jpe?g|gif|webp|avif)$/.test(pathname)) {
+      headers.set("cache-control", "public, max-age=31536000, immutable");
+    } else if (pathname === "/service-worker.js") {
+      headers.set("cache-control", "no-cache, max-age=0");
+    } else if (pathname === "/manifest.webmanifest" || pathname === "/fastscript-manifest.json" || pathname === "/asset-manifest.json") {
+      headers.set("cache-control", "no-store, max-age=0");
+    }
+    return new Response(res.body, { status: res.status, headers });
+  }
   return null;
 }
 
@@ -490,9 +574,10 @@ export default {
       return toResponse(result, responseCookies);
     } catch (error) {
       const status = Number.isInteger(error?.status) ? error.status : 500;
+      const headers = applySecurityHeaders(new Headers({ "content-type": "application/json; charset=utf-8" }));
       return new Response(JSON.stringify({ ok: false, error: error?.message || "Unknown error", details: error?.details || null }), {
         status,
-        headers: { "content-type": "application/json; charset=utf-8" },
+        headers,
       });
     }
   }
@@ -522,9 +607,25 @@ compatibility_date = "2026-04-14"
 compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
+[vars]
+NODE_ENV = "production"
+FASTSCRIPT_DEPLOY_TARGET = "cloudflare"
+
+[observability.logs]
+enabled = true
+
 [assets]
 directory = "dist"
 binding = "ASSETS"
+`,
+    "utf8",
+  );
+
+  writeFileSync(
+    join(root, ".dev.vars.example"),
+    `NODE_ENV=production
+FASTSCRIPT_DEPLOY_TARGET=cloudflare
+DEFAULT_TENANT_ID=public
 `,
     "utf8",
   );
@@ -556,4 +657,3 @@ export async function runDeploy(args = []) {
 
   throw new Error(`Unknown deploy target: ${target}. Use node|pm2|vercel|cloudflare`);
 }
-

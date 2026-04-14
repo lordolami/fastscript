@@ -4,6 +4,13 @@ compatibility_date = "2026-04-14"
 compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
+[vars]
+NODE_ENV = "production"
+FASTSCRIPT_DEPLOY_TARGET = "cloudflare"
+
+[observability.logs]
+enabled = true
+
 [assets]
 directory = "dist"
 binding = "ASSETS"

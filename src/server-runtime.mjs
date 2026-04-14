@@ -114,12 +114,34 @@ function match(routePath, pathname) {
   return params;
 }
 
+function routePriorityScore(routePath) {
+  const parts = String(routePath || "/").split("/").filter(Boolean);
+  if (!parts.length) return 1000;
+  let score = parts.length;
+  for (const part of parts) {
+    const dyn = parseRouteToken(part);
+    if (!dyn) score += 40;
+    else if (dyn.catchAll && dyn.optional) score += 5;
+    else if (dyn.catchAll) score += 10;
+    else if (dyn.optional) score += 20;
+    else score += 30;
+  }
+  return score;
+}
+
 function resolveRoute(routes, pathname) {
+  let best = null;
   for (const route of routes) {
     const params = match(route.path, pathname);
-    if (params) return { route, params };
+    if (!params) continue;
+    if (!best) {
+      best = { route, params, score: routePriorityScore(route.path) };
+      continue;
+    }
+    const score = routePriorityScore(route.path);
+    if (score > best.score) best = { route, params, score };
   }
-  return null;
+  return best ? { route: best.route, params: best.params } : null;
 }
 
 async function importDist(modulePath) {

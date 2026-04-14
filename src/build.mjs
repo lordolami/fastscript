@@ -7,7 +7,7 @@ import { normalizeFastScript } from "./fs-normalize.mjs";
 import { createPluginRuntime } from "./plugins.mjs";
 import { ensureDesignSystem, validateAppStyles } from "./style-system.mjs";
 import { assertFastScript } from "./fs-diagnostics.mjs";
-import { inferRouteLayouts, inferRouteMeta, isLayoutFile, isNotFoundFile } from "./routes.mjs";
+import { inferRouteLayouts, inferRouteMeta, isLayoutFile, isNotFoundFile, sortRoutesByPriority } from "./routes.mjs";
 import { optimizeFontAssets, optimizeImageAssets } from "./asset-optimizer.mjs";
 import { getI18nConfig } from "./i18n.mjs";
 
@@ -248,6 +248,10 @@ export async function runBuild(options = {}) {
     }
   }
 
+  manifest.routes = sortRoutesByPriority(manifest.routes);
+  manifest.parallelRoutes = sortRoutesByPriority(manifest.parallelRoutes);
+  manifest.apiRoutes = sortRoutesByPriority(manifest.apiRoutes);
+
   const middlewareSource = [join(APP_DIR, "middleware.fs"), join(APP_DIR, "middleware.js")].find((p) => existsSync(p));
   if (middlewareSource) {
     const rel = relative(APP_DIR, middlewareSource).replace(/\\/g, "/").replace(/\.fs$/, ".js");
@@ -384,12 +388,34 @@ function match(routePath, pathname) {
   return params;
 }
 
+function routePriorityScore(routePath) {
+  const parts = String(routePath || "/").split("/").filter(Boolean);
+  if (!parts.length) return 1000;
+  let score = parts.length;
+  for (const part of parts) {
+    const dyn = parseRouteToken(part);
+    if (!dyn) score += 40;
+    else if (dyn.catchAll && dyn.optional) score += 5;
+    else if (dyn.catchAll) score += 10;
+    else if (dyn.optional) score += 20;
+    else score += 30;
+  }
+  return score;
+}
+
 function findRoute(pathname) {
+  let best = null;
   for (const route of manifest.routes) {
     const params = match(route.path, pathname);
-    if (params) return { route, params };
+    if (!params) continue;
+    if (!best) {
+      best = { route, params, score: routePriorityScore(route.path) };
+      continue;
+    }
+    const score = routePriorityScore(route.path);
+    if (score > best.score) best = { route, params, score };
   }
-  return null;
+  return best ? { route: best.route, params: best.params } : null;
 }
 
 function resolveLocale(pathname) {

@@ -1,18 +1,65 @@
 {
   "version": 2,
+  "cleanUrls": false,
+  "trailingSlash": false,
   "functions": {
     "api/[[...fastscript]].mjs": {
       "runtime": "nodejs20.x",
-      "maxDuration": 30
+      "maxDuration": 30,
+      "memory": 1024
     }
   },
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "x-content-type-options",
+          "value": "nosniff"
+        },
+        {
+          "key": "x-frame-options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "referrer-policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
     {
       "source": "/(.*\\.[a-f0-9]{8}\\.(js|css))",
       "headers": [
         {
           "key": "cache-control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(woff|woff2|ttf|otf|svg|png|jpg|jpeg|gif|webp|avif))",
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(fastscript-manifest\\.json|asset-manifest\\.json|manifest\\.webmanifest)",
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/service-worker\\.js",
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "no-cache, max-age=0"
         }
       ]
     }
@@ -29,6 +76,14 @@
     {
       "src": "/manifest.webmanifest",
       "dest": "/dist/manifest.webmanifest"
+    },
+    {
+      "src": "/fastscript-manifest.json",
+      "dest": "/dist/fastscript-manifest.json"
+    },
+    {
+      "src": "/asset-manifest.json",
+      "dest": "/dist/asset-manifest.json"
     },
     {
       "src": "/(.*)",

@@ -5,10 +5,14 @@ const {
   DiagnosticSeverity,
   SymbolKind,
   CompletionItemKind,
+  CodeActionKind,
   Position,
   SemanticTokensBuilder,
 } = require("vscode-languageserver/node");
 const { TextDocument } = require("vscode-languageserver-textdocument");
+const { existsSync } = require("node:fs");
+const { dirname, extname, join, resolve } = require("node:path");
+const { fileURLToPath, pathToFileURL } = require("node:url");
 
 const connection = createConnection(ProposedFeatures.all);
 const documents = new TextDocuments(TextDocument);
@@ -60,6 +64,8 @@ const ALLOWED_DIRECTIONS = new Set(["row", "column"]);
 const ALLOWED_ALIGN = new Set(["start", "center", "end", "stretch"]);
 const ALLOWED_JUSTIFY = new Set(["start", "center", "end", "between", "around"]);
 const ALLOWED_BREAKPOINTS = new Set(["sm", "md", "lg", "xl"]);
+const IMPORT_EXTENSIONS = [".fs", ".js", ".mjs", ".cjs", ".json"];
+const VOID_ELEMENTS = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
 
 function lineStarts(text) {
   const out = [0];
@@ -91,14 +97,152 @@ function wordAt(line, character) {
   return `${left ? left[0] : ""}${right ? right[0] : ""}`;
 }
 
+function uriToPath(uri) {
+  if (!uri) return "";
+  if (uri.startsWith("file://")) {
+    try {
+      return fileURLToPath(uri);
+    } catch {
+      return "";
+    }
+  }
+  return uri;
+}
+
+function inferWorkspaceRoot() {
+  for (const doc of documents.all()) {
+    const path = uriToPath(doc.uri);
+    if (!path) continue;
+    const idx = path.replace(/\\/g, "/").toLowerCase().indexOf("/app/");
+    if (idx > 0) return path.slice(0, idx);
+  }
+  return process.cwd();
+}
+
+function resolveImportTarget(filePath, specifier) {
+  const spec = String(specifier || "");
+  if (!filePath || !spec) return null;
+  if (!spec.startsWith(".")) return null;
+
+  const absBase = resolve(dirname(filePath), spec);
+  const ext = extname(absBase);
+  if (ext && existsSync(absBase)) return absBase;
+
+  for (const candidateExt of IMPORT_EXTENSIONS) {
+    const fileCandidate = ext ? absBase : `${absBase}${candidateExt}`;
+    if (existsSync(fileCandidate)) return fileCandidate;
+  }
+
+  for (const candidateExt of IMPORT_EXTENSIONS) {
+    const indexCandidate = join(absBase, `index${candidateExt}`);
+    if (existsSync(indexCandidate)) return indexCandidate;
+  }
+  return null;
+}
+
+function extractTemplateRanges(text) {
+  const ranges = [];
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] !== "`") {
+      i += 1;
+      continue;
+    }
+    const start = i;
+    i += 1;
+    while (i < text.length) {
+      if (text[i] === "\\") {
+        i += 2;
+        continue;
+      }
+      if (text[i] === "`") {
+        const end = i;
+        ranges.push({ start, end, contentStart: start + 1, contentEnd: end });
+        i += 1;
+        break;
+      }
+      i += 1;
+    }
+  }
+  return ranges;
+}
+
 function parseSymbols(document) {
   const text = document.getText();
   const lines = text.split(/\r?\n/);
   const symbols = [];
   const definitions = new Map();
   const duplicates = [];
+  const imports = [];
 
   lines.forEach((line, idx) => {
+    const importFrom = line.match(/^\s*import\s+(.+?)\s+from\s+["']([^"']+)["']/);
+    const sideEffectImport = line.match(/^\s*import\s+["']([^"']+)["']/);
+
+    if (importFrom) {
+      const clause = importFrom[1].trim();
+      const specifier = importFrom[2];
+      const specChar = line.indexOf(specifier);
+      const importEntry = {
+        line: idx,
+        specifier,
+        specifierRange: {
+          start: { line: idx, character: Math.max(0, specChar) },
+          end: { line: idx, character: Math.max(0, specChar) + specifier.length },
+        },
+        locals: [],
+      };
+
+      const registerLocal = (name) => {
+        if (!name) return;
+        const clean = String(name).trim();
+        if (!clean) return;
+        const character = line.indexOf(clean);
+        const range = {
+          start: { line: idx, character },
+          end: { line: idx, character: character + clean.length },
+        };
+        symbols.push({ name: clean, kind: SymbolKind.Variable, range, selectionRange: range });
+        if (definitions.has(clean)) duplicates.push({ name: clean, range, first: definitions.get(clean) });
+        else definitions.set(clean, range.start);
+        importEntry.locals.push({ name: clean, range });
+      };
+
+      const clauseParts = clause.split(",").map((part) => part.trim()).filter(Boolean);
+      if (clauseParts.length && !clauseParts[0].startsWith("{") && !clauseParts[0].startsWith("*")) {
+        registerLocal(clauseParts[0]);
+      }
+      const nsMatch = clause.match(/\*\s+as\s+([A-Za-z_$][\w$]*)/);
+      if (nsMatch) registerLocal(nsMatch[1]);
+      const namedMatch = clause.match(/\{([^}]*)\}/);
+      if (namedMatch) {
+        for (const raw of namedMatch[1].split(",")) {
+          const segment = raw.trim();
+          if (!segment) continue;
+          const alias = segment.match(/\bas\s+([A-Za-z_$][\w$]*)$/);
+          if (alias) registerLocal(alias[1]);
+          else registerLocal(segment.replace(/^type\s+/, "").trim());
+        }
+      }
+      imports.push(importEntry);
+      return;
+    }
+
+    if (sideEffectImport) {
+      const specifier = sideEffectImport[1];
+      const specChar = line.indexOf(specifier);
+      imports.push({
+        line: idx,
+        specifier,
+        specifierRange: {
+          start: { line: idx, character: Math.max(0, specChar) },
+          end: { line: idx, character: Math.max(0, specChar) + specifier.length },
+        },
+        locals: [],
+      });
+      return;
+    }
+
     const fnMatch = line.match(/^\s*(export\s+)?fn\s+([A-Za-z_$][\w$]*)\s*\(/);
     if (fnMatch) {
       const name = fnMatch[2];
@@ -126,7 +270,7 @@ function parseSymbols(document) {
     }
   });
 
-  return { symbols, definitions, duplicates };
+  return { symbols, definitions, duplicates, imports };
 }
 
 function extractStyleBlocks(text) {
@@ -256,6 +400,74 @@ function validateStyleBlocks(text, starts) {
       );
       const lineBreak = chunk.indexOf("\n");
       i += lineBreak < 0 ? chunk.length : lineBreak + 1;
+    }
+  }
+  return diagnostics;
+}
+
+function validateImports(document, parsed, starts) {
+  const diagnostics = [];
+  const filePath = uriToPath(document.uri);
+  for (const entry of parsed.imports || []) {
+    const specifier = String(entry.specifier || "");
+    if (!specifier.startsWith(".")) continue;
+    const resolved = resolveImportTarget(filePath, specifier);
+    if (resolved) continue;
+
+    const possible = IMPORT_EXTENSIONS.map((ext) => `${specifier}${ext}`);
+    diagnostics.push(makeDiagnostic({
+      severity: DiagnosticSeverity.Error,
+      code: "FS3401",
+      message: `Cannot resolve import "${specifier}". Try ${possible.join(" or ")}.`,
+      start: entry.specifierRange?.start || offsetToPosition(starts, 0),
+      end: entry.specifierRange?.end || offsetToPosition(starts, 1),
+    }));
+  }
+  return diagnostics;
+}
+
+function validateTemplateMarkup(text, starts) {
+  const diagnostics = [];
+  for (const range of extractTemplateRanges(text)) {
+    const template = text.slice(range.contentStart, range.contentEnd);
+    const stack = [];
+    const tagRegex = /<\/?([A-Za-z][A-Za-z0-9:-]*)\b[^>]*>/g;
+    let match = null;
+    while ((match = tagRegex.exec(template)) !== null) {
+      const full = match[0];
+      const name = match[1];
+      const lower = name.toLowerCase();
+      const absolute = range.contentStart + match.index;
+      const isClosing = full.startsWith("</");
+      const selfClosing = /\/>$/.test(full) || VOID_ELEMENTS.has(lower);
+
+      if (isClosing) {
+        const top = stack.pop();
+        if (!top || top.name !== lower) {
+          diagnostics.push(makeDiagnostic({
+            severity: DiagnosticSeverity.Warning,
+            code: "FS3306",
+            message: `Unexpected closing tag </${name}> in template literal.`,
+            start: offsetToPosition(starts, absolute),
+            end: offsetToPosition(starts, absolute + full.length),
+          }));
+        }
+        continue;
+      }
+
+      if (!selfClosing) {
+        stack.push({ name: lower, absolute, length: full.length });
+      }
+    }
+
+    for (const open of stack) {
+      diagnostics.push(makeDiagnostic({
+        severity: DiagnosticSeverity.Warning,
+        code: "FS3307",
+        message: `Tag <${open.name}> is not closed in template literal.`,
+        start: offsetToPosition(starts, open.absolute),
+        end: offsetToPosition(starts, open.absolute + open.length),
+      }));
     }
   }
   return diagnostics;
@@ -417,7 +629,9 @@ function buildDiagnostics(document, parsed) {
     );
   }
 
+  diagnostics.push(...validateImports(document, parsed, starts));
   diagnostics.push(...validateStyleBlocks(text, starts));
+  diagnostics.push(...validateTemplateMarkup(text, starts));
   diagnostics.push(...validateBracketBalance(text, starts));
   return diagnostics;
 }
@@ -471,6 +685,18 @@ function refreshDocument(document) {
   connection.sendDiagnostics({ uri: document.uri, diagnostics: buildDiagnostics(document, parsed) });
 }
 
+function importAtPosition(entry, position) {
+  for (const item of entry?.imports || []) {
+    const start = item.specifierRange?.start;
+    const end = item.specifierRange?.end;
+    if (!start || !end) continue;
+    if (position.line !== start.line) continue;
+    if (position.character < start.character || position.character > end.character) continue;
+    return item;
+  }
+  return null;
+}
+
 connection.onInitialize(() => ({
   capabilities: {
     textDocumentSync: documents.syncKind,
@@ -479,6 +705,9 @@ connection.onInitialize(() => ({
     completionProvider: { resolveProvider: false, triggerCharacters: [".", " ", "<", ":"] },
     renameProvider: true,
     definitionProvider: true,
+    referencesProvider: true,
+    codeActionProvider: true,
+    documentLinkProvider: { resolveProvider: false },
     semanticTokensProvider: {
       legend: tokenLegend,
       full: true,
@@ -518,15 +747,28 @@ connection.onCompletion(() => ([
   { label: "fn", kind: CompletionItemKind.Keyword, detail: "FastScript function declaration" },
   { label: "state", kind: CompletionItemKind.Keyword, detail: "FastScript state declaration" },
   { label: "~", kind: CompletionItemKind.Keyword, detail: "Reactive declaration" },
-  { label: "export fn", kind: CompletionItemKind.Snippet, insertText: "export fn ${1:name}(${2:args}) {\\n  $0\\n}", insertTextFormat: 2 },
-  { label: "<section>", kind: CompletionItemKind.Snippet, insertText: "<section class=\\"${1:section}\\">$0</section>", insertTextFormat: 2 },
-  { label: "on:click", kind: CompletionItemKind.Property, insertText: "on:click={${1:handler}}", insertTextFormat: 2 },
+  { label: "export fn", kind: CompletionItemKind.Snippet, insertText: 'export fn ${1:name}(${2:args}) {\\n  $0\\n}', insertTextFormat: 2 },
+  { label: "<section>", kind: CompletionItemKind.Snippet, insertText: '<section class="${1:section}">$0</section>', insertTextFormat: 2 },
+  { label: "on:click", kind: CompletionItemKind.Property, insertText: 'on:click={${1:handler}}', insertTextFormat: 2 },
 ]));
 
 connection.onDefinition(({ textDocument, position }) => {
   const doc = documents.get(textDocument.uri);
   const entry = symbolIndex.get(textDocument.uri);
   if (!doc || !entry) return null;
+  const importAtCursor = importAtPosition(entry, position);
+  if (importAtCursor?.specifier?.startsWith(".")) {
+    const resolved = resolveImportTarget(uriToPath(textDocument.uri), importAtCursor.specifier);
+    if (resolved) {
+      return {
+        uri: pathToFileURL(resolved).href,
+        range: {
+          start: Position.create(0, 0),
+          end: Position.create(0, 0),
+        },
+      };
+    }
+  }
   const line = doc.getText({
     start: { line: position.line, character: 0 },
     end: { line: position.line, character: Number.MAX_SAFE_INTEGER },
@@ -566,6 +808,91 @@ connection.onRenameRequest(({ textDocument, position, newName }) => {
   return { changes: { [textDocument.uri]: edits } };
 });
 
+connection.onReferences(({ textDocument, position }) => {
+  const doc = documents.get(textDocument.uri);
+  if (!doc) return [];
+  const lines = doc.getText().split(/\r?\n/);
+  const line = lines[position.line] || "";
+  const target = wordAt(line, position.character);
+  if (!target) return [];
+
+  const out = [];
+  const re = new RegExp(`\\b${target}\\b`, "g");
+  lines.forEach((text, idx) => {
+    let match = null;
+    while ((match = re.exec(text)) !== null) {
+      out.push({
+        uri: textDocument.uri,
+        range: {
+          start: { line: idx, character: match.index },
+          end: { line: idx, character: match.index + target.length },
+        },
+      });
+    }
+  });
+  return out;
+});
+
+connection.onCodeAction(({ textDocument, context }) => {
+  const actions = [];
+  for (const diagnostic of context.diagnostics || []) {
+    if (diagnostic.code === "FS3002") {
+      actions.push({
+        title: "Replace var with let",
+        kind: CodeActionKind.QuickFix,
+        diagnostics: [diagnostic],
+        edit: {
+          changes: {
+            [textDocument.uri]: [
+              {
+                range: diagnostic.range,
+                newText: "let",
+              },
+            ],
+          },
+        },
+      });
+    }
+
+    if (diagnostic.code === "FS3305") {
+      actions.push({
+        title: "Replace inline style with class",
+        kind: CodeActionKind.QuickFix,
+        diagnostics: [diagnostic],
+        edit: {
+          changes: {
+            [textDocument.uri]: [
+              {
+                range: diagnostic.range,
+                newText: "class",
+              },
+            ],
+          },
+        },
+      });
+    }
+  }
+  return actions;
+});
+
+connection.onDocumentLinks(({ textDocument }) => {
+  const entry = symbolIndex.get(textDocument.uri);
+  if (!entry) return [];
+  const filePath = uriToPath(textDocument.uri);
+  const links = [];
+  for (const imported of entry.imports || []) {
+    if (!imported.specifier?.startsWith(".")) continue;
+    const target = resolveImportTarget(filePath, imported.specifier);
+    if (!target) continue;
+    links.push({
+      range: imported.specifierRange,
+      target: pathToFileURL(target).href,
+      tooltip: "Open imported module",
+    });
+  }
+  return links;
+});
+
 connection.onRequest("textDocument/semanticTokens/full", ({ textDocument }) => {
   const doc = documents.get(textDocument.uri);
   if (!doc) return { data: [] };
@@ -574,4 +901,3 @@ connection.onRequest("textDocument/semanticTokens/full", ({ textDocument }) => {
 
 documents.listen(connection);
 connection.listen();
-

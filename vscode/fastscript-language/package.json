@@ -2,7 +2,7 @@
   "name": "fastscript-language",
   "displayName": "FastScript FS Toolkit",
   "description": "Syntax and language support for FastScript (.fs)",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publisher": "lakesbim-velox",
   "license": "MIT",
   "repository": {

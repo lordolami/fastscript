@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { resolve } from "node:path";
-import { inferRouteMeta, inferRouteParamTypes } from "../src/routes.mjs";
+import { inferRouteMeta, inferRouteParamTypes, sortRoutesByPriority } from "../src/routes.mjs";
 
 const pagesDir = resolve("app/pages");
 
@@ -24,5 +24,17 @@ assert.deepEqual(inferRouteParamTypes("/:id/:slug*"), { id: "string", slug: "str
 assert.deepEqual(inferRouteParamTypes("/:id/:slug*?"), { id: "string", slug: "string[] | undefined" });
 assert.deepEqual(inferRouteParamTypes("/:locale?"), { locale: "string | undefined" });
 
-console.log("test-routes pass");
+const sorted = sortRoutesByPriority([
+  { path: "/docs/:slug*" },
+  { path: "/docs/reference" },
+  { path: "/docs/:id" },
+  { path: "/docs/:locale?" },
+]);
+assert.deepEqual(sorted.map((item) => item.path), [
+  "/docs/reference",
+  "/docs/:id",
+  "/docs/:locale?",
+  "/docs/:slug*",
+]);
 
+console.log("test-routes pass");

@@ -4,6 +4,8 @@
   "scopeName": "source.fastscript",
   "patterns": [
     { "include": "#comments" },
+    { "include": "#markupTag" },
+    { "include": "#importPath" },
     { "include": "#templateString" },
     { "include": "#strings" },
     { "include": "#keywords" },
@@ -63,8 +65,36 @@
       ]
     },
     "templateHtmlTag": {
-      "name": "entity.name.tag.fastscript",
-      "match": "</?[A-Za-z][A-Za-z0-9:-]*"
+      "patterns": [
+        {
+          "name": "meta.tag.fastscript",
+          "begin": "(</?)([A-Za-z][A-Za-z0-9:-]*)",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.tag.begin.fastscript" },
+            "2": { "name": "entity.name.tag.fastscript" }
+          },
+          "end": "(/?>)",
+          "endCaptures": {
+            "1": { "name": "punctuation.definition.tag.end.fastscript" }
+          },
+          "patterns": [
+            { "include": "#templateHtmlEvent" },
+            { "include": "#templateHtmlAttribute" },
+            {
+              "name": "string.quoted.double.fastscript",
+              "begin": "\"",
+              "end": "\"",
+              "patterns": [{ "name": "constant.character.escape.fastscript", "match": "\\\\." }]
+            },
+            {
+              "name": "string.quoted.single.fastscript",
+              "begin": "'",
+              "end": "'",
+              "patterns": [{ "name": "constant.character.escape.fastscript", "match": "\\\\." }]
+            }
+          ]
+        }
+      ]
     },
     "templateHtmlAttribute": {
       "name": "entity.other.attribute-name.fastscript",
@@ -73,6 +103,21 @@
     "templateHtmlEvent": {
       "name": "support.type.event.fastscript",
       "match": "\\bon:[A-Za-z][A-Za-z0-9:-]*(?=\\s*=)"
+    },
+    "markupTag": {
+      "patterns": [{ "include": "#templateHtmlTag" }]
+    },
+    "importPath": {
+      "patterns": [
+        {
+          "name": "string.quoted.import.fastscript",
+          "match": "(?<=\\bfrom\\s)[\"'][^\"']+[\"']"
+        },
+        {
+          "name": "string.quoted.import.fastscript",
+          "match": "(?<=\\bimport\\s)[\"'][^\"']+[\"']"
+        }
+      ]
     },
     "keywords": {
       "patterns": [
@@ -109,4 +154,3 @@
     }
   }
 }
-

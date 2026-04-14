@@ -130,6 +130,47 @@ export function createApp(def){ return { def, mount(el){ return { el, def }; } }
     },
   );
   writePkg(
+    "preact",
+    { type: "module", exports: "./index.js" },
+    {
+      "index.js": `export function h(tag, props, ...children){ return { tag, props: props || {}, children }; }
+export function render(vnode, root){ return { vnode, root }; }`,
+    },
+  );
+  writePkg(
+    "solid-js",
+    { type: "module", exports: "./index.js" },
+    {
+      "index.js": `export function createSignal(v){ let value=v; return [() => value, (n) => { value=n; }]; }
+export function createMemo(fn){ return () => fn(); }`,
+    },
+  );
+  writePkg(
+    "@fastscript/runtime",
+    { type: "module", exports: { ".": "./index.js", "./edge": "./edge.js" } },
+    {
+      "index.js": `export const runtime = "core"; export function boot(){ return "ok"; }`,
+      "edge.js": `export function edge(){ return "edge"; }`,
+    },
+  );
+  writePkg(
+    "dual-mode-lib",
+    {
+      type: "module",
+      exports: {
+        ".": {
+          import: "./index.js",
+          require: "./index.cjs",
+        },
+      },
+      main: "./index.cjs",
+    },
+    {
+      "index.js": `export default function mode(){ return "esm"; }`,
+      "index.cjs": `module.exports = function mode(){ return "cjs"; };`,
+    },
+  );
+  writePkg(
     "left-pad",
     { type: "commonjs", main: "index.cjs" },
     {
@@ -202,6 +243,62 @@ export default function runStore() {
   const store = writable(1)
   store.update((n) => n + 1)
   return store
+}
+`,
+    },
+    {
+      id: "preact-core-fs",
+      target: "preact",
+      kind: "framework",
+      platform: "browser",
+      file: "preact-entry.fs",
+      note: "FastScript module imports preact h/render API.",
+      source: `import { h, render } from "preact"
+export default function mount() {
+  const vnode = h("div", { id: "ok" }, "hello")
+  return render(vnode, { id: "root" })
+}
+`,
+    },
+    {
+      id: "solid-core-fs",
+      target: "solid-js",
+      kind: "framework",
+      platform: "browser",
+      file: "solid-entry.fs",
+      note: "FastScript module imports solid-js signals.",
+      source: `import { createSignal, createMemo } from "solid-js"
+export default function signals() {
+  const [count, setCount] = createSignal(1)
+  const doubled = createMemo(() => count() * 2)
+  setCount(2)
+  return doubled()
+}
+`,
+    },
+    {
+      id: "scoped-subpath-fs",
+      target: "@fastscript/runtime/edge",
+      kind: "npm",
+      platform: "node",
+      file: "scoped-subpath-entry.fs",
+      note: "FastScript module imports scoped package subpath export.",
+      source: `import { edge } from "@fastscript/runtime/edge"
+export default function run() {
+  return edge()
+}
+`,
+    },
+    {
+      id: "dual-mode-fs",
+      target: "dual-mode-lib",
+      kind: "npm",
+      platform: "node",
+      file: "dual-mode-entry.fs",
+      note: "FastScript module imports dual-mode package through ESM export condition.",
+      source: `import mode from "dual-mode-lib"
+export default function run() {
+  return mode()
 }
 `,
     },
@@ -290,7 +387,8 @@ function markdown(report) {
 - Fail: ${report.summary.fail}
 
 Interop matrix includes:
-- Framework API compatibility shims for react, next/link, vue, and svelte/store.
+- Framework API compatibility shims for react, next/link, vue, svelte/store, preact, and solid-js.
+- Scoped/subpath and dual-mode package checks (@fastscript/runtime/edge, dual-mode-lib).
 - Real npm package checks using installed dependencies (acorn, acorn-walk, astring).
 - Node built-in and CommonJS interop checks.
 

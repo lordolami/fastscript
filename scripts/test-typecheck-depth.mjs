@@ -14,6 +14,7 @@ const total = cart.count + 1
 const labels = [1, 2]
 labels.push(3)
 labels.push("bad")
+export function load() { return { count: 2, label: "ok" } }
 export default function Home() { return String(total) }`,
   "utf8",
 );
@@ -25,6 +26,10 @@ const codes = report.diagnostics.map((d) => d.code);
 assert.equal(codes.includes("FS4103"), true);
 assert.equal(codes.includes("FS4101"), false);
 
+const routeTypes = readFileSync(resolve(".fastscript", "route-params.d.ts"), "utf8");
+assert.equal(routeTypes.includes("export type FastScriptRouteLoaderData"), true);
+assert.equal(routeTypes.includes("\"/\": { count: number; label: string };"), true);
+assert.equal(routeTypes.includes("export type FastScriptRouteContext"), true);
+
 rmSync(root, { recursive: true, force: true });
 console.log("test-typecheck-depth pass");
-
