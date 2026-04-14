@@ -1,6 +1,6 @@
 # FastScript Proof Pack
 
-- Generated: 2026-04-14T06:57:05.570Z
+- Generated: 2026-04-14T06:58:20.854Z
 
 ## Summary
 - Routes: 16
@@ -16,7 +16,7 @@
 
 # FastScript Benchmark Report
 
-- Build time: 701.36ms
+- Build time: 775.18ms
 - Routes: 16
 - API routes: 5
 - JS first-load gzip: 2.71KB
