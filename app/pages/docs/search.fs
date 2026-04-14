@@ -1,11 +1,12 @@
-const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/playground", "/docs/search", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks"];
+const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/interop", "/docs/playground", "/docs/search", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks"];
 function resolveDocRoute(item) {
   const direct = String(item?.path || "").trim();
   if (DOC_ROUTE_FALLBACKS.includes(direct)) return direct;
   const haystack = `${item?.title || ""} ${item?.summary || ""} ${direct}`.toLowerCase();
   if (haystack.includes("playground")) return "/docs/playground";
   if (haystack.includes("v2") || haystack.includes("ratified") || haystack.includes("stdlib") || haystack.includes("runtime")) return "/docs/v2";
-  if (haystack.includes("interop") || haystack.includes("migration")) return "/docs/v1.1";
+  if (haystack.includes("interop")) return "/docs/interop";
+  if (haystack.includes("migration")) return "/docs/v1.1";
   if (haystack.includes("spec") || haystack.includes("error code")) return "/docs/v1";
   if (haystack.includes("deploy") || haystack.includes("release") || haystack.includes("rollout") || haystack.includes("api reference") || haystack.includes("plugin") || haystack.includes("cli")) {
     return "/docs/latest";

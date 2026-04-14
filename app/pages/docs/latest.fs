@@ -19,19 +19,24 @@ export default function DocsLatest() {
           <a class="docs-card-link" href="/docs/v2">Open v2.0 &#8594;</a>
         </div>
         <div class="docs-card">
+          <p class="docs-card-title">Interop guide</p>
+          <p class="docs-card-copy">Use npm packages, mixed JS/FS modules, and incremental migration patterns without leaving the FastScript app boundary.</p>
+          <a class="docs-card-link" href="/docs/interop">Open interop guide &#8594;</a>
+        </div>
+        <div class="docs-card">
           <p class="docs-card-title">Styling primitives</p>
           <p class="docs-card-copy">Box, Stack, Row, Text, Heading, Button, semantic spacing, tones, surfaces, and generated primitive CSS now form the permanent styling direction.</p>
           <a class="docs-card-link" href="/docs/primitives">Read primitive guide &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">Legacy docs</p>
-          <p class="docs-card-copy">Older v1 and v1.1 docs remain available for historical upgrade notes and earlier language baselines.</p>
-          <a class="docs-card-link" href="/docs/v1">Open legacy docs &#8594;</a>
-        </div>
-        <div class="docs-card">
           <p class="docs-card-title">API reference</p>
           <p class="docs-card-copy">Generated API docs are available in repo docs and searchable through the docs index API.</p>
           <a class="docs-card-link" href="/docs/search">Search reference &#8594;</a>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Legacy docs</p>
+          <p class="docs-card-copy">Older v1 and v1.1 docs remain available for historical upgrade notes and earlier language baselines.</p>
+          <a class="docs-card-link" href="/docs/v1">Open legacy docs &#8594;</a>
         </div>
       </div>
     </section>

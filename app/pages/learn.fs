@@ -37,8 +37,8 @@ const NEXT = [{
 }, {
   title: "Interop expansion",
   copy: "Bring existing npm packages and ecosystem APIs while keeping .fs as your app source of truth.",
-  href: "/benchmarks",
-  cta: "View interop matrix"
+  href: "/docs/interop",
+  cta: "View interop guide"
 }, {
   title: "Production adapters",
   copy: "Generate hardened Node, Vercel, and Cloudflare outputs with default cache, security, and routing policies.",

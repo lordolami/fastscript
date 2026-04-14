@@ -29,7 +29,7 @@ const SECTIONS = [{
     href: "/docs/v1.1"
   }, {
     label: "Interop",
-    href: "/benchmarks"
+    href: "/docs/interop"
   }]
 }, {
   label: "Reference",
@@ -75,7 +75,7 @@ const CARDS = [{
 }, {
   title: "Interop + migration",
   copy: "Use npm packages in .fs files and migrate existing JS codebases module by module, with older v1.1 notes preserved for reference.",
-  href: "/docs/v1.1",
+  href: "/docs/interop",
   cta: "Learn interop"
 }, {
   title: "Plugin API",
