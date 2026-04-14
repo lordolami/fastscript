@@ -6,3 +6,6 @@ dist/
 .tmp-*/
 exported-*/
 benchmarks/latest-report.md
+app/styles.generated.css
+.agents/
+.backups/

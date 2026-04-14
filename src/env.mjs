@@ -19,15 +19,28 @@ function parseDotEnv(raw) {
 }
 
 export function loadEnv({ root = process.cwd(), mode = process.env.NODE_ENV || "development" } = {}) {
-  const files = [".env", `.env.${mode}`, mode === "production" ? ".env.local" : null].filter(Boolean);
+  const profile = process.env.FASTSCRIPT_PROFILE || mode;
+  const files = [
+    ".env",
+    `.env.${mode}`,
+    profile !== mode ? `.env.${profile}` : null,
+    mode === "production" ? ".env.local" : null,
+  ].filter(Boolean);
   const merged = {};
+  const configPath = join(root, "fastscript.config.json");
+  if (existsSync(configPath)) {
+    try {
+      const config = JSON.parse(readFileSync(configPath, "utf8"));
+      Object.assign(merged, config?.profiles?.[profile] || {});
+    } catch {}
+  }
   for (const file of files) {
     const path = join(root, file);
     if (!existsSync(path)) continue;
     Object.assign(merged, parseDotEnv(readFileSync(path, "utf8")));
   }
   for (const [k, v] of Object.entries(merged)) if (process.env[k] === undefined) process.env[k] = v;
-  return { mode, values: merged };
+  return { mode, profile, values: merged };
 }
 
 export function validateEnv(schema = {}, env = process.env) {
@@ -91,4 +104,15 @@ export function appendEnvIfMissing(key, value) {
   const current = existsSync(path) ? readFileSync(path, "utf8") : "";
   if (current.includes(`${key}=`)) return;
   appendFileSync(path, `${key}=${value}\n`, "utf8");
+}
+
+export function listConfigProfiles({ root = process.cwd() } = {}) {
+  const path = join(root, "fastscript.config.json");
+  if (!existsSync(path)) return [];
+  try {
+    const config = JSON.parse(readFileSync(path, "utf8"));
+    return Object.keys(config.profiles || {});
+  } catch {
+    return [];
+  }
 }

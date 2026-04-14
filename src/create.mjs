@@ -1,14 +1,22 @@
-﻿import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 function ensureDir(path) {
   if (!existsSync(path)) mkdirSync(path, { recursive: true });
 }
 
-export async function createApp(target = "app") {
+export async function createApp(target = "app", { template = "default" } = {}) {
   const root = process.cwd();
   const appRoot = join(root, target);
   const pagesRoot = join(appRoot, "pages");
+  const templateDir = join(root, "examples", template, "app");
+
+  if (template !== "default" && existsSync(templateDir)) {
+    ensureDir(appRoot);
+    cpSync(templateDir, appRoot, { recursive: true });
+    console.log(`created ${target} from template: ${template}`);
+    return;
+  }
 
   ensureDir(pagesRoot);
   ensureDir(join(appRoot, "api"));
@@ -86,14 +94,59 @@ export async function GET(ctx) {
       path: join(appRoot, "styles.css"),
       content: `:root { color-scheme: dark; }
 * { box-sizing: border-box; }
-body { margin: 0; font: 16px/1.6 ui-sans-serif, system-ui; background: #050505; color: #fff; }
-.nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 24px; border-bottom: 1px solid #1f1f1f; }
-.nav a { color: #d3d3ff; text-decoration: none; margin-right: 12px; }
+body { margin: 0; font: 16px/1.6 ui-sans-serif, system-ui; background: var(--fs-color-bg); color: var(--fs-color-text); }
+.nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 24px; border-bottom: 1px solid var(--fs-color-border); }
+.nav a { color: var(--fs-color-accentSoft); text-decoration: none; margin-right: 12px; }
 .page { max-width: 980px; margin: 0 auto; padding: 40px 24px; }
 .hero h1 { font-size: clamp(2rem, 6vw, 4rem); line-height: 1.05; margin: 0 0 10px; }
-.eyebrow { color: #9f92ff; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
-.hero button { padding: 8px 12px; border: 1px solid #333; background: #0f0f0f; color: #fff; border-radius: 8px; cursor: pointer; }
-.footer { border-top: 1px solid #1f1f1f; padding: 24px; color: #8a8a8a; }
+.eyebrow { color: var(--fs-color-accent); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+.hero button { padding: 8px 12px; border: 1px solid var(--fs-color-border); background: var(--fs-color-surface); color: var(--fs-color-text); border-radius: 8px; cursor: pointer; }
+.footer { border-top: 1px solid var(--fs-color-border); padding: 24px; color: var(--fs-color-muted); }
+`,
+    },
+    {
+      path: join(appRoot, "design", "tokens.json"),
+      content: `{
+  "color": {
+    "bg": "#050505",
+    "surface": "#090909",
+    "text": "#ffffff",
+    "muted": "#8a8a8a",
+    "border": "#1f1f1f",
+    "accent": "#9f92ff",
+    "accentSoft": "#d3d3ff"
+  },
+  "space": {
+    "1": "4px",
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "5": "20px",
+    "6": "24px",
+    "8": "32px",
+    "10": "40px",
+    "12": "48px"
+  },
+  "radius": {
+    "sm": "8px",
+    "md": "12px",
+    "lg": "16px"
+  },
+  "shadow": {
+    "soft": "0 10px 40px rgba(0,0,0,0.22)"
+  }
+}
+`,
+    },
+    {
+      path: join(appRoot, "design", "class-allowlist.json"),
+      content: `[
+  "nav",
+  "page",
+  "footer",
+  "hero",
+  "eyebrow"
+]
 `,
     },
     {
@@ -125,13 +178,14 @@ export async function DELETE(ctx) {
     {
       path: join(appRoot, "api", "upload.js"),
       content: `export const schemas = {
-  POST: { key: "string", content: "string" }
+  POST: { key: "string", content: "string", acl: "string?" }
 };
 
 export async function POST(ctx) {
   const body = await ctx.input.validateBody(schemas.POST);
-  const put = ctx.storage.put(body.key, Buffer.from(body.content, "utf8"));
-  return ctx.helpers.json({ ok: true, ...put, url: ctx.storage.url(body.key) });
+  const put = ctx.storage.put(body.key, Buffer.from(body.content, "utf8"), { acl: body.acl || "public" });
+  const signedUrl = ctx.storage.signedUrl ? ctx.storage.signedUrl(body.key, { action: "get", expiresInSec: 900 }) : null;
+  return ctx.helpers.json({ ok: true, ...put, url: ctx.storage.url(body.key), signedUrl });
 }
 `,
     },

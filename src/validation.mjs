@@ -1,12 +1,22 @@
-export async function readBody(req) {
+export async function readBody(req, { maxBytes = 1024 * 1024 } = {}) {
   const chunks = [];
-  for await (const chunk of req) chunks.push(Buffer.from(chunk));
+  let total = 0;
+  for await (const chunk of req) {
+    const buf = Buffer.from(chunk);
+    total += buf.byteLength;
+    if (total > maxBytes) {
+      const error = new Error(`Request body too large (max ${maxBytes} bytes)`);
+      error.status = 413;
+      throw error;
+    }
+    chunks.push(buf);
+  }
   const text = Buffer.concat(chunks).toString("utf8");
   return text;
 }
 
-export async function readJsonBody(req) {
-  const raw = await readBody(req);
+export async function readJsonBody(req, { maxBytes = 1024 * 1024 } = {}) {
+  const raw = await readBody(req, { maxBytes });
   if (!raw.trim()) return {};
   try {
     return JSON.parse(raw);
@@ -76,4 +86,3 @@ export function validateShape(schema, input, scope = "input") {
   }
   return { ok: true, value: out };
 }
-

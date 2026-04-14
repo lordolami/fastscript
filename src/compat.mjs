@@ -2,17 +2,23 @@ import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import esbuild from "esbuild";
 import { normalizeFastScript } from "./fs-normalize.mjs";
+import { assertFastScript } from "./fs-diagnostics.mjs";
 
 const TMP_DIR = resolve(".fastscript-tmp-compat");
 
 function fsLoaderPlugin() {
+  const compilerMode = (process.env.FASTSCRIPT_COMPILER_MODE || "strict").toLowerCase() === "lenient" ? "lenient" : "strict";
   return {
     name: "fastscript-fs-loader",
     setup(build) {
       build.onLoad({ filter: /\.fs$/ }, async (args) => {
         const { readFile } = await import("node:fs/promises");
         const raw = await readFile(args.path, "utf8");
-        return { contents: normalizeFastScript(raw), loader: "js" };
+        assertFastScript(raw, { file: args.path, mode: compilerMode });
+        return {
+          contents: normalizeFastScript(raw, { file: args.path, mode: compilerMode, sourceMap: "inline" }),
+          loader: "js",
+        };
       });
     },
   };

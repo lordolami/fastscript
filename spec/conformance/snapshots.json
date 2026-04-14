@@ -1,0 +1,91 @@
+{
+  "basic-declarations.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "VariableDeclaration",
+      "ExportNamedDeclaration",
+      "VariableDeclaration"
+    ],
+    "rewriteKinds": [
+      "reactive",
+      "state",
+      "function"
+    ],
+    "normalized": "let count = 0\nlet title = \"Hello\"\nexport function add(a, b) {\n  return a + b + count\n}\n\nconst html = `<h1>${title}</h1>`\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "basic-declarations.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "diagnostics-invalid.fs": {
+    "diagnostics": [
+      "FS1001",
+      "FS1002",
+      "FS1005",
+      "FS1003",
+      "FS1007"
+    ],
+    "diagnosticSeverities": [
+      "error",
+      "error",
+      "error",
+      "error",
+      "warning"
+    ],
+    "bodyTypes": [],
+    "rewriteKinds": [],
+    "normalized": "~ bad\nstate wrong\nfn (x) { return x }\nconst marker = TODO_ERROR\n",
+    "reparseDiagnostics": [
+      "FS1001",
+      "FS1002",
+      "FS1005",
+      "FS1003",
+      "FS1007"
+    ],
+    "sourceMapSources": [
+      "diagnostics-invalid.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "js-compat.fs": {
+    "diagnostics": [],
+    "diagnosticSeverities": [],
+    "bodyTypes": [
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [],
+    "normalized": "export default function Home({ pathname }) {\n  const list = [1, 2, 3].map((n) => n * 2)\n  const isDocs = pathname?.startsWith(\"/docs\")\n  return `<p>${isDocs ? \"docs\" : \"site\"}:${list.join(\",\")}</p>`\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "js-compat.fs"
+    ],
+    "formatterIdempotent": true
+  },
+  "type-erasure.fs": {
+    "diagnostics": [
+      "FS1004",
+      "FS1004"
+    ],
+    "diagnosticSeverities": [
+      "error",
+      "error"
+    ],
+    "bodyTypes": [
+      "VariableDeclaration",
+      "ExportDefaultDeclaration"
+    ],
+    "rewriteKinds": [
+      "erase-type",
+      "erase-type"
+    ],
+    "normalized": "/* type User = { id: string } (removed by fastscript compiler) */\n/* interface Payload {\n  id: string\n} (removed by fastscript compiler) */\n\nconst user = { id: \"u1\" }\nexport default function View() {\n  return user.id\n}\n",
+    "reparseDiagnostics": [],
+    "sourceMapSources": [
+      "type-erasure.fs"
+    ],
+    "formatterIdempotent": true
+  }
+}

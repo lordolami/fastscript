@@ -1,0 +1,10 @@
+{
+  "iconDefinitions": {
+    "_file_fastscript": {
+      "iconPath": "../media/fs-file.svg"
+    }
+  },
+  "fileExtensions": {
+    "fs": "_file_fastscript"
+  }
+}

@@ -1,31 +1,22 @@
-const reactiveDeclPattern = /^(\s*)~([A-Za-z_$][\w$]*)(\s*=\s*.*)$/;
-const stateDeclPattern = /^(\s*)state\s+([A-Za-z_$][\w$]*)(\s*=\s*.*)$/;
-const fnDeclPattern = /^(\s*)(export\s+)?fn\s+([A-Za-z_$][\w$]*)\s*\(/;
+import { compileFastScript } from "./fs-parser.mjs";
 
-export function normalizeFastScript(source) {
-  const lines = source.split(/\r?\n/);
-  const out = [];
+export function normalizeFastScript(source, options = {}) {
+  const { code } = compileFastScript(source, {
+    file: options.file || "",
+    mode: options.mode || "lenient",
+    recover: options.recover !== false,
+    inlineSourceMap: options.sourceMap === "inline",
+  });
+  return code;
+}
 
-  for (const line of lines) {
-    const m = line.match(reactiveDeclPattern);
-    if (m) {
-      out.push(`${m[1]}let ${m[2]}${m[3]}`);
-      continue;
-    }
-    const s = line.match(stateDeclPattern);
-    if (s) {
-      out.push(`${s[1]}let ${s[2]}${s[3]}`);
-      continue;
-    }
-    const f = line.match(fnDeclPattern);
-    if (f) {
-      out.push(line.replace(fnDeclPattern, `${f[1]}${f[2] ?? ""}function ${f[3]}(`));
-      continue;
-    }
-    out.push(line);
-  }
-
-  return out.join("\n");
+export function normalizeFastScriptWithMetadata(source, options = {}) {
+  return compileFastScript(source, {
+    file: options.file || "",
+    mode: options.mode || "lenient",
+    recover: options.recover !== false,
+    inlineSourceMap: options.sourceMap === "inline",
+  });
 }
 
 export function stripTypeScriptHints(source) {

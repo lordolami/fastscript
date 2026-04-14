@@ -1,4 +1,4 @@
-﻿export default function DocsIndex() {
+export default function DocsIndex() {
   return `
     <section>
       <p class="eyebrow">Docs</p>
@@ -10,6 +10,16 @@
         <li><code>db/</code> for migrations and seeds</li>
         <li><code>jobs/</code> for worker handlers</li>
       </ul>
+      <div class="hero-links">
+        <a href="/learn">Learn</a>
+        <a href="/examples">Examples</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/docs/search">Search</a>
+        <a href="/docs/latest">Docs latest</a>
+        <a href="/docs/v1">Docs v1</a>
+        <a href="/docs/v1.1">Docs v1.1</a>
+        <a href="/docs/playground">Playground</a>
+      </div>
       <p>Quality gate: <code>npm run qa:all</code></p>
     </section>
   `;

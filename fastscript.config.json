@@ -1,0 +1,21 @@
+{
+  "profiles": {
+    "development": {
+      "NODE_ENV": "development",
+      "FASTSCRIPT_PROFILE": "development",
+      "METRICS_PUBLIC": "1"
+    },
+    "stage": {
+      "NODE_ENV": "production",
+      "FASTSCRIPT_PROFILE": "stage",
+      "METRICS_PUBLIC": "1",
+      "SESSION_COOKIE_SECURE": "1"
+    },
+    "production": {
+      "NODE_ENV": "production",
+      "FASTSCRIPT_PROFILE": "production",
+      "METRICS_PUBLIC": "0",
+      "SESSION_COOKIE_SECURE": "1"
+    }
+  }
+}

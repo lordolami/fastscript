@@ -1,4 +1,4 @@
-﻿export default function Home() {
+export default function Home() {
   return `
     <section class="hero">
       <p class="eyebrow">FastScript v0.1</p>
@@ -12,11 +12,10 @@
     </section>
   `;
 }
-
-export function hydrate({ root }) {
+export function hydrate({root}) {
   for (const a of root.querySelectorAll('.hero-links a')) {
     a.style.transition = 'opacity .2s ease';
-    a.addEventListener('mouseenter', () => (a.style.opacity = '0.8'));
-    a.addEventListener('mouseleave', () => (a.style.opacity = '1'));
+    a.addEventListener('mouseenter', () => a.style.opacity = '0.8');
+    a.addEventListener('mouseleave', () => a.style.opacity = '1');
   }
 }

@@ -1,0 +1,23 @@
+{
+  "date": "2026-04-13T23:15:56.613Z",
+  "port": 4191,
+  "steps": [
+    {
+      "action": "build_previous_artifact",
+      "ok": true
+    },
+    {
+      "label": "candidate_bad_deploy",
+      "expectSuccess": false,
+      "ok": true,
+      "message": "runtime failed as expected"
+    },
+    {
+      "label": "rollback_previous_artifact",
+      "expectSuccess": true,
+      "ok": true,
+      "message": "runtime passed health probes"
+    }
+  ],
+  "result": "pass"
+}

@@ -1,0 +1,44 @@
+{
+  "date": "2026-04-13T23:17:41.640Z",
+  "cycles": 3,
+  "steps": [
+    {
+      "label": "cycle_1_smoke_start",
+      "ok": true,
+      "exitCode": 0,
+      "durationMs": 1675
+    },
+    {
+      "label": "cycle_1_smoke_dev",
+      "ok": true,
+      "exitCode": 0,
+      "durationMs": 1657
+    },
+    {
+      "label": "cycle_2_smoke_start",
+      "ok": true,
+      "exitCode": 0,
+      "durationMs": 1568
+    },
+    {
+      "label": "cycle_2_smoke_dev",
+      "ok": true,
+      "exitCode": 0,
+      "durationMs": 1320
+    },
+    {
+      "label": "cycle_3_smoke_start",
+      "ok": true,
+      "exitCode": 0,
+      "durationMs": 1726
+    },
+    {
+      "label": "cycle_3_smoke_dev",
+      "ok": true,
+      "exitCode": 0,
+      "durationMs": 1677
+    }
+  ],
+  "criticalRegressions": [],
+  "result": "pass"
+}

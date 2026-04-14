@@ -4,6 +4,7 @@
   "description": "Syntax and language support for FastScript (.fs)",
   "version": "0.1.0",
   "publisher": "lakesbim-velox",
+  "icon": "media/fastscript-icon.svg",
   "engines": { "vscode": "^1.90.0" },
   "categories": ["Programming Languages"],
   "activationEvents": ["onLanguage:fastscript"],
@@ -13,6 +14,10 @@
       "id": "fastscript",
       "aliases": ["FastScript", "fastscript"],
       "extensions": [".fs"],
+      "icon": {
+        "light": "./media/fs-file.svg",
+        "dark": "./media/fs-file.svg"
+      },
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{
@@ -23,12 +28,21 @@
     "snippets": [{
       "language": "fastscript",
       "path": "./snippets/fastscript.code-snippets"
+    }],
+    "iconThemes": [{
+      "id": "fastscript-icons",
+      "label": "FastScript Icons",
+      "path": "./icons/fastscript-icon-theme.json"
     }]
   },
   "scripts": {
-    "test:lsp": "node ./lsp/smoke-test.cjs"
+    "test:lsp": "node ./lsp/smoke-test.cjs",
+    "package:vsix": "npx vsce package --no-dependencies",
+    "publish:check": "npx vsce ls",
+    "publish:marketplace": "npx vsce publish"
   },
   "devDependencies": {
+    "@vscode/vsce": "^2.27.0",
     "vscode-languageclient": "^9.0.1",
     "vscode-languageserver": "^9.0.1",
     "vscode-languageserver-textdocument": "^1.0.11"

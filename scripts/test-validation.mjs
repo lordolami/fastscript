@@ -1,5 +1,6 @@
-﻿import assert from "node:assert/strict";
-import { validateShape } from "../src/validation.mjs";
+import assert from "node:assert/strict";
+import { Readable } from "node:stream";
+import { readBody, validateShape } from "../src/validation.mjs";
 
 const q = validateShape({ page: "int", search: "string?" }, { page: "2" }, "query");
 assert.equal(q.value.page, 2);
@@ -13,5 +14,14 @@ try {
   assert.equal(e.status, 400);
 }
 assert.equal(failed, true);
+
+let tooLarge = false;
+try {
+  await readBody(Readable.from(["abcdef"]), { maxBytes: 3 });
+} catch (e) {
+  tooLarge = true;
+  assert.equal(e.status, 413);
+}
+assert.equal(tooLarge, true);
 
 console.log("test-validation pass");

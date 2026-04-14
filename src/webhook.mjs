@@ -2,9 +2,19 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-export async function readRawBody(req) {
+export async function readRawBody(req, { maxBytes = 1024 * 1024 } = {}) {
   const chunks = [];
-  for await (const chunk of req) chunks.push(Buffer.from(chunk));
+  let total = 0;
+  for await (const chunk of req) {
+    const buf = Buffer.from(chunk);
+    total += buf.byteLength;
+    if (total > maxBytes) {
+      const error = new Error(`Webhook payload too large (max ${maxBytes} bytes)`);
+      error.status = 413;
+      throw error;
+    }
+    chunks.push(buf);
+  }
   return Buffer.concat(chunks);
 }
 
@@ -54,8 +64,8 @@ function replayStore({ dir = ".fastscript", ttlSec = 600 } = {}) {
   };
 }
 
-export async function verifyWebhookRequest(req, { secret, signatureHeader = "x-signature", timestampHeader = "x-timestamp", idHeader = "x-event-id", maxSkewSec = 300, replayDir = ".fastscript" } = {}) {
-  const raw = await readRawBody(req);
+export async function verifyWebhookRequest(req, { secret, signatureHeader = "x-signature", timestampHeader = "x-timestamp", idHeader = "x-event-id", maxSkewSec = 300, replayDir = ".fastscript", maxBytes = 1024 * 1024 } = {}) {
+  const raw = await readRawBody(req, { maxBytes });
   const sig = req.headers[signatureHeader];
   const ts = req.headers[timestampHeader];
   const eventId = req.headers[idHeader];

@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ "${SKIP_QA_HOOK:-0}" = "1" ]; then
+  echo "[fastscript] pre-push QA skipped (SKIP_QA_HOOK=1)"
+  exit 0
+fi
+
+if command -v npm >/dev/null 2>&1; then
+  NPM_CMD="npm"
+elif command -v npm.cmd >/dev/null 2>&1; then
+  NPM_CMD="npm.cmd"
+else
+  echo "[fastscript] npm not found; cannot run qa:all"
+  exit 1
+fi
+
+echo "[fastscript] running pre-push quality gate: qa:all"
+"$NPM_CMD" run qa:all
+echo "[fastscript] running release merge gate"
+"$NPM_CMD" run merge:gate
+echo "[fastscript] pre-push quality gate passed"

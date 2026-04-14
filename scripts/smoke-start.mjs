@@ -21,7 +21,7 @@ await new Promise((resolve, reject) => {
 const proc = spawn(process.execPath, ["./src/cli.mjs", "start"], {
   cwd: process.cwd(),
   stdio: ["ignore", "pipe", "pipe"],
-  env: { ...process.env, PORT: "4173", NODE_ENV: "production" },
+  env: { ...process.env, PORT: "4173", NODE_ENV: "production", SESSION_SECRET: process.env.SESSION_SECRET || "smoke-secret-0123456789abcdef0123456789abcd" },
 });
 
 try {

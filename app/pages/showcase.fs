@@ -1,4 +1,4 @@
-﻿export default function Showcase() {
+export default function Showcase() {
   return `
     <section>
       <p class="eyebrow">Showcase</p>
