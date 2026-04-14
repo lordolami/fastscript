@@ -42,7 +42,7 @@ export default function Contribute() {
         <div class="feature-cell">
           <div class="feature-icon">&#9989;</div>
           <p class="feature-title">Tests</p>
-          <p class="feature-copy">Test files live in <code class="ic">spec/</code>. We use a lightweight test runner built into the framework. Run <code class="ic">npm test</code>.</p>
+          <p class="feature-copy">Test files live in <code class="ic">spec/</code>. We use a lightweight test runner built into the language runtime. Run <code class="ic">npm run test:core</code> for the main gate.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">&#128200;</div>

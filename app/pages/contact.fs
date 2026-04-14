@@ -71,7 +71,7 @@ export default function Contact() {
     <section class="home-cta reveal">
       <div class="cta-block">
         <h2 class="cta-title">Support policy</h2>
-        <p class="cta-copy">Bug reports on the latest stable version (v2.x) receive priority. Legacy pre-stable versions are not actively maintained. Production support agreements are available for enterprise teams &mdash; contact us.</p>
+        <p class="cta-copy">Bug reports on the latest stable version (v2.x) receive priority. Legacy pre-v2 lines are not actively maintained. Production support agreements are available for enterprise teams &mdash; contact us.</p>
         <div class="cta-actions">
           <a class="btn btn-primary btn-lg" href="/docs">Browse docs</a>
           <a class="btn btn-secondary btn-lg" href="/contribute">Contribution guide</a>

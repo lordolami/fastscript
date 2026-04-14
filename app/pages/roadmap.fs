@@ -48,7 +48,7 @@ export default function Roadmap() {
     </section>
 
     <section class="roadmap-section reveal">
-      <h2 class="h2 roadmap-phase">&#9675; Planned &mdash; v1.2</h2>
+      <h2 class="h2 roadmap-phase">&#9675; Planned &mdash; next release wave</h2>
       <div class="roadmap-list">
         <div class="roadmap-item">
           <div class="roadmap-status status-planned">Planned</div>
@@ -103,7 +103,7 @@ export default function Roadmap() {
     </section>
 
     <section class="roadmap-section reveal">
-      <h2 class="h2 roadmap-phase">&#9675; Next platform wave &mdash; v2.0</h2>
+      <h2 class="h2 roadmap-phase">&#9675; Next platform wave</h2>
       <div class="roadmap-list">
         <div class="roadmap-item">
           <div class="roadmap-status status-planned">Planned</div>
@@ -123,7 +123,7 @@ export default function Roadmap() {
           <div class="roadmap-status status-planned">Planned</div>
           <div class="roadmap-body">
             <p class="roadmap-title">Broader interoperability matrix</p>
-            <p class="roadmap-copy">Expand compatibility proof beyond the current matrix to more real-world frameworks, SDKs, database clients, worker runtimes, and deployment surfaces.</p>
+            <p class="roadmap-copy">Expand compatibility proof beyond the current matrix to more real-world runtimes, SDKs, database clients, worker runtimes, and deployment surfaces.</p>
           </div>
         </div>
         <div class="roadmap-item">

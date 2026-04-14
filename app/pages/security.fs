@@ -15,7 +15,7 @@ export default function Security() {
           <div class="compare-col-head">Status</div>
         </div>
         <div class="compare-row">
-          <div class="compare-cell is-label">v1.x (current stable)</div>
+          <div class="compare-cell is-label">v2.x (current stable)</div>
           <div class="compare-cell is-ours"><span class="check">&#10003;</span> Yes</div>
           <div class="compare-cell">Active</div>
         </div>
@@ -70,7 +70,7 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()</div>
       </div>
 
       <h2 class="h2">Commercial and AI restrictions</h2>
-      <p class="body-copy">FastScript is source-available, not permissively open-source. Without prior written permission, you may not use repository contents to build a competing compiler, framework, hosted developer platform, or AI product, and you may not use the codebase to train or improve a commercial AI model.</p>
+      <p class="body-copy">FastScript is source-available, not permissively open-source. Without prior written permission, you may not use repository contents to build a competing compiler, language runtime, hosted developer platform, or AI product, and you may not use the codebase to train or improve a commercial AI model.</p>
 
       <h2 class="h2">Recognition policy</h2>
       <p class="body-copy">FastScript does not currently run a public paid bug bounty program. Valid reports may be acknowledged in release notes or private correspondence at maintainer discretion.</p>

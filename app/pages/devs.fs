@@ -1,7 +1,7 @@
 const TEAM = [{
   name: "Olamilekan Akinuli",
   role: "Founder &mdash; Product + Platform",
-  copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v1 scope freeze and release governance."
+  copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v2.0 ratification and release governance."
 }, {
   name: "Compiler lane",
   role: "Parser + Typecheck",
@@ -60,7 +60,7 @@ export default function DevsPage() {
         <div class="feature-cell">
           <div class="feature-icon">&#128274;</div>
           <p class="feature-title">Stability guarantees</p>
-          <p class="feature-copy">v1 parser spans, diagnostic codes, and formatter output are stable across patch releases. Breaking changes require major version and migration docs.</p>
+          <p class="feature-copy">The ratified v2 line keeps parser spans, diagnostic codes, and formatter output stable across patch releases. Breaking changes require a major version and migration docs.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">TM</div>

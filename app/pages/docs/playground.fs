@@ -34,7 +34,7 @@ export default fn Page({ user }) {
         <div class="playground-actions">
           <button type="button" class="btn btn-primary btn-sm" data-pg-run>Compile &rarr;</button>
           <button type="button" class="btn btn-ghost btn-sm" data-pg-clear>Clear</button>
-          <span class="playground-note">FastScript v1.0 &middot; client-side preview</span>
+          <span class="playground-note">FastScript v2.0 &middot; client-side preview</span>
         </div>
       </div>
 

@@ -36,7 +36,7 @@ const NEXT = [{
   cta: "Open primitive guide"
 }, {
   title: "Interop expansion",
-  copy: "Bring existing npm packages and framework APIs while keeping .fs as your app source of truth.",
+  copy: "Bring existing npm packages and ecosystem APIs while keeping .fs as your app source of truth.",
   href: "/benchmarks",
   cta: "View interop matrix"
 }, {
@@ -89,7 +89,7 @@ export default function LearnPage() {
 
     <div class="cta-block">
       <h2 class="cta-title">Ready to ship?</h2>
-      <p class="cta-copy">Everything you need is in the language runtime. No parallel framework stack, no plugin hunting, no configuration sprawl.</p>
+      <p class="cta-copy">Everything you need is in the language runtime. No parallel stack maze, no plugin hunting, no configuration sprawl.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="/docs">Open the docs</a>
         <a class="btn btn-ghost btn-lg" href="/examples">Browse examples</a>

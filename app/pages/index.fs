@@ -21,8 +21,8 @@ export default function Home() {
 
           <div class="install-row">
             <span class="install-row-prefix">$</span>
-            <span class="install-row-cmd" id="install-cmd">git clone github.com/lordolami/fastscript.git && cd fastscript && npm i && npm link</span>
-            <button class="copy-btn" data-copy="git clone github.com/lordolami/fastscript.git && cd fastscript && npm i && npm link" aria-label="Copy install command">
+            <span class="install-row-cmd" id="install-cmd">git clone https://github.com/lordolami/fastscript.git && cd fastscript && npm i && npm link</span>
+            <button class="copy-btn" data-copy="git clone https://github.com/lordolami/fastscript.git && cd fastscript && npm i && npm link" aria-label="Copy install command">
               &#9112; Copy
             </button>
           </div>
@@ -114,14 +114,14 @@ export default function Home() {
         <span class="ticker-item">FastScript</span>
         <span class="ticker-item">Full-stack .fs language</span>
         <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
-        <span class="ticker-item">No framework lock-in</span>
+        <span class="ticker-item">No stack lock-in</span>
         <span class="ticker-item">13/13 interop</span>
         <span class="ticker-item">2.71KB first-load gzip</span>
         <span class="ticker-item">SSR + ISR + Streaming</span>
         <span class="ticker-item">FastScript</span>
         <span class="ticker-item">Full-stack .fs language</span>
         <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
-        <span class="ticker-item">No framework lock-in</span>
+        <span class="ticker-item">No stack lock-in</span>
         <span class="ticker-item">13/13 interop</span>
         <span class="ticker-item">2.71KB first-load gzip</span>
         <span class="ticker-item">SSR + ISR + Streaming</span>
@@ -157,7 +157,7 @@ export default function Home() {
         <div class="split-cell">
           <p class="kicker">Developer experience</p>
           <h2 class="h2 split-h2">Write once.<br>Ship anywhere.</h2>
-          <p class="body-copy split-copy">One language. One pipeline. No parallel framework stacks, no config sprawl. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
+          <p class="body-copy split-copy">One language. One pipeline. No parallel stack maze, no config sprawl. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
           <div class="terminal">
             <div class="terminal-bar">
               <span class="terminal-dot-r"></span><span class="terminal-dot-y"></span><span class="terminal-dot-g"></span>
