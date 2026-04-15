@@ -1,4 +1,4 @@
-import { listAgencyData, requireAgencyForUser } from "../../lib/agency.fs";
+﻿import { listAgencyData, requireAgencyForUser } from "../../lib/agency.fs";
 
 export async function load(ctx) {
   const user = ctx.user || ctx.auth.requireUser();
@@ -6,7 +6,7 @@ export async function load(ctx) {
   return listAgencyData(ctx.db, agency.id);
 }
 
-export default function SettingsPage({ agency }) {
+export default function SettingsPage({ agency, config }) {
   return `
     <section class="list-stack">
       <header>
@@ -28,11 +28,29 @@ export default function SettingsPage({ agency }) {
           </div>
         </form>
       </section>
+
+      <section class="list-card">
+        <h2>Cloudflare runtime config</h2>
+        <div class="detail-list">
+          <div><div class="detail-label">App name</div><div class="detail-value">${config.appName}</div></div>
+          <div><div class="detail-label">Support email</div><div class="detail-value">${config.supportEmail}</div></div>
+          <div><div class="detail-label">Notify from</div><div class="detail-value">${config.notifyFrom}</div></div>
+          <div><div class="detail-label">Primary region</div><div class="detail-value">${config.primaryRegion}</div></div>
+        </div>
+        <p class="mini-note">These values come from the app env schema and Cloudflare-friendly env vars, so the same app can move from local proof to internal deployment without rewriting route code.</p>
+      </section>
     </section>
   `;
 }
 
 export function hydrate({ root }) {
+  function createJsonHeaders() {
+    const headers = { "content-type": "application/json", accept: "application/json" };
+    const cookie = String(document.cookie || "").split(";").map((entry) => entry.trim()).find((entry) => entry.startsWith("fs_csrf="));
+    if (cookie) headers["x-csrf-token"] = cookie.slice("fs_csrf=".length);
+    return headers;
+  }
+
   const form = root.querySelector("[data-settings-form]");
   const msg = root.querySelector("[data-settings-msg]");
   if (!form || !msg) return;
@@ -42,7 +60,7 @@ export function hydrate({ root }) {
     msg.textContent = "Saving settings...";
     const response = await fetch("/api/agency-settings", {
       method: "POST",
-      headers: { "content-type": "application/json", accept: "application/json" },
+      headers: createJsonHeaders(),
       body: JSON.stringify(body)
     });
     const json = await response.json();

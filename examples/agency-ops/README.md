@@ -14,6 +14,8 @@ This app proves a small agency can run client operations inside one FastScript a
 - notification and receipt jobs
 - DB-backed agency state
 - Cloudflare-ready deployment path
+- custom Node/container deployment from the same built output
+- internal delivery queue and work-item operations
 
 ## What this app exercises
 
@@ -51,6 +53,26 @@ node ../../src/cli.mjs build
 node ../../src/cli.mjs deploy --target cloudflare
 ```
 
+Manual production start on a custom Node/container host:
+
+```bash
+node ../../src/cli.mjs build
+NODE_ENV=production PORT=4173 SESSION_SECRET=replace_me node ../../src/cli.mjs start
+```
+
+Cloudflare env/binding examples for the internal product track live here:
+
+- `app/env.schema.fs`
+- `.dev.vars.example`
+- `wrangler.toml.example`
+
+Important product env values:
+
+- `AGENCY_OPS_APP_NAME`
+- `AGENCY_OPS_SUPPORT_EMAIL`
+- `AGENCY_OPS_NOTIFY_FROM`
+- `AGENCY_OPS_PRIMARY_REGION`
+
 ## Matrix-backed lanes used here
 
 Check `/docs/support` in the main FastScript site for the governed support matrix behind this app. This proving-ground app intentionally exercises proven lanes across:
@@ -62,5 +84,6 @@ Check `/docs/support` in the main FastScript site for the governed support matri
 - DB collections and migrations
 - queue-backed jobs
 - Cloudflare deployment adapter generation
+- manual Node/container production start from built `dist/`
 
 If a valid JS/TS pattern used here fails in `.fs`, that is a FastScript compatibility bug.

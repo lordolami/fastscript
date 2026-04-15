@@ -1,6 +1,6 @@
 # FastScript Compatibility Matrix
 
-- Generated: 2026-04-15T22:37:40.655Z
+- Generated: 2026-04-15T23:37:36.318Z
 - Current stable line: `3.0.x`
 - Governance track: FastScript `4.0` compatibility system
 - Product contract: If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.
@@ -14,8 +14,8 @@
 - `blocked`: explicitly unsupported or blocked pending design/runtime work
 
 ## Summary
-- Registry entries: 30
-- Proven entries: 28
+- Registry entries: 32
+- Proven entries: 30
 - JS/TS syntax proof cases: 8
 - .fs parity cases: 18
 - Interop cases: 17
@@ -73,6 +73,7 @@
 | Preact interop | proven | `interop:preact-core-fs` | Current proof covers core Preact render flow. |
 | SolidJS signal interop | proven | `interop:solid-core-fs` | Current proof covers createSignal/createMemo usage. |
 | Next-style layout and metadata exports | proven | `fs-parity:next-layout-metadata-style` | Covers metadata-like exports, generated metadata, and layout-style wrappers. |
+| Strict TypeScript product-shaped .fs apps | proven | `script:test:agency-ops` | Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, billing, jobs, and Cloudflare-ready generation. |
 
 ## Tooling
 | Feature | Status | Proof | Notes |
@@ -85,6 +86,7 @@
 | Feature | Status | Proof | Notes |
 |---|---|---|---|
 | Node, Vercel, and Cloudflare deploy adapters | proven | `script:test:deploy-adapters` | Current proof covers Node/PM2, Vercel, and Cloudflare adapter generation. |
+| Manual deployment to custom Node and container platforms | proven | `script:smoke:start`, `script:test:agency-ops` | Covers the dist-manifest-driven production start path for custom Node/container hosts such as Cloud Run, ECS/EC2, or Oracle compute. |
 
 ## Compatibility Request Lane
 If valid JS/TS, a framework pattern, or a real migration case fails in `.fs`, treat it as a FastScript compatibility bug and report it through the compatibility intake workflow.

@@ -21,6 +21,8 @@ Use it when you want:
 - billing and invoice flow
 - queue-backed notification and receipt jobs
 - Cloudflare-ready adapter generation
+- custom Node/container deployment from the same built `dist/` output
+- internal delivery-queue workflows and work-item operations
 
 ## How to use it
 
@@ -38,6 +40,67 @@ Use it when you want:
 - DB: seed data and collection-backed product state
 - Middleware: auth/session guardrails
 - Deploy: Cloudflare adapter generation path
+- Config: app env schema plus Cloudflare-friendly env vars for branding, support contact, and notification sender
+
+## Manual deployment if you are not using Node, Vercel, or Cloudflare adapters
+
+This is the missing but important rule: the portable build artifact is `dist/`, not `worker.js`.
+
+After `build`, the important production outputs are:
+
+- `dist/fastscript-manifest.json`: route and API manifest
+- `dist/asset-manifest.json`: hashed asset lookup table
+- `dist/pages/*`: compiled pages
+- `dist/api/*`: compiled API handlers
+- `dist/middleware.js`: compiled middleware chain
+- `dist/styles.css` and `dist/assets/*`: static assets
+
+Adapter-specific files are extra:
+
+- `dist/worker.js` is for Cloudflare only
+- `vercel.json` and `api/[[...fastscript]].mjs` are for Vercel only
+
+If you deploy Agency Ops to Google Cloud Run, AWS ECS/EC2, Oracle Cloud compute, or any other Node-capable platform, the manual path is:
+
+1. `cd examples/agency-ops`
+2. `node ../../src/cli.mjs build`
+3. ship the app with `dist/`, `app/`, `src/`, `package.json`, and installed production dependencies
+4. set `NODE_ENV=production`, `PORT`, and `SESSION_SECRET`
+5. run `node ../../src/cli.mjs start`
+
+So the thing you are really deploying is the app plus its built `dist/` directory. The server reads `dist/fastscript-manifest.json` at startup.
+
+If you are targeting a provider-specific function runtime instead of a Node/container runtime, treat that as a custom integration unless FastScript already has a first-party adapter for it.
+
+## Manual upload checklist
+
+1. Build: `node ../../src/cli.mjs build`
+2. Confirm `dist/fastscript-manifest.json` exists
+3. Upload the app bundle to your target
+4. Make sure `dist/` is present on the target machine/image
+5. Install production dependencies if they are not baked into the image
+6. Start with `node ../../src/cli.mjs start`
+7. Probe `/`, `/dashboard`, `/dashboard/clients`, and one API route before calling it deployed
+
+## Cloudflare env and bindings for the real product track
+
+Agency Ops now includes an app-level env schema and example Cloudflare files so the proving-ground app can become a real internal product without inventing deployment wiring from scratch.
+
+Files to use:
+
+- `examples/agency-ops/app/env.schema.fs`
+- `examples/agency-ops/.dev.vars.example`
+- `examples/agency-ops/wrangler.toml.example`
+
+Important runtime vars:
+
+- `SESSION_SECRET`
+- `AGENCY_OPS_APP_NAME`
+- `AGENCY_OPS_SUPPORT_EMAIL`
+- `AGENCY_OPS_NOTIFY_FROM`
+- `AGENCY_OPS_PRIMARY_REGION`
+
+That means the same app can be branded and operated per environment while staying inside the normal FastScript runtime contract.
 
 ## Performance evidence
 

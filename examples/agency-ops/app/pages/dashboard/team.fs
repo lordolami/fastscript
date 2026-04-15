@@ -43,6 +43,12 @@ export default function TeamPage({ agency, memberships }) {
 }
 
 export function hydrate({ root }) {
+  function createJsonHeaders() {
+    const headers = { "content-type": "application/json", accept: "application/json" };
+    const cookie = String(document.cookie || "").split(";").map((entry) => entry.trim()).find((entry) => entry.startsWith("fs_csrf="));
+    if (cookie) headers["x-csrf-token"] = cookie.slice("fs_csrf=".length);
+    return headers;
+  }
   const form = root.querySelector("[data-invite-form]");
   const msg = root.querySelector("[data-invite-msg]");
   if (!form || !msg) return;
@@ -52,7 +58,7 @@ export function hydrate({ root }) {
     msg.textContent = "Sending invite...";
     const response = await fetch("/api/members", {
       method: "POST",
-      headers: { "content-type": "application/json", accept: "application/json" },
+      headers: createJsonHeaders(),
       body: JSON.stringify(body)
     });
     const json = await response.json();

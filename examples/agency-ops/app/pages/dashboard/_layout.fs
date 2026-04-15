@@ -26,10 +26,16 @@ export default function DashboardLayout({ content, pathname, user }) {
 }
 
 export function hydrate({ root }) {
+  function createJsonHeaders() {
+    const headers = { accept: "application/json" };
+    const cookie = String(document.cookie || "").split(";").map((entry) => entry.trim()).find((entry) => entry.startsWith("fs_csrf="));
+    if (cookie) headers["x-csrf-token"] = cookie.slice("fs_csrf=".length);
+    return headers;
+  }
   const button = root.querySelector("[data-signout]");
   if (!button) return;
   button.addEventListener("click", async () => {
-    await fetch("/api/session", { method: "DELETE" });
+    await fetch("/api/session", { method: "DELETE", headers: createJsonHeaders() });
     location.href = "/";
   });
 }

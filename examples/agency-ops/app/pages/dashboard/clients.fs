@@ -53,6 +53,12 @@ export default function ClientsPage({ agency, clients }) {
 }
 
 export function hydrate({ root }) {
+  function createJsonHeaders() {
+    const headers = { "content-type": "application/json", accept: "application/json" };
+    const cookie = String(document.cookie || "").split(";").map((entry) => entry.trim()).find((entry) => entry.startsWith("fs_csrf="));
+    if (cookie) headers["x-csrf-token"] = cookie.slice("fs_csrf=".length);
+    return headers;
+  }
   const form = root.querySelector("[data-client-form]");
   const msg = root.querySelector("[data-client-msg]");
   if (!form || !msg) return;
@@ -62,7 +68,7 @@ export function hydrate({ root }) {
     msg.textContent = "Creating client...";
     const response = await fetch("/api/clients", {
       method: "POST",
-      headers: { "content-type": "application/json", accept: "application/json" },
+      headers: createJsonHeaders(),
       body: JSON.stringify(body)
     });
     const json = await response.json();

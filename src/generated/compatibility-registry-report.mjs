@@ -1,13 +1,13 @@
 export const COMPATIBILITY_REPORT = {
-  "generatedAt": "2026-04-15T22:37:40.655Z",
+  "generatedAt": "2026-04-15T23:37:36.318Z",
   "governanceTrack": "4.0",
   "stableLine": "3.0.x",
   "packageVersion": "3.0.2",
   "contract": "If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.",
   "summary": {
-    "entries": 30,
+    "entries": 32,
     "byStatus": {
-      "proven": 28,
+      "proven": 30,
       "partial": 1,
       "planned": 1
     },
@@ -17,12 +17,12 @@ export const COMPATIBILITY_REPORT = {
       "typescript": 2,
       "jsx-tsx": 1,
       "fastscript-sugar": 1,
-      "framework-patterns": 12,
+      "framework-patterns": 13,
       "runtime-targets": 1,
-      "deployment-adapters": 1,
+      "deployment-adapters": 2,
       "tooling": 3
     },
-    "provenEntries": 28
+    "provenEntries": 30
   },
   "artifacts": {
     "jsTsSyntaxCases": 8,
@@ -711,6 +711,30 @@ export const COMPATIBILITY_REPORT = {
       ]
     },
     {
+      "id": "custom-node-container-deploy",
+      "category": "deployment-adapters",
+      "feature": "Manual deployment to custom Node and container platforms",
+      "status": "proven",
+      "contractNote": "Teams deploying on custom platforms should be able to ship the built dist artifact and start the production runtime without relying on a first-party adapter.",
+      "proofIds": [
+        "script:smoke:start",
+        "script:test:agency-ops"
+      ],
+      "docsNote": "Covers the dist-manifest-driven production start path for custom Node/container hosts such as Cloud Run, ECS/EC2, or Oracle compute.",
+      "proofDetails": [
+        {
+          "id": "script:smoke:start",
+          "status": "configured",
+          "kind": "script"
+        },
+        {
+          "id": "script:test:agency-ops",
+          "status": "configured",
+          "kind": "script"
+        }
+      ]
+    },
+    {
       "id": "tooling-core",
       "category": "tooling",
       "feature": "CLI, lint, format, and typecheck stability",
@@ -797,6 +821,24 @@ export const COMPATIBILITY_REPORT = {
           "kind": "artifact",
           "artifact": "fs-parity",
           "label": "next-layout-metadata-style"
+        }
+      ]
+    },
+    {
+      "id": "strict-ts-product-apps",
+      "category": "framework-patterns",
+      "feature": "Strict TypeScript product-shaped .fs apps",
+      "status": "proven",
+      "contractNote": "A real product-shaped app written in ordinary TypeScript inside .fs should build, start, deploy, and exercise frontend, backend, jobs, and auth together.",
+      "proofIds": [
+        "script:test:agency-ops"
+      ],
+      "docsNote": "Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, billing, jobs, and Cloudflare-ready generation.",
+      "proofDetails": [
+        {
+          "id": "script:test:agency-ops",
+          "status": "configured",
+          "kind": "script"
         }
       ]
     },

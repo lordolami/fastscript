@@ -73,14 +73,18 @@ export default function AgencyOpsGuidePage() {
             <p class="story-cell-title">Jobs</p>
             <p class="story-cell-copy">Async receipts and follow-up work live in <code class="ic">app/jobs</code>. This is where billing and notification side effects stay inside the same product runtime.</p>
           </div>
-          <div class="story-cell">
-            <p class="story-cell-title">DB + middleware</p>
-            <p class="story-cell-copy">Seed data and collection-backed state live in <code class="ic">app/db</code>, while auth/session guardrails live in middleware. That gives you one product boundary from seed to request to async job.</p>
-          </div>
+        <div class="story-cell">
+          <p class="story-cell-title">DB + middleware</p>
+          <p class="story-cell-copy">Seed data and collection-backed state live in <code class="ic">app/db</code>, while auth/session guardrails live in middleware. That gives you one product boundary from seed to request to async job.</p>
         </div>
-      </section>
+        <div class="story-cell">
+          <p class="story-cell-title">Env + deploy config</p>
+          <p class="story-cell-copy">The app now includes an env schema and Cloudflare-friendly example files so teams can brand and operate the product with runtime vars instead of rewriting route code for each environment.</p>
+        </div>
+      </div>
+    </section>
 
-      <hr class="section-divider">
+    <hr class="section-divider">
 
       <section class="docs-syntax">
         <header class="sec-header-sm">
@@ -103,6 +107,33 @@ export default function AgencyOpsGuidePage() {
           <div class="docs-card">
             <p class="docs-card-title">TS-only adoption demo</p>
             <p class="docs-card-copy">The cleanest current demo for showing developers that ordinary TypeScript can live in <code class="ic">.fs</code> without changing the app architecture.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section class="docs-syntax">
+        <header class="sec-header-sm">
+          <p class="kicker">Internal product track</p>
+          <h2 class="h2">What changed when Agency Ops became a real product slice.</h2>
+        </header>
+        <div class="docs-card-grid">
+          <div class="docs-card">
+            <p class="docs-card-title">Delivery queue</p>
+            <p class="docs-card-copy">Agency Ops now carries a real internal delivery-queue lane: work items, due labels, at-risk status, and ops handoff visibility in the same strict-TypeScript <code class="ic">.fs</code> app.</p>
+          </div>
+          <div class="docs-card">
+            <p class="docs-card-title">Cloudflare env/bindings</p>
+            <p class="docs-card-copy">Use <code class="ic">app/env.schema.fs</code>, <code class="ic">.dev.vars.example</code>, and <code class="ic">wrangler.toml.example</code> to wire branding, support contact, notification sender, and region without inventing a second deployment layer.</p>
+          </div>
+          <div class="docs-card">
+            <p class="docs-card-title">Custom host path</p>
+            <p class="docs-card-copy">If you deploy on Google, AWS, Oracle, or another Node/container host, ship the app with <code class="ic">dist/</code> intact and run the standard production entrypoint. The built artifact is still the contract, even without a first-party adapter.</p>
+          </div>
+          <div class="docs-card">
+            <p class="docs-card-title">Governed proof lane</p>
+            <p class="docs-card-copy">The product-shaped strict-TypeScript app pattern and the custom Node/container deploy path now belong in the governed compatibility system instead of living only as loose docs claims.</p>
           </div>
         </div>
       </section>

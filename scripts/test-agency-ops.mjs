@@ -101,6 +101,9 @@ try {
   assert.equal(existsSync(join(appRoot, "dist", "fastscript-manifest.json")), true);
   assert.equal(existsSync(join(appRoot, "wrangler.toml")), true);
   assert.equal(existsSync(join(appRoot, "dist", "worker.js")), true);
+  assert.equal(existsSync(join(appRoot, "app", "env.schema.fs")), true);
+  assert.equal(existsSync(join(appRoot, ".dev.vars.example")), true);
+  assert.equal(existsSync(join(appRoot, "wrangler.toml.example")), true);
 
   const manifest = JSON.parse(readFileSync(join(appRoot, "dist", "fastscript-manifest.json"), "utf8"));
   for (const route of [
@@ -120,6 +123,7 @@ try {
     "/api/agency",
     "/api/clients",
     "/api/members",
+    "/api/work-items",
     "/api/agency-settings",
     "/api/billing/checkout",
     "/api/notifications/retry"
@@ -145,6 +149,7 @@ try {
   assert.equal(home.status, 200);
   assert.match(homeText, /Agency Ops SaaS/);
   assert.match(homeText, /Strict TypeScript in \.fs/i);
+  assert.match(homeText, /Support contact/i);
 
   const signIn = await fetch(`${baseUrl}/sign-in`);
   updateCookies(signIn);
@@ -212,6 +217,23 @@ try {
   const memberJson = await memberResponse.json();
   assert.equal(memberResponse.status, 200);
   assert.equal(memberJson.ok, true);
+
+  const workItemResponse = await fetch(`${baseUrl}/api/work-items`, {
+    method: "POST",
+    headers: {
+      ...csrfHeaders(),
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      title: "Ship Maple Health retention board",
+      clientName: "Maple Health",
+      priority: "high"
+    })
+  });
+  updateCookies(workItemResponse);
+  const workItemJson = await workItemResponse.json();
+  assert.equal(workItemResponse.status, 200);
+  assert.equal(workItemJson.ok, true);
 
   const billingResponse = await fetch(`${baseUrl}/api/billing/checkout`, {
     method: "POST",
@@ -283,6 +305,8 @@ try {
   const opsHtml = await opsPage.text();
   assert.equal(opsPage.status, 200);
   assert.match(opsHtml, /support-follow-up/);
+  assert.match(opsHtml, /Ship Maple Health retention board/);
+  assert.match(opsHtml, /Support email:/);
 
   console.log("test-agency-ops pass");
 } finally {

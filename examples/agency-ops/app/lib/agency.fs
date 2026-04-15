@@ -4,6 +4,21 @@ const DEFAULT_PLANS = [
   { id: "plan_scale", name: "Scale", price: 349, seats: 40, support: "Priority ops support" }
 ];
 
+export function getAgencyOpsConfig(env = process.env) {
+  const fromEnv = (key, fallback = "") => {
+    const value = env[key];
+    if (!value) return fallback;
+    return String(value);
+  };
+  return {
+    appName: fromEnv("AGENCY_OPS_APP_NAME", "Agency Ops SaaS"),
+    supportEmail: fromEnv("AGENCY_OPS_SUPPORT_EMAIL", "ops@agencyops.local"),
+    notifyFrom: fromEnv("AGENCY_OPS_NOTIFY_FROM", "notifications@agencyops.local"),
+    primaryRegion: fromEnv("AGENCY_OPS_PRIMARY_REGION", "global"),
+    environment: fromEnv("NODE_ENV", "development")
+  };
+}
+
 function nowIso() {
   return new Date().toISOString();
 }
@@ -61,6 +76,25 @@ export function queueNotificationJob(db, agencyId, kind, payload = {}) {
     createdAt: nowIso()
   };
   return set(db, "notificationJobs", record.id, record);
+}
+
+export function createWorkItemRecord(db, agencyId, actorId, body = {}) {
+  const record = {
+    id: id("work"),
+    agencyId,
+    clientId: body.clientId || null,
+    clientName: body.clientName || "Internal ops",
+    title: body.title || "Follow up on delivery scope",
+    lane: body.lane || "delivery",
+    priority: body.priority || "medium",
+    status: body.status || "queued",
+    dueLabel: body.dueLabel || "This week",
+    ownerId: actorId,
+    updatedAt: nowIso()
+  };
+  set(db, "workItems", record.id, record);
+  createActivity(db, agencyId, "work-item.created", `Queued work item: ${record.title}`, actorId);
+  return record;
 }
 
 export function getMembershipForUser(db, userId) {
@@ -158,6 +192,49 @@ export function createAgency(db, owner, options = {}) {
   ];
   for (const client of clientRows) set(db, "clients", client.id, client);
 
+  const workItems = [
+    {
+      id: id("work"),
+      agencyId: agency.id,
+      clientId: clientRows[0].id,
+      clientName: clientRows[0].name,
+      title: "Prepare Q2 retention forecast and budget notes",
+      lane: "strategy",
+      priority: "high",
+      status: "at-risk",
+      dueLabel: "Due tomorrow",
+      ownerId: owner.id,
+      updatedAt: nowIso()
+    },
+    {
+      id: id("work"),
+      agencyId: agency.id,
+      clientId: clientRows[1].id,
+      clientName: clientRows[1].name,
+      title: "Finalize onboarding checklist and analytics access",
+      lane: "onboarding",
+      priority: "medium",
+      status: "queued",
+      dueLabel: "Due this week",
+      ownerId: owner.id,
+      updatedAt: nowIso()
+    },
+    {
+      id: id("work"),
+      agencyId: agency.id,
+      clientId: clientRows[2].id,
+      clientName: clientRows[2].name,
+      title: "Send lifecycle audit scope revision and invoice note",
+      lane: "finance",
+      priority: "medium",
+      status: "in-review",
+      dueLabel: "Waiting on approval",
+      ownerId: owner.id,
+      updatedAt: nowIso()
+    }
+  ];
+  for (const item of workItems) set(db, "workItems", item.id, item);
+
   const invoice = {
     id: id("invoice"),
     agencyId: agency.id,
@@ -171,13 +248,14 @@ export function createAgency(db, owner, options = {}) {
 
   createActivity(db, agency.id, "agency.created", `Agency ${agency.name} created`, owner.id);
   createActivity(db, agency.id, "client.seeded", `Seeded ${clientRows.length} client records`, owner.id);
+  createActivity(db, agency.id, "ops.seeded", `Seeded ${workItems.length} delivery queue items`, owner.id);
   createActivity(db, agency.id, "billing.started", `Activated ${starter.name} plan`, owner.id);
   queueNotificationJob(db, agency.id, "weekly-client-recap", { agencyId: agency.id, clientCount: clientRows.length });
 
   return agency;
 }
 
-export function bootstrapAgency(db, user, agencyName) {
+export function bootstrapAgency(db, user, agencyName = "") {
   const existing = getAgencyForUser(db, user.id);
   if (existing) return existing;
   return createAgency(db, user, { name: agencyName || `${user.name.split(" ")[0]} Client Ops` });
@@ -193,6 +271,7 @@ export function listAgencyData(db, agencyId) {
   const agency = get(db, "agencies", agencyId);
   const memberships = all(db, "memberships").filter((entry) => entry.agencyId === agencyId);
   const clients = all(db, "clients").filter((entry) => entry.agencyId === agencyId);
+  const workItems = all(db, "workItems").filter((entry) => entry.agencyId === agencyId).sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
   const activities = all(db, "activity").filter((entry) => entry.agencyId === agencyId).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
   const invoices = all(db, "invoices").filter((entry) => entry.agencyId === agencyId).sort((a, b) => String(b.issuedAt).localeCompare(String(a.issuedAt)));
   const notificationJobs = all(db, "notificationJobs").filter((entry) => entry.agencyId === agencyId).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
@@ -203,9 +282,11 @@ export function listAgencyData(db, agencyId) {
     activeClients: clients.filter((entry) => entry.status === "active" || entry.status === "onboarding").length,
     retainers: clients.filter((entry) => String(entry.engagement || "").toLowerCase().includes("retainer")).length,
     monthlyRetainers: clients.filter((entry) => entry.status === "active" || entry.status === "onboarding").reduce((sum, entry) => sum + Number(entry.monthlyRetainer || 0), 0),
-    queuedJobs: notificationJobs.filter((entry) => entry.status === "queued").length
+    queuedJobs: notificationJobs.filter((entry) => entry.status === "queued").length,
+    activeWorkItems: workItems.filter((entry) => entry.status !== "done").length,
+    atRiskWorkItems: workItems.filter((entry) => entry.status === "at-risk").length
   };
-  return { agency, memberships, clients, activities, invoices, notificationJobs, subscription, metrics, plans: listPlans(db) };
+  return { agency, memberships, clients, workItems, activities, invoices, notificationJobs, subscription, metrics, plans: listPlans(db), config: getAgencyOpsConfig() };
 }
 
 export function createClientRecord(db, agencyId, ownerId, body) {
@@ -284,6 +365,7 @@ export function upgradePlan(db, agencyId, actor, planId) {
 }
 
 export function summarizeOps(db) {
+  const workItems = all(db, "workItems");
   const agencies = all(db, "agencies");
   const memberships = all(db, "memberships");
   const invoices = all(db, "invoices");
@@ -295,9 +377,11 @@ export function summarizeOps(db) {
       members: memberships.length,
       clients: clients.length,
       invoices: invoices.length,
-      queuedJobs: jobs.filter((entry) => entry.status === "queued").length
+      queuedJobs: jobs.filter((entry) => entry.status === "queued").length,
+      openWorkItems: workItems.filter((entry) => entry.status !== "done").length
     },
     recentJobs: jobs.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))).slice(0, 8),
-    recentInvoices: invoices.sort((a, b) => String(b.issuedAt).localeCompare(String(a.issuedAt))).slice(0, 8)
+    recentInvoices: invoices.sort((a, b) => String(b.issuedAt).localeCompare(String(a.issuedAt))).slice(0, 8),
+    recentWorkItems: workItems.sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt))).slice(0, 8)
   };
 }

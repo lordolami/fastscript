@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   color-scheme: dark;
 }
 
@@ -137,7 +137,8 @@ textarea {
 
 .field input,
 .field select,
-.field textarea {
+.field textarea,
+.input-inline {
   width: 100%;
   padding: 10px 12px;
   border-radius: 12px;

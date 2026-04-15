@@ -294,6 +294,18 @@
       "docsNote": "Current proof covers Node/PM2, Vercel, and Cloudflare adapter generation."
     },
     {
+      "id": "custom-node-container-deploy",
+      "category": "deployment-adapters",
+      "feature": "Manual deployment to custom Node and container platforms",
+      "status": "proven",
+      "contractNote": "Teams deploying on custom platforms should be able to ship the built dist artifact and start the production runtime without relying on a first-party adapter.",
+      "proofIds": [
+        "script:smoke:start",
+        "script:test:agency-ops"
+      ],
+      "docsNote": "Covers the dist-manifest-driven production start path for custom Node/container hosts such as Cloud Run, ECS/EC2, or Oracle compute."
+    },
+    {
       "id": "tooling-core",
       "category": "tooling",
       "feature": "CLI, lint, format, and typecheck stability",
@@ -346,6 +358,17 @@
         "artifact:fs-parity:next-layout-metadata-style"
       ],
       "docsNote": "Covers metadata-like exports, generated metadata, and layout-style wrappers."
+    },
+    {
+      "id": "strict-ts-product-apps",
+      "category": "framework-patterns",
+      "feature": "Strict TypeScript product-shaped .fs apps",
+      "status": "proven",
+      "contractNote": "A real product-shaped app written in ordinary TypeScript inside .fs should build, start, deploy, and exercise frontend, backend, jobs, and auth together.",
+      "proofIds": [
+        "script:test:agency-ops"
+      ],
+      "docsNote": "Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, billing, jobs, and Cloudflare-ready generation."
     },
     {
       "id": "future-tc39-and-ts-additions",

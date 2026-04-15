@@ -1,4 +1,4 @@
-import { listAgencyData, requireAgencyForUser } from "../../lib/agency.fs";
+﻿import { listAgencyData, requireAgencyForUser } from "../../lib/agency.fs";
 
 export async function load(ctx) {
   const user = ctx.user || ctx.auth.requireUser();
@@ -15,7 +15,7 @@ export default function BillingPage({ agency, plans, subscription, invoices }) {
     <div class="list-card">
       <div class="detail-label">${plan.support}</div>
       <h3>${plan.name}</h3>
-      <p>${formatMoney(plan.price)} / month � ${plan.seats} seats</p>
+      <p>${formatMoney(plan.price)} / month · ${plan.seats} seats</p>
       <div class="inline-actions">
         <button class="btn-inline" type="button" data-plan="${plan.id}">Choose plan</button>
         ${subscription?.planId === plan.id ? `<span class="status-pill">current</span>` : ""}
@@ -59,13 +59,20 @@ export default function BillingPage({ agency, plans, subscription, invoices }) {
 }
 
 export function hydrate({ root }) {
+  function createJsonHeaders() {
+    const headers = { "content-type": "application/json", accept: "application/json" };
+    const cookie = String(document.cookie || "").split(";").map((entry) => entry.trim()).find((entry) => entry.startsWith("fs_csrf="));
+    if (cookie) headers["x-csrf-token"] = cookie.slice("fs_csrf=".length);
+    return headers;
+  }
+
   const msg = root.querySelector("[data-billing-msg]");
   for (const button of root.querySelectorAll("[data-plan]")) {
     button.addEventListener("click", async () => {
       msg.textContent = "Upgrading plan...";
       const response = await fetch("/api/billing/checkout", {
         method: "POST",
-        headers: { "content-type": "application/json", accept: "application/json" },
+        headers: createJsonHeaders(),
         body: JSON.stringify({ planId: button.getAttribute("data-plan") })
       });
       const json = await response.json();
@@ -82,7 +89,7 @@ export function hydrate({ root }) {
     msg.textContent = "Queueing billing follow-up...";
     const response = await fetch("/api/notifications/retry", {
       method: "POST",
-      headers: { "content-type": "application/json", accept: "application/json" },
+      headers: createJsonHeaders(),
       body: JSON.stringify({ kind: "billing-follow-up" })
     });
     const json = await response.json();

@@ -32,6 +32,8 @@ export default function DashboardOverview({ user, agency, metrics, activities, s
         <div class="metric-card"><div class="detail-label">Retainers</div><h2>${metrics.retainers}</h2></div>
         <div class="metric-card"><div class="detail-label">Monthly retainers</div><h2>${formatMoney(metrics.monthlyRetainers)}</h2></div>
         <div class="metric-card"><div class="detail-label">Queued follow-ups</div><h2>${metrics.queuedJobs}</h2></div>
+        <div class="metric-card"><div class="detail-label">Open delivery items</div><h2>${metrics.activeWorkItems}</h2></div>
+        <div class="metric-card"><div class="detail-label">At-risk work</div><h2>${metrics.atRiskWorkItems}</h2></div>
       </div>
 
       <div class="info-grid">
@@ -42,6 +44,7 @@ export default function DashboardOverview({ user, agency, metrics, activities, s
             <div><div class="detail-label">Team</div><div class="detail-value">Invite operators, strategists, and finance roles</div></div>
             <div><div class="detail-label">Billing</div><div class="detail-value">Upgrade plans and keep invoice trails visible</div></div>
             <div><div class="detail-label">Ops</div><div class="detail-value">Review queued jobs and support follow-up state</div></div>
+            <div><div class="detail-label">Delivery queue</div><div class="detail-value">Track at-risk work items, due labels, and internal handoffs</div></div>
           </div>
         </section>
         <section class="list-card">
