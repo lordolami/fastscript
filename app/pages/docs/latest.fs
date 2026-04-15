@@ -49,6 +49,11 @@ export default function DocsLatest() {
           <a class="docs-card-link" href="/docs/team-dashboard-saas">Open baseline guide &#8594;</a>
         </div>
         <div class="docs-card">
+          <p class="docs-card-title">Agency Ops strict-TypeScript guide</p>
+          <p class="docs-card-copy">Use the public proving-ground app when you want the clearest “only the filename changes” demo: strict ordinary TypeScript inside <code class="ic">.fs</code> with pages, APIs, jobs, billing, and deploy flow already wired.</p>
+          <a class="docs-card-link" href="/docs/agency-ops">Open Agency Ops guide &#8594;</a>
+        </div>
+        <div class="docs-card">
           <p class="docs-card-title">Legacy docs</p>
           <p class="docs-card-copy">Older v1, v1.1, and v2 docs remain available for historical upgrade notes and earlier language baselines.</p>
           <a class="docs-card-link" href="/docs/v1">Open legacy docs &#8594;</a>

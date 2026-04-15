@@ -95,6 +95,7 @@
     "test:compatibility-matrix": "node ./scripts/test-compatibility-matrix.mjs",
     "test:real-world-adoption": "node ./scripts/test-real-world-adoption.mjs",
     "test:startup-mvp-saas": "node ./scripts/test-startup-mvp-saas.mjs",
+    "test:agency-ops": "node ./scripts/test-agency-ops.mjs",
     "test:release-discipline": "node ./scripts/test-release-discipline.mjs",
     "test:validation": "node ./scripts/test-validation.mjs",
     "test:webhook-storage": "node ./scripts/test-webhook-storage.mjs",
@@ -157,7 +158,8 @@
     "public:bundle": "node ./scripts/prepare-public-docs-bundle.mjs",
     "release:npm:prepare": "node ./scripts/prepare-npm-release.mjs",
     "publish:npm": "node ./scripts/prepare-npm-release.mjs --pack && npm publish ./.release/npm-public --access public",
-    "deploy:cloudflare:adapter": "node ./src/cli.mjs deploy --target cloudflare"
+    "deploy:cloudflare:adapter": "node ./src/cli.mjs deploy --target cloudflare",
+    "bench:agency-ops:runtime": "node ./scripts/benchmark-agency-ops-runtime.mjs"
   },
   "engines": {
     "node": ">=20.0.0"

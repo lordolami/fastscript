@@ -103,6 +103,10 @@ The first official greenfield product baseline lives at:
 
 - `/docs/team-dashboard-saas`
 
+The strict-TypeScript proving-ground guide for developers who want the cleanest "only the filename changes" demo lives at:
+
+- `/docs/agency-ops`
+
 ## Install
 
 ### Option 1: npm install
@@ -207,7 +211,10 @@ Use this rule before starting product work:
 3. Prefer the Team Dashboard SaaS baseline when you want the strongest product-shaped starting point:
    - `fastscript create startup-mvp --template startup-mvp`
    - reference guide at `/docs/team-dashboard-saas`
-4. Treat any valid JS/TS failure in `.fs` as a compatibility bug and report it through the public compatibility lane.
+4. Use Agency Ops when you want a public strict-TypeScript proving-ground app that shows pages, APIs, jobs, billing, and deploy flow without FastScript-only syntax:
+   - source: `examples/agency-ops`
+   - guide: `/docs/agency-ops`
+5. Treat any valid JS/TS failure in `.fs` as a compatibility bug and report it through the public compatibility lane.
 
 FastScript 3.0.2 is the first real-world adoption line. The public product contract stays anchored to the support matrix, proof pack, and release-blocking compatibility checks.
 
@@ -603,6 +610,16 @@ A more startup-shaped example with:
 - authenticated workspace dashboard
 - projects, team, billing, settings, and admin routes
 - migrations plus queue-backed receipt/notification jobs
+
+### `examples/agency-ops`
+A strict-TypeScript proving-ground app with:
+
+- public marketing page
+- authenticated agency dashboard
+- clients, team, billing, settings, and ops routes
+- queue-backed receipts and notification follow-up
+- Cloudflare-ready deploy adapter generation
+- a dedicated app proof via `npm run test:agency-ops`
 
 ## Deploy Targets
 

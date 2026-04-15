@@ -11,6 +11,7 @@ const OUT_DOCS = resolve("docs", "PROOF_PACK.md");
 const JS_TS_PROOF = resolve(".fastscript", "proofs", "js-ts-syntax-proof.json");
 const FS_PARITY_PROOF = resolve(".fastscript", "proofs", "fs-parity-matrix.json");
 const COMPATIBILITY_REPORT = resolve(".fastscript", "proofs", "compatibility-registry-report.json");
+const AGENCY_RUNTIME_JSON = resolve("benchmarks", "agency-ops-runtime.json");
 
 function readJson(path, fallback = {}) {
   if (!existsSync(path)) return fallback;
@@ -43,6 +44,8 @@ const pkg = readJson(resolve("package.json"), {});
 const compatibilityArtifacts = loadCompatibilityArtifacts();
 writeCompatibilityArtifacts({ registry, pkg, artifacts: compatibilityArtifacts });
 const compatibilityReport = readJson(COMPATIBILITY_REPORT, { summary: { entries: 0, provenEntries: 0, byStatus: {} } });
+const agencyRuntime = readJson(AGENCY_RUNTIME_JSON, null);
+const agencyCorpus = (bench.corpora || []).find((item) => item.id === "example-agency-ops") || null;
 
 const failed = (interop.cases || []).filter((item) => item.status === "fail");
 const failLines = failed.length
@@ -70,6 +73,9 @@ const markdown = `# FastScript Proof Pack
 - Compatibility registry entries: ${compatibilityReport.summary?.entries ?? 0}
 - Compatibility proven entries: ${compatibilityReport.summary?.provenEntries ?? 0}
 - Framework proof rows: ${compatibilityReport.summary?.byCategory?.["framework-patterns"] ?? 0}
+- Agency Ops warm build p95 trimmed: ${agencyCorpus?.timingsMs?.buildWarm?.p95Trimmed ?? "n/a"}ms
+- Agency Ops cold build: ${agencyCorpus?.timingsMs?.buildCold?.ms ?? "n/a"}ms
+- Agency Ops runtime /dashboard: ${agencyRuntime?.timingsMs?.dashboard ?? "n/a"}ms
 - Launch line: FastScript v3
 - Product contract: \`.fs\` is a universal JS/TS container and valid JS/TS failures in \`.fs\` are treated as FastScript compatibility bugs
 - Release posture: source-available public repo, proprietary core, no AI-training use without permission
@@ -84,6 +90,15 @@ See full matrix: \`docs/INTEROP_MATRIX.md\`
 
 ### Failed Interop Cases
 ${failLines}
+
+## Agency Ops Speed Proof
+- Benchmark corpus id: \`example-agency-ops\`
+- Warm build p95 trimmed: ${agencyCorpus?.timingsMs?.buildWarm?.p95Trimmed ?? "n/a"}ms
+- Cold build: ${agencyCorpus?.timingsMs?.buildCold?.ms ?? "n/a"}ms
+- Runtime /: ${agencyRuntime?.timingsMs?.home ?? "n/a"}ms
+- Runtime /dashboard: ${agencyRuntime?.timingsMs?.dashboard ?? "n/a"}ms
+- Runtime /dashboard/clients: ${agencyRuntime?.timingsMs?.clientsPage ?? "n/a"}ms
+- Runtime /api/session: ${agencyRuntime?.timingsMs?.sessionBootstrap ?? "n/a"}ms
 
 ## JS/TS Compatibility Proof
 - Syntax proof artifact: \`.fastscript/proofs/js-ts-syntax-proof.json\`

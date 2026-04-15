@@ -28,6 +28,9 @@ const SECTIONS = [{
     label: "Team Dashboard SaaS",
     href: "/docs/team-dashboard-saas"
   }, {
+    label: "Agency Ops guide",
+    href: "/docs/agency-ops"
+  }, {
     label: "Styling primitives",
     href: "/docs/primitives"
   }, {
@@ -76,6 +79,11 @@ const CARDS = [{
   copy: "The first official FastScript greenfield product baseline: public pages, authenticated workspace flows, billing, jobs, DB state, and Cloudflare-ready deployment in one reference app.",
   href: "/docs/team-dashboard-saas",
   cta: "Open baseline guide"
+}, {
+  title: "Agency Ops strict-TypeScript guide",
+  copy: "A publicly documented proving-ground app that shows how to keep ordinary TypeScript inside .fs while shipping a client-ops product shape with pages, APIs, jobs, DB state, and deploy proof.",
+  href: "/docs/agency-ops",
+  cta: "Open Agency Ops"
 }, {
   title: "Quickstart",
   copy: "Install the CLI, create, build, and deploy a FastScript app in 15 minutes. Clone the repo when you want to work on the language itself.",

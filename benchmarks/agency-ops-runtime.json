@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-04-15T22:36:38.432Z",
+  "app": "agency-ops",
+  "timingsMs": {
+    "home": 6.43,
+    "signIn": 9.65,
+    "sessionBootstrap": 22.41,
+    "dashboard": 37.35,
+    "clientsPage": 10.52,
+    "clientsApiMutation": 8.18
+  }
+}

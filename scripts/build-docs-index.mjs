@@ -28,6 +28,7 @@ const PATH_OVERRIDES = {
   "support_matrix": "/docs/support",
   "real_world_adoption": "/docs/adoption",
   "team_dashboard_saas": "/docs/team-dashboard-saas",
+  "agency_ops_guide": "/docs/agency-ops",
 };
 
 for (const name of files) {

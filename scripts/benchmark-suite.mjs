@@ -17,6 +17,7 @@ const CORPORA = [
   { id: "repo-app", root: resolve(".") },
   { id: "yomiru", root: resolve("yomiru") },
   { id: "example-startup-mvp", root: resolve("examples", "startup-mvp") },
+  { id: "example-agency-ops", root: resolve("examples", "agency-ops") },
   { id: "example-fullstack", root: resolve("examples", "fullstack") },
 ];
 

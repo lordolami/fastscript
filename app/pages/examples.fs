@@ -1,4 +1,8 @@
 const EXAMPLES = [{
+  title: "Agency Ops SaaS",
+  copy: "Strict-TypeScript proving-ground app with client-ops routes, billing, follow-up jobs, and Cloudflare-ready deployment. Great for showing developers that the filename can be the only obvious FastScript difference.",
+  tags: ["TypeScript", "Client Ops", "Proving Ground"]
+}, {
   title: "Team dashboard SaaS",
   copy: "Reference product with marketing pages, authenticated workspace flows, billing, queue jobs, admin routes, and governed compatibility across one FastScript runtime.",
   tags: ["Full-stack", "SaaS", "Reference"]
@@ -49,7 +53,7 @@ export default function ExamplesPage() {
         <p class="cta-copy">The stable <code class="ic">startup-mvp</code> template id now points to the first real FastScript greenfield product baseline: marketing pages, authenticated workspace flows, billing, jobs, DB state, and Cloudflare-ready deployment.</p>
         <div class="cta-actions">
           <a class="btn btn-primary btn-lg" href="/docs/team-dashboard-saas">Open baseline guide</a>
-          <a class="btn btn-secondary btn-lg" href="/showcase">View showcase</a>
+          <a class="btn btn-secondary btn-lg" href="/docs/agency-ops">Open Agency Ops guide</a>
         </div>
       </div>
 

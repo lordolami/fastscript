@@ -1,4 +1,10 @@
 const PROJECTS = [{
+  title: "Agency Ops SaaS",
+  copy: "Strict-TypeScript client-ops proving-ground app with agency routes, billing, jobs, DB state, and dedicated speed proof.",
+  meta: "proving-ground",
+  detail: "strict ts - client ops - speed proof",
+  kind: "full-app"
+}, {
   title: "FastScript Team Dashboard SaaS",
   copy: "Reference app proving public pages, authenticated workspaces, billing, jobs, DB flows, and governed compatibility in one runtime.",
   meta: "starter",
@@ -75,7 +81,7 @@ export default function Showcase() {
         <p class="cta-copy">The stable <code class="ic">startup-mvp</code> template is now the first official FastScript greenfield product baseline. It is the strongest starting point for real SaaS-shaped work in the current product line.</p>
         <div class="cta-actions">
           <a class="btn btn-primary btn-lg" href="/docs/team-dashboard-saas">Open baseline guide</a>
-          <a class="btn btn-secondary btn-lg" href="/docs/adoption">Open adoption flow</a>
+          <a class="btn btn-secondary btn-lg" href="/docs/agency-ops">Open Agency Ops guide</a>
         </div>
       </div>
 
