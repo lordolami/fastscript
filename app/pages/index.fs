@@ -1,5 +1,5 @@
 export default function Home() {
-  return (`
+  return `
     <section class="hero">
       <div class="shell hero-inner">
         <div class="hero-left">
@@ -413,5 +413,5 @@ export default function Home() {
         </div>
       </div>
     </section>
-  `);
+  `;
 }
