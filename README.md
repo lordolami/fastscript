@@ -78,6 +78,20 @@ See:
 - Package compatibility without giving up a proprietary language/runtime moat
 - A direct path into the next FastScript AI assistant stack
 
+## Why Developers Choose FastScript
+
+FastScript is built for developers who want one system instead of a pile of cooperating tools.
+
+- Write ordinary TS/JS/JSX/TSX in `.fs`
+- Use the same runtime for frontend pages, backend APIs, middleware, jobs, and workers
+- Keep npm packages and ecosystem code while migrating incrementally
+- Convert existing route-based codebases safely with dry-run previews, diff artifacts, validation, and rollback
+- Ship through Node, Vercel, or Cloudflare deploy adapters without rebuilding your app around each target
+
+The strongest public developer guide lives at `/why-fastscript`, and the compatibility lane for edge cases lives at:
+
+- `https://github.com/lordolami/fastscript/issues/new?template=compatibility-gap.yml`
+
 ## Install
 
 ### Option 1: npm install
@@ -333,6 +347,19 @@ Developers should be able to:
 2. use existing libraries
 3. export back out when needed
 4. keep real production optionality
+
+## Migration Story
+
+FastScript is meant to meet existing teams where they are:
+
+1. keep your current TS/JS modules
+2. run `npm run migrate -- <path> --dry-run`
+3. inspect `diff-preview.json`, manifests, validation, and fidelity output
+4. convert route-by-route into `.fs`
+5. preserve CSS, assets, and existing libraries
+6. keep authoring normal TS/JS directly in `.fs` after conversion
+
+If valid JS/TS or a real framework pattern fails in `.fs`, that is a FastScript compatibility gap and should be reported through the public compatibility issue lane.
 
 ## Commands
 

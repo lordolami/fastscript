@@ -5,6 +5,9 @@ const NAV = [{
   href: "/learn",
   label: "Quickstart"
 }, {
+  href: "/why-fastscript",
+  label: "Why FS"
+}, {
   href: "/examples",
   label: "Examples"
 }, {
@@ -25,7 +28,7 @@ const NAV = [{
 }];
 const FOOTER_COLS = [{
   title: "Product",
-  links: [["Overview", "/"], ["Quickstart", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"], ["Playground", "/docs/playground"]]
+  links: [["Overview", "/"], ["Why FastScript", "/why-fastscript"], ["Quickstart", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"], ["Playground", "/docs/playground"]]
 }, {
   title: "Language",
   links: [["Docs", "/docs"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"], ["Interop", "/docs/interop"], ["Spec", "/docs/v3"]]

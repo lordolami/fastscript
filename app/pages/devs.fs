@@ -1,19 +1,19 @@
 const TEAM = [{
   name: "Olamilekan Akinuli",
   role: "Founder &mdash; Product + Platform",
-  copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v3 positioning, release governance, compatibility-first product direction, and the next FastScript AI assistant line."
+  copy: "Leads language design, full-stack product strategy, ecosystem positioning, and shipping cadence. Owns the FastScript v3 contract, release governance, compatibility-first direction, and the next FastScript AI assistant line."
 }, {
   name: "Compiler lane",
   role: "Parser + Typecheck",
-  copy: "Owns route typing, diagnostics, source maps, and stability of .fs to JavaScript compilation. Maintains the conformance snapshot harness and semantic type checker."
+  copy: "Owns route typing, diagnostics, source maps, and stable .fs to JavaScript compilation. Maintains the conformance snapshot harness and semantic type checker."
 }, {
   name: "Runtime lane",
   role: "Server + Deploy",
-  copy: "Owns middleware pipeline, auth, job queue, storage, worker orchestration, and deploy adapters for Node, Vercel, and Cloudflare Workers."
+  copy: "Owns middleware, auth, job queue, storage, worker orchestration, and deploy adapters for Node, Vercel, and Cloudflare Workers."
 }, {
   name: "DX lane",
   role: "Editor + Docs",
-  copy: "Owns VS Code language extension, LSP server, documentation quality, and adoption loops for developers and AI systems consuming FastScript context packs."
+  copy: "Owns the VS Code extension, LSP server, docs quality, and adoption loops for developers and AI systems consuming FastScript context packs."
 }];
 export default function DevsPage() {
   const cells = TEAM.map(m => `
@@ -28,7 +28,7 @@ export default function DevsPage() {
       <header class="sec-header">
         <p class="kicker">About the builders</p>
         <h1 class="h1">Team architecture behind FastScript.</h1>
-        <p class="lead">FastScript is built as a product system, not just a compiler experiment. Each lane ships against measurable output: test evidence, runtime parity, deploy reliability, and protection of the language core as part of the wider FastScript AI platform.</p>
+        <p class="lead">FastScript is built as a product system, not just a compiler experiment. Each lane ships against measurable output: proof-backed speed, compatibility evidence, deploy reliability, and protection of the language core as part of the wider FastScript AI platform.</p>
       </header>
 
       <div class="team-grid">${cells}</div>
@@ -80,15 +80,15 @@ export default function DevsPage() {
       <div class="story-grid">
         <div class="story-cell">
           <p class="story-cell-title">The mission</p>
-          <p class="story-cell-copy">The goal is to collapse stack sprawl without asking developers to abandon JavaScript or TypeScript. v3 turns <code class="ic">.fs</code> into the runtime-native container so teams keep familiar syntax and gain a faster pipeline.</p>
+          <p class="story-cell-copy">The goal is to collapse stack sprawl without asking developers to abandon JavaScript or TypeScript. v3 turns <code class="ic">.fs</code> into the runtime-native container so teams keep familiar syntax, keep package compatibility, and gain a faster full-stack pipeline.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">Why proprietary</p>
-          <p class="story-cell-copy">FastScript is source-available for trust, evaluation, and adoption, but the main language/runtime remains proprietary because it is also the foundation for the future FastScript AI assistant. That moat is intentional.</p>
+          <p class="story-cell-copy">FastScript is source-available for trust, evaluation, and adoption, but the main language/runtime remains proprietary because it is also the foundation for future FastScript AI tooling. That moat is deliberate: the platform advantage should compound inside FastScript, not subsidize copycats.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">What comes next</p>
-          <p class="story-cell-copy">The next wave is an AI coding assistant built on the main FastScript language/runtime, designed for stronger accuracy, faster deciphering of messy codebases, and better full-stack execution discipline than generic assistants.</p>
+          <p class="story-cell-copy">The next wave is an AI coding assistant built on the main FastScript language/runtime, designed for stronger accuracy, faster deciphering of messy codebases, and better full-stack execution discipline than generic assistants. The long game is one platform where the language, runtime, tooling, and assistant reinforce each other.</p>
         </div>
       </div>
     </section>

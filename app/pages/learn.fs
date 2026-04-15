@@ -16,7 +16,7 @@ const STEPS = [{
 }, {
   n: "04",
   title: "Add product logic",
-  copy: "Build route loaders, API handlers, queue workers, storage workflows, and UI primitives in .fs. Everything shares one context object.",
+  copy: "Build route loaders, API handlers, queue workers, storage workflows, and UI primitives in .fs. FastScript works as both frontend and backend in one runtime, with one context model.",
   cmd: "app/pages/*.fs\napp/api/*.fs\napp/db/migrations/*.fs\n<Stack> <Row> <Text> <Button>"
 }, {
   n: "05",
@@ -44,6 +44,11 @@ const NEXT = [{
   copy: "Generate hardened Node, Vercel, and Cloudflare outputs with default cache, security, and routing policies.",
   href: "/docs/latest",
   cta: "Open deploy guide"
+}, {
+  title: "Why FastScript",
+  copy: "Get the full developer story: why FastScript is better, how migration works, how to ship TS in .fs, and how to request missing edge cases.",
+  href: "/why-fastscript",
+  cta: "Read adoption guide"
 }];
 export default function LearnPage() {
   const steps = STEPS.map(s => `
@@ -87,11 +92,36 @@ export default function LearnPage() {
 
     <hr class="section-divider">
 
+    <section class="learn-next">
+      <header class="sec-header-sm">
+        <p class="kicker">Bring existing code</p>
+        <h2 class="h2">Move existing TS/JS into FastScript safely.</h2>
+      </header>
+
+      <div class="docs-card-grid">
+        <div class="docs-card">
+          <p class="docs-card-title">Preview conversion first</p>
+          <p class="docs-card-copy">Use <code class="ic">npm run migrate -- app --dry-run</code> to inspect rename-only conversion, diff preview, validation, and manifest output before changing source files.</p>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Keep frontend + backend together</p>
+          <p class="docs-card-copy">Move existing pages, API routes, middleware, and shared helpers into <code class="ic">.fs</code> incrementally while preserving the same app boundary.</p>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Keep your libraries</p>
+          <p class="docs-card-copy">Preserve npm packages, CSS, assets, and ecosystem code while you migrate route-by-route instead of rewriting your stack around the runtime.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
     <div class="cta-block">
       <h2 class="cta-title">Ready to ship?</h2>
-      <p class="cta-copy">Everything you need is in the runtime and toolchain. Keep familiar JS/TS habits, get a faster pipeline, and avoid the parallel stack maze.</p>
+      <p class="cta-copy">Everything you need is in the runtime and toolchain. Keep familiar JS/TS habits, get a faster pipeline, avoid the parallel stack maze, and use the compatibility lane if your migration hits a real edge case.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="/docs">Open the docs</a>
+        <a class="btn btn-secondary btn-lg" href="/why-fastscript">Why FastScript</a>
         <a class="btn btn-ghost btn-lg" href="/examples">Browse examples</a>
       </div>
     </div>

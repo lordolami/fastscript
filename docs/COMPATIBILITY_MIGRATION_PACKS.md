@@ -30,3 +30,27 @@ Manifest and rollback workflow:
 1. inspect latest conversion manifest: `npm run manifest -- --json`
 2. inspect latest diff preview: `.fastscript/conversion/latest/diff-preview.json`
 3. rollback from latest conversion manifest: `npm run migrate:rollback`
+
+## Full-stack migration example
+
+For a normal TypeScript app:
+
+1. keep your existing page/component source and API routes in place
+2. run `npm run migrate -- app --dry-run`
+3. inspect `diff-preview.json`, manifest output, validation, and fidelity reports
+4. convert eligible `ts/tsx/js/jsx` files into `.fs`
+5. keep CSS, assets, and npm dependencies untouched
+6. continue authoring ordinary TS/JS directly inside `.fs`
+7. deploy through the existing FastScript targets
+
+This is meant for teams coming from Node, Express, Next-style routes, Vue-adjacent script usage, or general TS projects that want one runtime boundary without a rewrite cliff.
+
+## Compatibility request lane
+
+If valid JS/TS, a framework pattern, or a real migration case fails in `.fs`, treat that as a FastScript compatibility bug and report it publicly:
+
+1. open `https://github.com/lordolami/fastscript/issues/new?template=compatibility-gap.yml`
+2. include the source snippet
+3. include expected behavior
+4. include framework/runtime context
+5. include reproduction steps and whether the failure is parse/build/typecheck/runtime related

@@ -4,7 +4,7 @@ export default function DocsInterop() {
       <header class="sec-header">
         <p class="kicker">Interop</p>
         <h1 class="h1">JavaScript ecosystem compatibility in practice.</h1>
-        <p class="lead">FastScript keeps <code class="ic">.fs</code> as the source of truth while still working with npm packages, mixed JS/FS modules, and incremental migration paths.</p>
+        <p class="lead">FastScript keeps <code class="ic">.fs</code> as the source of truth while still working with npm packages, mixed JS/FS modules, and incremental migration paths across frontend and backend code.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -83,6 +83,11 @@ export default function DocsInterop() {
           <div class="docs-card">
             <p class="docs-card-title">Proof before rewrite</p>
             <p class="docs-card-copy">Use the proof suite and benchmarks to verify compatibility before collapsing the remaining bridge layer.</p>
+          </div>
+          <div class="docs-card">
+            <p class="docs-card-title">Report a missing edge case</p>
+            <p class="docs-card-copy">If valid JS/TS, a framework pattern, or a migration lane breaks in <code class="ic">.fs</code>, use the dedicated compatibility issue path so the gap is treated as product work.</p>
+            <a class="docs-card-link" href="https://github.com/lordolami/fastscript/issues/new?template=compatibility-gap.yml" target="_blank" rel="noreferrer">Open compatibility issue &#8594;</a>
           </div>
         </div>
       </section>

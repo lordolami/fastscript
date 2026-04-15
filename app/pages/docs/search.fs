@@ -1,13 +1,14 @@
-const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/interop", "/docs/playground", "/docs/search", "/docs/v3", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks"];
+const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/interop", "/docs/playground", "/docs/search", "/docs/v3", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks", "/why-fastscript"];
 function resolveDocRoute(item) {
   const direct = String(item?.path || "").trim();
   if (DOC_ROUTE_FALLBACKS.includes(direct)) return direct;
   const haystack = `${item?.title || ""} ${item?.summary || ""} ${direct}`.toLowerCase();
   if (haystack.includes("playground")) return "/docs/playground";
+  if (haystack.includes("why fastscript") || haystack.includes("why developers") || haystack.includes("adopt") || haystack.includes("frontend and backend") || haystack.includes("full-stack")) return "/why-fastscript";
   if (haystack.includes("v3") || haystack.includes("latest") || haystack.includes("compatibility") || haystack.includes("parity") || haystack.includes("stdlib") || haystack.includes("runtime")) return "/docs/v3";
   if (haystack.includes("v2") || haystack.includes("ratified")) return "/docs/v2";
   if (haystack.includes("interop")) return "/docs/interop";
-  if (haystack.includes("migration")) return "/docs/v1.1";
+  if (haystack.includes("migration") || haystack.includes("convert") || haystack.includes("rollback") || haystack.includes("edge case")) return "/docs/interop";
   if (haystack.includes("spec") || haystack.includes("error code")) return "/docs/v1";
   if (haystack.includes("deploy") || haystack.includes("release") || haystack.includes("rollout") || haystack.includes("api reference") || haystack.includes("plugin") || haystack.includes("cli")) {
     return "/docs/latest";

@@ -15,9 +15,9 @@ export default function Home() {
 
           <p class="hero-desc">
             Write normal <code class="ic">js</code>, <code class="ic">ts</code>, <code class="ic">jsx</code>, or <code class="ic">tsx</code> in <code class="ic">.fs</code>,
-            keep full package compatibility, compile to optimized JavaScript, and ship to Node, Vercel, or Cloudflare with one command.
-            FastScript-specific syntax is optional. Current proof pack shows 2.71KB first-load gzip, 702.98ms builds, and 13/13 interop passing.
-            The main language/runtime stays proprietary and source-available as the foundation for the next FastScript AI products.
+            keep full package compatibility, compile to optimized JavaScript, and ship frontend, backend, jobs, and APIs through one runtime pipeline.
+            FastScript-specific syntax is optional. The current proof pack shows 2.71KB first-load gzip, 702.98ms builds, and 13/13 interop passing.
+            The main language/runtime stays proprietary and source-available so the platform can compound into the next FastScript AI products.
           </p>
 
           <div class="install-row">
@@ -30,7 +30,7 @@ export default function Home() {
 
           <div class="hero-actions">
             <a class="btn btn-primary btn-lg" href="/learn">Get Started</a>
-            <a class="btn btn-secondary btn-lg" href="/docs">View Docs</a>
+            <a class="btn btn-secondary btn-lg" href="/why-fastscript">Why FastScript</a>
           </div>
         </div>
 
@@ -133,6 +133,7 @@ export default function Home() {
       <header class="sec-header reveal">
         <p class="kicker">How it works</p>
         <h2 class="h2">Three steps from idea to production.</h2>
+        <p class="lead">Use FastScript as one frontend + backend runtime, keep normal TS/JS authoring habits, and ship through one toolchain instead of managing a parallel stack.</p>
       </header>
       <div class="how-grid reveal-children">
         <div class="how-cell">
@@ -151,6 +152,9 @@ export default function Home() {
           <p class="how-copy"><code class="ic">fastscript deploy --target cloudflare</code> (or <code class="ic">node</code>, <code class="ic">vercel</code>) generates a hardened adapter and deploys. No per-platform config. One codebase, three outputs.</p>
         </div>
       </div>
+      <div class="action-row">
+        <a class="btn btn-ghost btn-lg" href="/why-fastscript">See the developer story</a>
+      </div>
     </section>
 
     <section class="home-split reveal">
@@ -158,7 +162,7 @@ export default function Home() {
         <div class="split-cell">
           <p class="kicker">Developer experience</p>
           <h2 class="h2 split-h2">Write once.<br>Ship anywhere.</h2>
-          <p class="body-copy split-copy">One runtime container. One pipeline. No parallel stack maze, no config sprawl. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
+          <p class="body-copy split-copy">One runtime-native container. One proof-backed toolchain. No frontend/backend split brain, no adapter sprawl, no extra authored language tax. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
           <div class="terminal">
             <div class="terminal-bar">
               <span class="terminal-dot-r"></span><span class="terminal-dot-y"></span><span class="terminal-dot-g"></span>
@@ -246,23 +250,23 @@ export default function Home() {
       <div class="story-grid">
         <div class="story-cell">
           <p class="story-cell-title">The problem</p>
-          <p class="story-cell-copy">Modern JavaScript stacks often make you choose between familiar code and a fast deployment pipeline. Teams end up rewriting how they think just to get routing, auth, jobs, validation, and deploy adapters to agree.</p>
+          <p class="story-cell-copy">Modern JavaScript stacks force teams to stitch together separate frontend, backend, worker, and deployment stories. The result is slower builds, heavier payloads, and too much time spent reconciling tools instead of shipping product.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The insight</p>
-          <p class="story-cell-copy">The best path is not a stranger DSL. It is keeping normal JS/TS authoring, putting it in one runtime-native container, and letting the compiler/runtime/toolchain create the speed advantage.</p>
+          <p class="story-cell-copy">The better move is not another framework shell or stranger DSL. It is keeping normal JS/TS authoring, putting it in one runtime-native container, and letting the compiler, runtime, and toolchain create the speed advantage.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The approach</p>
-          <p class="story-cell-copy">Compile-first and proof-backed: every <code class="ic">.fs</code> file goes through strict validation, parity checks, benchmarks, and proof-pack publishing before release. The speed story is earned by the toolchain, not by forcing you to code differently.</p>
+          <p class="story-cell-copy">Compile-first and proof-backed: every <code class="ic">.fs</code> file goes through strict validation, parity checks, benchmarks, and proof-pack publishing before release. The speed story is earned by the toolchain, not by demanding a new coding identity.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The promise</p>
-          <p class="story-cell-copy">FastScript v3 treats valid JS/TS in <code class="ic">.fs</code> as first-class source. If valid JS/TS fails in <code class="ic">.fs</code>, that is a FastScript compatibility bug. You keep your code style and get the speed benefits anyway.</p>
+          <p class="story-cell-copy">FastScript v3 treats valid JS/TS in <code class="ic">.fs</code> as first-class source. If valid JS/TS fails in <code class="ic">.fs</code>, that is a FastScript compatibility bug. You keep your code style, keep the npm ecosystem, and still get the speed gains.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The moat</p>
-          <p class="story-cell-copy">FastScript keeps the main language/runtime proprietary and source-available. The public repo is open for adoption and evaluation, but not for training competing AI coding systems or cloning the platform moat.</p>
+          <p class="story-cell-copy">FastScript keeps the main language/runtime proprietary and source-available. The public repo is open for adoption and evaluation, but not for training competing AI coding systems or cloning the platform moat that powers the next generation of FastScript tooling.</p>
         </div>
       </div>
     </section>
@@ -318,8 +322,8 @@ export default function Home() {
       </header>
       <div class="split-section">
         <div class="split-cell">
-          <p class="body-copy split-copy">AI code generators produce volume. FastScript provides the safety net. The compiler&rsquo;s strict diagnostic pass catches hallucination patterns &mdash; undefined references, type mismatches, unreachable code, bad import shapes &mdash; before they reach production.</p>
-          <p class="body-copy split-copy">The same language/runtime foundation also powers what comes next: a FastScript AI coding assistant optimized for accuracy, deciphering speed, and full-stack context. The protected core exists so we can keep compounding that advantage.</p>
+          <p class="body-copy split-copy">AI code generators produce volume. FastScript provides the verification layer. The compiler&rsquo;s strict diagnostic pass catches hallucination patterns &mdash; undefined references, type mismatches, unreachable code, bad import shapes &mdash; before they hit production.</p>
+          <p class="body-copy split-copy">The same language/runtime foundation also powers what comes next: a FastScript AI coding assistant optimized for accuracy, deciphering speed, and full-stack context. The protected core exists so that advantage compounds instead of leaking out into generic tooling.</p>
           <div class="tag-row">
             <span class="tag">Strict diagnostics</span>
             <span class="tag">Compile-time proof</span>
@@ -405,9 +409,10 @@ export default function Home() {
     <section class="home-cta reveal">
       <div class="cta-block">
         <h2 class="cta-title">Build once in .fs. Ship anywhere.</h2>
-        <p class="cta-copy">FastScript keeps the JavaScript ecosystem while removing stack sprawl. Use <code class="ic">.fs</code> as your source of truth, keep <code class="ic">.js</code> compatibility, and build on the same protected runtime foundation that powers the next FastScript AI products.</p>
+        <p class="cta-copy">FastScript keeps the JavaScript ecosystem while cutting stack sprawl, payload weight, and build drag. Use <code class="ic">.fs</code> as your source of truth, keep package compatibility, and build on the same protected runtime foundation that powers the next FastScript AI products.</p>
         <div class="cta-actions">
           <a class="btn btn-primary btn-lg" href="/learn">Start in 15 minutes</a>
+          <a class="btn btn-secondary btn-lg" href="/why-fastscript">Why developers choose FastScript</a>
           <a class="btn btn-secondary btn-lg" href="/examples">Browse examples</a>
           <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub &rarr;</a>
         </div>

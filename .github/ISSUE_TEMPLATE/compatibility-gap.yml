@@ -1,0 +1,75 @@
+name: Compatibility gap
+description: Report valid JS/TS, framework, or migration behavior that should work in `.fs` but does not.
+title: "[compat] "
+labels:
+  - compatibility
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form when valid JavaScript, TypeScript, JSX, TSX, or a real framework/migration pattern fails in `.fs`.
+        Under the FastScript v3 contract, these are compatibility bugs.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Compatibility lane
+      description: What kind of edge case is this?
+      options:
+        - JS syntax
+        - TS syntax
+        - JSX/TSX syntax
+        - Framework pattern
+        - Migration blocker
+        - Runtime/platform mismatch
+    validations:
+      required: true
+  - type: input
+    id: runtime
+    attributes:
+      label: Framework/runtime context
+      description: Node, Express, Next-style routes, Vue-adjacent script usage, React/TSX, plain TS project, etc.
+      placeholder: Next-style route module on Node 20
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source snippet
+      description: Paste the smallest source example that reproduces the issue.
+      render: ts
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Describe what should happen if FastScript accepts this case correctly.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include parse/build/typecheck/runtime failure details, diagnostics, or screenshots if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: List the exact steps or commands needed to reproduce the problem.
+      placeholder: |
+        1. Create app
+        2. Save snippet as app/pages/index.fs
+        3. Run npm run build
+        4. Observe failure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: FastScript version
+      placeholder: 3.0.0
+    validations:
+      required: true

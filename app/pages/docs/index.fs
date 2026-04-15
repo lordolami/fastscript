@@ -19,6 +19,9 @@ const SECTIONS = [{
     label: "Quickstart",
     href: "/learn"
   }, {
+    label: "Why FastScript",
+    href: "/why-fastscript"
+  }, {
     label: "Styling primitives",
     href: "/docs/primitives"
   }, {
@@ -53,6 +56,11 @@ const CARDS = [{
   href: "/docs/v3",
   cta: "Read v3"
 }, {
+  title: "Why developers choose FastScript",
+  copy: "The full developer story: why FastScript is better, how frontend and backend live in one runtime, how migration works, and how to request edge cases.",
+  href: "/why-fastscript",
+  cta: "Read guide"
+}, {
   title: "Quickstart",
   copy: "Install the CLI, create, build, and deploy a FastScript app in 15 minutes. Clone the repo when you want to work on the language itself.",
   href: "/learn",
@@ -74,7 +82,7 @@ const CARDS = [{
   cta: "View reference"
 }, {
   title: "Interop + migration",
-  copy: "Use npm packages in .fs files and migrate existing JS codebases module by module, with older v1.1 notes preserved for reference.",
+  copy: "Use npm packages in .fs files and migrate existing TS/JS codebases module by module, with dry runs, diff previews, rollback, and compatibility reporting built in.",
   href: "/docs/interop",
   cta: "Learn interop"
 }, {
