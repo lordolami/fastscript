@@ -6,7 +6,17 @@ export async function load(ctx) {
   return { agency, ...listAgencyData(ctx.db, agency.id), ops: summarizeOps(ctx.db) };
 }
 
-export default function OpsPage({ agency, ops, notificationJobs, invoices, workItems, config }) {
+function assignmentOptions(memberships, currentId) {
+  const options = [`<option value="">Unassigned</option>`];
+  for (const member of memberships || []) {
+    if (member.status !== "active") continue;
+    const selected = currentId === member.id ? " selected" : "";
+    options.push(`<option value="${member.id}"${selected}>${member.name || member.email} · ${member.role}</option>`);
+  }
+  return options.join("");
+}
+
+export default function OpsPage({ agency, ops, notificationJobs, invoices, workItems, config, memberships }) {
   const jobs = (notificationJobs || []).map((job) => `
     <div class="list-card">
       <h3>${job.kind}</h3>
@@ -24,6 +34,11 @@ export default function OpsPage({ agency, ops, notificationJobs, invoices, workI
         <span class="status-pill">${item.status}</span>
         <span class="meta-pill">${item.priority}</span>
         <span class="meta-pill">${item.dueLabel}</span>
+        <span class="meta-pill">${item.assigneeName || "Unassigned"}</span>
+      </div>
+      <div class="inline-actions">
+        <select class="input-inline" data-assign-select data-work-item-id="${item.id}">${assignmentOptions(memberships, item.assigneeMembershipId)}</select>
+        <button class="btn-inline btn-secondary" type="button" data-assign-button data-work-item-id="${item.id}">Save assignment</button>
       </div>
     </div>
   `).join("");
@@ -50,6 +65,7 @@ export default function OpsPage({ agency, ops, notificationJobs, invoices, workI
         <div class="metric-card"><div class="detail-label">Invoices</div><h2>${ops.totals.invoices}</h2></div>
         <div class="metric-card"><div class="detail-label">Queued jobs</div><h2>${ops.totals.queuedJobs}</h2></div>
         <div class="metric-card"><div class="detail-label">Open work items</div><h2>${ops.totals.openWorkItems}</h2></div>
+        <div class="metric-card"><div class="detail-label">Unassigned work</div><h2>${ops.totals.unassignedWorkItems}</h2></div>
       </div>
 
       <section class="form-card">
@@ -61,6 +77,10 @@ export default function OpsPage({ agency, ops, notificationJobs, invoices, workI
               <option value="medium">Medium priority</option>
               <option value="high">High priority</option>
               <option value="low">Low priority</option>
+            </select>
+            <select class="input-inline" name="assigneeMembershipId">
+              <option value="">Assign later</option>
+              ${assignmentOptions(memberships, "")}
             </select>
             <button class="btn-inline" type="submit">Add work item</button>
           </div>
@@ -112,12 +132,35 @@ export function hydrate({ root }) {
         body: JSON.stringify({
           title: String(formData.get("title") || ""),
           clientName: String(formData.get("clientName") || ""),
-          priority: String(formData.get("priority") || "medium")
+          priority: String(formData.get("priority") || "medium"),
+          assigneeMembershipId: String(formData.get("assigneeMembershipId") || "")
         })
       });
       const json = await response.json();
       if (!response.ok || !json.ok) {
         msg.textContent = json.reason || "Could not add work item";
+        return;
+      }
+      location.reload();
+    });
+  }
+
+  for (const button of root.querySelectorAll("[data-assign-button]")) {
+    button.addEventListener("click", async () => {
+      const workItemId = button.getAttribute("data-work-item-id") || "";
+      const select = root.querySelector(`[data-assign-select][data-work-item-id="${workItemId}"]`);
+      msg.textContent = "Saving assignment...";
+      const response = await fetch("/api/work-items", {
+        method: "PATCH",
+        headers: createJsonHeaders(),
+        body: JSON.stringify({
+          workItemId,
+          assigneeMembershipId: select?.value || ""
+        })
+      });
+      const json = await response.json();
+      if (!response.ok || !json.ok) {
+        msg.textContent = json.reason || "Could not save assignment";
         return;
       }
       location.reload();

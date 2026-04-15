@@ -48,6 +48,12 @@ function set(db, name, key, value) {
   return value;
 }
 
+function displayNameFromEmail(email = "") {
+  const local = String(email || "team-member").split("@")[0].replace(/[^a-z0-9]+/gi, " ").trim();
+  if (!local) return "Team Member";
+  return local.split(/\s+/).map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" ");
+}
+
 export function seedPlans(db) {
   for (const plan of DEFAULT_PLANS) {
     if (!get(db, "plans", plan.id)) set(db, "plans", plan.id, plan);
@@ -79,6 +85,8 @@ export function queueNotificationJob(db, agencyId, kind, payload = {}) {
 }
 
 export function createWorkItemRecord(db, agencyId, actorId, body = {}) {
+  const assigneeMembershipId = body.assigneeMembershipId || "";
+  const assignee = assigneeMembershipId ? get(db, "memberships", assigneeMembershipId) : null;
   const record = {
     id: id("work"),
     agencyId,
@@ -90,6 +98,9 @@ export function createWorkItemRecord(db, agencyId, actorId, body = {}) {
     status: body.status || "queued",
     dueLabel: body.dueLabel || "This week",
     ownerId: actorId,
+    assigneeMembershipId: assigneeMembershipId || "",
+    assigneeName: assignee?.name || "",
+    assigneeEmail: assignee?.email || "",
     updatedAt: nowIso()
   };
   set(db, "workItems", record.id, record);
@@ -135,12 +146,37 @@ export function createAgency(db, owner, options = {}) {
     id: id("member"),
     agencyId: agency.id,
     userId: owner.id,
+    name: owner.name,
     email: owner.email,
     role: "owner",
     status: "active",
     createdAt: nowIso()
   };
   set(db, "memberships", membership.id, membership);
+
+  const seededMembers = [
+    {
+      id: id("member"),
+      agencyId: agency.id,
+      userId: id("user"),
+      name: "Kemi Delivery",
+      email: "kemi@northstarops.dev",
+      role: "operator",
+      status: "active",
+      createdAt: nowIso()
+    },
+    {
+      id: id("member"),
+      agencyId: agency.id,
+      userId: id("user"),
+      name: "David Finance",
+      email: "david@northstarops.dev",
+      role: "finance",
+      status: "active",
+      createdAt: nowIso()
+    }
+  ];
+  for (const item of seededMembers) set(db, "memberships", item.id, item);
 
   const starter = DEFAULT_PLANS[0];
   const subscription = {
@@ -204,6 +240,9 @@ export function createAgency(db, owner, options = {}) {
       status: "at-risk",
       dueLabel: "Due tomorrow",
       ownerId: owner.id,
+      assigneeMembershipId: membership.id,
+      assigneeName: membership.name,
+      assigneeEmail: membership.email,
       updatedAt: nowIso()
     },
     {
@@ -217,6 +256,9 @@ export function createAgency(db, owner, options = {}) {
       status: "queued",
       dueLabel: "Due this week",
       ownerId: owner.id,
+      assigneeMembershipId: seededMembers[0].id,
+      assigneeName: seededMembers[0].name,
+      assigneeEmail: seededMembers[0].email,
       updatedAt: nowIso()
     },
     {
@@ -230,6 +272,9 @@ export function createAgency(db, owner, options = {}) {
       status: "in-review",
       dueLabel: "Waiting on approval",
       ownerId: owner.id,
+      assigneeMembershipId: "",
+      assigneeName: "",
+      assigneeEmail: "",
       updatedAt: nowIso()
     }
   ];
@@ -284,9 +329,23 @@ export function listAgencyData(db, agencyId) {
     monthlyRetainers: clients.filter((entry) => entry.status === "active" || entry.status === "onboarding").reduce((sum, entry) => sum + Number(entry.monthlyRetainer || 0), 0),
     queuedJobs: notificationJobs.filter((entry) => entry.status === "queued").length,
     activeWorkItems: workItems.filter((entry) => entry.status !== "done").length,
-    atRiskWorkItems: workItems.filter((entry) => entry.status === "at-risk").length
+    atRiskWorkItems: workItems.filter((entry) => entry.status === "at-risk").length,
+    unassignedWorkItems: workItems.filter((entry) => !entry.assigneeMembershipId && entry.status !== "done").length
   };
-  return { agency, memberships, clients, workItems, activities, invoices, notificationJobs, subscription, metrics, plans: listPlans(db), config: getAgencyOpsConfig() };
+  return {
+    agency,
+    memberships,
+    clients,
+    workItems,
+    activities,
+    invoices,
+    notificationJobs,
+    subscription,
+    metrics,
+    plans: listPlans(db),
+    config: getAgencyOpsConfig(),
+    workload: summarizeWorkload(memberships, workItems)
+  };
 }
 
 export function createClientRecord(db, agencyId, ownerId, body) {
@@ -311,6 +370,7 @@ export function inviteMemberRecord(db, agencyId, actor, body) {
     id: id("member"),
     agencyId,
     userId: id("invite"),
+    name: body.name || displayNameFromEmail(body.email),
     email: body.email,
     role: body.role || "strategist",
     status: "invited",
@@ -320,6 +380,45 @@ export function inviteMemberRecord(db, agencyId, actor, body) {
   createActivity(db, agencyId, "member.invited", `Invited ${body.email}`, actor.id);
   queueNotificationJob(db, agencyId, "team-invite", { email: body.email, role: membership.role });
   return membership;
+}
+
+export function assignWorkItem(db, agencyId, actor, body) {
+  const current = get(db, "workItems", body.workItemId);
+  if (!current || current.agencyId !== agencyId) throw new Error("Unknown work item");
+  const membership = body.assigneeMembershipId ? get(db, "memberships", body.assigneeMembershipId) : null;
+  if (body.assigneeMembershipId && (!membership || membership.agencyId !== agencyId)) throw new Error("Unknown assignee");
+  const next = {
+    ...current,
+    assigneeMembershipId: membership?.id || "",
+    assigneeName: membership?.name || "",
+    assigneeEmail: membership?.email || "",
+    updatedAt: nowIso()
+  };
+  set(db, "workItems", current.id, next);
+  createActivity(
+    db,
+    agencyId,
+    membership ? "work-item.assigned" : "work-item.unassigned",
+    membership ? `Assigned ${current.title} to ${membership.name}` : `Removed assignee from ${current.title}`,
+    actor.id
+  );
+  return next;
+}
+
+export function summarizeWorkload(memberships, workItems) {
+  const activeMembers = (memberships || []).filter((entry) => entry.status === "active");
+  return activeMembers.map((member) => {
+    const assigned = (workItems || []).filter((item) => item.assigneeMembershipId === member.id && item.status !== "done");
+    return {
+      membershipId: member.id,
+      name: member.name || displayNameFromEmail(member.email),
+      email: member.email,
+      role: member.role,
+      assignedCount: assigned.length,
+      atRiskCount: assigned.filter((item) => item.status === "at-risk").length,
+      queuedCount: assigned.filter((item) => item.status === "queued").length
+    };
+  });
 }
 
 export function updateAgencySettings(db, agencyId, body) {
@@ -378,7 +477,8 @@ export function summarizeOps(db) {
       clients: clients.length,
       invoices: invoices.length,
       queuedJobs: jobs.filter((entry) => entry.status === "queued").length,
-      openWorkItems: workItems.filter((entry) => entry.status !== "done").length
+      openWorkItems: workItems.filter((entry) => entry.status !== "done").length,
+      unassignedWorkItems: workItems.filter((entry) => entry.status !== "done" && !entry.assigneeMembershipId).length
     },
     recentJobs: jobs.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))).slice(0, 8),
     recentInvoices: invoices.sort((a, b) => String(b.issuedAt).localeCompare(String(a.issuedAt))).slice(0, 8),

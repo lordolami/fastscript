@@ -368,7 +368,18 @@
       "proofIds": [
         "script:test:agency-ops"
       ],
-      "docsNote": "Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, billing, jobs, and Cloudflare-ready generation."
+      "docsNote": "Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, assignment workflow, billing, jobs, and Cloudflare-ready generation."
+    },
+    {
+      "id": "authenticated-dashboard-assignment-flows",
+      "category": "framework-patterns",
+      "feature": "Authenticated dashboard assignment and workload flows",
+      "status": "proven",
+      "contractNote": "Role-aware dashboard mutations such as assignment, reassignment, workload views, and authenticated operational flows should remain valid .fs product patterns.",
+      "proofIds": [
+        "script:test:agency-ops"
+      ],
+      "docsNote": "Covers assignment-capable work-item APIs, seeded assignee state, workload views, and authenticated dashboard mutation flow in Agency Ops."
     },
     {
       "id": "future-tc39-and-ts-additions",

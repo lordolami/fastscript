@@ -103,6 +103,8 @@ try {
   assert.equal(existsSync(join(appRoot, "dist", "worker.js")), true);
   assert.equal(existsSync(join(appRoot, "app", "env.schema.fs")), true);
   assert.equal(existsSync(join(appRoot, ".dev.vars.example")), true);
+  assert.equal(existsSync(join(appRoot, ".env.production.example")), true);
+  assert.equal(existsSync(join(appRoot, "DEPLOYMENT_INTERNAL.md")), true);
   assert.equal(existsSync(join(appRoot, "wrangler.toml.example")), true);
 
   const manifest = JSON.parse(readFileSync(join(appRoot, "dist", "fastscript-manifest.json"), "utf8"));
@@ -235,6 +237,33 @@ try {
   assert.equal(workItemResponse.status, 200);
   assert.equal(workItemJson.ok, true);
 
+  const workItemsResponse = await fetch(`${baseUrl}/api/work-items`, {
+    headers: { cookie: cookieHeader(), accept: "application/json" }
+  });
+  updateCookies(workItemsResponse);
+  const workItemsJson = await workItemsResponse.json();
+  assert.equal(workItemsResponse.status, 200);
+  assert.equal(workItemsJson.ok, true);
+  const activeOperator = workItemsJson.memberships.find((entry) => entry.role === "operator" && entry.status === "active");
+  assert.equal(Boolean(activeOperator), true);
+
+  const assignResponse = await fetch(`${baseUrl}/api/work-items`, {
+    method: "PATCH",
+    headers: {
+      ...csrfHeaders(),
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      workItemId: workItemJson.workItem.id,
+      assigneeMembershipId: activeOperator.id
+    })
+  });
+  updateCookies(assignResponse);
+  const assignJson = await assignResponse.json();
+  assert.equal(assignResponse.status, 200);
+  assert.equal(assignJson.ok, true);
+  assert.equal(assignJson.workItem.assigneeMembershipId, activeOperator.id);
+
   const billingResponse = await fetch(`${baseUrl}/api/billing/checkout`, {
     method: "POST",
     headers: {
@@ -292,6 +321,8 @@ try {
   const teamHtml = await teamPage.text();
   assert.equal(teamPage.status, 200);
   assert.match(teamHtml, /strategist@northstarops\.dev/);
+  assert.match(teamHtml, /Operator workload/i);
+  assert.match(teamHtml, /Kemi Delivery/);
 
   const billingPage = await fetch(`${baseUrl}/dashboard/billing`, { headers: { cookie: cookieHeader() } });
   updateCookies(billingPage);
@@ -306,6 +337,8 @@ try {
   assert.equal(opsPage.status, 200);
   assert.match(opsHtml, /support-follow-up/);
   assert.match(opsHtml, /Ship Maple Health retention board/);
+  assert.match(opsHtml, /Kemi Delivery/);
+  assert.match(opsHtml, /Save assignment/);
   assert.match(opsHtml, /Support email:/);
 
   console.log("test-agency-ops pass");

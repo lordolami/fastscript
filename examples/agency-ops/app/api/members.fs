@@ -1,8 +1,9 @@
-import { inviteMemberRecord, requireAgencyForUser } from "../lib/agency.fs";
+﻿import { inviteMemberRecord, requireAgencyForUser } from "../lib/agency.fs";
 
 export const schemas = {
   POST: {
     email: "string",
+    name: "string?",
     role: "string?"
   }
 };

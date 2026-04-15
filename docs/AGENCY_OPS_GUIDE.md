@@ -1,4 +1,4 @@
-# Agency Ops SaaS Guide
+﻿# Agency Ops SaaS Guide
 
 Agency Ops is the strict-TypeScript proving-ground app built from the public `startup-mvp` baseline.
 
@@ -8,8 +8,8 @@ Use it when you want:
 
 - a greenfield agency or client-ops SaaS
 - an internal service-delivery dashboard
-- a retainers, billing, and follow-up workflow app
-- a small-team admin product with notifications and invoice trails
+- a retainers, billing, assignment, and follow-up workflow app
+- a small-team admin product with notifications, workload visibility, and invoice trails
 
 ## What it proves
 
@@ -18,6 +18,7 @@ Use it when you want:
 - session bootstrap and auth gating
 - client and engagement CRUD
 - team invite flow
+- operator assignment and workload visibility
 - billing and invoice flow
 - queue-backed notification and receipt jobs
 - Cloudflare-ready adapter generation
@@ -35,12 +36,12 @@ Use it when you want:
 ## Architecture map
 
 - Pages: UI routes and server-rendered screens
-- APIs: session, billing, data mutation, and workflow actions
+- APIs: session, billing, work-item mutation, assignment, and workflow actions
 - Jobs: async receipts and follow-up notifications
 - DB: seed data and collection-backed product state
 - Middleware: auth/session guardrails
-- Deploy: Cloudflare adapter generation path
-- Config: app env schema plus Cloudflare-friendly env vars for branding, support contact, and notification sender
+- Deploy: Cloudflare adapter generation path plus custom Node/container production start
+- Config: app env schema plus Cloudflare-friendly and custom-host env examples for branding, support contact, notification sender, and database wiring
 
 ## Manual deployment if you are not using Node, Vercel, or Cloudflare adapters
 
@@ -64,9 +65,11 @@ If you deploy Agency Ops to Google Cloud Run, AWS ECS/EC2, Oracle Cloud compute,
 
 1. `cd examples/agency-ops`
 2. `node ../../src/cli.mjs build`
-3. ship the app with `dist/`, `app/`, `src/`, `package.json`, and installed production dependencies
-4. set `NODE_ENV=production`, `PORT`, and `SESSION_SECRET`
-5. run `node ../../src/cli.mjs start`
+3. `DB_DRIVER=postgres DATABASE_URL=... node ../../src/cli.mjs db:migrate`
+4. `DB_DRIVER=postgres DATABASE_URL=... node ../../src/cli.mjs db:seed`
+5. ship the app with `dist/`, `app/`, `src/`, `package.json`, and installed production dependencies
+6. set `NODE_ENV=production`, `PORT`, `SESSION_SECRET`, `DB_DRIVER=postgres`, and `DATABASE_URL`
+7. run `node ../../src/cli.mjs start`
 
 So the thing you are really deploying is the app plus its built `dist/` directory. The server reads `dist/fastscript-manifest.json` at startup.
 
@@ -76,25 +79,30 @@ If you are targeting a provider-specific function runtime instead of a Node/cont
 
 1. Build: `node ../../src/cli.mjs build`
 2. Confirm `dist/fastscript-manifest.json` exists
-3. Upload the app bundle to your target
-4. Make sure `dist/` is present on the target machine/image
-5. Install production dependencies if they are not baked into the image
-6. Start with `node ../../src/cli.mjs start`
-7. Probe `/`, `/dashboard`, `/dashboard/clients`, and one API route before calling it deployed
+3. Run migrations and seed against your target Postgres database
+4. Upload the app bundle to your target
+5. Make sure `dist/` is present on the target machine/image
+6. Install production dependencies if they are not baked into the image
+7. Start with `node ../../src/cli.mjs start`
+8. Probe `/`, `/dashboard`, `/dashboard/ops`, `/api/session`, and `/api/work-items`
 
-## Cloudflare env and bindings for the real product track
+## Cloudflare env and bindings for the product track
 
-Agency Ops now includes an app-level env schema and example Cloudflare files so the proving-ground app can become a real internal product without inventing deployment wiring from scratch.
+Agency Ops includes an app-level env schema and example Cloudflare files so the proving-ground app can become a real internal product without inventing deployment wiring from scratch.
 
 Files to use:
 
 - `examples/agency-ops/app/env.schema.fs`
 - `examples/agency-ops/.dev.vars.example`
 - `examples/agency-ops/wrangler.toml.example`
+- `examples/agency-ops/.env.production.example`
+- `examples/agency-ops/DEPLOYMENT_INTERNAL.md`
 
 Important runtime vars:
 
 - `SESSION_SECRET`
+- `DB_DRIVER`
+- `DATABASE_URL`
 - `AGENCY_OPS_APP_NAME`
 - `AGENCY_OPS_SUPPORT_EMAIL`
 - `AGENCY_OPS_NOTIFY_FROM`

@@ -1,6 +1,6 @@
 # FastScript Compatibility Matrix
 
-- Generated: 2026-04-15T23:37:36.318Z
+- Generated: 2026-04-15T23:53:22.536Z
 - Current stable line: `3.0.x`
 - Governance track: FastScript `4.0` compatibility system
 - Product contract: If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.
@@ -14,8 +14,8 @@
 - `blocked`: explicitly unsupported or blocked pending design/runtime work
 
 ## Summary
-- Registry entries: 32
-- Proven entries: 30
+- Registry entries: 33
+- Proven entries: 31
 - JS/TS syntax proof cases: 8
 - .fs parity cases: 18
 - Interop cases: 17
@@ -73,7 +73,8 @@
 | Preact interop | proven | `interop:preact-core-fs` | Current proof covers core Preact render flow. |
 | SolidJS signal interop | proven | `interop:solid-core-fs` | Current proof covers createSignal/createMemo usage. |
 | Next-style layout and metadata exports | proven | `fs-parity:next-layout-metadata-style` | Covers metadata-like exports, generated metadata, and layout-style wrappers. |
-| Strict TypeScript product-shaped .fs apps | proven | `script:test:agency-ops` | Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, billing, jobs, and Cloudflare-ready generation. |
+| Strict TypeScript product-shaped .fs apps | proven | `script:test:agency-ops` | Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, assignment workflow, billing, jobs, and Cloudflare-ready generation. |
+| Authenticated dashboard assignment and workload flows | proven | `script:test:agency-ops` | Covers assignment-capable work-item APIs, seeded assignee state, workload views, and authenticated dashboard mutation flow in Agency Ops. |
 
 ## Tooling
 | Feature | Status | Proof | Notes |

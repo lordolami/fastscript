@@ -10,7 +10,7 @@ export default function AgencyOpsGuidePage() {
       <div class="docs-card-grid">
         <div class="docs-card">
           <p class="docs-card-title">What it is</p>
-          <p class="docs-card-copy">A small-agency client-ops product with clients, engagements, team, billing, settings, and ops follow-up flows. It is documented publicly, but it does not replace the official <code class="ic">startup-mvp</code> starter contract.</p>
+          <p class="docs-card-copy">A small-agency client-ops product with clients, engagements, team, billing, assignment-aware delivery queue, settings, and ops follow-up flows. It is documented publicly, but it does not replace the official <code class="ic">startup-mvp</code> starter contract.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Why it exists</p>
@@ -129,7 +129,7 @@ export default function AgencyOpsGuidePage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">Custom host path</p>
-            <p class="docs-card-copy">If you deploy on Google, AWS, Oracle, or another Node/container host, ship the app with <code class="ic">dist/</code> intact and run the standard production entrypoint. The built artifact is still the contract, even without a first-party adapter.</p>
+            <p class="docs-card-copy">If you deploy on Google, AWS, Oracle, or another Node/container host, ship the app with <code class="ic">dist/</code> intact, run the standard production entrypoint, and use the documented <code class="ic">DB_DRIVER=postgres</code> + <code class="ic">DATABASE_URL</code> path when you want real persistence.</p>
           </div>
           <div class="docs-card">
             <p class="docs-card-title">Governed proof lane</p>

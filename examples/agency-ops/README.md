@@ -1,4 +1,4 @@
-# Agency Ops SaaS (Internal FastScript Proving-Ground App)
+﻿# Agency Ops SaaS (Internal FastScript Proving-Ground App)
 
 `examples/agency-ops` is the first real internal product track built on top of the proven `startup-mvp` baseline.
 
@@ -9,13 +9,13 @@ This app proves a small agency can run client operations inside one FastScript a
 - public marketing page
 - authenticated agency dashboard
 - client and engagement management flows
-- team invite and role tracking
+- team invite and workload tracking
 - billing, invoices, and follow-up flow
 - notification and receipt jobs
 - DB-backed agency state
 - Cloudflare-ready deployment path
 - custom Node/container deployment from the same built output
-- internal delivery queue and work-item operations
+- internal delivery queue, operator assignment, and work-item operations
 
 ## What this app exercises
 
@@ -25,7 +25,7 @@ This app proves a small agency can run client operations inside one FastScript a
 - agency/client/team domain model
 - API routes and queue jobs
 - billing upgrade flow
-- ops/support operational view
+- operator assignment and workload visibility
 - governed compatibility in real product usage
 
 ## Core routes
@@ -57,7 +57,7 @@ Manual production start on a custom Node/container host:
 
 ```bash
 node ../../src/cli.mjs build
-NODE_ENV=production PORT=4173 SESSION_SECRET=replace_me node ../../src/cli.mjs start
+NODE_ENV=production PORT=4173 SESSION_SECRET=replace_me DB_DRIVER=postgres DATABASE_URL=postgres://agency_ops:change_me@127.0.0.1:5432/agency_ops node ../../src/cli.mjs start
 ```
 
 Cloudflare env/binding examples for the internal product track live here:
@@ -66,8 +66,16 @@ Cloudflare env/binding examples for the internal product track live here:
 - `.dev.vars.example`
 - `wrangler.toml.example`
 
+Custom-host production env examples live here:
+
+- `.env.production.example`
+- `DEPLOYMENT_INTERNAL.md`
+
 Important product env values:
 
+- `DB_DRIVER=postgres`
+- `DATABASE_URL`
+- `SESSION_SECRET`
 - `AGENCY_OPS_APP_NAME`
 - `AGENCY_OPS_SUPPORT_EMAIL`
 - `AGENCY_OPS_NOTIFY_FROM`
@@ -85,5 +93,6 @@ Check `/docs/support` in the main FastScript site for the governed support matri
 - queue-backed jobs
 - Cloudflare deployment adapter generation
 - manual Node/container production start from built `dist/`
+- authenticated dashboard assignment and workload flows
 
 If a valid JS/TS pattern used here fails in `.fs`, that is a FastScript compatibility bug.

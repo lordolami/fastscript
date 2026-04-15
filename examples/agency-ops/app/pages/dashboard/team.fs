@@ -1,18 +1,31 @@
-import { listAgencyData, requireAgencyForUser } from "../../lib/agency.fs";
+﻿import { listAgencyData, requireAgencyForUser } from "../../lib/agency.fs";
 
 export async function load(ctx) {
   const user = ctx.user || ctx.auth.requireUser();
   const { agency } = requireAgencyForUser(ctx.db, user);
-  return { agency, memberships: listAgencyData(ctx.db, agency.id).memberships };
+  const snapshot = listAgencyData(ctx.db, agency.id);
+  return { agency, memberships: snapshot.memberships, workload: snapshot.workload, metrics: snapshot.metrics };
 }
 
-export default function TeamPage({ agency, memberships }) {
+export default function TeamPage({ agency, memberships, workload, metrics }) {
   const list = (memberships || []).map((entry) => `
     <div class="list-card">
-      <h3>${entry.email}</h3>
+      <h3>${entry.name || entry.email}</h3>
+      <p>${entry.email}</p>
       <div class="inline-actions">
         <span class="status-pill">${entry.role}</span>
         <span class="meta-pill">${entry.status}</span>
+      </div>
+    </div>
+  `).join("");
+  const workloadRows = (workload || []).map((entry) => `
+    <div class="list-card">
+      <h3>${entry.name}</h3>
+      <div class="inline-actions">
+        <span class="status-pill">${entry.role}</span>
+        <span class="meta-pill">${entry.assignedCount} assigned</span>
+        <span class="meta-pill">${entry.atRiskCount} at risk</span>
+        <span class="meta-pill">${entry.queuedCount} queued</span>
       </div>
     </div>
   `).join("");
@@ -22,11 +35,13 @@ export default function TeamPage({ agency, memberships }) {
       <header>
         <p class="detail-label">Team</p>
         <h1>Invite client ops teammates into ${agency.name}.</h1>
+        <p>${metrics.unassignedWorkItems} unassigned work item(s) currently need an owner, so this page doubles as the workload control panel.</p>
       </header>
 
       <section class="form-card">
         <form class="form-stack" data-invite-form>
           <div class="field-grid">
+            <label class="field"><span>Name</span><input name="name" value="Maya Operator" /></label>
             <label class="field"><span>Email</span><input name="email" value="ops@harborcommerce.dev" /></label>
             <label class="field"><span>Role</span><select name="role"><option value="strategist">strategist</option><option value="operator">operator</option><option value="finance">finance</option></select></label>
           </div>
@@ -37,7 +52,15 @@ export default function TeamPage({ agency, memberships }) {
         </form>
       </section>
 
-      <div class="list-stack">${list}</div>
+      <section class="list-stack">
+        <h2>Operator workload</h2>
+        <div class="list-stack">${workloadRows || `<div class="empty-state">No active operators yet.</div>`}</div>
+      </section>
+
+      <section class="list-stack">
+        <h2>Team roster</h2>
+        <div class="list-stack">${list}</div>
+      </section>
     </section>
   `;
 }

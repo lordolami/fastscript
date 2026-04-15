@@ -51,6 +51,8 @@ npm run build
    - `NODE_ENV=production`
    - `PORT`
    - `SESSION_SECRET`
+   - `DB_DRIVER=postgres` when you want Postgres-backed persistence
+   - `DATABASE_URL` when `DB_DRIVER=postgres`
 
 4. Start the production runtime:
 
@@ -75,6 +77,13 @@ For teams doing a completely manual handoff instead of a first-party adapter:
    - one authenticated route
    - one API route
    - static assets under `/assets/...`
+
+For stateful internal products like Agency Ops, also run:
+
+```bash
+DB_DRIVER=postgres DATABASE_URL=postgres://... node ./src/cli.mjs db:migrate
+DB_DRIVER=postgres DATABASE_URL=postgres://... node ./src/cli.mjs db:seed
+```
 
 ## What to do on Google, AWS, Oracle, or similar providers
 
