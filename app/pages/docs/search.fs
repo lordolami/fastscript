@@ -1,13 +1,14 @@
-const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/interop", "/docs/playground", "/docs/search", "/docs/support", "/docs/v3", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks", "/why-fastscript"];
+const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/adoption", "/docs/interop", "/docs/playground", "/docs/search", "/docs/support", "/docs/v3", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks", "/why-fastscript"];
 function resolveDocRoute(item) {
   const direct = String(item?.path || "").trim();
   if (DOC_ROUTE_FALLBACKS.includes(direct)) return direct;
   const haystack = `${item?.title || ""} ${item?.summary || ""} ${direct}`.toLowerCase();
+  if (haystack.includes("real world") || haystack.includes("real-world") || haystack.includes("adoption") || haystack.includes("greenfield") || haystack.includes("first project")) return "/docs/adoption";
   if (haystack.includes("support matrix") || haystack.includes("compatibility matrix")) return "/docs/support";
   if (haystack.includes("proven") || haystack.includes("blocked") || haystack.includes("supported") || haystack.includes("planned")) return "/docs/support";
   if (haystack.includes("next") || haystack.includes("react") || haystack.includes("vue") || haystack.includes("node") || haystack.includes("npm")) return "/docs/support";
   if (haystack.includes("playground")) return "/docs/playground";
-  if (haystack.includes("why fastscript") || haystack.includes("why developers") || haystack.includes("adopt") || haystack.includes("frontend and backend") || haystack.includes("full-stack")) return "/why-fastscript";
+  if (haystack.includes("why fastscript") || haystack.includes("why developers") || haystack.includes("frontend and backend") || haystack.includes("full-stack")) return "/why-fastscript";
   if (haystack.includes("v3") || haystack.includes("latest") || haystack.includes("parity") || haystack.includes("stdlib") || haystack.includes("runtime")) return "/docs/v3";
   if (haystack.includes("compatibility")) return "/docs/support";
   if (haystack.includes("v2") || haystack.includes("ratified")) return "/docs/v2";

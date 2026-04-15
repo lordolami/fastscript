@@ -39,6 +39,11 @@ export default function DocsLatest() {
           <a class="docs-card-link" href="/docs/support">Open support matrix &#8594;</a>
         </div>
         <div class="docs-card">
+          <p class="docs-card-title">Real-world adoption</p>
+          <p class="docs-card-copy">Use one canonical flow for greenfield <code class="ic">.fs</code> apps and incremental migration from existing TS/JS codebases, with the governed matrix as the contract before you ship.</p>
+          <a class="docs-card-link" href="/docs/adoption">Open adoption flow &#8594;</a>
+        </div>
+        <div class="docs-card">
           <p class="docs-card-title">Legacy docs</p>
           <p class="docs-card-copy">Older v1, v1.1, and v2 docs remain available for historical upgrade notes and earlier language baselines.</p>
           <a class="docs-card-link" href="/docs/v1">Open legacy docs &#8594;</a>

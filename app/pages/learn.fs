@@ -45,6 +45,11 @@ const NEXT = [{
   href: "/docs/latest",
   cta: "Open deploy guide"
 }, {
+  title: "Real-world adoption",
+  copy: "Use the canonical production path for greenfield apps and incremental TS/JS migration, with the support matrix as the contract before you promise a runtime or framework shape.",
+  href: "/docs/adoption",
+  cta: "Open adoption flow"
+}, {
   title: "Why FastScript",
   copy: "Get the full developer story: why FastScript is better, how migration works, how to ship TS in .fs, and how to request missing edge cases.",
   href: "/why-fastscript",
@@ -121,7 +126,7 @@ export default function LearnPage() {
       <p class="cta-copy">Everything you need is in the runtime and toolchain. Keep familiar JS/TS habits, get a faster pipeline, avoid the parallel stack maze, and use the compatibility lane if your migration hits a real edge case.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="/docs">Open the docs</a>
-        <a class="btn btn-secondary btn-lg" href="/why-fastscript">Why FastScript</a>
+        <a class="btn btn-secondary btn-lg" href="/docs/adoption">Real-world adoption</a>
         <a class="btn btn-ghost btn-lg" href="/examples">Browse examples</a>
       </div>
     </div>

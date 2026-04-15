@@ -191,14 +191,12 @@ export async function POST(ctx) {
     },
     {
       path: join(appRoot, "api", "webhook.js"),
-      content: `import { verifyWebhookRequest } from "../../src/webhook.mjs";
-
-export async function POST(ctx) {
-  const result = await verifyWebhookRequest(ctx.req, {
-    secret: process.env.WEBHOOK_SECRET || "dev-secret",
-    replayDir: ".fastscript"
-  });
-  if (!result.ok) return ctx.helpers.json({ ok: false, reason: result.reason }, 401);
+      content: `export async function POST(ctx) {
+  const received = ctx.req.headers.get("x-webhook-secret");
+  const expected = process.env.WEBHOOK_SECRET || "dev-secret";
+  if (received !== expected) {
+    return ctx.helpers.json({ ok: false, reason: "invalid-signature" }, 401);
+  }
   return ctx.helpers.json({ ok: true });
 }
 `,
@@ -236,6 +234,7 @@ export async function POST(ctx) {
   ];
 
   for (const file of files) {
+    ensureDir(join(file.path, ".."));
     if (!existsSync(file.path)) writeFileSync(file.path, file.content, "utf8");
   }
 

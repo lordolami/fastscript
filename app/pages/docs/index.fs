@@ -22,6 +22,9 @@ const SECTIONS = [{
     label: "Why FastScript",
     href: "/why-fastscript"
   }, {
+    label: "Real-world adoption",
+    href: "/docs/adoption"
+  }, {
     label: "Styling primitives",
     href: "/docs/primitives"
   }, {
@@ -60,6 +63,11 @@ const CARDS = [{
   copy: "The full developer story: why FastScript is better, how frontend and backend live in one runtime, how migration works, and how to request edge cases.",
   href: "/why-fastscript",
   cta: "Read guide"
+}, {
+  title: "Real-world adoption",
+  copy: "One canonical path for starting a new .fs app or migrating an existing TS/JS codebase, with the governed support matrix as the contract before you promise a pattern.",
+  href: "/docs/adoption",
+  cta: "Open adoption guide"
 }, {
   title: "Quickstart",
   copy: "Install the CLI, create, build, and deploy a FastScript app in 15 minutes. Clone the repo when you want to work on the language itself.",

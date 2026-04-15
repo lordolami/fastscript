@@ -26,6 +26,7 @@ const files = readdirSync(docsDir).filter((name) => name.endsWith(".md"));
 const items = [];
 const PATH_OVERRIDES = {
   "support_matrix": "/docs/support",
+  "real_world_adoption": "/docs/adoption",
 };
 
 for (const name of files) {

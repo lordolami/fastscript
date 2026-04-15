@@ -95,6 +95,10 @@ The strongest public developer guide lives at `/why-fastscript`, and the compati
 
 - `https://github.com/lordolami/fastscript/issues/new?template=compatibility-gap.yml`
 
+The canonical real-world adoption flow for greenfield apps and incremental migration lives at:
+
+- `/docs/adoption`
+
 ## Install
 
 ### Option 1: npm install
@@ -185,6 +189,18 @@ npm run start
 ```bash
 npm run qa:all
 ```
+
+## Real-World Adoption
+
+Use this rule before starting product work:
+
+1. Check `/docs/support` for the framework, runtime, and syntax lanes you depend on.
+2. Use `/docs/adoption` for the canonical path:
+   - greenfield `.fs` app via `fastscript create`
+   - incremental migration from existing TS/JS via `npm run migrate -- app --dry-run`
+3. Treat any valid JS/TS failure in `.fs` as a compatibility bug and report it through the public compatibility lane.
+
+FastScript 3.0.1 is the first real-world adoption line. The public product contract stays anchored to the support matrix, proof pack, and release-blocking compatibility checks.
 
 ## The `.fs` Language At A Glance
 
