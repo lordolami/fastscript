@@ -41,7 +41,7 @@ export default function DocsAdoptionPage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">1. Create the app</p>
-            <p class="docs-card-copy"><code class="ic">fastscript create my-app</code> gives you pages, API routes, middleware, migrations, and styling primitives as a working full-stack baseline.</p>
+            <p class="docs-card-copy"><code class="ic">fastscript create my-app</code> gives you pages, API routes, middleware, migrations, and styling primitives in a full-stack starter you can ship from.</p>
           </div>
           <div class="docs-card">
             <p class="docs-card-title">2. Build in one runtime</p>
@@ -80,7 +80,7 @@ export default function DocsAdoptionPage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">4. Roll back safely</p>
-            <p class="docs-card-copy">If a conversion loses trust, use the manifest plus <code class="ic">npm run migrate:rollback</code> to revert the latest conversion cleanly and treat the gap as governed follow-up work.</p>
+            <p class="docs-card-copy">If a conversion loses trust, use the manifest plus <code class="ic">npm run migrate:rollback</code> to revert the latest conversion cleanly and record the gap for governed follow-up work.</p>
           </div>
         </div>
       </section>
@@ -90,7 +90,7 @@ export default function DocsAdoptionPage() {
       <section class="docs-syntax">
         <header class="sec-header-sm">
           <p class="kicker">First-project program</p>
-          <h2 class="h2">Use one greenfield app and one migration as the proving ground.</h2>
+          <h2 class="h2">Use one greenfield app and one migration to prove the workflow.</h2>
         </header>
         <div class="story-grid">
           <div class="story-cell">
@@ -103,11 +103,11 @@ export default function DocsAdoptionPage() {
           </div>
           <div class="story-cell">
             <p class="story-cell-title">Required evidence</p>
-            <p class="story-cell-copy">For both apps, require setup instructions, build/dev/deploy success, support-matrix cross-checks, and explicit capture of any missing compatibility as product work.</p>
+            <p class="story-cell-copy">For both apps, require setup instructions, build/dev/deploy success, support-matrix cross-checks, and explicit capture of any missing compatibility in the product backlog.</p>
           </div>
           <div class="story-cell">
             <p class="story-cell-title">No silent exceptions</p>
-            <p class="story-cell-copy">If a feature is missing, do not treat it as tribal knowledge. Either the matrix already covers it, or the gap becomes a compatibility issue plus proof expansion work.</p>
+            <p class="story-cell-copy">If a feature is missing, never leave it undocumented. Either the matrix already covers it, or the gap becomes a compatibility issue plus proof expansion work.</p>
           </div>
         </div>
       </section>
@@ -137,7 +137,7 @@ export default function DocsAdoptionPage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">Report a compatibility gap</p>
-            <p class="docs-card-copy">If real code fails, treat it as product work and use the public compatibility lane.</p>
+            <p class="docs-card-copy">If real code fails, log it in the public compatibility lane and track it in product follow-up.</p>
             <a class="docs-card-link" href="https://github.com/lordolami/fastscript/issues/new?template=compatibility-gap.yml" target="_blank" rel="noreferrer">Open compatibility lane &#8594;</a>
           </div>
         </div>
