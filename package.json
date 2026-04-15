@@ -1,6 +1,6 @@
 {
   "name": "fastscript",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "FastScript v3 universal JS/TS runtime with governed compatibility proof and first-class .fs source.",
   "keywords": [
     "fastscript",

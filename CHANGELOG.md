@@ -14,6 +14,12 @@
   - `spec/V2_0_MIGRATION_PROOF_REPORT.md`
   - `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`
 
+## v3.0.2 - 2026-04-15
+- Elevate `startup-mvp` into the Team Dashboard SaaS baseline and make it the first official FastScript greenfield product starting point
+- Publish the dedicated baseline guide at `/docs/team-dashboard-saas` and promote it across docs, adoption, examples, showcase, and README surfaces
+- Harden the reference app and proof flow around validator-safe class handling, token-safe example styling, CSRF/session-correct mutation flow, and the real dev/start runtime port behavior
+- Keep the public contract aligned to `.fs` as a universal JS/TS container, `/docs/support` as the governed compatibility source of truth, and Team Dashboard SaaS as the first greenfield baseline on the `3.0.x` line
+
 ## v3.0.1 - 2026-04-15
 - Broaden the governed ecosystem proof surface across Next-style route/layout/shared-module patterns
 - Deepen React hooks/context/shared-helper, Node middleware/error/mixed-module, and Vue composable/app-utility coverage
