@@ -1,6 +1,6 @@
 # FastScript Proof Pack
 
-- Generated: 2026-04-15T15:54:57.747Z
+- Generated: 2026-04-15T18:50:40.636Z
 
 ## Summary
 - Routes: n/a
@@ -15,7 +15,10 @@
 - JS/TS syntax cases: 8
 - `.fs` parity proof: pass
 - Parser/frontend parity: pass (5 cases)
-- Runtime/platform parity: pass (4 runtime cases, 1 build corpus)
+- Runtime/platform parity: pass (8 runtime cases, 1 build corpus)
+- Compatibility registry entries: 30
+- Compatibility proven entries: 28
+- Framework proof rows: 12
 - Launch line: FastScript v3
 - Product contract: `.fs` is a universal JS/TS container and valid JS/TS failures in `.fs` are treated as FastScript compatibility bugs
 - Release posture: source-available public repo, proprietary core, no AI-training use without permission
@@ -44,4 +47,6 @@ See full matrix: `docs/INTEROP_MATRIX.md`
 ## JS/TS Compatibility Proof
 - Syntax proof artifact: `.fastscript/proofs/js-ts-syntax-proof.json`
 - `.fs` parity artifact: `.fastscript/proofs/fs-parity-matrix.json`
+- Compatibility registry artifact: `.fastscript/proofs/compatibility-registry-report.json`
 - Product contract: valid JS/TS in `.fs` is the compatibility target; failures are treated as FastScript bugs.
+- 4.0.1 proof expansion: Next-style layout/metadata, React hooks/context/lazy, Node middleware/error/env flow, and Vue composable/store-adjacent patterns are now represented in the governed matrix.

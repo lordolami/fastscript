@@ -1,33 +1,90 @@
-﻿# FastScript Support Matrix
+# FastScript Compatibility Matrix
+
+- Generated: 2026-04-15T18:50:40.654Z
+- Current stable line: `3.0.x`
+- Governance track: FastScript `4.0` compatibility system
+- Product contract: If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.
+- Proven means: linked automated coverage and CI-enforced release discipline
+
+## Status Legend
+- `proven`: linked automated coverage exists and release gates fail on regression
+- `supported`: intended support surface with some proof or operational confidence, but not yet fully governed as `proven`
+- `partial`: some known working coverage exists, but not enough to claim full contract safety
+- `planned`: visible compatibility lane targeted for future proof coverage
+- `blocked`: explicitly unsupported or blocked pending design/runtime work
+
+## Summary
+- Registry entries: 30
+- Proven entries: 28
+- JS/TS syntax proof cases: 8
+- .fs parity cases: 14
+- Interop cases: 13
+
+## ECMAScript Syntax
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| Modern ECMAScript syntax in .fs | proven | `js-ts-syntax-proof:js-modern-module`, `js-ts-syntax-proof:js-comments-strings-regex`, `fs-parity:ecmascript-modern-class` | Covers module syntax, classes, private fields, static blocks, generators, and async generators. |
+| Future TC39 and TypeScript additions | planned | - | 4.0 establishes the governed system that future additions plug into. |
+
+## TypeScript Syntax Erasure
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| TypeScript type erasure in .fs | proven | `js-ts-syntax-proof:ts-types`, `js-ts-syntax-proof:ts-namespace-and-declare`, `fs-parity:typescript-types-and-generics` | Covers interfaces, type aliases, generics, namespaces, and declaration shapes. |
+| TypeScript decorators | partial | - | Keep visible as an explicit compatibility lane instead of implying support. |
+
+## JSX / TSX
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| JSX and TSX authoring in .fs | proven | `js-ts-syntax-proof:jsx-component`, `js-ts-syntax-proof:tsx-page`, `fs-parity:tsx-component-surface`, `script:test:authored-ts-in-fs` | Covers typed component props, TSX page modules, and authored .fs TSX. |
+
+## FastScript Sugar
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| FastScript sugar remains optional | proven | `fs-parity:fastscript-sugar-compatible` | Sugar support is maintained without making it the required authoring model. |
+
+## Modules And Interop
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| Dynamic import and require in .fs | proven | `js-ts-syntax-proof:js-dynamic-and-require`, `fs-parity:module-interop-patterns`, `fs-parity:commonjs-interop` | Includes mixed ESM/CommonJS usage inside authored .fs modules. |
+| Import assertion and multiline import shapes | proven | `js-ts-syntax-proof:multiline-import-assertion-shape` | Current proof covers multiline assertion-like import shapes in migration input. |
+| Scoped package subpath exports | proven | `interop:scoped-subpath-fs`, `script:test:ecosystem-compatibility-contract` | Covers scoped package subpath exports and workspace-linked packages. |
+| Dual-mode package resolution | proven | `interop:dual-mode-fs`, `script:test:ecosystem-compatibility-contract` | Covers modern export-condition resolution. |
+| CommonJS package interop | proven | `interop:node-cjs-npm-fs`, `fs-parity:commonjs-interop`, `script:test:ecosystem-compatibility-contract` | Covers require-driven compatibility and bundling against npm CommonJS packages. |
+| Node built-in module imports | proven | `interop:node-builtins-fs` | Current proof covers node:crypto and node:path. |
+| Real npm package bundling | proven | `interop:real-acorn-js`, `interop:real-astring-js`, `interop:real-acorn-walk-js` | Current proof uses real installed dependencies instead of synthetic package mocks alone. |
 
 ## Runtime Targets
-- Node HTTP runtime: supported
-- PM2 process manager: supported
-- Vercel adapter: supported (catch-all SSR/API)
-- Cloudflare adapter: supported (worker SSR/API + static assets)
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| Node HTTP runtime target | proven | `script:test:runtime-contract`, `script:smoke:start` | Covers app routing, API routes, and production adapter serving. |
 
-## Language Surface
-- `.fs` files with `~`, `state`, `fn`: supported
-- `.js` compatibility mode: supported
-- authored JS in `.fs`: supported
-- authored TS in `.fs`: supported
-- authored JSX/TSX in `.fs`: supported
-- FastScript-specific syntax: optional sugar
+## Framework Patterns
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| Framework-style build corpus | proven | `fs-parity:framework-build-corpus` | Covers a small build corpus with pages, dynamic routes, and API modules. |
+| Node and Express-style handler patterns | proven | `fs-parity:node-express-style`, `script:test:runtime-contract` | Includes handler-style modules, params access, and path/env-adjacent server code. |
+| Node middleware chains, error handlers, and env-aware server flow | proven | `fs-parity:node-middleware-error-chain` | Covers sequential middleware, error handling, and process.env usage in server code. |
+| React and TSX ecosystem interop | proven | `interop:react-core-fs` | Current proof covers createElement/react-dom client import surfaces. |
+| React hooks, context, and lazy module patterns | proven | `fs-parity:react-hooks-context-lazy` | Covers useState, createContext/useContext, and lazy-loaded module flow. |
+| Next-style pages, links, and route-adjacent modules | proven | `interop:next-link-fs`, `fs-parity:next-page-style-tsx` | Covers page-style TSX modules and next/link-like imports. |
+| Vue-adjacent script and composable patterns | proven | `interop:vue-core-fs`, `fs-parity:vue-script-setup-adjacent` | Current proof covers Vue createApp/h interop and typed composable-style modules. |
+| Vue composables and store-adjacent helpers | proven | `fs-parity:vue-composable-store-adjacent` | Covers ref/computed-based composables and store-like helper return shapes. |
+| Svelte store interop | proven | `interop:svelte-store-fs` | Current proof covers writable store usage. |
+| Preact interop | proven | `interop:preact-core-fs` | Current proof covers core Preact render flow. |
+| SolidJS signal interop | proven | `interop:solid-core-fs` | Current proof covers createSignal/createMemo usage. |
+| Next-style layout and metadata exports | proven | `fs-parity:next-layout-metadata-style` | Covers metadata-like exports, generated metadata, and layout-style wrappers. |
 
-## Platform Matrix
-- Windows: supported
-- macOS: supported
-- Linux: supported
-- Validation source: CI matrix in `.github/workflows/ci.yml`
+## Tooling
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| CLI, lint, format, and typecheck stability | proven | `script:qa:gate` | Governed through the full repo quality gate. |
+| VS Code language tooling | proven | `script:test:vscode-language` | Smoke-tested LSP and syntax integration. |
+| Proof and benchmark discipline | proven | `script:test:benchmark-discipline`, `script:test:release-discipline` | Keeps proof pack claims tied to generated artifacts and release gates. |
 
-## Node Support
-- Minimum: Node `>=20`
-- Tested: Node `20` and `22`
+## Deployment Adapters
+| Feature | Status | Proof | Notes |
+|---|---|---|---|
+| Node, Vercel, and Cloudflare deploy adapters | proven | `script:test:deploy-adapters` | Current proof covers Node/PM2, Vercel, and Cloudflare adapter generation. |
 
-## Tooling Support
-- VS Code syntax + LSP smoke-tested
-- CLI + formatter + linter + typecheck stable under `qa:gate`
-
-## Release Support
-- Current stable line: `2.0.x`
-- LTS policy reference: `docs/LTS_POLICY.md`
+## Compatibility Request Lane
+If valid JS/TS, a framework pattern, or a real migration case fails in `.fs`, treat it as a FastScript compatibility bug and report it through the compatibility intake workflow.

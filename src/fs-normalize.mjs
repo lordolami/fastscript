@@ -1,7 +1,8 @@
 import { compileFastScript } from "./fs-parser.mjs";
 
 export function normalizeFastScript(source, options = {}) {
-  const { code } = compileFastScript(source, {
+  const prepared = stripTypeScriptHints(String(source ?? ""));
+  const { code } = compileFastScript(prepared, {
     file: options.file || "",
     mode: options.mode || "lenient",
     recover: options.recover !== false,
@@ -11,7 +12,8 @@ export function normalizeFastScript(source, options = {}) {
 }
 
 export function normalizeFastScriptWithMetadata(source, options = {}) {
-  return compileFastScript(source, {
+  const prepared = stripTypeScriptHints(String(source ?? ""));
+  return compileFastScript(prepared, {
     file: options.file || "",
     mode: options.mode || "lenient",
     recover: options.recover !== false,
@@ -40,7 +42,7 @@ export function stripTypeScriptHints(source) {
       continue;
     }
 
-    if (/^\s*interface\s+[A-Za-z_$][\w$]*\s*[{]/.test(next) || /^\s*enum\s+[A-Za-z_$][\w$]*\s*[{]/.test(next)) {
+    if (/^\s*interface\s+[A-Za-z_$][\w$]*(?:\s*<[^>]+>)?\s*[{]/.test(next) || /^\s*enum\s+[A-Za-z_$][\w$]*\s*[{]/.test(next)) {
       out.push(`// ${next.trim()} (removed by fastscript migrate)`);
       skippingBlock = true;
       const opens = (next.match(/{/g) || []).length;
@@ -49,7 +51,7 @@ export function stripTypeScriptHints(source) {
       continue;
     }
 
-    if (/^\s*type\s+[A-Za-z_$][\w$]*\s*=/.test(next)) {
+    if (/^\s*type\s+[A-Za-z_$][\w$]*(?:\s*<[^>]+>)?\s*=/.test(next)) {
       out.push(`// ${next.trim()} (removed by fastscript migrate)`);
       if (!next.includes(";") && next.includes("{")) {
         skippingBlock = true;

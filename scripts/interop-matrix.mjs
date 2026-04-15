@@ -5,6 +5,7 @@ import { pathToFileURL } from "node:url";
 import esbuild from "esbuild";
 import { normalizeFastScript } from "../src/fs-normalize.mjs";
 import { assertFastScript } from "../src/fs-diagnostics.mjs";
+import { loadCompatibilityRegistry } from "../src/compatibility-governance.mjs";
 
 const TMP_DIR = resolve(".tmp-interop-matrix");
 const OUT_DIR = resolve("benchmarks");
@@ -369,6 +370,8 @@ export default function walkOk(){ return typeof simple === "function"; }
 }
 
 function markdown(report) {
+  const registry = loadCompatibilityRegistry();
+  const governed = registry.entries.filter((entry) => (entry.proofIds || []).some((proofId) => proofId.startsWith("artifact:interop:")));
   const rows = report.cases
     .map((item) => `| ${item.id} | ${item.target} | ${item.kind} | ${item.platform} | ${item.status} | ${item.bundleBytes} | ${item.note} |`)
     .join("\n");
@@ -385,6 +388,8 @@ function markdown(report) {
 - Total: ${report.summary.total}
 - Pass: ${report.summary.pass}
 - Fail: ${report.summary.fail}
+- Governed registry entries linked here: ${governed.length}
+- Governance track: FastScript 4.0 compatibility system
 
 Interop matrix includes:
 - Framework API compatibility shims for react, next/link, vue, svelte/store, preact, and solid-js.

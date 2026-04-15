@@ -1,10 +1,16 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { loadCompatibilityArtifacts, loadCompatibilityRegistry, writeCompatibilityArtifacts } from "../src/compatibility-governance.mjs";
 
 const docsDir = resolve("docs");
 const outPath = resolve("docs", "search-index.json");
 const generatedDir = resolve("src", "generated");
 const moduleOutPath = resolve(generatedDir, "docs-search-index.mjs");
+
+const registry = loadCompatibilityRegistry();
+const pkg = JSON.parse(readFileSync(resolve("package.json"), "utf8"));
+const artifacts = loadCompatibilityArtifacts();
+writeCompatibilityArtifacts({ registry, pkg, artifacts });
 
 function tokenize(text) {
   return String(text || "")

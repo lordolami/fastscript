@@ -9,7 +9,7 @@ body:
     attributes:
       value: |
         Use this form when valid JavaScript, TypeScript, JSX, TSX, or a real framework/migration pattern fails in `.fs`.
-        Under the FastScript v3 contract, these are compatibility bugs.
+        Under the FastScript compatibility contract, these are compatibility bugs and feed the governed support matrix.
   - type: dropdown
     id: kind
     attributes:

@@ -24,6 +24,11 @@ export default function DocsV3() {
           <a class="docs-card-link" href="/benchmarks">Open benchmarks &#8594;</a>
         </div>
         <div class="docs-card">
+          <p class="docs-card-title">Governed compatibility matrix</p>
+          <p class="docs-card-copy">FastScript 4.0 starts a governed compatibility system where every <code class="ic">proven</code> claim must link to automated coverage.</p>
+          <a class="docs-card-link" href="/docs/support">Open matrix &#8594;</a>
+        </div>
+        <div class="docs-card">
           <p class="docs-card-title">Parity artifacts</p>
           <p class="docs-card-copy">Release proof now includes JS/TS syntax proof and <code class="ic">.fs</code> parity matrices so the public website and release process tell the same story.</p>
           <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/main/benchmarks/latest-proof-pack.md" target="_blank" rel="noreferrer">Open proof pack &#8594;</a>

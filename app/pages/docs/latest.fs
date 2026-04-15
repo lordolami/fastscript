@@ -34,6 +34,11 @@ export default function DocsLatest() {
           <a class="docs-card-link" href="/docs/search">Search reference &#8594;</a>
         </div>
         <div class="docs-card">
+          <p class="docs-card-title">Compatibility matrix</p>
+          <p class="docs-card-copy">Open the governed compatibility registry surface for proven JS/TS, framework, runtime, and tooling claims.</p>
+          <a class="docs-card-link" href="/docs/support">Open support matrix &#8594;</a>
+        </div>
+        <div class="docs-card">
           <p class="docs-card-title">Legacy docs</p>
           <p class="docs-card-copy">Older v1, v1.1, and v2 docs remain available for historical upgrade notes and earlier language baselines.</p>
           <a class="docs-card-link" href="/docs/v1">Open legacy docs &#8594;</a>

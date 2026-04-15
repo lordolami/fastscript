@@ -16,6 +16,14 @@ FastScript strict conversion is compatibility-first and rename-only by default:
 
 After conversion, teams can keep authoring ordinary JS/TS/JSX/TSX directly inside `.fs`. The extension is the runtime container; FastScript-specific forms such as `fn`, `state`, and `~` remain optional sugar.
 
+The governed support surface for what is currently `proven`, `partial`, or `planned` lives in `docs/SUPPORT_MATRIX.md`.
+
+Operational rule:
+
+1. every accepted compatibility bug maps to an existing matrix row or creates a new one
+2. every fixed compatibility bug adds or expands automated proof coverage
+3. unresolved gaps stay visible as `partial`, `planned`, or `blocked` until the proof exists
+
 Use `npm run wizard:migrate <path>` for preview-driven conversion planning.
 
 Use `npm run migrate -- <path> --dry-run` for trust-first previews.
@@ -54,3 +62,4 @@ If valid JS/TS, a framework pattern, or a real migration case fails in `.fs`, tr
 3. include expected behavior
 4. include framework/runtime context
 5. include reproduction steps and whether the failure is parse/build/typecheck/runtime related
+6. link the nearest support-matrix lane if one already exists

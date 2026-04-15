@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { loadCompatibilityArtifacts, loadCompatibilityRegistry, writeCompatibilityArtifacts } from "../src/compatibility-governance.mjs";
 
 const BENCH_MD = resolve("benchmarks", "latest-report.md");
 const BENCH_JSON = resolve("benchmarks", "suite-latest.json");
@@ -9,6 +10,7 @@ const OUT_BENCH = resolve("benchmarks", "latest-proof-pack.md");
 const OUT_DOCS = resolve("docs", "PROOF_PACK.md");
 const JS_TS_PROOF = resolve(".fastscript", "proofs", "js-ts-syntax-proof.json");
 const FS_PARITY_PROOF = resolve(".fastscript", "proofs", "fs-parity-matrix.json");
+const COMPATIBILITY_REPORT = resolve(".fastscript", "proofs", "compatibility-registry-report.json");
 
 function readJson(path, fallback = {}) {
   if (!existsSync(path)) return fallback;
@@ -36,6 +38,11 @@ const fsParityProof = readJson(FS_PARITY_PROOF, {
   parserFrontendParity: { status: "missing", syntaxCases: 0 },
   runtimePlatformParity: { status: "missing", runtimeCases: 0, buildCorpus: 0 },
 });
+const registry = loadCompatibilityRegistry();
+const pkg = readJson(resolve("package.json"), {});
+const compatibilityArtifacts = loadCompatibilityArtifacts();
+writeCompatibilityArtifacts({ registry, pkg, artifacts: compatibilityArtifacts });
+const compatibilityReport = readJson(COMPATIBILITY_REPORT, { summary: { entries: 0, provenEntries: 0, byStatus: {} } });
 
 const failed = (interop.cases || []).filter((item) => item.status === "fail");
 const failLines = failed.length
@@ -60,6 +67,9 @@ const markdown = `# FastScript Proof Pack
 - \`.fs\` parity proof: ${fsParityProof.status}
 - Parser/frontend parity: ${fsParityProof.parserFrontendParity?.status ?? "missing"} (${fsParityProof.parserFrontendParity?.syntaxCases ?? 0} cases)
 - Runtime/platform parity: ${fsParityProof.runtimePlatformParity?.status ?? "missing"} (${fsParityProof.runtimePlatformParity?.runtimeCases ?? 0} runtime cases, ${fsParityProof.runtimePlatformParity?.buildCorpus ?? 0} build corpus)
+- Compatibility registry entries: ${compatibilityReport.summary?.entries ?? 0}
+- Compatibility proven entries: ${compatibilityReport.summary?.provenEntries ?? 0}
+- Framework proof rows: ${compatibilityReport.summary?.byCategory?.["framework-patterns"] ?? 0}
 - Launch line: FastScript v3
 - Product contract: \`.fs\` is a universal JS/TS container and valid JS/TS failures in \`.fs\` are treated as FastScript compatibility bugs
 - Release posture: source-available public repo, proprietary core, no AI-training use without permission
@@ -78,7 +88,9 @@ ${failLines}
 ## JS/TS Compatibility Proof
 - Syntax proof artifact: \`.fastscript/proofs/js-ts-syntax-proof.json\`
 - \`.fs\` parity artifact: \`.fastscript/proofs/fs-parity-matrix.json\`
+- Compatibility registry artifact: \`.fastscript/proofs/compatibility-registry-report.json\`
 - Product contract: valid JS/TS in \`.fs\` is the compatibility target; failures are treated as FastScript bugs.
+- 4.0.1 proof expansion: Next-style layout/metadata, React hooks/context/lazy, Node middleware/error/env flow, and Vue composable/store-adjacent patterns are now represented in the governed matrix.
 `;
 
 mkdirSync(resolve("benchmarks"), { recursive: true });

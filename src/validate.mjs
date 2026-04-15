@@ -10,6 +10,7 @@ import { runMigrate } from "./migrate.mjs";
 import { runPermissions } from "./permissions-cli.mjs";
 import { runBenchmarkDiscipline } from "./benchmark-discipline.mjs";
 import { runRegressionGuard } from "./regression-guard.mjs";
+import { runCompatibilityGovernanceCheck } from "./compatibility-governance.mjs";
 
 export async function runValidate() {
   await runMigrate(["app", "--dry-run", "--fidelity-level", "full", "--fail-on-unproven-fidelity"]);
@@ -20,6 +21,7 @@ export async function runValidate() {
   await runBuild();
   await runBench();
   await runBenchmarkDiscipline();
+  await runCompatibilityGovernanceCheck();
   await runRegressionGuard(["--mode", "all", "--auto-baseline"]);
   await runCompat();
   await runDbMigrate();

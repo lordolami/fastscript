@@ -15,14 +15,18 @@ must(resolve("docs", "RELEASE_PROCESS.md"));
 must(resolve("docs", "RELEASE_SIGNOFF_TEMPLATE.md"));
 must(resolve("spec", "STABLE_RELEASE_CHECKLIST.md"));
 must(resolve("spec", "FASTSCRIPT_COMPATIBILITY_FIRST_RUNTIME_SPEC.md"));
+must(resolve("spec", "compatibility-registry.json"));
 must(resolve("benchmarks", "suite-latest.json"));
 must(resolve("benchmarks", "interop-latest.json"));
 must(resolve("benchmarks", "latest-proof-pack.md"));
 must(resolve("docs", "PROOF_PACK.md"));
+must(resolve("docs", "SUPPORT_MATRIX.md"));
 must(resolve(".fastscript", "proofs", "js-ts-syntax-proof.json"));
 must(resolve(".fastscript", "proofs", "fs-parity-matrix.json"));
+must(resolve(".fastscript", "proofs", "compatibility-registry-report.json"));
 must(resolve("src", "regression-guard.mjs"));
 must(resolve("scripts", "test-regression-guard.mjs"));
+must(resolve("scripts", "test-compatibility-matrix.mjs"));
 
 const pkg = JSON.parse(readFileSync(resolve("package.json"), "utf8"));
 if (!isSemver(pkg.version)) throw new Error(`package version is not semver: ${pkg.version}`);
@@ -35,6 +39,11 @@ if (!changelog.includes(pkg.version)) {
 const spec = readFileSync(resolve("spec", "FASTSCRIPT_COMPATIBILITY_FIRST_RUNTIME_SPEC.md"), "utf8");
 if (!/Version:\s*`\d+\.\d+\.\d+`/.test(spec)) {
   throw new Error("compatibility spec missing explicit version header");
+}
+
+const supportMatrix = readFileSync(resolve("docs", "SUPPORT_MATRIX.md"), "utf8");
+if (supportMatrix.includes("Current stable line: `2.0.x`")) {
+  throw new Error("support matrix still claims 2.0.x as the current stable line");
 }
 
 console.log("test-release-discipline pass");

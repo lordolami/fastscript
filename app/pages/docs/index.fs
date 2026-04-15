@@ -86,6 +86,11 @@ const CARDS = [{
   href: "/docs/interop",
   cta: "Learn interop"
 }, {
+  title: "Compatibility matrix",
+  copy: "Generated source-of-truth support matrix with proven, partial, planned, and blocked compatibility lanes.",
+  href: "/docs/support",
+  cta: "Open matrix"
+}, {
   title: "Plugin API",
   copy: "Hook into build and request lifecycle with typed plugin contracts and middleware.",
   href: "/docs/latest",
