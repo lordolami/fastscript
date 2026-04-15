@@ -53,14 +53,14 @@ fn name(...) { }     // desugars to: function name(...) { }</pre>
 <p>Cloudflare Workers has some constraints that required careful handling: no native Node.js APIs, limited memory, and sub-millisecond startup budget. The FastScript Cloudflare adapter wraps the server runtime in a fetch handler, polyfills the necessary Node globals via compatibility flags, and aggressively tree-shakes the bundle. The result is a ~19ms cold start on a typical FastScript app.</p>`
   }
 };
-
 export async function load(ctx) {
   const post = POSTS[ctx.params.slug];
   if (!post) return null;
-  return { post };
+  return {
+    post
+  };
 }
-
-export default function BlogPost({ post }) {
+export default function BlogPost({post}) {
   if (!post) {
     return `
       <div class="not-found">
@@ -73,7 +73,6 @@ export default function BlogPost({ post }) {
       </div>
     `;
   }
-
   return `
     <article class="blog-post-wrap">
       <div class="post-header">

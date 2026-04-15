@@ -1,5 +1,5 @@
 export default function Home() {
-  return `
+  return (`
     <section class="hero">
       <div class="shell hero-inner">
         <div class="hero-left">
@@ -359,7 +359,7 @@ export default function Home() {
         </div>
         <div class="compare-row">
           <div class="compare-cell is-label">Universal JS/TS container</div>
-          <div class="compare-cell is-ours"><span class="check">&#10003;</span> `.fs` first-class</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> `.fs)` first-class</div>
           <div class="compare-cell"><span class="cross">&ndash;</span> separate app shell</div>
           <div class="compare-cell"><span class="cross">&ndash;</span> separate app shell</div>
         </div>
