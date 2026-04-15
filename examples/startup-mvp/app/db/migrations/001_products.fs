@@ -1,6 +1,12 @@
-﻿export async function up(db) {
-  const products = db.collection("products");
-  if (!products.get("p1")) products.set("p1", { id: "p1", name: "Starter Plan", price: 19 });
-  if (!products.get("p2")) products.set("p2", { id: "p2", name: "Growth Plan", price: 49 });
-  if (!products.get("p3")) products.set("p3", { id: "p3", name: "Scale Plan", price: 99 });
+export async function up(db) {
+  const plans = db.collection("plans");
+  if (!plans.get("plan_starter")) {
+    plans.set("plan_starter", { id: "plan_starter", name: "Starter", price: 29, seats: 5, support: "Email support" });
+  }
+  if (!plans.get("plan_growth")) {
+    plans.set("plan_growth", { id: "plan_growth", name: "Growth", price: 79, seats: 15, support: "Priority support" });
+  }
+  if (!plans.get("plan_scale")) {
+    plans.set("plan_scale", { id: "plan_scale", name: "Scale", price: 199, seats: 50, support: "Shared Slack channel" });
+  }
 }

@@ -99,6 +99,10 @@ The canonical real-world adoption flow for greenfield apps and incremental migra
 
 - `/docs/adoption`
 
+The first official greenfield product baseline lives at:
+
+- `/docs/team-dashboard-saas`
+
 ## Install
 
 ### Option 1: npm install
@@ -159,6 +163,8 @@ npm run create:fullstack
 npm run create:startup-mvp
 ```
 
+`startup-mvp` is the stable template id for the Team Dashboard SaaS reference app, which is now the first official FastScript greenfield product baseline.
+
 ### Run locally
 
 ```bash
@@ -198,7 +204,10 @@ Use this rule before starting product work:
 2. Use `/docs/adoption` for the canonical path:
    - greenfield `.fs` app via `fastscript create`
    - incremental migration from existing TS/JS via `npm run migrate -- app --dry-run`
-3. Treat any valid JS/TS failure in `.fs` as a compatibility bug and report it through the public compatibility lane.
+3. Prefer the Team Dashboard SaaS baseline when you want the strongest product-shaped starting point:
+   - `fastscript create startup-mvp --template startup-mvp`
+   - reference guide at `/docs/team-dashboard-saas`
+4. Treat any valid JS/TS failure in `.fs` as a compatibility bug and report it through the public compatibility lane.
 
 FastScript 3.0.1 is the first real-world adoption line. The public product contract stays anchored to the support matrix, proof pack, and release-blocking compatibility checks.
 
@@ -590,10 +599,10 @@ A production-style full-stack starter with:
 ### `examples/startup-mvp`
 A more startup-shaped example with:
 
-- cart + checkout APIs
-- dashboard page
-- migrations
-- email job flow
+- public marketing page
+- authenticated workspace dashboard
+- projects, team, billing, settings, and admin routes
+- migrations plus queue-backed receipt/notification jobs
 
 ## Deploy Targets
 

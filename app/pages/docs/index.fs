@@ -25,6 +25,9 @@ const SECTIONS = [{
     label: "Real-world adoption",
     href: "/docs/adoption"
   }, {
+    label: "Team Dashboard SaaS",
+    href: "/docs/team-dashboard-saas"
+  }, {
     label: "Styling primitives",
     href: "/docs/primitives"
   }, {
@@ -68,6 +71,11 @@ const CARDS = [{
   copy: "One canonical path for starting a new .fs app or migrating an existing TS/JS codebase, with the governed support matrix as the contract before you promise a pattern.",
   href: "/docs/adoption",
   cta: "Open adoption guide"
+}, {
+  title: "Team Dashboard SaaS baseline",
+  copy: "The first official FastScript greenfield product baseline: public pages, authenticated workspace flows, billing, jobs, DB state, and Cloudflare-ready deployment in one reference app.",
+  href: "/docs/team-dashboard-saas",
+  cta: "Open baseline guide"
 }, {
   title: "Quickstart",
   copy: "Install the CLI, create, build, and deploy a FastScript app in 15 minutes. Clone the repo when you want to work on the language itself.",

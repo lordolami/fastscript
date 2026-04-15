@@ -35,6 +35,11 @@ export default function DocsAdoptionPage() {
         </header>
         <div class="docs-card-grid">
           <div class="docs-card">
+            <p class="docs-card-title">Recommended baseline</p>
+            <p class="docs-card-copy">For the first real product path, start from the Team Dashboard SaaS reference app. It keeps the stable template id <code class="ic">startup-mvp</code> but gives you the strongest greenfield baseline in the repo today.</p>
+            <a class="docs-card-link" href="/docs/team-dashboard-saas">Open baseline guide &#8594;</a>
+          </div>
+          <div class="docs-card">
             <p class="docs-card-title">1. Create the app</p>
             <p class="docs-card-copy"><code class="ic">fastscript create my-app</code> gives you pages, API routes, middleware, migrations, and styling primitives as a working full-stack baseline.</p>
           </div>
@@ -115,6 +120,11 @@ export default function DocsAdoptionPage() {
           <h2 class="h2">Everything stays anchored to governed support.</h2>
         </header>
         <div class="docs-card-grid">
+          <div class="docs-card">
+            <p class="docs-card-title">Team Dashboard SaaS baseline</p>
+            <p class="docs-card-copy">Use the official product-shaped reference app when you want the first serious greenfield FastScript starting point instead of a thinner starter.</p>
+            <a class="docs-card-link" href="/docs/team-dashboard-saas">Open reference app guide &#8594;</a>
+          </div>
           <div class="docs-card">
             <p class="docs-card-title">Open support matrix</p>
             <p class="docs-card-copy">See what is currently proven, partial, planned, or blocked.</p>

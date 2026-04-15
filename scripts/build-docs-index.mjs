@@ -27,6 +27,7 @@ const items = [];
 const PATH_OVERRIDES = {
   "support_matrix": "/docs/support",
   "real_world_adoption": "/docs/adoption",
+  "team_dashboard_saas": "/docs/team-dashboard-saas",
 };
 
 for (const name of files) {

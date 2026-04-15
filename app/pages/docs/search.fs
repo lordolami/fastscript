@@ -1,8 +1,9 @@
-const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/adoption", "/docs/interop", "/docs/playground", "/docs/search", "/docs/support", "/docs/v3", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks", "/why-fastscript"];
+const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/adoption", "/docs/team-dashboard-saas", "/docs/interop", "/docs/playground", "/docs/search", "/docs/support", "/docs/v3", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks", "/why-fastscript"];
 function resolveDocRoute(item) {
   const direct = String(item?.path || "").trim();
   if (DOC_ROUTE_FALLBACKS.includes(direct)) return direct;
   const haystack = `${item?.title || ""} ${item?.summary || ""} ${direct}`.toLowerCase();
+  if (haystack.includes("team dashboard") || haystack.includes("startup mvp") || haystack.includes("startup-mvp") || haystack.includes("reference app baseline") || haystack.includes("greenfield baseline")) return "/docs/team-dashboard-saas";
   if (haystack.includes("real world") || haystack.includes("real-world") || haystack.includes("adoption") || haystack.includes("greenfield") || haystack.includes("first project")) return "/docs/adoption";
   if (haystack.includes("support matrix") || haystack.includes("compatibility matrix")) return "/docs/support";
   if (haystack.includes("proven") || haystack.includes("blocked") || haystack.includes("supported") || haystack.includes("planned")) return "/docs/support";

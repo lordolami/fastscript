@@ -1,0 +1,183 @@
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Inter, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+input,
+select,
+button,
+textarea {
+  font: inherit;
+}
+
+.saas-nav,
+.workspace-nav,
+.hero-grid,
+.metric-grid,
+.info-grid,
+.record-grid,
+.cta-row,
+.topbar-row {
+  display: grid;
+  gap: 16px;
+}
+
+.saas-nav {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.saas-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.saas-chip,
+.status-pill,
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.hero-grid,
+.metric-grid,
+.info-grid,
+.record-grid,
+.detail-list {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.workspace-nav {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.workspace-link {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  text-decoration: none;
+  text-align: center;
+}
+
+.workspace-link.is-active {
+  border-color: rgba(255,255,255,0.24);
+  background: rgba(255,255,255,0.08);
+}
+
+.form-stack,
+.list-stack,
+.event-feed,
+.detail-list {
+  display: grid;
+  gap: 12px;
+}
+
+.form-card,
+.metric-card,
+.list-card,
+.event-card {
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+}
+
+.field-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(8,10,15,0.8);
+  color: var(--fs-color-text);
+}
+
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-inline {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: var(--fs-color-text);
+  color: var(--fs-color-bg);
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-inline.btn-secondary {
+  background: transparent;
+  color: var(--fs-color-text);
+}
+
+.mini-note {
+  color: rgba(255,255,255,0.72);
+  font-size: 14px;
+}
+
+.empty-state {
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px dashed rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.72);
+}
+
+.detail-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.62);
+}
+
+.detail-value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .saas-nav {
+    grid-template-columns: 1fr;
+  }
+}

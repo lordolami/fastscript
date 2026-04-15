@@ -44,6 +44,11 @@ export default function DocsLatest() {
           <a class="docs-card-link" href="/docs/adoption">Open adoption flow &#8594;</a>
         </div>
         <div class="docs-card">
+          <p class="docs-card-title">Team Dashboard SaaS baseline</p>
+          <p class="docs-card-copy">The stable <code class="ic">startup-mvp</code> template is now the first official FastScript greenfield product baseline and reference app for real full-stack work.</p>
+          <a class="docs-card-link" href="/docs/team-dashboard-saas">Open baseline guide &#8594;</a>
+        </div>
+        <div class="docs-card">
           <p class="docs-card-title">Legacy docs</p>
           <p class="docs-card-copy">Older v1, v1.1, and v2 docs remain available for historical upgrade notes and earlier language baselines.</p>
           <a class="docs-card-link" href="/docs/v1">Open legacy docs &#8594;</a>

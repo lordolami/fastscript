@@ -1,8 +1,8 @@
 const PROJECTS = [{
-  title: "FastScript Commerce Starter",
-  copy: "Checkout flow with queue-based receipts, upload API, and multi-tenant readiness.",
+  title: "FastScript Team Dashboard SaaS",
+  copy: "Reference app proving public pages, authenticated workspaces, billing, jobs, DB flows, and governed compatibility in one runtime.",
   meta: "starter",
-  detail: "8 routes - 4 APIs - queue worker",
+  detail: "team dashboard - billing - jobs",
   kind: "starter"
 }, {
   title: "Realtime Ops Dashboard",
@@ -69,6 +69,15 @@ export default function Showcase() {
         <h1 class="h1">Production projects built with FastScript.</h1>
         <p class="lead">Deploy-ready patterns and real apps built on the v3 product contract: universal JS/TS in <code class="ic">.fs</code>, proof-backed speed, and one runtime-native pipeline.</p>
       </header>
+
+      <div class="cta-block">
+        <h2 class="cta-title">Featured baseline: Team Dashboard SaaS</h2>
+        <p class="cta-copy">The stable <code class="ic">startup-mvp</code> template is now the first official FastScript greenfield product baseline. It is the strongest starting point for real SaaS-shaped work in the current product line.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="/docs/team-dashboard-saas">Open baseline guide</a>
+          <a class="btn btn-secondary btn-lg" href="/docs/adoption">Open adoption flow</a>
+        </div>
+      </div>
 
       <div class="filter-row">
         <input class="input filter-input" data-showcase-search placeholder="Search projects..." />
