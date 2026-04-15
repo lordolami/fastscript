@@ -1,6 +1,6 @@
 # Real-World Adoption
 
-FastScript `3.0.1` is the first real-world adoption line.
+FastScript `3.0.2` is the first real-world adoption line.
 
 Use `/docs/adoption` as the canonical path for:
 

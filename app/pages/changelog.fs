@@ -1,4 +1,8 @@
 const RELEASES = [{
+  version: "v3.0.2",
+  date: "April 2026",
+  copy: "Team Dashboard SaaS baseline elevated across examples, showcase, adoption docs, npm metadata, and release surfaces, with validator-safe styling, CSRF/session-safe proof flow, and corrected runtime port behavior in the reference app suite."
+}, {
   version: "v3.0.1",
   date: "April 2026",
   copy: "Broader governed ecosystem proof sweep: deeper Next-style, React, Node, Vue, and npm/package interop coverage shipped into the public support matrix, proof pack, docs search, and npm-facing release story."

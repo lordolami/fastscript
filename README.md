@@ -209,7 +209,7 @@ Use this rule before starting product work:
    - reference guide at `/docs/team-dashboard-saas`
 4. Treat any valid JS/TS failure in `.fs` as a compatibility bug and report it through the public compatibility lane.
 
-FastScript 3.0.1 is the first real-world adoption line. The public product contract stays anchored to the support matrix, proof pack, and release-blocking compatibility checks.
+FastScript 3.0.2 is the first real-world adoption line. The public product contract stays anchored to the support matrix, proof pack, and release-blocking compatibility checks.
 
 ## The `.fs` Language At A Glance
 

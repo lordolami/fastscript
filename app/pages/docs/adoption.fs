@@ -4,13 +4,13 @@ export default function DocsAdoptionPage() {
       <header class="sec-header">
         <p class="kicker">Real-world adoption</p>
         <h1 class="h1">The canonical path from evaluation to real product work.</h1>
-        <p class="lead">FastScript 3.0.1 is the first real-world adoption line. Use this flow to start a new <code class="ic">.fs</code> app or migrate an existing JS/TS codebase without guessing what is proven, partial, planned, or blocked.</p>
+        <p class="lead">FastScript 3.0.2 is the first real-world adoption line. Use this flow to start a new <code class="ic">.fs</code> app or migrate an existing JS/TS codebase without guessing what is proven, partial, planned, or blocked.</p>
       </header>
 
       <div class="docs-card-grid">
         <div class="docs-card">
           <p class="docs-card-title">Stable public line</p>
-          <p class="docs-card-copy"><code class="ic">3.0.1</code> is the active public line. The compatibility-governance system is the internal 4.0 discipline model, but support claims for shipping work are governed publicly through the current support matrix.</p>
+          <p class="docs-card-copy"><code class="ic">3.0.2</code> is the active public line. The compatibility-governance system is the internal 4.0 discipline model, but support claims for shipping work are governed publicly through the current support matrix.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Source of truth</p>
