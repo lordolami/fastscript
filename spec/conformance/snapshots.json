@@ -65,23 +65,15 @@
     "formatterIdempotent": true
   },
   "type-erasure.fs": {
-    "diagnostics": [
-      "FS1004",
-      "FS1004"
-    ],
-    "diagnosticSeverities": [
-      "error",
-      "error"
-    ],
+    "diagnostics": [],
+    "diagnosticSeverities": [],
     "bodyTypes": [
       "VariableDeclaration",
-      "ExportDefaultDeclaration"
+      "FunctionDeclaration",
+      "ExportNamedDeclaration"
     ],
-    "rewriteKinds": [
-      "erase-type",
-      "erase-type"
-    ],
-    "normalized": "/* type User = { id: string } (removed by fastscript compiler) */\n/* interface Payload {\n  id: string\n} (removed by fastscript compiler) */\n\nconst user = { id: \"u1\" }\nexport default function View() {\n  return user.id\n}\n",
+    "rewriteKinds": [],
+    "normalized": "const user = { id: \"u1\" };\nfunction View() {\n  return user.id;\n}\nexport {\n  View as default\n};\n",
     "reparseDiagnostics": [],
     "sourceMapSources": [
       "type-erasure.fs"

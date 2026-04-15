@@ -579,18 +579,6 @@ function buildDiagnostics(document, parsed) {
         }),
       );
     }
-    if (/^\s*(interface|type|enum)\b/.test(line)) {
-      const start = Math.max(0, line.search(/\S/));
-      diagnostics.push(
-        makeDiagnostic({
-          severity: DiagnosticSeverity.Warning,
-          code: "FS1004",
-          message: "Type declarations are not part of FastScript runtime semantics",
-          start: { line: i, character: start },
-          end: { line: i, character: start + 8 },
-        }),
-      );
-    }
     if (/^\s*var\s+/.test(line)) {
       const start = line.indexOf("var");
       diagnostics.push(

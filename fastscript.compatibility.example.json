@@ -1,0 +1,40 @@
+{
+  "protectedFiles": [
+    "app/styles.css",
+    "app/design/tokens.json"
+  ],
+  "protectedDirectories": [
+    "app/design",
+    "app/assets"
+  ],
+  "protectedGlobs": [
+    "app/pages/**/__snapshots__/**"
+  ],
+  "protectedExtensions": [
+    ".lock"
+  ],
+  "blockedFiles": [],
+  "protectedConfigKeys": [
+    "brand",
+    "theme",
+    "layout"
+  ],
+  "protectedMarkupRegions": [
+    "hero",
+    "pricing"
+  ],
+  "fidelity": {
+    "requiredProbes": [
+      "routeOutputComparison",
+      "apiContractComparison"
+    ],
+    "commands": {
+      "routeOutputComparison": "node ./scripts/test-runtime-contract.mjs",
+      "apiContractComparison": "node ./scripts/test-validation.mjs",
+      "domSnapshotComparison": "node ./scripts/test-conformance.mjs",
+      "computedStyleComparison": "node ./scripts/test-style-rules.mjs",
+      "screenshotDiffComparison": "node ./scripts/test-style-rules.mjs",
+      "hydrationAndInteractionValidation": "node ./scripts/test-runtime-context-rules.mjs"
+    }
+  }
+}

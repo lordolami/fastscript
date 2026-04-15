@@ -5,18 +5,19 @@ export default function Home() {
         <div class="hero-left">
           <div class="hero-badge">
             <span class="hero-badge-dot" aria-hidden="true"></span>
-            v2.0 &mdash; <a href="/changelog" class="hero-badge-link">See what&rsquo;s new</a>
+            v3.0 &mdash; <a href="/changelog" class="hero-badge-link">See what&rsquo;s new</a>
           </div>
 
           <h1 class="hero-title">
-            The full-stack<br>
-            <span class="hero-title-muted">language runtime.</span>
+            The universal JS/TS<br>
+            <span class="hero-title-muted">runtime container.</span>
           </h1>
 
           <p class="hero-desc">
-            Write your app in <code class="ic">.fs</code>, keep full <code class="ic">.js</code> package compatibility,
-            compile to optimized JavaScript, and ship to Node, Vercel, or Cloudflare with one command.
-            Ambient runtime complete. Zero-JS authored apps proven. 2.71KB first-load gzip.
+            Write normal <code class="ic">js</code>, <code class="ic">ts</code>, <code class="ic">jsx</code>, or <code class="ic">tsx</code> in <code class="ic">.fs</code>,
+            keep full package compatibility, compile to optimized JavaScript, and ship to Node, Vercel, or Cloudflare with one command.
+            FastScript-specific syntax is optional. Current proof pack shows 2.71KB first-load gzip, 702.98ms builds, and 13/13 interop passing.
+            The main language/runtime stays proprietary and source-available as the foundation for the next FastScript AI products.
           </p>
 
           <div class="install-row">
@@ -76,13 +77,13 @@ export default function Home() {
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128204;</span>
-            <span class="social-item-n">v2.0</span>
-            <span>latest stable</span>
+            <span class="social-item-n">v3.0</span>
+            <span>current public line</span>
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128275;</span>
             <span class="social-item-n">Protected</span>
-            <span>commercial rights reserved</span>
+            <span>source-available, AI-training restricted</span>
           </div>
         </div>
       </div>
@@ -112,19 +113,19 @@ export default function Home() {
     <div class="ticker-strip" aria-hidden="true">
       <div class="ticker-track">
         <span class="ticker-item">FastScript</span>
-        <span class="ticker-item">Full-stack .fs language</span>
+        <span class="ticker-item">Universal JS/TS container</span>
         <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
         <span class="ticker-item">No stack lock-in</span>
         <span class="ticker-item">13/13 interop</span>
         <span class="ticker-item">2.71KB first-load gzip</span>
-        <span class="ticker-item">SSR + ISR + Streaming</span>
+        <span class="ticker-item">Proof-backed speed</span>
         <span class="ticker-item">FastScript</span>
-        <span class="ticker-item">Full-stack .fs language</span>
+        <span class="ticker-item">Universal JS/TS container</span>
         <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
         <span class="ticker-item">No stack lock-in</span>
         <span class="ticker-item">13/13 interop</span>
         <span class="ticker-item">2.71KB first-load gzip</span>
-        <span class="ticker-item">SSR + ISR + Streaming</span>
+        <span class="ticker-item">Proof-backed speed</span>
       </div>
     </div>
 
@@ -137,7 +138,7 @@ export default function Home() {
         <div class="how-cell">
           <p class="how-num">01 &mdash; Write</p>
           <p class="how-title">Author in .fs</p>
-          <p class="how-copy">Use the FastScript language: ES modules plus <code class="ic">fn</code>, <code class="ic">state</code>, and <code class="ic">~</code>. Pages, APIs, middleware, jobs &mdash; all in one file format with full type stripping at compile time.</p>
+          <p class="how-copy">Write normal JS, TS, JSX, or TSX directly in <code class="ic">.fs</code>. FastScript-specific forms like <code class="ic">fn</code>, <code class="ic">state</code>, and <code class="ic">~</code> remain optional sugar.</p>
         </div>
         <div class="how-cell">
           <p class="how-num">02 &mdash; Verify</p>
@@ -157,7 +158,7 @@ export default function Home() {
         <div class="split-cell">
           <p class="kicker">Developer experience</p>
           <h2 class="h2 split-h2">Write once.<br>Ship anywhere.</h2>
-          <p class="body-copy split-copy">One language. One pipeline. No parallel stack maze, no config sprawl. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
+          <p class="body-copy split-copy">One runtime container. One pipeline. No parallel stack maze, no config sprawl. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
           <div class="terminal">
             <div class="terminal-bar">
               <span class="terminal-dot-r"></span><span class="terminal-dot-y"></span><span class="terminal-dot-g"></span>
@@ -175,21 +176,22 @@ export default function Home() {
         <div class="split-cell">
           <p class="kicker">Language syntax</p>
           <h2 class="h2 split-h2">Familiar syntax.<br>New power.</h2>
-          <p class="body-copy split-copy">All of JavaScript ESM &mdash; plus three new forms: <code class="ic">fn</code>, <code class="ic">state</code>, and <code class="ic">~</code>. Type annotations strip at compile time. Full npm ecosystem compatibility.</p>
+          <p class="body-copy split-copy"><code class="ic">.fs</code> is a universal JS/TS container for the FastScript runtime. Use standard JS/TS authoring directly, then opt into FastScript sugar only when you want it. Full npm ecosystem compatibility stays intact.</p>
           <div class="code-block">
             <div class="code-block-head">
               <span class="code-block-file">app/pages/product/[slug].fs</span>
               <span class="code-block-lang">.fs</span>
             </div>
-            <div class="code-block-body"><span class="code-kw">export</span> <span class="code-kw">async</span> <span class="code-fn">fn</span> <span class="code-fn">load</span>(ctx) {
-  state product = <span class="code-kw">await</span> ctx.db.get(
+            <div class="code-block-body"><span class="code-kw">type</span> Product = { name: <span class="code-kw">string</span> }
+
+<span class="code-kw">export</span> <span class="code-kw">async</span> <span class="code-kw">function</span> <span class="code-fn">load</span>(ctx): <span class="code-kw">Promise</span>&lt;{ product: Product }&gt; {
+  <span class="code-kw">const</span> product = <span class="code-kw">await</span> ctx.db.get(
     <span class="code-str">"products"</span>, ctx.params.slug
   )
-  <span class="code-kw">if</span> (!product) <span class="code-kw">return</span> { notFound: <span class="code-kw">true</span> }
   <span class="code-kw">return</span> { product }
 }
 
-<span class="code-kw">export</span> <span class="code-kw">default</span> <span class="code-fn">fn</span> <span class="code-fn">Page</span>({ product }) {
+<span class="code-kw">export</span> <span class="code-kw">default</span> <span class="code-kw">function</span> <span class="code-fn">Page</span>({ product }: { product: Product }) {
   <span class="code-kw">return</span> <span class="code-str">\`&lt;h1&gt;\${product.name}&lt;/h1&gt;\`</span>
 }</div>
           </div>
@@ -244,19 +246,23 @@ export default function Home() {
       <div class="story-grid">
         <div class="story-cell">
           <p class="story-cell-title">The problem</p>
-          <p class="story-cell-copy">Modern JavaScript stacks require you to assemble 5&ndash;10 libraries before you write a single line of product code: a router, an auth library, a job runner, a validation system, a deploy config. Every new project starts with a week of plumbing.</p>
+          <p class="story-cell-copy">Modern JavaScript stacks often make you choose between familiar code and a fast deployment pipeline. Teams end up rewriting how they think just to get routing, auth, jobs, validation, and deploy adapters to agree.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The insight</p>
-          <p class="story-cell-copy">The best teams don&rsquo;t pick better libraries &mdash; they pick a coherent system. FastScript is that system: a single language and runtime where the router, auth, queue, and deploy adapter speak the same language because they were designed together.</p>
+          <p class="story-cell-copy">The best path is not a stranger DSL. It is keeping normal JS/TS authoring, putting it in one runtime-native container, and letting the compiler/runtime/toolchain create the speed advantage.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The approach</p>
-          <p class="story-cell-copy">Compile-first: every <code class="ic">.fs</code> file goes through a strict QA gate before it ever runs. No runtime surprises, no silent failures. Ship with confidence because the toolchain proves correctness before you deploy.</p>
+          <p class="story-cell-copy">Compile-first and proof-backed: every <code class="ic">.fs</code> file goes through strict validation, parity checks, benchmarks, and proof-pack publishing before release. The speed story is earned by the toolchain, not by forcing you to code differently.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The promise</p>
-          <p class="story-cell-copy">FastScript will never require you to learn a proprietary DSL that doesn&rsquo;t map back to JavaScript. Every compilation output is readable, standard JS. You own your code &mdash; always.</p>
+          <p class="story-cell-copy">FastScript v3 treats valid JS/TS in <code class="ic">.fs</code> as first-class source. If valid JS/TS fails in <code class="ic">.fs</code>, that is a FastScript compatibility bug. You keep your code style and get the speed benefits anyway.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">The moat</p>
+          <p class="story-cell-copy">FastScript keeps the main language/runtime proprietary and source-available. The public repo is open for adoption and evaluation, but not for training competing AI coding systems or cloning the platform moat.</p>
         </div>
       </div>
     </section>
@@ -269,8 +275,8 @@ export default function Home() {
       <div class="bento reveal">
         <div class="bento-cell bento-quarter">
           <p class="bento-label">Client runtime</p>
-          <p class="bento-num">1.8<span class="bento-num-sub">KB</span></p>
-          <p class="bento-copy">gzip budget. React baseline is 142KB.</p>
+          <p class="bento-num">2.71<span class="bento-num-sub">KB</span></p>
+          <p class="bento-copy">Current proof-backed first-load JS gzip. React-style baseline is 142KB.</p>
         </div>
         <div class="bento-cell bento-quarter">
           <p class="bento-label">Build time</p>
@@ -313,7 +319,7 @@ export default function Home() {
       <div class="split-section">
         <div class="split-cell">
           <p class="body-copy split-copy">AI code generators produce volume. FastScript provides the safety net. The compiler&rsquo;s strict diagnostic pass catches hallucination patterns &mdash; undefined references, type mismatches, unreachable code, bad import shapes &mdash; before they reach production.</p>
-          <p class="body-copy split-copy">The QA gate runs automatically on every <code class="ic">fastscript build</code>. AI-generated routes, handlers, and middleware all go through the same pipeline as hand-written code. Same rules. No exceptions.</p>
+          <p class="body-copy split-copy">The same language/runtime foundation also powers what comes next: a FastScript AI coding assistant optimized for accuracy, deciphering speed, and full-stack context. The protected core exists so we can keep compounding that advantage.</p>
           <div class="tag-row">
             <span class="tag">Strict diagnostics</span>
             <span class="tag">Compile-time proof</span>
@@ -352,14 +358,14 @@ export default function Home() {
           <div class="compare-col-head">Remix</div>
         </div>
         <div class="compare-row">
-          <div class="compare-cell is-label">Own language + compiler</div>
-          <div class="compare-cell is-ours"><span class="check">&#10003;</span> .fs first-class</div>
-          <div class="compare-cell"><span class="cross">&ndash;</span> JS/TS only</div>
-          <div class="compare-cell"><span class="cross">&ndash;</span> JS/TS only</div>
+          <div class="compare-cell is-label">Universal JS/TS container</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> `.fs` first-class</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> separate app shell</div>
+          <div class="compare-cell"><span class="cross">&ndash;</span> separate app shell</div>
         </div>
         <div class="compare-row">
           <div class="compare-cell is-label">Client runtime size</div>
-          <div class="compare-cell is-ours"><span class="check">&#10003;</span> 1.8 KB gzip</div>
+          <div class="compare-cell is-ours"><span class="check">&#10003;</span> 2.71 KB gzip</div>
           <div class="compare-cell"><span class="cross">&#10007;</span> 89 KB+</div>
           <div class="compare-cell"><span class="cross">&#10007;</span> ~40 KB+</div>
         </div>
@@ -399,7 +405,7 @@ export default function Home() {
     <section class="home-cta reveal">
       <div class="cta-block">
         <h2 class="cta-title">Build once in .fs. Ship anywhere.</h2>
-        <p class="cta-copy">FastScript keeps the JavaScript ecosystem while removing stack sprawl. Use <code class="ic">.fs</code> as your source of truth, keep <code class="ic">.js</code> compatibility, and start your next production app in under 15 minutes.</p>
+        <p class="cta-copy">FastScript keeps the JavaScript ecosystem while removing stack sprawl. Use <code class="ic">.fs</code> as your source of truth, keep <code class="ic">.js</code> compatibility, and build on the same protected runtime foundation that powers the next FastScript AI products.</p>
         <div class="cta-actions">
           <a class="btn btn-primary btn-lg" href="/learn">Start in 15 minutes</a>
           <a class="btn btn-secondary btn-lg" href="/examples">Browse examples</a>

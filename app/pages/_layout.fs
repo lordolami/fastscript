@@ -28,7 +28,7 @@ const FOOTER_COLS = [{
   links: [["Overview", "/"], ["Quickstart", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"], ["Playground", "/docs/playground"]]
 }, {
   title: "Language",
-  links: [["Docs", "/docs"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"], ["Interop", "/docs/interop"], ["Spec", "/docs/v2"]]
+  links: [["Docs", "/docs"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"], ["Interop", "/docs/interop"], ["Spec", "/docs/v3"]]
 }, {
   title: "Community",
   links: [["Blog", "/blog"], ["About", "/devs"], ["Contribute", "/contribute"], ["GitHub", "https://github.com/lordolami/fastscript"], ["Discord", "https://discord.gg/fastscript"]]
@@ -71,7 +71,7 @@ export default function Layout({content, pathname}) {
         <a class="brand" href="/" aria-label="FastScript home">
           <span class="brand-mark" aria-hidden="true">FS</span>
           <span class="brand-name">FastScript</span>
-          <span class="brand-ver">v2.0</span>
+          <span class="brand-ver">v3.0</span>
         </a>
 
         <nav class="nav-links" aria-label="Primary navigation">
@@ -109,7 +109,7 @@ export default function Layout({content, pathname}) {
               <span class="brand-mark footer-brand-mark" aria-hidden="true">FS</span>
               FastScript
             </div>
-            <p class="footer-brand-copy">Full-stack language runtime with <code class="ic">.fs</code> source and <code class="ic">.js</code> ecosystem compatibility. This website is built and shipped with FastScript itself. Core platform rights are protected and commercially licensed by Lakesbim Infotechnology.</p>
+            <p class="footer-brand-copy">Full-stack language runtime with <code class="ic">.fs</code> as a universal JS/TS container, proof-backed speed claims, and full <code class="ic">.js</code> ecosystem compatibility. This website is built and shipped with FastScript itself. Core platform rights are protected and commercially licensed by Lakesbim Infotechnology.</p>
             <div class="footer-social">
               <a class="footer-social-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
               <a class="footer-social-link" href="https://discord.gg/fastscript" target="_blank" rel="noreferrer" aria-label="Discord">DC</a>

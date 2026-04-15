@@ -9,7 +9,10 @@
 ## Language Surface
 - `.fs` files with `~`, `state`, `fn`: supported
 - `.js` compatibility mode: supported
-- `.tsx/.jsx` direct compile in pipeline: not supported (use migration path)
+- authored JS in `.fs`: supported
+- authored TS in `.fs`: supported
+- authored JSX/TSX in `.fs`: supported
+- FastScript-specific syntax: optional sugar
 
 ## Platform Matrix
 - Windows: supported

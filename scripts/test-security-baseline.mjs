@@ -11,7 +11,9 @@ must(resolve("docs", "INCIDENT_PLAYBOOK.md"));
 must(resolve("docs", "LTS_POLICY.md"));
 must(resolve("docs", "V1_FOREVER_READINESS.md"));
 must(resolve("docs", "REFERENCE_APPS.md"));
+must(resolve("docs", "RUNTIME_PERMISSIONS.md"));
 must(resolve("docs", "SBOM.json"));
+must(resolve("fastscript.permissions.example.json"));
 
 const vercel = JSON.parse(readFileSync(resolve("vercel.json"), "utf8"));
 const headers = (vercel.headers || []).flatMap((h) => h.headers || []).map((h) => `${h.key}:${h.value}`.toLowerCase());

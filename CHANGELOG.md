@@ -14,6 +14,12 @@
   - `spec/V2_0_MIGRATION_PROOF_REPORT.md`
   - `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`
 
+## v3.0.0 - 2026-04-15
+- Launch FastScript v3 as the active public line with `.fs` positioned as a universal JS/TS container
+- Publish v3 website/docs alignment, `/docs/v3` latest-track routing, and proof-backed benchmark messaging
+- Elevate JS/TS syntax proof and `.fs` parity proof into release discipline and proof-pack publishing
+- Refresh the proprietary/source-available product story and position the next FastScript AI assistant wave on the roadmap
+
 ## v2.0.0 - 2026-04-14
 - Ratify the FastScript v2.0 language/runtime surface and freeze the public spec pack
 - Complete ambient runtime, standard library, DOM/platform, inference, and zero-JS authored app proof gates

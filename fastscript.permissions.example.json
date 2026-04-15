@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "preset": "compat",
+  "audit": {
+    "enabled": true,
+    "path": ".fastscript/permissions-audit.jsonl"
+  },
+  "fileAccess": {
+    "mode": "allow",
+    "allow": ["**"],
+    "deny": ["secrets/**"]
+  },
+  "envAccess": {
+    "mode": "allow",
+    "allow": ["FASTSCRIPT_*", "NODE_ENV", "PORT"],
+    "deny": ["FASTSCRIPT_SECRET"]
+  },
+  "networkAccess": {
+    "mode": "allow",
+    "allowHosts": ["*"],
+    "denyHosts": []
+  },
+  "subprocessExecution": {
+    "mode": "allow",
+    "allowPrefixes": [],
+    "denyPrefixes": []
+  },
+  "dynamicImports": {
+    "mode": "allow",
+    "allowKinds": ["relative", "absolute", "package", "fileUrl", "dataUrl"],
+    "denyKinds": ["httpUrl", "httpsUrl"]
+  },
+  "pluginAccess": {
+    "mode": "allow",
+    "allow": ["*"],
+    "deny": []
+  }
+}

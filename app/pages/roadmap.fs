@@ -7,7 +7,7 @@ export default function Roadmap() {
     </div>
 
     <section class="roadmap-section reveal">
-      <h2 class="h2 roadmap-phase">&#9679; In Progress &mdash; post-v2.0</h2>
+      <h2 class="h2 roadmap-phase">&#9679; In Progress &mdash; post-v3.0</h2>
       <div class="roadmap-list">
         <div class="roadmap-item">
           <div class="roadmap-status status-active">Active</div>
@@ -40,8 +40,15 @@ export default function Roadmap() {
         <div class="roadmap-item">
           <div class="roadmap-status status-active">Active</div>
           <div class="roadmap-body">
-            <p class="roadmap-title">Website hardening + launch polish</p>
-            <p class="roadmap-copy">Route health, interactive controls, docs search reliability, responsive behavior, Cloudflare deployment flow, and launch-readiness cleanup across the flagship site.</p>
+            <p class="roadmap-title">V3 site and docs hardening</p>
+            <p class="roadmap-copy">Keep every public page, docs route, benchmark claim, and search result aligned to the v3 compatibility and speed story without stale version drift.</p>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status status-active">Active</div>
+          <div class="roadmap-body">
+            <p class="roadmap-title">v3 launch packaging</p>
+            <p class="roadmap-copy">Ship the npm package, GitHub release surfaces, proof pack, and release notes as one coherent public launch instead of a docs-only refresh.</p>
           </div>
         </div>
       </div>
@@ -74,8 +81,8 @@ export default function Roadmap() {
         <div class="roadmap-item">
           <div class="roadmap-status status-planned">Planned</div>
           <div class="roadmap-body">
-            <p class="roadmap-title">AI Code Reliability Mode</p>
-            <p class="roadmap-copy">Strict diagnostic mode designed for AI-generated <code class="ic">.fs</code> output. Catches hallucination patterns at compile time.</p>
+            <p class="roadmap-title">FastScript AI coding assistant</p>
+            <p class="roadmap-copy">Agentic coding assistant built on the main FastScript language/runtime, optimized for high-accuracy code generation, fast codebase deciphering, and full-stack execution discipline.</p>
           </div>
         </div>
         <div class="roadmap-item">
@@ -83,6 +90,13 @@ export default function Roadmap() {
           <div class="roadmap-body">
             <p class="roadmap-title">Plugin Marketplace</p>
             <p class="roadmap-copy">Searchable registry of community plugins for auth providers, storage adapters, and analytics.</p>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status status-planned">Planned</div>
+          <div class="roadmap-body">
+            <p class="roadmap-title">AI code reliability mode</p>
+            <p class="roadmap-copy">Strict diagnostic mode designed for AI-generated <code class="ic">.fs</code> output. Catches hallucination patterns at compile time and feeds the next assistant product with cleaner verification loops.</p>
           </div>
         </div>
         <div class="roadmap-item">
@@ -105,6 +119,13 @@ export default function Roadmap() {
     <section class="roadmap-section reveal">
       <h2 class="h2 roadmap-phase">&#9675; Next platform wave</h2>
       <div class="roadmap-list">
+        <div class="roadmap-item">
+          <div class="roadmap-status status-planned">Planned</div>
+          <div class="roadmap-body">
+            <p class="roadmap-title">FastScript private language intelligence</p>
+            <p class="roadmap-copy">Turn the protected language/runtime core into a compounding platform advantage across tooling, assistant workflows, eval loops, and proprietary developer infrastructure.</p>
+          </div>
+        </div>
         <div class="roadmap-item">
           <div class="roadmap-status status-planned">Planned</div>
           <div class="roadmap-body">

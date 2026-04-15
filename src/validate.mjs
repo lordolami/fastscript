@@ -6,13 +6,21 @@ import { runExport } from "./export.mjs";
 import { runDbMigrate, runDbSeed } from "./db-cli.mjs";
 import { runTypeCheck } from "./typecheck.mjs";
 import { runLint } from "./fs-linter.mjs";
+import { runMigrate } from "./migrate.mjs";
+import { runPermissions } from "./permissions-cli.mjs";
+import { runBenchmarkDiscipline } from "./benchmark-discipline.mjs";
+import { runRegressionGuard } from "./regression-guard.mjs";
 
 export async function runValidate() {
+  await runMigrate(["app", "--dry-run", "--fidelity-level", "full", "--fail-on-unproven-fidelity"]);
+  await runPermissions(["--mode", "report"]);
   await runCheck();
   await runLint(["--mode", "fail"]);
   await runTypeCheck(["--mode", "fail"]);
   await runBuild();
   await runBench();
+  await runBenchmarkDiscipline();
+  await runRegressionGuard(["--mode", "all", "--auto-baseline"]);
   await runCompat();
   await runDbMigrate();
   await runDbSeed();

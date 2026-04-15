@@ -4,6 +4,7 @@ This is the single source of truth for everything we still need to do.
 
 For the formal `v2.0` destination and A-to-Z Codex execution order, see `spec/V2_0_FORMAL_SPEC_AND_EXECUTION_PLAN.md`.
 Live v2.0 progress tracking: `spec/V2_0_EXECUTION_TRACKER.md`.
+FastScript agent/coding-model planning stack: `spec/FASTSCRIPT_AGENT_INDEX.md`.
 
 1. [x] Run formal security sign-off. (Completed `2026-04-14`, see `spec/releases/v0.1.2/RELEASE_SIGNOFF.md`)
 2. [x] Run formal docs/content sign-off. (Completed `2026-04-14`, see `spec/releases/v0.1.2/RELEASE_SIGNOFF.md`)

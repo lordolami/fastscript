@@ -27,8 +27,8 @@ const STEPS = [{
 const NEXT = [{
   title: "Route + loader contracts",
   copy: "Use inferred route param and loader data types to remove runtime guesswork on every page.",
-  href: "/docs/v2",
-  cta: "Read v2.0 spec"
+  href: "/docs/v3",
+  cta: "Read v3 docs"
 }, {
   title: "Styling primitives",
   copy: "Use Box, Stack, Row, Heading, Text, Button, and token-backed semantic props instead of raw CSS trivia.",
@@ -68,7 +68,7 @@ export default function LearnPage() {
       <header class="sec-header">
         <p class="kicker">Quickstart</p>
         <h1 class="h1">From zero to live deployment in one flow.</h1>
-        <p class="lead">Shortest path to production with hard QA gates enabled from day one.</p>
+        <p class="lead">Shortest path to production with normal JS/TS-in-.fs authoring, hard QA gates, and proof-backed speed from day one.</p>
       </header>
 
       <div class="steps">${steps}</div>
@@ -89,7 +89,7 @@ export default function LearnPage() {
 
     <div class="cta-block">
       <h2 class="cta-title">Ready to ship?</h2>
-      <p class="cta-copy">Everything you need is in the language runtime. No parallel stack maze, no plugin hunting, no configuration sprawl.</p>
+      <p class="cta-copy">Everything you need is in the runtime and toolchain. Keep familiar JS/TS habits, get a faster pipeline, and avoid the parallel stack maze.</p>
       <div class="cta-actions">
         <a class="btn btn-primary btn-lg" href="/docs">Open the docs</a>
         <a class="btn btn-ghost btn-lg" href="/examples">Browse examples</a>

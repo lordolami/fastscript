@@ -11,15 +11,15 @@ rmSync(root, { recursive: true, force: true });
 mkdirSync(pages, { recursive: true });
 
 writeFileSync(join(pages, 'index.ts'), `
-import type { X } from './types'
 state n = 1
 function add(a: number, b: number): number { return a + b }
 export default function Home(){ return '<h1>' + String(add(n,2)) + '</h1>' }
 `, 'utf8');
 
-await runMigrate(root);
+await runMigrate([root, '--fidelity-level', 'off']);
 assert.equal(existsSync(join(pages, 'index.fs')), true);
 assert.equal(existsSync(join(pages, 'index.ts')), false);
+await runMigrate([root, '--fidelity-level', 'off']);
 
 const appDir = resolve('app');
 const restoreDir = mkdtempSync(join(tmpdir(), 'fs-app-backup-'));

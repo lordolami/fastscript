@@ -1,7 +1,7 @@
 const TEAM = [{
   name: "Olamilekan Akinuli",
   role: "Founder &mdash; Product + Platform",
-  copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v2.0 ratification and release governance."
+  copy: "Leads language design, full-stack strategy, ecosystem positioning, and production shipping cadence. Responsible for FastScript v3 positioning, release governance, compatibility-first product direction, and the next FastScript AI assistant line."
 }, {
   name: "Compiler lane",
   role: "Parser + Typecheck",
@@ -60,12 +60,35 @@ export default function DevsPage() {
         <div class="feature-cell">
           <div class="feature-icon">&#128274;</div>
           <p class="feature-title">Stability guarantees</p>
-          <p class="feature-copy">The ratified v2 line keeps parser spans, diagnostic codes, and formatter output stable across patch releases. Breaking changes require a major version and migration docs.</p>
+          <p class="feature-copy">The current v3 line keeps parser spans, diagnostic codes, formatter output, and compatibility guarantees stable across patch releases. Breaking changes require a major version and migration docs.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">TM</div>
           <p class="feature-title">Protected core</p>
           <p class="feature-copy">The FastScript name, branding, language core, and commercial platform rights are protected by Lakesbim Infotechnology. Public review does not grant competing product rights.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section class="devs-principles">
+      <header class="sec-header-sm">
+        <p class="kicker">Founder note</p>
+        <h2 class="h2">Why this is being built.</h2>
+      </header>
+      <div class="story-grid">
+        <div class="story-cell">
+          <p class="story-cell-title">The mission</p>
+          <p class="story-cell-copy">The goal is to collapse stack sprawl without asking developers to abandon JavaScript or TypeScript. v3 turns <code class="ic">.fs</code> into the runtime-native container so teams keep familiar syntax and gain a faster pipeline.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">Why proprietary</p>
+          <p class="story-cell-copy">FastScript is source-available for trust, evaluation, and adoption, but the main language/runtime remains proprietary because it is also the foundation for the future FastScript AI assistant. That moat is intentional.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">What comes next</p>
+          <p class="story-cell-copy">The next wave is an AI coding assistant built on the main FastScript language/runtime, designed for stronger accuracy, faster deciphering of messy codebases, and better full-stack execution discipline than generic assistants.</p>
         </div>
       </div>
     </section>

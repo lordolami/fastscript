@@ -4,7 +4,7 @@ export default function Benchmarks() {
       <header class="sec-header">
         <p class="kicker">Benchmarks</p>
         <h1 class="h1">Metrics that reflect real production pressure.</h1>
-        <p class="lead">Benchmark reports are generated from build artifacts and interop checks, then packed into a proof bundle for every release signoff.</p>
+        <p class="lead">Benchmark reports are generated from build artifacts, parity proofs, and interop checks, then packed into a proof bundle for every release signoff. FastScript sells speed with evidence, not vibes.</p>
       </header>
 
       <div class="split-section">
@@ -31,7 +31,7 @@ export default function Benchmarks() {
           <div class="highlight-box">
             <p class="highlight-box-label">FastScript wins by</p>
             <p class="highlight-box-value">52x</p>
-            <p class="highlight-box-note">smaller than a 142 KB React-style baseline on the current reference build.</p>
+            <p class="highlight-box-note">smaller than a 142 KB React-style baseline on the current proof-backed reference build, while still letting teams write normal JS/TS in <code class="ic">.fs</code>.</p>
           </div>
         </div>
         <div class="split-cell">
@@ -57,7 +57,7 @@ export default function Benchmarks() {
           <div class="highlight-box">
             <p class="highlight-box-label">Measured result</p>
             <p class="highlight-box-value">25.6x</p>
-            <p class="highlight-box-note">faster than the 18.0 s webpack-style baseline on the current reference run.</p>
+            <p class="highlight-box-note">faster than the 18.0 s webpack-style baseline on the current proof-backed reference run because the runtime, compiler, and release gates were designed together.</p>
           </div>
         </div>
       </div>
@@ -65,15 +65,15 @@ export default function Benchmarks() {
       <div class="docs-card-grid bench-method">
         <div class="docs-card">
           <p class="docs-card-title">What is measured</p>
-          <p class="docs-card-copy">First-load JS/CSS gzip budgets, route counts, API route counts, and interop case pass/fail outcomes. Generated from actual build artifacts.</p>
+          <p class="docs-card-copy">First-load JS/CSS gzip budgets, route counts, API route counts, interop case pass/fail outcomes, and JS/TS parity evidence. Generated from actual build artifacts.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">How it is validated</p>
-          <p class="docs-card-copy">qa:all runs test core, smoke tests, benchmark suite, interop report, proof publish, and backup verification atomically.</p>
+          <p class="docs-card-copy">Release discipline and proof publishing keep benchmark discipline, interop, and parity artifacts tied together instead of relying on one-off marketing claims.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Current proof points</p>
-          <p class="docs-card-copy">Current reference report: 702.98 ms build, 2.71 KB first-load JS gzip, 13/13 interop passing. See benchmarks/latest-report.md and benchmarks/interop-latest.json.</p>
+          <p class="docs-card-copy">Current public proof pack: 702.98 ms build, 2.71 KB first-load JS gzip, 13/13 interop passing, plus JS/TS syntax proof and <code class="ic">.fs</code> parity proof artifacts. That is the public performance contract for v3.</p>
         </div>
       </div>
     </section>

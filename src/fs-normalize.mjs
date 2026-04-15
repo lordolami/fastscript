@@ -60,28 +60,58 @@ export function stripTypeScriptHints(source) {
       continue;
     }
 
+    if (/^\s*declare\s+(global|module|namespace)\b/.test(next)) {
+      out.push(`// ${next.trim()} (removed by fastscript migrate)`);
+      if (next.includes("{")) {
+        skippingBlock = true;
+        const opens = (next.match(/{/g) || []).length;
+        const closes = (next.match(/}/g) || []).length;
+        blockDepth = Math.max(1, opens - closes);
+      }
+      continue;
+    }
+
+    if (/^\s*declare\s+/.test(next)) {
+      out.push(`// ${next.trim()} (removed by fastscript migrate)`);
+      continue;
+    }
+
     next = next.replace(/\bimport\s+type\b/g, "import");
     next = next.replace(/\bexport\s+type\b/g, "export");
+    next = next.replace(/\btype\s+([A-Za-z_$][\w$]*)\s+as\s+/g, "$1 as ");
+    next = next.replace(/\b(?:public|private|protected|readonly|declare|override|abstract)\s+/g, "");
+    next = next.replace(/\s+implements\s+[A-Za-z_$][\w$<>\[\]\|&, ?.]+/g, "");
+    next = next.replace(/([A-Za-z_$][\w$]*)!([?:;=,\)])/g, "$1$2");
 
     next = next.replace(
       /^(\s*)(const|let|var)\s+([A-Za-z_$][\w$]*)\s*:\s*([^=;]+)([=;].*)$/,
       "$1$2 $3 $5",
     );
+    next = next.replace(
+      /^(\s*)(const|let|var)\s+([A-Za-z_$][\w$]*)\s*<[^>]+>\s*=\s*/,
+      "$1$2 $3 = ",
+    );
 
-    if (/\bfunction\b/.test(next) || /\)\s*=>/.test(next)) {
+    if (/\bfunction\b/.test(next) || /\bfn\b/.test(next) || /\)\s*=>/.test(next)) {
       next = next.replace(/\(([^)]*)\)/, (_, params) => {
         const cleaned = params.replace(
-          /([A-Za-z_$][\w$]*)\s*:\s*([A-Za-z_$][\w$<>\[\]\|&, ?.]*)/g,
+          /([A-Za-z_$][\w$]*)(\?)?\s*:\s*([A-Za-z_$][\w$<>\[\]\|&, ?.:{}=]*)/g,
           "$1",
         );
         return `(${cleaned})`;
       });
-      next = next.replace(/\)\s*:\s*([A-Za-z_$][\w$<>\[\]\|&, ?.]*)\s*\{/g, ") {");
+      next = next.replace(/\)\s*:\s*([A-Za-z_$][\w$<>\[\]\|&, ?.:{}=]*)\s*\{/g, ") {");
+      next = next.replace(/\)\s*:\s*([A-Za-z_$][\w$<>\[\]\|&, ?.:{}=]*)\s*=>/g, ") =>");
       next = next.replace(/\bfunction\s+([A-Za-z_$][\w$]*)\s*<[^>]+>\s*\(/g, "function $1(");
+      next = next.replace(/\bfn\s+([A-Za-z_$][\w$]*)\s*<[^>]+>\s*\(/g, "fn $1(");
+      next = next.replace(/=\s*async\s*<[^>]+>\s*\(/g, "= async (");
+      next = next.replace(/=\s*<[^>]+>\s*\(/g, "= (");
     }
 
     next = next.replace(/^\s*<([A-Za-z_$][\w$,\s]*)>\s*\(/, "(");
     next = next.replace(/\)\s*=>\s*<[A-Za-z_$][\w$<>\[\]\|&, ?.]*>/g, ") =>");
+    next = next.replace(/\s+as\s+const\b/g, "");
+    next = next.replace(/\s+as\s+[A-Za-z_$][\w$<>\[\]\|&, ?.:{}=]*/g, "");
     next = next.replace(/\sas\s+const\b/g, "");
     next = next.replace(/\s+satisfies\s+[A-Za-z_$][\w$<>\[\]\|&, ?.]*/g, "");
     out.push(next);

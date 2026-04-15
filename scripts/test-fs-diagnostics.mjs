@@ -8,6 +8,15 @@ fn add(a, b) { return a + b }
 `);
 assert.equal(ok.length, 0);
 
+const typedOk = analyzeFastScript(`
+type X = { n: number }
+interface Y { name: string }
+const value: number = 1
+export async fn load(): Promise<{ n: number }> { return { n: value } }
+export default fn Page(input: { n: number }) { return String(input.n + value) }
+`);
+assert.equal(typedOk.length, 0);
+
 const badSource = `
 ~ bad
 state wrong
@@ -21,7 +30,8 @@ const codes = bad.map((diagnostic) => diagnostic.code);
 assert.equal(codes.includes("FS1001"), true);
 assert.equal(codes.includes("FS1002"), true);
 assert.equal(codes.includes("FS1003"), true);
-assert.equal(codes.includes("FS1004"), true);
+assert.equal(codes.includes("FS1005"), true);
+assert.equal(codes.includes("FS1004"), false);
 assert.equal(codes.includes("FS1007"), true);
 
 const report = formatDiagnosticsReport(bad, { source: badSource });

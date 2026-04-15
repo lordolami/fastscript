@@ -17,7 +17,7 @@
 ## Potentially visible behavior
 
 1. `fn`, `state`, and `~` normalize to `function`/`let` in generated code.
-2. `type`/`interface`/`enum` in `.fs` are reported and removed in lenient normalization.
+2. `type`/`interface`/`enum` and other standard TS syntax in `.fs` now flow through the JS/TS compatibility frontend and erase during normalization instead of being rejected.
 3. Semantic errors (`FS410x`, `FS4201`) can fail `typecheck --mode fail`.
 4. `format --check` can report more files due to canonical formatting.
 

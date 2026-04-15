@@ -5,7 +5,7 @@
 - `FS1001`: Invalid reactive declaration (`~name = expression` expected).
 - `FS1002`: Invalid state declaration (`state name = expression` expected).
 - `FS1003`: Invalid function declaration (`fn name(...)` expected).
-- `FS1004`: Unsupported runtime type declaration (`type`/`interface`/`enum`) in `.fs`.
+- `FS1004`: Reserved legacy compatibility code for runtime/frontend type-surface conflicts. Current JS/TS-compatible `.fs` parsing should not emit this for ordinary `type`/`interface`/`enum` usage.
 - `FS1005`: Parse error.
 - `FS1006`: Invalid identifier.
 - `FS1007`: `TODO_ERROR` token warning.

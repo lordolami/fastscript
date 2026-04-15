@@ -1,7 +1,11 @@
 const RELEASES = [{
+  version: "v3.0.0",
+  date: "April 2026",
+  copy: "FastScript v3 public surface rewrite: `.fs` positioned as a universal JS/TS container, v3 docs became the latest line, website messaging aligned to proof-backed speed claims, and parity proofs were elevated into release discipline."
+}, {
   version: "v2.0.0",
   date: "April 2026",
-  copy: "FastScript v2.0 ratified: ambient runtime and standard library completed, zero-JS authored app proof gates passed, public/private boundary frozen, and the formal execution tracker published."
+  copy: "FastScript v2.0 ratified: ambient runtime and standard library completed, authored `.fs` parity hardened, public/private boundary frozen, and the formal execution tracker published."
 }, {
   version: "v1.0.0",
   date: "April 2026",
@@ -43,7 +47,7 @@ export default function ChangelogPage() {
       <header class="sec-header">
         <p class="kicker">Changelog</p>
         <h1 class="h1">Every release tied to evidence.</h1>
-        <p class="lead">FastScript ships with proof-pack updates, regression tests, and release signoff artifacts. No guesswork &mdash; just verifiable milestones.</p>
+        <p class="lead">FastScript ships with proof-pack updates, parity artifacts, regression tests, and release signoff artifacts. No guesswork &mdash; just verifiable milestones.</p>
       </header>
 
       <div class="list-items">${items}</div>

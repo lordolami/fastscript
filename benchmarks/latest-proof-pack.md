@@ -1,16 +1,24 @@
 # FastScript Proof Pack
 
-- Generated: 2026-04-14T07:00:10.162Z
+- Generated: 2026-04-15T15:54:57.747Z
 
 ## Summary
-- Routes: 16
-- JS gzip: 2382 bytes
-- CSS gzip: 6135 bytes
+- Routes: n/a
+- JS gzip: n/a bytes
+- CSS gzip: n/a bytes
 - JS budget (30KB): PASS
 - CSS budget (10KB): PASS
 - Interop cases: 13
 - Interop pass: 13
 - Interop fail: 0
+- JS/TS syntax proof: pass
+- JS/TS syntax cases: 8
+- `.fs` parity proof: pass
+- Parser/frontend parity: pass (5 cases)
+- Runtime/platform parity: pass (4 runtime cases, 1 build corpus)
+- Launch line: FastScript v3
+- Product contract: `.fs` is a universal JS/TS container and valid JS/TS failures in `.fs` are treated as FastScript compatibility bugs
+- Release posture: source-available public repo, proprietary core, no AI-training use without permission
 
 ## Benchmark Report
 
@@ -32,3 +40,8 @@ See full matrix: `docs/INTEROP_MATRIX.md`
 
 ### Failed Interop Cases
 - None
+
+## JS/TS Compatibility Proof
+- Syntax proof artifact: `.fastscript/proofs/js-ts-syntax-proof.json`
+- `.fs` parity artifact: `.fastscript/proofs/fs-parity-matrix.json`
+- Product contract: valid JS/TS in `.fs` is the compatibility target; failures are treated as FastScript bugs.

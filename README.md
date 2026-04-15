@@ -1,22 +1,32 @@
 # FastScript
 
-FastScript is a JavaScript-first full-stack language runtime built around a first-class `.fs` file format.
+FastScript is a proprietary, source-available JavaScript-first full-stack runtime built around a first-class `.fs` file format.
 
 It is designed to feel easier to read than heavyweight stack combinations while staying compatible with the JavaScript ecosystem developers already use.
 
+- Write normal JavaScript or TypeScript in `.fs`
 - Write pages, APIs, middleware, jobs, and database workflows in `.fs`
 - Keep compatibility with normal `.js` packages and modules
+- Treat FastScript-specific syntax as optional sugar, not a requirement
 - Compile to optimized JavaScript for production deployment
 - Deploy the same app to Node, Vercel, or Cloudflare
 - Run one quality gate for formatting, linting, typecheck, tests, smoke checks, benchmarks, and interop
+- Build on the same language/runtime foundation that powers the future FastScript AI coding products
 
-FastScript v2.0 is built for product teams that want a simpler, faster full-stack pipeline without surrendering compatibility with the ground-level JavaScript platform.
+FastScript v3 is built for product teams that want a simpler, faster full-stack pipeline without surrendering compatibility with the ground-level JavaScript platform.
+
+The v3 product contract is simple:
+
+- `.fs` is a universal JS/TS container for the FastScript runtime
+- FastScript-specific syntax is optional sugar
+- valid JS/TS failures in `.fs` are FastScript compatibility bugs
+- the speed story is earned by the runtime/compiler/toolchain and backed by release proof artifacts
 
 ## What FastScript Is
 
 FastScript combines:
 
-1. A source language: `.fs`
+1. A JS/TS-compatible source container: `.fs`
 2. A compiler and CLI
 3. A full-stack app runtime
 4. A deployment pipeline for multiple targets
@@ -58,6 +68,15 @@ See:
 - `benchmarks/latest-report.md`
 - `benchmarks/suite-latest.json`
 - `benchmarks/interop-latest.json`
+- `docs/PROOF_PACK.md`
+
+## Why Teams Pick FastScript
+
+- Smaller client payloads than heavier framework baselines
+- Faster build loops and stricter release gates in one toolchain
+- One runtime-native source container for pages, APIs, jobs, and middleware
+- Package compatibility without giving up a proprietary language/runtime moat
+- A direct path into the next FastScript AI assistant stack
 
 ## Install
 
@@ -333,6 +352,9 @@ npm run validate
 
 ```bash
 npm run migrate
+npm run convert
+npm run migrate:rollback
+npm run manifest
 npm run wizard:migrate
 npm run export:js
 npm run export:ts
@@ -341,9 +363,20 @@ npm run typecheck
 npm run typecheck:pass
 npm run lint:fs
 npm run lint:fs:pass
+npm run diagnostics
+npm run permissions
 npm run format
 npm run format:check
 ```
+
+`migrate` now runs strict compatibility-first conversion (rename-only + import extension rewrites + manifest/validation/fidelity reports).  
+Example: `npm run migrate -- app --dry-run`  
+Full proof mode: `npm run migrate -- app --fidelity-level full --fail-on-unproven-fidelity`
+
+Latest trust artifacts are written to `.fastscript/conversion/latest`:
+`conversion-manifest.json`, `diff-preview.json`, `validation-report.json`, `fidelity-report.json`.
+
+Authored `.fs` now accepts normal JS/TS/JSX/TSX-style code directly. Proof artifacts for the current parity contract are written to `.fastscript/proofs/js-ts-syntax-proof.json` and `.fastscript/proofs/fs-parity-matrix.json`.
 
 ### Database and data
 
@@ -382,6 +415,10 @@ npm run qa:all
 
 ```bash
 npm run bench
+npm run bench:discipline
+npm run regression
+npm run profile
+npm run trace
 npm run bench:report
 npm run benchmark:suite
 npm run interop:report
@@ -551,6 +588,7 @@ Key docs in this repo:
 - `docs/KNOWN_LIMITATIONS.md`
 - `docs/CONTRIBUTING.md`
 - `docs/OBSERVABILITY.md` (public stub; full version lives in private core)
+- `docs/RUNTIME_PERMISSIONS.md`
 - `docs/ROLLOUT_GUIDE.md` (public stub; full version lives in private core)
 - `SECURITY.md`
 

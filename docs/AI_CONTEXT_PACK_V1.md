@@ -1,7 +1,9 @@
 ﻿# FastScript AI Context Pack v1
 
 ## Core Contracts
-- `.fs` primary, `.js` compatible.
+- `.fs` is a universal JS/TS container for the FastScript runtime.
+- Write normal JS, TS, JSX, or TSX directly in `.fs`.
+- FastScript-specific syntax is optional sugar.
 - Route pages live in `app/pages`.
 - API routes live in `app/api`.
 - Optional `app/middleware.fs` for global middleware.

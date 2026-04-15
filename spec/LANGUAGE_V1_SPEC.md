@@ -6,9 +6,9 @@
 - Applies to: `.fs` source modules compiled by FastScript CLI/runtime
 
 ## 1. Design Goals
-- FastScript is a first-class language with its own syntax contract, diagnostics, formatter/linter behavior, and compatibility guarantees.
-- FastScript is source-compatible with ECMAScript module syntax for all constructs accepted by the parser.
-- FastScript adds dedicated declaration forms (`~`, `state`, `fn`) that compile to canonical JavaScript.
+- FastScript is a first-class language runtime with its own diagnostics, formatter/linter behavior, and compatibility guarantees.
+- FastScript is source-compatible with ECMAScript module syntax and accepts normal JS/TS/JSX/TSX authoring inside `.fs`.
+- FastScript adds dedicated declaration forms (`~`, `state`, `fn`) as optional sugar that compile to canonical JavaScript.
 
 ## 2. Source Model
 - File unit: module (ESM semantics).
@@ -37,14 +37,14 @@ FastScriptExportFn ::= "export" "fn" Identifier "(" ParamList? ")" FunctionBody
 Notes:
 - `state` and `~` are declaration statements only.
 - `fn` is a declaration form, not an expression form.
-- `type`, `interface`, and `enum` are not runtime FastScript constructs in `.fs` files.
+- Standard TypeScript type-only syntax in `.fs` erases during normalization and should not be rejected solely for being TypeScript-shaped.
 
 ## 5. Desugaring Semantics
 - `state name = expr` desugars to `let name = expr`.
 - `~name = expr` desugars to `let name = expr`.
 - `fn name(...) { ... }` desugars to `function name(...) { ... }`.
 - `export fn name(...) { ... }` desugars to `export function name(...) { ... }`.
-- Unsupported type declarations (`type`, `interface`, `enum`) are removed during lenient normalization and reported diagnostically.
+- Type-only TS syntax erases during normalization through the JS/TS compatibility frontend.
 
 ## 6. Static Semantics (Type System v1)
 - Typechecking is flow-insensitive with lexical scopes and symbol tables.

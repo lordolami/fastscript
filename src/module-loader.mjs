@@ -3,6 +3,15 @@ import { pathToFileURL } from "node:url";
 import esbuild from "esbuild";
 import { normalizeFastScript } from "./fs-normalize.mjs";
 import { assertFastScript } from "./fs-diagnostics.mjs";
+import { createPermissionRuntime } from "./runtime-permissions.mjs";
+
+let cachedPermissionRuntime = null;
+
+function getPermissionRuntime() {
+  if (process.env.FASTSCRIPT_RUNTIME_PERMISSIONS === "0") return null;
+  if (!cachedPermissionRuntime) cachedPermissionRuntime = createPermissionRuntime();
+  return cachedPermissionRuntime;
+}
 
 function fsLoaderPlugin() {
   const compilerMode = (process.env.FASTSCRIPT_COMPILER_MODE || "strict").toLowerCase() === "lenient" ? "lenient" : "strict";
@@ -24,6 +33,8 @@ function fsLoaderPlugin() {
 
 export async function importSourceModule(filePath, { platform = "node" } = {}) {
   const ext = extname(filePath).toLowerCase();
+  const permissionRuntime = getPermissionRuntime();
+  permissionRuntime?.assert({ kind: "dynamicImportAccess", resource: filePath, details: { platform } });
   if (ext !== ".fs") {
     return import(`${pathToFileURL(filePath).href}?t=${Date.now()}`);
   }
@@ -42,5 +53,6 @@ export async function importSourceModule(filePath, { platform = "node" } = {}) {
 
   const code = result.outputFiles[0].text;
   const dataUrl = `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`;
+  permissionRuntime?.assert({ kind: "dynamicImportAccess", resource: dataUrl, details: { platform, source: filePath } });
   return import(dataUrl);
 }

@@ -16,8 +16,8 @@ export const FS_ERROR_CODES = Object.freeze({
   },
   FS1004: {
     severity: "error",
-    message: "Type declarations are not valid runtime FastScript syntax.",
-    hint: "Move `type`, `interface`, and `enum` definitions to `.d.ts` files or remove them from `.fs` files.",
+    message: "Legacy compatibility frontend conflict.",
+    hint: "Ordinary TS type-only syntax in `.fs` should parse. If this appears, treat it as a FastScript compatibility bug.",
   },
   FS1005: {
     severity: "error",

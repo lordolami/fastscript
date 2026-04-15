@@ -16,6 +16,14 @@ import { runTypeCheck } from "./typecheck.mjs";
 import { runFormat } from "./fs-formatter.mjs";
 import { runLint } from "./fs-linter.mjs";
 import { runMigrationWizard } from "./migration-wizard.mjs";
+import { runProfile } from "./profile.mjs";
+import { runTrace } from "./trace.mjs";
+import { runDiagnostics } from "./diagnostics.mjs";
+import { runMigrateRollback } from "./migrate-rollback.mjs";
+import { runManifest } from "./conversion-manifest.mjs";
+import { runPermissions } from "./permissions-cli.mjs";
+import { runBenchmarkDiscipline } from "./benchmark-discipline.mjs";
+import { runRegressionGuard } from "./regression-guard.mjs";
 
 const [, , command, ...args] = process.argv;
 
@@ -42,13 +50,28 @@ async function main() {
       await runCheck();
       break;
     case "migrate":
-      await runMigrate(args[0] ?? "app/pages");
+      await runMigrate(args.length ? args : ["app"]);
+      break;
+    case "convert":
+      await runMigrate(args.length ? args : ["app"]);
+      break;
+    case "migrate:rollback":
+      await runMigrateRollback(args);
+      break;
+    case "manifest":
+      await runManifest(args);
       break;
     case "wizard:migrate":
       await runMigrationWizard(args);
       break;
     case "bench":
       await runBench();
+      break;
+    case "bench:discipline":
+      await runBenchmarkDiscipline();
+      break;
+    case "regression":
+      await runRegressionGuard(args);
       break;
     case "export":
       await runExport(args);
@@ -61,6 +84,18 @@ async function main() {
       break;
     case "typecheck":
       await runTypeCheck(args);
+      break;
+    case "profile":
+      await runProfile(args);
+      break;
+    case "trace":
+      await runTrace(args);
+      break;
+    case "diagnostics":
+      await runDiagnostics(args);
+      break;
+    case "permissions":
+      await runPermissions(args);
       break;
     case "format":
       await runFormat(args);
@@ -85,7 +120,7 @@ async function main() {
       break;
     default:
       console.log("FastScript CLI");
-      console.log("Commands: create, dev, start, build, ssg, check, migrate, wizard:migrate, bench, export, compat, validate, typecheck, format, lint, db:migrate, db:seed, db:rollback, deploy, worker");
+      console.log("Commands: create, dev, start, build, ssg, check, migrate, convert, migrate:rollback, manifest, wizard:migrate, bench, bench:discipline, regression, export, compat, validate, typecheck, profile, trace, diagnostics, permissions, format, lint, db:migrate, db:seed, db:rollback, deploy, worker");
   }
 }
 

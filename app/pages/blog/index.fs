@@ -10,9 +10,9 @@ const POSTS = [{
   excerpt: "The v1 spec locks the parser, diagnostic codes, formatter output, and compatibility guarantees for the first stable FastScript language baseline."
 }, {
   slug: "1-8kb-runtime",
-  title: "How we got the client runtime down to 1.8KB",
+  title: "How FastScript keeps the client footprint at 2.71KB",
   date: "April 12, 2026",
-  excerpt: "Most frameworks ship 80-140KB of JavaScript to the browser by default. Here is the architectural decision that made 1.8KB possible."
+  excerpt: "Most frameworks ship 80-140KB of JavaScript to the browser by default. Here is the architecture and proof discipline behind FastScript’s current 2.71KB first-load footprint."
 }, {
   slug: "deploy-adapter-architecture",
   title: "One codebase, three deploy adapters: Node, Vercel, Cloudflare",

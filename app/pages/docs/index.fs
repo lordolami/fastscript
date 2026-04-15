@@ -4,8 +4,8 @@ const SECTIONS = [{
     label: "Introduction",
     href: "/docs"
   }, {
-    label: "Language spec v2.0",
-    href: "/docs/v2"
+    label: "Current line v3",
+    href: "/docs/v3"
   }, {
     label: "Language spec v1",
     href: "/docs/v1"
@@ -48,10 +48,10 @@ const SECTIONS = [{
   }]
 }];
 const CARDS = [{
-  title: "Language v2.0 spec",
-  copy: "Ratified language/runtime surface, ambient stdlib, runtime scope rules, zero-JS authored app proof, and execution tracker.",
-  href: "/docs/v2",
-  cta: "Read spec"
+  title: "Language v3 overview",
+  copy: "Current public line: universal JS/TS in .fs, optional FastScript sugar, parity proof, and speed discipline.",
+  href: "/docs/v3",
+  cta: "Read v3"
 }, {
   title: "Quickstart",
   copy: "Install the CLI, create, build, and deploy a FastScript app in 15 minutes. Clone the repo when you want to work on the language itself.",
@@ -112,7 +112,7 @@ export default function DocsIndex({pathname}) {
         <header class="sec-header">
           <p class="kicker">Documentation</p>
           <h1 class="h1">FastScript docs.</h1>
-          <p class="lead">Everything you need to build, validate, and ship full-stack FastScript applications on the ratified v2.0 line.</p>
+          <p class="lead">Everything you need to build, validate, and ship full-stack FastScript applications on the current v3 line.</p>
         </header>
 
         <div class="docs-card-grid docs-entry-cards">${cards}</div>
@@ -122,7 +122,7 @@ export default function DocsIndex({pathname}) {
         <section class="docs-syntax">
           <header class="sec-header-sm">
             <p class="kicker">Language baseline</p>
-            <h2 class="h2">FastScript v2.0 syntax at a glance.</h2>
+            <h2 class="h2">FastScript v3 at a glance.</h2>
           </header>
           <div class="code-pair">
             <div class="code-block">
@@ -130,14 +130,11 @@ export default function DocsIndex({pathname}) {
                 <span class="code-block-file">declarations.fs</span>
                 <span class="code-block-lang">.fs</span>
               </div>
-              <div class="code-block-body"><span class="code-cmt">// Reactive binding</span>
-<span class="code-fs">~</span>count = 0
-<span class="code-kw">state</span> user = <span class="code-kw">null</span>
-<span class="code-fn">fn</span> <span class="code-fn">greet</span>(name) {
-  <span class="code-kw">return</span> <span class="code-str">\`Hello \${name}\`</span>
-}
-<span class="code-kw">export</span> <span class="code-fn">fn</span> <span class="code-fn">load</span>(ctx) {
-  <span class="code-kw">return</span> ctx.db.get(<span class="code-str">"users"</span>)
+              <div class="code-block-body"><span class="code-cmt">// Normal TS in .fs</span>
+<span class="code-kw">type</span> User = { name: <span class="code-kw">string</span> }
+
+<span class="code-kw">export</span> <span class="code-kw">default</span> <span class="code-kw">function</span> <span class="code-fn">Page</span>({ user }: { user: User }) {
+  <span class="code-kw">return</span> <span class="code-str">\`&lt;h1&gt;\${user.name}&lt;/h1&gt;\`</span>
 }</div>
             </div>
             <div class="code-block">
@@ -145,14 +142,9 @@ export default function DocsIndex({pathname}) {
                 <span class="code-block-file">compiled output</span>
                 <span class="code-block-lang">.js</span>
               </div>
-              <div class="code-block-body"><span class="code-cmt">// Compiled from .fs</span>
-<span class="code-kw">let</span> count = 0
-<span class="code-kw">let</span> user = <span class="code-kw">null</span>
-<span class="code-kw">function</span> <span class="code-fn">greet</span>(name) {
-  <span class="code-kw">return</span> <span class="code-str">\`Hello \${name}\`</span>
-}
-<span class="code-kw">export</span> <span class="code-kw">function</span> <span class="code-fn">load</span>(ctx) {
-  <span class="code-kw">return</span> ctx.db.get(<span class="code-str">"users"</span>)
+              <div class="code-block-body"><span class="code-cmt">// FastScript normalizes to standard JS</span>
+<span class="code-kw">export</span> <span class="code-kw">default</span> <span class="code-kw">function</span> <span class="code-fn">Page</span>({ user }) {
+  <span class="code-kw">return</span> <span class="code-str">\`&lt;h1&gt;\${user.name}&lt;/h1&gt;\`</span>
 }</div>
             </div>
           </div>

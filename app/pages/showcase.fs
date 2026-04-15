@@ -67,7 +67,7 @@ export default function Showcase() {
       <header class="sec-header">
         <p class="kicker">Showcase</p>
         <h1 class="h1">Production projects built with FastScript.</h1>
-        <p class="lead">Deploy-ready patterns and real apps. Filter by category and use as a launchpad for your own architecture.</p>
+        <p class="lead">Deploy-ready patterns and real apps built on the v3 product contract: universal JS/TS in <code class="ic">.fs</code>, proof-backed speed, and one runtime-native pipeline.</p>
       </header>
 
       <div class="filter-row">
