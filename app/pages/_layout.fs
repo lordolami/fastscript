@@ -112,7 +112,7 @@ export default function Layout({content, pathname}) {
               <span class="brand-mark footer-brand-mark" aria-hidden="true">FS</span>
               FastScript
             </div>
-            <p class="footer-brand-copy">Full-stack language runtime with <code class="ic">.fs</code> as a universal JS/TS container, proof-backed speed claims, and full <code class="ic">.js</code> ecosystem compatibility. This website is built and shipped with FastScript itself. Core platform rights are protected and commercially licensed by Lakesbim Infotechnology.</p>
+            <p class="footer-brand-copy">Full-stack language runtime with <code class="ic">.fs</code> as a universal JS/TS container, proof-backed speed claims, a governed support matrix, and full <code class="ic">.js</code> ecosystem compatibility. This website is built and shipped with FastScript itself. Core platform rights are protected and commercially licensed by Lakesbim Infotechnology.</p>
             <div class="footer-social">
               <a class="footer-social-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
               <a class="footer-social-link" href="https://discord.gg/fastscript" target="_blank" rel="noreferrer" aria-label="Discord">DC</a>

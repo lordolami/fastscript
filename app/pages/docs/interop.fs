@@ -4,13 +4,13 @@ export default function DocsInterop() {
       <header class="sec-header">
         <p class="kicker">Interop</p>
         <h1 class="h1">JavaScript ecosystem compatibility in practice.</h1>
-        <p class="lead">FastScript keeps <code class="ic">.fs</code> as the source of truth while still working with npm packages, mixed JS/FS modules, and incremental migration paths across frontend and backend code.</p>
+        <p class="lead">FastScript keeps <code class="ic">.fs</code> as the source of truth while still working with npm packages, mixed JS/FS modules, and incremental migration paths across frontend and backend code. The governed support matrix and interop proof suite make those claims visible instead of vague.</p>
       </header>
 
       <div class="docs-card-grid">
         <div class="docs-card">
           <p class="docs-card-title">What works today</p>
-          <p class="docs-card-copy">ESM, CJS, dynamic import, JSON import, JS importing FS output, and mixed bundles are all covered by the interop proof suite.</p>
+          <p class="docs-card-copy">ESM, CJS, dynamic import, JSON import, JS importing FS output, mixed bundles, framework package surfaces, and export-condition subpaths are all covered by the interop proof suite.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">How to adopt gradually</p>

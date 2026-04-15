@@ -14,6 +14,12 @@
   - `spec/V2_0_MIGRATION_PROOF_REPORT.md`
   - `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`
 
+## v3.0.1 - 2026-04-15
+- Broaden the governed ecosystem proof surface across Next-style route/layout/shared-module patterns
+- Deepen React hooks/context/shared-helper, Node middleware/error/mixed-module, and Vue composable/app-utility coverage
+- Expand npm/package interop proof to next/navigation, react-dom/server, vue-router, and export-condition subpath cases
+- Refresh website/docs/README/npm-facing copy to align with the governed support matrix and current proof-backed public contract
+
 ## v3.0.0 - 2026-04-15
 - Launch FastScript v3 as the active public line with `.fs` positioned as a universal JS/TS container
 - Publish v3 website/docs alignment, `/docs/v3` latest-track routing, and proof-backed benchmark messaging

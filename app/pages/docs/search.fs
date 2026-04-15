@@ -5,6 +5,7 @@ function resolveDocRoute(item) {
   const haystack = `${item?.title || ""} ${item?.summary || ""} ${direct}`.toLowerCase();
   if (haystack.includes("support matrix") || haystack.includes("compatibility matrix")) return "/docs/support";
   if (haystack.includes("proven") || haystack.includes("blocked") || haystack.includes("supported") || haystack.includes("planned")) return "/docs/support";
+  if (haystack.includes("next") || haystack.includes("react") || haystack.includes("vue") || haystack.includes("node") || haystack.includes("npm")) return "/docs/support";
   if (haystack.includes("playground")) return "/docs/playground";
   if (haystack.includes("why fastscript") || haystack.includes("why developers") || haystack.includes("adopt") || haystack.includes("frontend and backend") || haystack.includes("full-stack")) return "/why-fastscript";
   if (haystack.includes("v3") || haystack.includes("latest") || haystack.includes("parity") || haystack.includes("stdlib") || haystack.includes("runtime")) return "/docs/v3";

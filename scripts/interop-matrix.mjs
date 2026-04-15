@@ -95,16 +95,19 @@ export default React;
   );
   writePkg(
     "react-dom",
-    { type: "module", exports: { "./client": "./client.js" } },
+    { type: "module", exports: { "./client": "./client.js", "./server": "./server.js" } },
     {
       "client.js": `export function createRoot(node){ return { node, render(v){ return v; } }; }`,
+      "server.js": `export function renderToString(node){ return "<rendered>" + (node?.tag || node?.type || "node") + "</rendered>"; }`,
     },
   );
   writePkg(
     "next",
-    { type: "module", exports: { "./link": "./link.js" } },
+    { type: "module", exports: { "./link": "./link.js", "./navigation": "./navigation.js" } },
     {
       "link.js": `export default function Link(props){ return { kind: "next-link", ...props }; }`,
+      "navigation.js": `export function redirect(path){ return "redirect:" + path; }
+export function notFound(){ return "not-found"; }`,
     },
   );
   writePkg(
@@ -113,6 +116,14 @@ export default React;
     {
       "index.js": `export function h(tag, children){ return { tag, children }; }
 export function createApp(def){ return { def, mount(el){ return { el, def }; } }; }`,
+    },
+  );
+  writePkg(
+    "vue-router",
+    { type: "module", exports: "./index.js" },
+    {
+      "index.js": `export function createRouter(config){ return { ...config, currentRoute: { value: config.history } }; }
+export function createWebHistory(base = "/"){ return "history:" + base; }`,
     },
   );
   writePkg(
@@ -178,8 +189,24 @@ export function createMemo(fn){ return () => fn(); }`,
       "index.cjs": `module.exports = function leftPad(str, len, ch){
   str = String(str); ch = (ch || " ").charAt(0);
   while (str.length < len) str = ch + str;
-  return str;
+      return str;
 };`,
+    },
+  );
+  writePkg(
+    "conditioned-subpath-lib",
+    {
+      type: "module",
+      exports: {
+        "./server": {
+          node: "./server-node.js",
+          default: "./server-default.js",
+        },
+      },
+    },
+    {
+      "server-node.js": `export default function target(){ return "node-subpath"; }`,
+      "server-default.js": `export default function target(){ return "default-subpath"; }`,
     },
   );
 }
@@ -206,6 +233,20 @@ export default boot
 `,
     },
     {
+      id: "react-dom-server-fs",
+      target: "react-dom/server",
+      kind: "framework",
+      platform: "node",
+      file: "react-dom-server-entry.fs",
+      note: "FastScript module imports react-dom/server rendering helpers.",
+      source: `import React from "react"
+import { renderToString } from "react-dom/server"
+export default function renderCard() {
+  return renderToString(React.createElement("article", { id: "card" }, "ok"))
+}
+`,
+    },
+    {
       id: "next-link-fs",
       target: "next",
       kind: "framework",
@@ -215,6 +256,19 @@ export default boot
       source: `import Link from "next/link"
 export default function routeLink() {
   return Link({ href: "/docs", children: "Docs" })
+}
+`,
+    },
+    {
+      id: "next-navigation-fs",
+      target: "next/navigation",
+      kind: "framework",
+      platform: "browser",
+      file: "next-navigation-entry.fs",
+      note: "FastScript module imports next/navigation redirect and notFound helpers.",
+      source: `import { redirect, notFound } from "next/navigation"
+export default function navigation() {
+  return redirect("/docs") + "|" + notFound()
 }
 `,
     },
@@ -229,6 +283,20 @@ export default function routeLink() {
 export default function mountable() {
   const app = createApp({ render() { return h("div", "ok") } })
   return typeof app.mount === "function"
+}
+`,
+    },
+    {
+      id: "vue-router-fs",
+      target: "vue-router",
+      kind: "framework",
+      platform: "browser",
+      file: "vue-router-entry.fs",
+      note: "FastScript module imports vue-router createRouter history helpers.",
+      source: `import { createRouter, createWebHistory } from "vue-router"
+export default function routerReady() {
+  const router = createRouter({ history: createWebHistory("/docs"), routes: [] })
+  return router.currentRoute.value
 }
 `,
     },
@@ -287,6 +355,19 @@ export default function signals() {
       source: `import { edge } from "@fastscript/runtime/edge"
 export default function run() {
   return edge()
+}
+`,
+    },
+    {
+      id: "conditioned-subpath-fs",
+      target: "conditioned-subpath-lib/server",
+      kind: "npm",
+      platform: "node",
+      file: "conditioned-subpath-entry.fs",
+      note: "FastScript module resolves a subpath export with node/default conditions.",
+      source: `import target from "conditioned-subpath-lib/server"
+export default function run() {
+  return target()
 }
 `,
     },
@@ -392,8 +473,8 @@ function markdown(report) {
 - Governance track: FastScript 4.0 compatibility system
 
 Interop matrix includes:
-- Framework API compatibility shims for react, next/link, vue, svelte/store, preact, and solid-js.
-- Scoped/subpath and dual-mode package checks (@fastscript/runtime/edge, dual-mode-lib).
+- Framework API compatibility shims for react, react-dom/server, next/link, next/navigation, vue, vue-router, svelte/store, preact, and solid-js.
+- Scoped/subpath and export-condition package checks (@fastscript/runtime/edge, conditioned-subpath-lib/server, dual-mode-lib).
 - Real npm package checks using installed dependencies (acorn, acorn-walk, astring).
 - Node built-in and CommonJS interop checks.
 

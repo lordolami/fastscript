@@ -32,7 +32,7 @@ export default function DocsSupportPage() {
       <header class="sec-header">
         <p class="kicker">Compatibility matrix</p>
         <h1 class="h1">One governed source of truth for what FastScript proves.</h1>
-        <p class="lead">FastScript ${report.governanceTrack} treats <code class="ic">proven</code> as a release-blocking claim. This page is generated from the compatibility registry and linked proof artifacts.</p>
+        <p class="lead">FastScript ${report.governanceTrack} treats <code class="ic">proven</code> as a release-blocking claim. This page is generated from the compatibility registry and linked proof artifacts, and the current 3.0.x line ships that governed matrix publicly.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -42,7 +42,7 @@ export default function DocsSupportPage() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Registry scale</p>
-          <p class="docs-card-copy">${report.summary?.entries || 0} entries, ${(report.summary?.byStatus || ({})).proven || 0} marked <code class="ic">proven</code>, all tied to CI-visible proof.</p>
+          <p class="docs-card-copy">${report.summary?.entries || 0} entries, ${(report.summary?.byStatus || ({})).proven || 0} marked <code class="ic">proven</code>, all tied to CI-visible proof across syntax, frameworks, runtime targets, tooling, and npm/package interop.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Product contract</p>

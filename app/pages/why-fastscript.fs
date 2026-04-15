@@ -22,7 +22,7 @@ export default function WhyFastScriptPage() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Proof-backed speed</p>
-          <p class="docs-card-copy">Current public proof shows 2.71KB first-load JS gzip, 702.98ms builds, and 13/13 interop passing. The speed story comes from the runtime and toolchain, not from forcing new coding habits.</p>
+          <p class="docs-card-copy">Current public proof shows 2.71KB first-load JS gzip, 702.98ms builds, 17/17 interop passing, and governed ecosystem coverage across Next-style, React, Node, Vue, and npm package patterns. The speed story comes from the runtime and toolchain, not from forcing new coding habits.</p>
         </div>
       </div>
 
@@ -146,7 +146,7 @@ export default function WhyFastScriptPage() {
           </div>
           <div class="story-cell">
             <p class="story-cell-title">Broader compatibility matrix</p>
-            <p class="story-cell-copy">The v3 contract expands by adding more JS/TS syntax cases, framework patterns, and runtime surfaces as permanent proof-backed compatibility lanes.</p>
+            <p class="story-cell-copy">The v3 contract expands by adding more JS/TS syntax cases, framework patterns, route shapes, shared modules, and runtime surfaces as permanent proof-backed compatibility lanes published in the support matrix.</p>
           </div>
           <div class="story-cell">
             <p class="story-cell-title">More targets</p>

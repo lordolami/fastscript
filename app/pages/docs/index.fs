@@ -82,12 +82,12 @@ const CARDS = [{
   cta: "View reference"
 }, {
   title: "Interop + migration",
-  copy: "Use npm packages in .fs files and migrate existing TS/JS codebases module by module, with dry runs, diff previews, rollback, and compatibility reporting built in.",
+  copy: "Use npm packages in .fs files and migrate existing TS/JS codebases module by module, with dry runs, diff previews, rollback, compatibility reporting, and governed proof coverage built in.",
   href: "/docs/interop",
   cta: "Learn interop"
 }, {
   title: "Compatibility matrix",
-  copy: "Generated source-of-truth support matrix with proven, partial, planned, and blocked compatibility lanes.",
+  copy: "Generated source-of-truth support matrix with proven, partial, planned, and blocked compatibility lanes across JS/TS, frameworks, runtime targets, tooling, and npm interop.",
   href: "/docs/support",
   cta: "Open matrix"
 }, {
@@ -125,7 +125,7 @@ export default function DocsIndex({pathname}) {
         <header class="sec-header">
           <p class="kicker">Documentation</p>
           <h1 class="h1">FastScript docs.</h1>
-          <p class="lead">Everything you need to build, validate, and ship full-stack FastScript applications on the current v3 line.</p>
+          <p class="lead">Everything you need to build, validate, and ship full-stack FastScript applications on the current v3 line, with the governed support matrix as the source of truth for compatibility claims.</p>
         </header>
 
         <div class="docs-card-grid docs-entry-cards">${cards}</div>

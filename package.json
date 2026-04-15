@@ -1,7 +1,20 @@
 {
   "name": "fastscript",
-  "version": "3.0.0",
-  "description": "FastScript v3 universal JS/TS runtime with first-class .fs source.",
+  "version": "3.0.1",
+  "description": "FastScript v3 universal JS/TS runtime with governed compatibility proof and first-class .fs source.",
+  "keywords": [
+    "fastscript",
+    "javascript",
+    "typescript",
+    "tsx",
+    "jsx",
+    "full-stack",
+    "runtime",
+    "framework",
+    "compatibility",
+    "interop",
+    "npm"
+  ],
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "publishConfig": {

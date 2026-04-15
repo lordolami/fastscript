@@ -28,7 +28,7 @@ export default function DevsPage() {
       <header class="sec-header">
         <p class="kicker">About the builders</p>
         <h1 class="h1">Team architecture behind FastScript.</h1>
-        <p class="lead">FastScript is built as a product system, not just a compiler experiment. Each lane ships against measurable output: proof-backed speed, compatibility evidence, deploy reliability, and protection of the language core as part of the wider FastScript AI platform.</p>
+        <p class="lead">FastScript is built as a product system, not just a compiler experiment. Each lane ships against measurable output: proof-backed speed, governed compatibility evidence, deploy reliability, and protection of the language core as part of the wider FastScript AI platform.</p>
       </header>
 
       <div class="team-grid">${cells}</div>
@@ -55,7 +55,7 @@ export default function DevsPage() {
         <div class="feature-cell">
           <div class="feature-icon">&#129514;</div>
           <p class="feature-title">Evidence over intuition</p>
-          <p class="feature-copy">Benchmarks, smoke tests, interop matrices, and proof packs are produced for every release &mdash; not just when something breaks.</p>
+          <p class="feature-copy">Benchmarks, smoke tests, interop matrices, support-matrix generation, and proof packs are produced for every release &mdash; not just when something breaks.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">&#128274;</div>

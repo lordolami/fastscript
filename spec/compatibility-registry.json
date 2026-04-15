@@ -96,9 +96,10 @@
       "contractNote": "Common Node/server request-handler shapes should work directly in .fs.",
       "proofIds": [
         "artifact:fs-parity:node-express-style",
+        "artifact:fs-parity:node-request-mutation-mixed-modules",
         "script:test:runtime-contract"
       ],
-      "docsNote": "Includes handler-style modules, params access, and path/env-adjacent server code."
+      "docsNote": "Includes handler-style modules, params access, request mutation, mixed ESM/CJS helpers, and path/env-adjacent server code."
     },
     {
       "id": "node-middleware-and-error-flow",
@@ -118,9 +119,10 @@
       "status": "proven",
       "contractNote": "React-style modules and TSX authoring should work without forcing a framework rewrite.",
       "proofIds": [
-        "artifact:interop:react-core-fs"
+        "artifact:interop:react-core-fs",
+        "artifact:interop:react-dom-server-fs"
       ],
-      "docsNote": "Current proof covers createElement/react-dom client import surfaces."
+      "docsNote": "Current proof covers createElement plus react-dom client/server import surfaces."
     },
     {
       "id": "react-hooks-context-and-lazy",
@@ -129,9 +131,10 @@
       "status": "proven",
       "contractNote": "React-style hook and lazy-module workflows should remain valid authored .fs patterns.",
       "proofIds": [
-        "artifact:fs-parity:react-hooks-context-lazy"
+        "artifact:fs-parity:react-hooks-context-lazy",
+        "artifact:fs-parity:react-composed-hooks-shared-helper"
       ],
-      "docsNote": "Covers useState, createContext/useContext, and lazy-loaded module flow."
+      "docsNote": "Covers useState, createContext/useContext, lazy-loaded module flow, and composed hook/shared-helper patterns."
     },
     {
       "id": "next-style-modules",
@@ -141,9 +144,11 @@
       "contractNote": "Next-style module shapes should be accepted as syntax and framework-adjacent source in .fs.",
       "proofIds": [
         "artifact:interop:next-link-fs",
-        "artifact:fs-parity:next-page-style-tsx"
+        "artifact:interop:next-navigation-fs",
+        "artifact:fs-parity:next-page-style-tsx",
+        "artifact:fs-parity:next-route-shared-lib-style"
       ],
-      "docsNote": "Covers page-style TSX modules and next/link-like imports."
+      "docsNote": "Covers page-style TSX modules, next/link and next/navigation imports, plus shared-lib route-adjacent patterns."
     },
     {
       "id": "vue-style-modules",
@@ -153,9 +158,11 @@
       "contractNote": "Vue-style script modules and composable helpers should work as normal .fs source.",
       "proofIds": [
         "artifact:interop:vue-core-fs",
-        "artifact:fs-parity:vue-script-setup-adjacent"
+        "artifact:interop:vue-router-fs",
+        "artifact:fs-parity:vue-script-setup-adjacent",
+        "artifact:fs-parity:vue-app-utility-module"
       ],
-      "docsNote": "Current proof covers Vue createApp/h interop and typed composable-style modules."
+      "docsNote": "Current proof covers Vue createApp/h interop, vue-router module usage, typed composable-style modules, and app-adjacent utility helpers."
     },
     {
       "id": "vue-composables-and-store-helpers",
@@ -209,9 +216,10 @@
       "contractNote": "Subpath export resolution should work for .fs imports against modern packages.",
       "proofIds": [
         "artifact:interop:scoped-subpath-fs",
+        "artifact:interop:conditioned-subpath-fs",
         "script:test:ecosystem-compatibility-contract"
       ],
-      "docsNote": "Covers scoped package subpath exports and workspace-linked packages."
+      "docsNote": "Covers scoped package subpath exports, export-condition subpaths, and workspace-linked packages."
     },
     {
       "id": "package-dual-mode",

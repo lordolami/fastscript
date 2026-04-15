@@ -24,6 +24,9 @@ if (!existsSync(docsDir)) throw new Error("Missing docs directory");
 
 const files = readdirSync(docsDir).filter((name) => name.endsWith(".md"));
 const items = [];
+const PATH_OVERRIDES = {
+  "support_matrix": "/docs/support",
+};
 
 for (const name of files) {
   const path = join(docsDir, name);
@@ -38,7 +41,7 @@ for (const name of files) {
   items.push({
     id: name.replace(/\.md$/, "").toLowerCase(),
     title,
-    path: `/docs/${name.replace(/\.md$/, "").toLowerCase()}`,
+    path: PATH_OVERRIDES[name.replace(/\.md$/, "").toLowerCase()] || `/docs/${name.replace(/\.md$/, "").toLowerCase()}`,
     summary: summary.trim(),
     terms,
   });

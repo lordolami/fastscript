@@ -36,7 +36,7 @@ const NEXT = [{
   cta: "Open primitive guide"
 }, {
   title: "Interop expansion",
-  copy: "Bring existing npm packages and ecosystem APIs while keeping .fs as your app source of truth.",
+  copy: "Bring existing npm packages and ecosystem APIs while keeping .fs as your app source of truth and the support matrix as your proof-backed compatibility guide.",
   href: "/docs/interop",
   cta: "View interop guide"
 }, {
@@ -73,7 +73,7 @@ export default function LearnPage() {
       <header class="sec-header">
         <p class="kicker">Quickstart</p>
         <h1 class="h1">From zero to live deployment in one flow.</h1>
-        <p class="lead">Shortest path to production with normal JS/TS-in-.fs authoring, hard QA gates, and proof-backed speed from day one.</p>
+        <p class="lead">Shortest path to production with normal JS/TS-in-.fs authoring, hard QA gates, proof-backed speed, and a governed compatibility matrix from day one.</p>
       </header>
 
       <div class="steps">${steps}</div>

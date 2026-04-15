@@ -8,6 +8,7 @@ It is designed to feel easier to read than heavyweight stack combinations while 
 - Write pages, APIs, middleware, jobs, and database workflows in `.fs`
 - Keep compatibility with normal `.js` packages and modules
 - Treat FastScript-specific syntax as optional sugar, not a requirement
+- Govern compatibility claims through a source-of-truth support matrix
 - Compile to optimized JavaScript for production deployment
 - Deploy the same app to Node, Vercel, or Cloudflare
 - Run one quality gate for formatting, linting, typecheck, tests, smoke checks, benchmarks, and interop
@@ -60,8 +61,9 @@ These are the real measured numbers from the current repo benchmark report:
 - JS first-load gzip: `2.71KB`
 - Routes in benchmark app: `16`
 - API routes in benchmark app: `5`
-- Interop matrix: `13/13` passing
+- Interop matrix: `17/17` passing
 - Current website deploy target: Node, Vercel, and Cloudflare adapters supported
+- Governed `.fs` parity corpus: `18` passing checks across JS/TS, Next-style, React, Node, and Vue patterns
 
 See:
 
@@ -85,6 +87,7 @@ FastScript is built for developers who want one system instead of a pile of coop
 - Write ordinary TS/JS/JSX/TSX in `.fs`
 - Use the same runtime for frontend pages, backend APIs, middleware, jobs, and workers
 - Keep npm packages and ecosystem code while migrating incrementally
+- See exactly what is `proven`, `partial`, `planned`, or `blocked` in the governed support matrix
 - Convert existing route-based codebases safely with dry-run previews, diff artifacts, validation, and rollback
 - Ship through Node, Vercel, or Cloudflare deploy adapters without rebuilding your app around each target
 
@@ -404,6 +407,7 @@ Latest trust artifacts are written to `.fastscript/conversion/latest`:
 `conversion-manifest.json`, `diff-preview.json`, `validation-report.json`, `fidelity-report.json`.
 
 Authored `.fs` now accepts normal JS/TS/JSX/TSX-style code directly. Proof artifacts for the current parity contract are written to `.fastscript/proofs/js-ts-syntax-proof.json` and `.fastscript/proofs/fs-parity-matrix.json`.
+The governed compatibility registry and generated support matrix live in `spec/compatibility-registry.json` and `docs/SUPPORT_MATRIX.md`.
 
 ### Database and data
 

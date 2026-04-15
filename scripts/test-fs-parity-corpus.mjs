@@ -255,6 +255,53 @@ export default compose([traceMiddleware, guardMiddleware], (error, req, res) => 
     },
   },
   {
+    id: "node-request-mutation-mixed-modules",
+    entry: "node-request-mutation-mixed-modules.fs",
+    files: {
+      "node-request-mutation-mixed-modules.fs": `import normalizeUser from "./server-user-helper.fs";
+const settings = require("./server-settings.cjs");
+
+export function withUser(handler) {
+  return function run(req) {
+    req.meta = { ...(req.meta || {}), source: settings.source };
+    req.user = normalizeUser(req.headers["x-user"] || "guest");
+    return handler(req);
+  };
+}
+
+export default withUser(function handler(req) {
+  return {
+    ok: true,
+    user: req.user,
+    source: req.meta.source,
+    mode: process.env.FASTSCRIPT_NODE_MODE || "unset"
+  };
+});
+`,
+      "server-user-helper.fs": `export default function normalizeUser(input) {
+  return String(input).trim().toLowerCase();
+}
+`,
+      "server-settings.cjs": `module.exports = { source: "cjs-settings" };`,
+    },
+    async check(mod) {
+      const previous = process.env.FASTSCRIPT_NODE_MODE;
+      process.env.FASTSCRIPT_NODE_MODE = "server-proof";
+      try {
+        const result = mod.default({ headers: { "x-user": "Ada" } });
+        assert.deepEqual(result, {
+          ok: true,
+          user: "ada",
+          source: "cjs-settings",
+          mode: "server-proof",
+        });
+      } finally {
+        if (previous === undefined) delete process.env.FASTSCRIPT_NODE_MODE;
+        else process.env.FASTSCRIPT_NODE_MODE = previous;
+      }
+    },
+  },
+  {
     id: "vue-script-setup-adjacent",
     entry: "vue-script-setup-adjacent.fs",
     files: {
@@ -371,6 +418,52 @@ export default function Layout({ children }) {
     },
   },
   {
+    id: "next-route-shared-lib-style",
+    entry: "next-route-shared-lib-style.fs",
+    files: {
+      "next-route-shared-lib-style.fs": `import { slugTitle, buildCacheTag } from "./next-shared-lib.fs";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 120;
+
+export async function GET({ params }) {
+  return {
+    status: 200,
+    body: slugTitle(params.slug),
+    tag: buildCacheTag(params.slug)
+  };
+}
+
+export default function Page({ params }) {
+  return <article data-runtime={runtime}>{slugTitle(params.slug)}</article>;
+}
+`,
+      "next-shared-lib.fs": `export function slugTitle(slug) {
+  return slug.split("-").map((part) => part[0].toUpperCase() + part.slice(1)).join(" ");
+}
+
+export function buildCacheTag(slug) {
+  return "post:" + slug;
+}
+`,
+    },
+    async check(mod) {
+      assert.equal(mod.runtime, "nodejs");
+      assert.equal(mod.dynamic, "force-dynamic");
+      assert.equal(mod.revalidate, 120);
+      assert.deepEqual(await mod.GET({ params: { slug: "fast-script" } }), {
+        status: 200,
+        body: "Fast Script",
+        tag: "post:fast-script",
+      });
+      const tree = mod.default({ params: { slug: "fast-script" } });
+      assert.equal(tree.type, "article");
+      assert.equal(tree.props["data-runtime"], "nodejs");
+      assert.equal(tree.props.children[0], "Fast Script");
+    },
+  },
+  {
     id: "react-hooks-context-lazy",
     entry: "react-hooks-context-lazy.fs",
     files: {
@@ -438,6 +531,65 @@ export default React;
     },
   },
   {
+    id: "react-composed-hooks-shared-helper",
+    entry: "react-composed-hooks-shared-helper.fs",
+    files: {
+      "react-composed-hooks-shared-helper.fs": `import { createContext, useContext, useState } from "react";
+import { useBadgeLabel } from "./react-hook-helper.fs";
+
+const ThemeContext = createContext("dark");
+
+export function useDashboardCard() {
+  const theme = useContext(ThemeContext);
+  const [count, setCount] = useState(3);
+  setCount(count + 2);
+  return {
+    theme,
+    label: useBadgeLabel(theme, count),
+    count
+  };
+}
+
+export default function runCard() {
+  return useDashboardCard();
+}
+`,
+      "react-hook-helper.fs": `export function useBadgeLabel(theme, count) {
+  return theme + ":" + String(count);
+}
+`,
+      "node_modules/react/package.json": `{
+  "name": "react",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": "./index.js"
+}
+`,
+      "node_modules/react/index.js": `const contexts = new WeakMap();
+export function createContext(defaultValue) {
+  const ctx = { defaultValue };
+  contexts.set(ctx, defaultValue);
+  return ctx;
+}
+export function useContext(ctx) {
+  return contexts.get(ctx) ?? ctx.defaultValue;
+}
+export function useState(initial) {
+  let value = initial;
+  return [value, (next) => { value = next; }];
+}
+export function createElement(type, props, ...children) {
+  return { type, props: { ...(props || {}), children } };
+}
+const React = { createContext, useContext, useState, createElement };
+export default React;
+`,
+    },
+    async check(mod) {
+      assert.deepEqual(mod.default(), { theme: "dark", label: "dark:3", count: 3 });
+    },
+  },
+  {
     id: "commonjs-interop",
     entry: "commonjs-interop.fs",
     files: {
@@ -450,6 +602,49 @@ export default function run(name: string) {
     },
     async check(mod) {
       assert.equal(mod.default("fs"), "[fs]");
+    },
+  },
+  {
+    id: "vue-app-utility-module",
+    entry: "vue-app-utility-module.fs",
+    files: {
+      "vue-app-utility-module.fs": `import { ref } from "vue";
+import { createInventorySummary, formatInventoryLabel } from "./vue-utility-helper.fs";
+
+export function useInventoryPanel() {
+  const items = ref([2, 5]);
+  return createInventorySummary(items.value);
+}
+
+export default function panelLabel() {
+  return formatInventoryLabel(useInventoryPanel());
+}
+`,
+      "vue-utility-helper.fs": `export function createInventorySummary(items) {
+  return {
+    count: items.length,
+    total: items.reduce((sum, item) => sum + item, 0)
+  };
+}
+
+export function formatInventoryLabel(summary) {
+  return "items:" + summary.count + "|total:" + summary.total;
+}
+`,
+      "node_modules/vue/package.json": `{
+  "name": "vue",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": "./index.js"
+}
+`,
+      "node_modules/vue/index.js": `export function ref(value){
+  return { value };
+}
+`,
+    },
+    async check(mod) {
+      assert.equal(mod.default(), "items:2|total:7");
     },
   },
 ];

@@ -4,7 +4,7 @@ export default function DocsLatest() {
       <header class="sec-header">
         <p class="kicker">Docs latest</p>
         <h1 class="h1">Current docs track: FastScript v3</h1>
-        <p class="lead">This alias is the canonical entrypoint for the current v3 product contract: universal JS/TS in <code class="ic">.fs</code>, optional FastScript sugar, proof-backed speed, release evidence, and a protected core that compounds into future FastScript AI tooling.</p>
+        <p class="lead">This alias is the canonical entrypoint for the current v3 product contract: universal JS/TS in <code class="ic">.fs</code>, optional FastScript sugar, proof-backed speed, governed compatibility evidence, and a protected core that compounds into future FastScript AI tooling.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -15,7 +15,7 @@ export default function DocsLatest() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">v3 overview</p>
-          <p class="docs-card-copy">Current public line: <code class="ic">.fs</code> as a universal JS/TS container, optional sugar, parity proof, benchmark discipline, and release-facing evidence.</p>
+          <p class="docs-card-copy">Current public line: <code class="ic">.fs</code> as a universal JS/TS container, optional sugar, parity proof, benchmark discipline, and a governed compatibility matrix tied to release evidence.</p>
           <a class="docs-card-link" href="/docs/v3">Open v3 &#8594;</a>
         </div>
         <div class="docs-card">
@@ -35,7 +35,7 @@ export default function DocsLatest() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Compatibility matrix</p>
-          <p class="docs-card-copy">Open the governed compatibility registry surface for proven JS/TS, framework, runtime, and tooling claims.</p>
+          <p class="docs-card-copy">Open the governed compatibility registry surface for proven JS/TS, framework, runtime, tooling, and npm ecosystem claims.</p>
           <a class="docs-card-link" href="/docs/support">Open support matrix &#8594;</a>
         </div>
         <div class="docs-card">

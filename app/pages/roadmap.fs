@@ -51,6 +51,13 @@ export default function Roadmap() {
             <p class="roadmap-copy">Ship the npm package, GitHub release surfaces, proof pack, and release notes as one coherent public launch so adoption, proof, and positioning all land together.</p>
           </div>
         </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status status-active">Active</div>
+          <div class="roadmap-body">
+            <p class="roadmap-title">Governed ecosystem expansion</p>
+            <p class="roadmap-copy">Deepen real-world proof coverage for Next-style routes/layouts, React hooks and shared helpers, Node middleware/error flows, Vue composables and utilities, and npm export-condition interop so more public claims stay safely marked <code class="ic">proven</code>.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -144,7 +151,7 @@ export default function Roadmap() {
           <div class="roadmap-status status-planned">Planned</div>
           <div class="roadmap-body">
             <p class="roadmap-title">Broader interoperability matrix</p>
-            <p class="roadmap-copy">Expand compatibility proof beyond the current matrix to more real-world runtimes, SDKs, database clients, worker runtimes, and deployment surfaces so edge cases become permanent compatibility wins.</p>
+            <p class="roadmap-copy">Expand compatibility proof beyond the current matrix to more real-world runtimes, SDKs, database clients, worker runtimes, and deployment surfaces so edge cases move from partial or planned lanes into governed permanent wins.</p>
           </div>
         </div>
         <div class="roadmap-item">

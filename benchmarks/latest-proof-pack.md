@@ -1,6 +1,6 @@
 # FastScript Proof Pack
 
-- Generated: 2026-04-15T18:50:40.636Z
+- Generated: 2026-04-15T19:21:33.044Z
 
 ## Summary
 - Routes: n/a
@@ -8,14 +8,14 @@
 - CSS gzip: n/a bytes
 - JS budget (30KB): PASS
 - CSS budget (10KB): PASS
-- Interop cases: 13
-- Interop pass: 13
+- Interop cases: 17
+- Interop pass: 17
 - Interop fail: 0
 - JS/TS syntax proof: pass
 - JS/TS syntax cases: 8
 - `.fs` parity proof: pass
 - Parser/frontend parity: pass (5 cases)
-- Runtime/platform parity: pass (8 runtime cases, 1 build corpus)
+- Runtime/platform parity: pass (12 runtime cases, 1 build corpus)
 - Compatibility registry entries: 30
 - Compatibility proven entries: 28
 - Framework proof rows: 12
@@ -49,4 +49,4 @@ See full matrix: `docs/INTEROP_MATRIX.md`
 - `.fs` parity artifact: `.fastscript/proofs/fs-parity-matrix.json`
 - Compatibility registry artifact: `.fastscript/proofs/compatibility-registry-report.json`
 - Product contract: valid JS/TS in `.fs` is the compatibility target; failures are treated as FastScript bugs.
-- 4.0.1 proof expansion: Next-style layout/metadata, React hooks/context/lazy, Node middleware/error/env flow, and Vue composable/store-adjacent patterns are now represented in the governed matrix.
+- Current governed ecosystem sweep: Next pages/layouts/navigation/shared modules, React hooks/context/lazy/shared helpers, Node middleware/error/request-mutation flow, Vue composables/store/app utilities, and expanded npm export-condition interop are represented in the matrix.

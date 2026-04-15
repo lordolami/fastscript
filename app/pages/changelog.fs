@@ -1,4 +1,8 @@
 const RELEASES = [{
+  version: "v3.0.1",
+  date: "April 2026",
+  copy: "Broader governed ecosystem proof sweep: deeper Next-style, React, Node, Vue, and npm/package interop coverage shipped into the public support matrix, proof pack, docs search, and npm-facing release story."
+}, {
   version: "v3.0.0",
   date: "April 2026",
   copy: "FastScript v3 public surface rewrite: `.fs` positioned as a universal JS/TS container, v3 docs became the latest line, website messaging aligned to proof-backed speed claims, and parity proofs were elevated into release discipline."

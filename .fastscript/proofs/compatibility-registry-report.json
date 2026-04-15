@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-04-15T18:50:40.654Z",
+  "generatedAt": "2026-04-15T19:21:33.048Z",
   "governanceTrack": "4.0",
   "stableLine": "3.0.x",
-  "packageVersion": "3.0.0",
+  "packageVersion": "3.0.1",
   "contract": "If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.",
   "summary": {
     "entries": 30,
@@ -26,8 +26,8 @@
   },
   "artifacts": {
     "jsTsSyntaxCases": 8,
-    "fsParityCases": 14,
-    "interopCases": 13
+    "fsParityCases": 18,
+    "interopCases": 17
   },
   "entries": [
     {
@@ -248,9 +248,10 @@
       "contractNote": "Common Node/server request-handler shapes should work directly in .fs.",
       "proofIds": [
         "artifact:fs-parity:node-express-style",
+        "artifact:fs-parity:node-request-mutation-mixed-modules",
         "script:test:runtime-contract"
       ],
-      "docsNote": "Includes handler-style modules, params access, and path/env-adjacent server code.",
+      "docsNote": "Includes handler-style modules, params access, request mutation, mixed ESM/CJS helpers, and path/env-adjacent server code.",
       "proofDetails": [
         {
           "id": "artifact:fs-parity:node-express-style",
@@ -258,6 +259,13 @@
           "kind": "artifact",
           "artifact": "fs-parity",
           "label": "node-express-style"
+        },
+        {
+          "id": "artifact:fs-parity:node-request-mutation-mixed-modules",
+          "status": "pass",
+          "kind": "artifact",
+          "artifact": "fs-parity",
+          "label": "node-request-mutation-mixed-modules"
         },
         {
           "id": "script:test:runtime-contract",
@@ -293,9 +301,10 @@
       "status": "proven",
       "contractNote": "React-style modules and TSX authoring should work without forcing a framework rewrite.",
       "proofIds": [
-        "artifact:interop:react-core-fs"
+        "artifact:interop:react-core-fs",
+        "artifact:interop:react-dom-server-fs"
       ],
-      "docsNote": "Current proof covers createElement/react-dom client import surfaces.",
+      "docsNote": "Current proof covers createElement plus react-dom client/server import surfaces.",
       "proofDetails": [
         {
           "id": "artifact:interop:react-core-fs",
@@ -303,6 +312,13 @@
           "kind": "artifact",
           "artifact": "interop",
           "label": "react-core-fs"
+        },
+        {
+          "id": "artifact:interop:react-dom-server-fs",
+          "status": "pass",
+          "kind": "artifact",
+          "artifact": "interop",
+          "label": "react-dom-server-fs"
         }
       ]
     },
@@ -313,9 +329,10 @@
       "status": "proven",
       "contractNote": "React-style hook and lazy-module workflows should remain valid authored .fs patterns.",
       "proofIds": [
-        "artifact:fs-parity:react-hooks-context-lazy"
+        "artifact:fs-parity:react-hooks-context-lazy",
+        "artifact:fs-parity:react-composed-hooks-shared-helper"
       ],
-      "docsNote": "Covers useState, createContext/useContext, and lazy-loaded module flow.",
+      "docsNote": "Covers useState, createContext/useContext, lazy-loaded module flow, and composed hook/shared-helper patterns.",
       "proofDetails": [
         {
           "id": "artifact:fs-parity:react-hooks-context-lazy",
@@ -323,6 +340,13 @@
           "kind": "artifact",
           "artifact": "fs-parity",
           "label": "react-hooks-context-lazy"
+        },
+        {
+          "id": "artifact:fs-parity:react-composed-hooks-shared-helper",
+          "status": "pass",
+          "kind": "artifact",
+          "artifact": "fs-parity",
+          "label": "react-composed-hooks-shared-helper"
         }
       ]
     },
@@ -334,9 +358,11 @@
       "contractNote": "Next-style module shapes should be accepted as syntax and framework-adjacent source in .fs.",
       "proofIds": [
         "artifact:interop:next-link-fs",
-        "artifact:fs-parity:next-page-style-tsx"
+        "artifact:interop:next-navigation-fs",
+        "artifact:fs-parity:next-page-style-tsx",
+        "artifact:fs-parity:next-route-shared-lib-style"
       ],
-      "docsNote": "Covers page-style TSX modules and next/link-like imports.",
+      "docsNote": "Covers page-style TSX modules, next/link and next/navigation imports, plus shared-lib route-adjacent patterns.",
       "proofDetails": [
         {
           "id": "artifact:interop:next-link-fs",
@@ -346,11 +372,25 @@
           "label": "next-link-fs"
         },
         {
+          "id": "artifact:interop:next-navigation-fs",
+          "status": "pass",
+          "kind": "artifact",
+          "artifact": "interop",
+          "label": "next-navigation-fs"
+        },
+        {
           "id": "artifact:fs-parity:next-page-style-tsx",
           "status": "pass",
           "kind": "artifact",
           "artifact": "fs-parity",
           "label": "next-page-style-tsx"
+        },
+        {
+          "id": "artifact:fs-parity:next-route-shared-lib-style",
+          "status": "pass",
+          "kind": "artifact",
+          "artifact": "fs-parity",
+          "label": "next-route-shared-lib-style"
         }
       ]
     },
@@ -362,9 +402,11 @@
       "contractNote": "Vue-style script modules and composable helpers should work as normal .fs source.",
       "proofIds": [
         "artifact:interop:vue-core-fs",
-        "artifact:fs-parity:vue-script-setup-adjacent"
+        "artifact:interop:vue-router-fs",
+        "artifact:fs-parity:vue-script-setup-adjacent",
+        "artifact:fs-parity:vue-app-utility-module"
       ],
-      "docsNote": "Current proof covers Vue createApp/h interop and typed composable-style modules.",
+      "docsNote": "Current proof covers Vue createApp/h interop, vue-router module usage, typed composable-style modules, and app-adjacent utility helpers.",
       "proofDetails": [
         {
           "id": "artifact:interop:vue-core-fs",
@@ -374,11 +416,25 @@
           "label": "vue-core-fs"
         },
         {
+          "id": "artifact:interop:vue-router-fs",
+          "status": "pass",
+          "kind": "artifact",
+          "artifact": "interop",
+          "label": "vue-router-fs"
+        },
+        {
           "id": "artifact:fs-parity:vue-script-setup-adjacent",
           "status": "pass",
           "kind": "artifact",
           "artifact": "fs-parity",
           "label": "vue-script-setup-adjacent"
+        },
+        {
+          "id": "artifact:fs-parity:vue-app-utility-module",
+          "status": "pass",
+          "kind": "artifact",
+          "artifact": "fs-parity",
+          "label": "vue-app-utility-module"
         }
       ]
     },
@@ -470,9 +526,10 @@
       "contractNote": "Subpath export resolution should work for .fs imports against modern packages.",
       "proofIds": [
         "artifact:interop:scoped-subpath-fs",
+        "artifact:interop:conditioned-subpath-fs",
         "script:test:ecosystem-compatibility-contract"
       ],
-      "docsNote": "Covers scoped package subpath exports and workspace-linked packages.",
+      "docsNote": "Covers scoped package subpath exports, export-condition subpaths, and workspace-linked packages.",
       "proofDetails": [
         {
           "id": "artifact:interop:scoped-subpath-fs",
@@ -480,6 +537,13 @@
           "kind": "artifact",
           "artifact": "interop",
           "label": "scoped-subpath-fs"
+        },
+        {
+          "id": "artifact:interop:conditioned-subpath-fs",
+          "status": "pass",
+          "kind": "artifact",
+          "artifact": "interop",
+          "label": "conditioned-subpath-fs"
         },
         {
           "id": "script:test:ecosystem-compatibility-contract",

@@ -2,13 +2,14 @@
 
 ## Current state
 
-FastScript `v3.0.0` is the launch target in the public repo:
+FastScript `v3.0.1` is the current patch-release target in the public repo:
 
-- website/docs/changelog/support matrix match the `v3.0` line
+- website/docs/changelog/support matrix match the `v3.0.x` public line
 - `npm run build` passes
 - `npm run validate` passes
 - `npm run pack:check` validates the generated public npm bundle
 - the release bundle is prepared from the v3 public surface, not the repo root
+- npm-facing README and package metadata now point at the governed compatibility matrix and broader ecosystem proof posture
 
 ## Packaging model
 
@@ -36,3 +37,4 @@ Because FastScript distribution is not the product moat, the package model was c
 - run `npm run pack:check`
 - publish npm package from `.release/npm-public`
 - publish matching GitHub release/tag with the same v3 proof-pack summary
+- keep npm-facing copy aligned with the current support matrix, proof pack, and website compatibility story

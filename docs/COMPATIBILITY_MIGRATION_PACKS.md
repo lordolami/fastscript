@@ -16,7 +16,7 @@ FastScript strict conversion is compatibility-first and rename-only by default:
 
 After conversion, teams can keep authoring ordinary JS/TS/JSX/TSX directly inside `.fs`. The extension is the runtime container; FastScript-specific forms such as `fn`, `state`, and `~` remain optional sugar.
 
-The governed support surface for what is currently `proven`, `partial`, or `planned` lives in `docs/SUPPORT_MATRIX.md`.
+The governed support surface for what is currently `proven`, `partial`, or `planned` lives in `docs/SUPPORT_MATRIX.md`. It now covers broader ecosystem proof across Next-style modules, React hooks/shared helpers, Node middleware/error flow, Vue composables/utilities, and npm/package interop.
 
 Operational rule:
 

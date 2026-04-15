@@ -16,7 +16,7 @@ export default function Home() {
           <p class="hero-desc">
             Write normal <code class="ic">js</code>, <code class="ic">ts</code>, <code class="ic">jsx</code>, or <code class="ic">tsx</code> in <code class="ic">.fs</code>,
             keep full package compatibility, compile to optimized JavaScript, and ship frontend, backend, jobs, and APIs through one runtime pipeline.
-            FastScript-specific syntax is optional. The current proof pack shows 2.71KB first-load gzip, 702.98ms builds, and 13/13 interop passing.
+            FastScript-specific syntax is optional. The current proof pack shows 2.71KB first-load gzip, 702.98ms builds, 17/17 interop passing, and governed ecosystem proof across Next-style, React, Node, Vue, and npm package patterns.
             The main language/runtime stays proprietary and source-available so the platform can compound into the next FastScript AI products.
           </p>
 
@@ -49,7 +49,7 @@ export default function Home() {
 
             <div class="hero-proof-orbit hero-proof-orbit-b" data-depth="18">
               <span class="hero-proof-kicker">Interop</span>
-              <span class="hero-proof-value">13/13</span>
+              <span class="hero-proof-value">17/17</span>
               <span class="hero-proof-copy">Contract passing</span>
             </div>
 
@@ -138,7 +138,7 @@ export default function Home() {
             <span class="hero-stat-l">Build time</span>
           </div>
           <div class="hero-stat" role="listitem">
-            <span class="hero-stat-n">13<span class="hero-stat-n-sub">/13</span></span>
+            <span class="hero-stat-n">17<span class="hero-stat-n-sub">/17</span></span>
             <span class="hero-stat-l">Interop tests</span>
           </div>
           <div class="hero-stat" role="listitem">
@@ -155,14 +155,14 @@ export default function Home() {
         <span class="ticker-item">Universal JS/TS container</span>
         <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
         <span class="ticker-item">No stack lock-in</span>
-        <span class="ticker-item">13/13 interop</span>
+        <span class="ticker-item">17/17 interop</span>
         <span class="ticker-item">2.71KB first-load gzip</span>
         <span class="ticker-item">Proof-backed speed</span>
         <span class="ticker-item">FastScript</span>
         <span class="ticker-item">Universal JS/TS container</span>
         <span class="ticker-item">Node &middot; Vercel &middot; Cloudflare</span>
         <span class="ticker-item">No stack lock-in</span>
-        <span class="ticker-item">13/13 interop</span>
+        <span class="ticker-item">17/17 interop</span>
         <span class="ticker-item">2.71KB first-load gzip</span>
         <span class="ticker-item">Proof-backed speed</span>
       </div>
@@ -301,7 +301,7 @@ export default function Home() {
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The promise</p>
-          <p class="story-cell-copy">FastScript v3 treats valid JS/TS in <code class="ic">.fs</code> as first-class source. If valid JS/TS fails in <code class="ic">.fs</code>, that is a FastScript compatibility bug. You keep your code style, keep the npm ecosystem, and still get the speed gains.</p>
+          <p class="story-cell-copy">FastScript v3 treats valid JS/TS in <code class="ic">.fs</code> as first-class source. If valid JS/TS fails in <code class="ic">.fs</code>, that is a FastScript compatibility bug. You keep your code style, keep the npm ecosystem, and get a governed support matrix that shows which framework and module patterns are already proven.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The moat</p>
@@ -328,8 +328,8 @@ export default function Home() {
         </div>
         <div class="bento-cell bento-quarter">
           <p class="bento-label">Interop matrix</p>
-          <p class="bento-num">13<span class="bento-num-sub">/13</span></p>
-          <p class="bento-copy">ESM, CJS, and .fs combinations passing.</p>
+          <p class="bento-num">17<span class="bento-num-sub">/17</span></p>
+          <p class="bento-copy">ESM, CJS, framework, and package combinations passing.</p>
         </div>
         <div class="bento-cell bento-quarter">
           <p class="bento-label">Cloudflare startup</p>

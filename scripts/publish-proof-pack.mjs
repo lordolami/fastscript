@@ -90,7 +90,7 @@ ${failLines}
 - \`.fs\` parity artifact: \`.fastscript/proofs/fs-parity-matrix.json\`
 - Compatibility registry artifact: \`.fastscript/proofs/compatibility-registry-report.json\`
 - Product contract: valid JS/TS in \`.fs\` is the compatibility target; failures are treated as FastScript bugs.
-- 4.0.1 proof expansion: Next-style layout/metadata, React hooks/context/lazy, Node middleware/error/env flow, and Vue composable/store-adjacent patterns are now represented in the governed matrix.
+- Current governed ecosystem sweep: Next pages/layouts/navigation/shared modules, React hooks/context/lazy/shared helpers, Node middleware/error/request-mutation flow, Vue composables/store/app utilities, and expanded npm export-condition interop are represented in the matrix.
 `;
 
 mkdirSync(resolve("benchmarks"), { recursive: true });

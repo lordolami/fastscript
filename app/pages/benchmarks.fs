@@ -73,7 +73,7 @@ export default function Benchmarks() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Current proof points</p>
-          <p class="docs-card-copy">Current public proof pack: 702.98 ms build, 2.71 KB first-load JS gzip, 13/13 interop passing, plus JS/TS syntax proof and <code class="ic">.fs</code> parity proof artifacts. That is the public performance contract for v3.</p>
+          <p class="docs-card-copy">Current public proof pack: 702.98 ms build, 2.71 KB first-load JS gzip, 17/17 interop passing, plus JS/TS syntax proof, governed support-matrix coverage, and <code class="ic">.fs</code> parity proof artifacts. That is the public performance contract for v3.</p>
         </div>
       </div>
     </section>
@@ -83,7 +83,7 @@ export default function Benchmarks() {
     <section class="bench-interop">
       <header class="sec-header-sm">
         <p class="kicker">Interop matrix</p>
-        <h2 class="h2">13/13 ESM, CJS, .fs combinations passing.</h2>
+        <h2 class="h2">17/17 ESM, CJS, framework, and package combinations passing.</h2>
       </header>
 
       <div class="compare-table compare-table-4">

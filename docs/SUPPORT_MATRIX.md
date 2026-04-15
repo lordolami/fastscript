@@ -1,6 +1,6 @@
 # FastScript Compatibility Matrix
 
-- Generated: 2026-04-15T18:50:40.654Z
+- Generated: 2026-04-15T19:21:33.048Z
 - Current stable line: `3.0.x`
 - Governance track: FastScript `4.0` compatibility system
 - Product contract: If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.
@@ -17,8 +17,8 @@
 - Registry entries: 30
 - Proven entries: 28
 - JS/TS syntax proof cases: 8
-- .fs parity cases: 14
-- Interop cases: 13
+- .fs parity cases: 18
+- Interop cases: 17
 
 ## ECMAScript Syntax
 | Feature | Status | Proof | Notes |
@@ -47,7 +47,7 @@
 |---|---|---|---|
 | Dynamic import and require in .fs | proven | `js-ts-syntax-proof:js-dynamic-and-require`, `fs-parity:module-interop-patterns`, `fs-parity:commonjs-interop` | Includes mixed ESM/CommonJS usage inside authored .fs modules. |
 | Import assertion and multiline import shapes | proven | `js-ts-syntax-proof:multiline-import-assertion-shape` | Current proof covers multiline assertion-like import shapes in migration input. |
-| Scoped package subpath exports | proven | `interop:scoped-subpath-fs`, `script:test:ecosystem-compatibility-contract` | Covers scoped package subpath exports and workspace-linked packages. |
+| Scoped package subpath exports | proven | `interop:scoped-subpath-fs`, `interop:conditioned-subpath-fs`, `script:test:ecosystem-compatibility-contract` | Covers scoped package subpath exports, export-condition subpaths, and workspace-linked packages. |
 | Dual-mode package resolution | proven | `interop:dual-mode-fs`, `script:test:ecosystem-compatibility-contract` | Covers modern export-condition resolution. |
 | CommonJS package interop | proven | `interop:node-cjs-npm-fs`, `fs-parity:commonjs-interop`, `script:test:ecosystem-compatibility-contract` | Covers require-driven compatibility and bundling against npm CommonJS packages. |
 | Node built-in module imports | proven | `interop:node-builtins-fs` | Current proof covers node:crypto and node:path. |
@@ -62,12 +62,12 @@
 | Feature | Status | Proof | Notes |
 |---|---|---|---|
 | Framework-style build corpus | proven | `fs-parity:framework-build-corpus` | Covers a small build corpus with pages, dynamic routes, and API modules. |
-| Node and Express-style handler patterns | proven | `fs-parity:node-express-style`, `script:test:runtime-contract` | Includes handler-style modules, params access, and path/env-adjacent server code. |
+| Node and Express-style handler patterns | proven | `fs-parity:node-express-style`, `fs-parity:node-request-mutation-mixed-modules`, `script:test:runtime-contract` | Includes handler-style modules, params access, request mutation, mixed ESM/CJS helpers, and path/env-adjacent server code. |
 | Node middleware chains, error handlers, and env-aware server flow | proven | `fs-parity:node-middleware-error-chain` | Covers sequential middleware, error handling, and process.env usage in server code. |
-| React and TSX ecosystem interop | proven | `interop:react-core-fs` | Current proof covers createElement/react-dom client import surfaces. |
-| React hooks, context, and lazy module patterns | proven | `fs-parity:react-hooks-context-lazy` | Covers useState, createContext/useContext, and lazy-loaded module flow. |
-| Next-style pages, links, and route-adjacent modules | proven | `interop:next-link-fs`, `fs-parity:next-page-style-tsx` | Covers page-style TSX modules and next/link-like imports. |
-| Vue-adjacent script and composable patterns | proven | `interop:vue-core-fs`, `fs-parity:vue-script-setup-adjacent` | Current proof covers Vue createApp/h interop and typed composable-style modules. |
+| React and TSX ecosystem interop | proven | `interop:react-core-fs`, `interop:react-dom-server-fs` | Current proof covers createElement plus react-dom client/server import surfaces. |
+| React hooks, context, and lazy module patterns | proven | `fs-parity:react-hooks-context-lazy`, `fs-parity:react-composed-hooks-shared-helper` | Covers useState, createContext/useContext, lazy-loaded module flow, and composed hook/shared-helper patterns. |
+| Next-style pages, links, and route-adjacent modules | proven | `interop:next-link-fs`, `interop:next-navigation-fs`, `fs-parity:next-page-style-tsx`, `fs-parity:next-route-shared-lib-style` | Covers page-style TSX modules, next/link and next/navigation imports, plus shared-lib route-adjacent patterns. |
+| Vue-adjacent script and composable patterns | proven | `interop:vue-core-fs`, `interop:vue-router-fs`, `fs-parity:vue-script-setup-adjacent`, `fs-parity:vue-app-utility-module` | Current proof covers Vue createApp/h interop, vue-router module usage, typed composable-style modules, and app-adjacent utility helpers. |
 | Vue composables and store-adjacent helpers | proven | `fs-parity:vue-composable-store-adjacent` | Covers ref/computed-based composables and store-like helper return shapes. |
 | Svelte store interop | proven | `interop:svelte-store-fs` | Current proof covers writable store usage. |
 | Preact interop | proven | `interop:preact-core-fs` | Current proof covers core Preact render flow. |

@@ -20,12 +20,12 @@ export default function DocsV3() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Proof-backed speed</p>
-          <p class="docs-card-copy">Current public proof pack reports 702.98ms builds, 2.71KB first-load JS gzip, and 13/13 interop passing, alongside JS/TS parity artifacts.</p>
+          <p class="docs-card-copy">Current public proof pack reports 702.98ms builds, 2.71KB first-load JS gzip, 17/17 interop passing, and governed ecosystem proof across JS/TS, Next-style, React, Node, Vue, and npm package surfaces.</p>
           <a class="docs-card-link" href="/benchmarks">Open benchmarks &#8594;</a>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Governed compatibility matrix</p>
-          <p class="docs-card-copy">FastScript 4.0 starts a governed compatibility system where every <code class="ic">proven</code> claim must link to automated coverage.</p>
+          <p class="docs-card-copy">FastScript 4.0 starts a governed compatibility system where every <code class="ic">proven</code> claim must link to automated coverage, while the current 3.0.x line ships that governed matrix publicly.</p>
           <a class="docs-card-link" href="/docs/support">Open matrix &#8594;</a>
         </div>
         <div class="docs-card">
