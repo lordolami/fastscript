@@ -263,7 +263,6 @@ export function hydrate() {
     document.querySelectorAll(".reveal").forEach(el => el.classList.add("revealed"));
     document.querySelectorAll(".reveal-children").forEach(el => el.classList.add("revealed-children"));
   }
-
   const homeScene = document.querySelector("[data-home-3d]");
   const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
@@ -273,7 +272,6 @@ export function hydrate() {
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
-
     function applySceneMotion() {
       currentX += (targetX - currentX) * 0.14;
       currentY += (targetY - currentY) * 0.14;
@@ -287,11 +285,9 @@ export function hydrate() {
         frame = 0;
       }
     }
-
     const queueFrame = () => {
       if (!frame) frame = window.requestAnimationFrame(applySceneMotion);
     };
-
     if (finePointer) {
       homeScene.addEventListener("pointermove", event => {
         const rect = homeScene.getBoundingClientRect();
