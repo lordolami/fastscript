@@ -263,4 +263,62 @@ export function hydrate() {
     document.querySelectorAll(".reveal").forEach(el => el.classList.add("revealed"));
     document.querySelectorAll(".reveal-children").forEach(el => el.classList.add("revealed-children"));
   }
+
+  const homeScene = document.querySelector("[data-home-3d]");
+  const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+  if (homeScene && !reducedMotion) {
+    let frame = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    function applySceneMotion() {
+      currentX += (targetX - currentX) * 0.14;
+      currentY += (targetY - currentY) * 0.14;
+      homeScene.style.setProperty("--hero-tilt-x", `${-currentY * 7}deg`);
+      homeScene.style.setProperty("--hero-tilt-y", `${currentX * 9}deg`);
+      homeScene.style.setProperty("--hero-pan-x", `${currentX * 18}px`);
+      homeScene.style.setProperty("--hero-pan-y", `${currentY * 14}px`);
+      if (Math.abs(targetX - currentX) > 0.001 || Math.abs(targetY - currentY) > 0.001) {
+        frame = window.requestAnimationFrame(applySceneMotion);
+      } else {
+        frame = 0;
+      }
+    }
+
+    const queueFrame = () => {
+      if (!frame) frame = window.requestAnimationFrame(applySceneMotion);
+    };
+
+    if (finePointer) {
+      homeScene.addEventListener("pointermove", event => {
+        const rect = homeScene.getBoundingClientRect();
+        const px = (event.clientX - rect.left) / rect.width;
+        const py = (event.clientY - rect.top) / rect.height;
+        targetX = (px - 0.5) * 2;
+        targetY = (py - 0.5) * 2;
+        queueFrame();
+      });
+      homeScene.addEventListener("pointerleave", () => {
+        targetX = 0;
+        targetY = 0;
+        queueFrame();
+      });
+    } else {
+      const onScroll = () => {
+        const rect = homeScene.getBoundingClientRect();
+        const viewport = window.innerHeight || 1;
+        const progress = Math.max(-1, Math.min(1, (rect.top + rect.height * 0.5 - viewport * 0.5) / viewport));
+        targetX = progress * -0.12;
+        targetY = progress * 0.2;
+        queueFrame();
+      };
+      window.addEventListener("scroll", onScroll, {
+        passive: true
+      });
+      onScroll();
+    }
+  }
 }

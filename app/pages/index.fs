@@ -35,24 +35,63 @@ export default function Home() {
         </div>
 
         <div class="hero-right" aria-hidden="true">
-          <div class="hero-visual">
-            <div class="terminal-bar">
-              <span class="terminal-dot-r"></span>
-              <span class="terminal-dot-y"></span>
-              <span class="terminal-dot-g"></span>
-              <span class="terminal-title">fastscript deploy --target cloudflare</span>
+          <div class="hero-scene" data-home-3d>
+            <div class="hero-scene-glow hero-scene-glow-a" data-depth="-16"></div>
+            <div class="hero-scene-glow hero-scene-glow-b" data-depth="-10"></div>
+            <div class="hero-depth-plane hero-depth-plane-grid" data-depth="-22"></div>
+            <div class="hero-depth-plane hero-depth-plane-rings" data-depth="-12"></div>
+
+            <div class="hero-proof-orbit hero-proof-orbit-a" data-depth="14">
+              <span class="hero-proof-kicker">Proof</span>
+              <span class="hero-proof-value">2.71KB</span>
+              <span class="hero-proof-copy">First-load gzip</span>
             </div>
-            <div class="terminal-body">
-              <span class="t-prompt">$ </span><span class="t-cmd">fastscript create my-app</span><br>
-              <span class="t-out">&nbsp; &#10003; scaffolded in 0.4s</span><br>
-              <br>
-              <span class="t-prompt">$ </span><span class="t-cmd">npm run qa:all</span><br>
-              <span class="t-out">&nbsp; &#10003; lint &middot; types &middot; tests &middot; bench</span><br>
-              <br>
-              <span class="t-prompt">$ </span><span class="t-cmd">fastscript deploy --target cloudflare</span><br>
-              <span class="t-success">&nbsp; &#10003; ready &rarr; workers.dev (~19ms)</span><br>
-              <br>
-              <span class="t-prompt">$ </span><span class="t-cursor"></span>
+
+            <div class="hero-proof-orbit hero-proof-orbit-b" data-depth="18">
+              <span class="hero-proof-kicker">Interop</span>
+              <span class="hero-proof-value">13/13</span>
+              <span class="hero-proof-copy">Contract passing</span>
+            </div>
+
+            <div class="hero-proof-orbit hero-proof-orbit-c" data-depth="20">
+              <span class="hero-proof-kicker">Build</span>
+              <span class="hero-proof-value">702.98ms</span>
+              <span class="hero-proof-copy">Proof-backed loop</span>
+            </div>
+
+            <div class="hero-visual hero-visual-main" data-depth="28" data-tilt-card>
+              <div class="hero-visual-reflection"></div>
+              <div class="terminal-bar">
+                <span class="terminal-dot-r"></span>
+                <span class="terminal-dot-y"></span>
+                <span class="terminal-dot-g"></span>
+                <span class="terminal-title">fastscript deploy --target cloudflare</span>
+              </div>
+              <div class="terminal-body">
+                <span class="t-prompt">$ </span><span class="t-cmd">fastscript create my-app</span><br>
+                <span class="t-out">&nbsp; &#10003; scaffolded in 0.4s</span><br>
+                <br>
+                <span class="t-prompt">$ </span><span class="t-cmd">npm run qa:all</span><br>
+                <span class="t-out">&nbsp; &#10003; lint &middot; types &middot; tests &middot; bench</span><br>
+                <br>
+                <span class="t-prompt">$ </span><span class="t-cmd">fastscript deploy --target cloudflare</span><br>
+                <span class="t-success">&nbsp; &#10003; ready &rarr; workers.dev (~19ms)</span><br>
+                <br>
+                <span class="t-prompt">$ </span><span class="t-cursor"></span>
+              </div>
+            </div>
+
+            <div class="hero-side-stack" data-depth="22">
+              <div class="hero-stack-card hero-stack-card-primary">
+                <span class="hero-stack-label">Runtime</span>
+                <strong class="hero-stack-title">Frontend + backend + jobs</strong>
+                <span class="hero-stack-copy">One runtime pipeline. No split-brain stack.</span>
+              </div>
+              <div class="hero-stack-card hero-stack-card-secondary">
+                <span class="hero-stack-label">Targets</span>
+                <strong class="hero-stack-title">Node / Vercel / Workers</strong>
+                <span class="hero-stack-copy">Generate hardened adapters from one codebase.</span>
+              </div>
             </div>
           </div>
         </div>
