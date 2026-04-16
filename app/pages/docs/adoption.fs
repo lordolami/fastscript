@@ -37,7 +37,7 @@ export default function DocsAdoptionPage() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Infrastructure caveat</p>
-          <p class="docs-card-copy">In this environment, the only incomplete end-to-end proof was live Postgres infrastructure, not FastScript's full-stack app capability.</p>
+          <p class="docs-card-copy">Infrastructure choices like databases and hosts still need real reachable services in the target environment. FastScript's full-stack app capability is proven, while specific lanes stay governed by <a href="/docs/support">/docs/support</a>.</p>
         </div>
       </section>
 

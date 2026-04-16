@@ -40,7 +40,7 @@ export default function WhyFastScriptPage() {
           </div>
           <div class="story-cell">
             <p class="story-cell-title">Full-stack surface</p>
-            <p class="story-cell-copy">The same project can hold UI routes, backend APIs, middleware, database migrations, workers, and deploy adapters. FastScript is not just a template layer; it is the runtime, framework, and language container together.</p>
+            <p class="story-cell-copy">The same project can hold UI routes, backend APIs, middleware, state and storage workflows, workers, and deploy adapters. FastScript is not just a template layer; it is the runtime, framework, and language container together.</p>
           </div>
           <div class="story-cell">
             <p class="story-cell-title">What is now proven</p>

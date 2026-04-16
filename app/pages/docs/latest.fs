@@ -83,7 +83,7 @@ export default function DocsLatest() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">Honest caveat</p>
-            <p class="docs-card-copy">In this environment, the only incomplete end-to-end proof was live Postgres infrastructure. The FastScript app and runtime path are ready, but real database infra still has to exist.</p>
+            <p class="docs-card-copy">Infrastructure choices like databases and hosts still need real reachable services in the target environment. FastScript's full-stack app and runtime path are ready, while lane-specific support remains governed by <a href="/docs/support">/docs/support</a>.</p>
           </div>
         </div>
       </section>

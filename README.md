@@ -7,7 +7,7 @@ FastScript has now proven real full-stack app capability in one JS/TS-native run
 It is designed to feel easier to read than heavyweight stack combinations while staying compatible with the JavaScript ecosystem developers already use.
 
 - Write normal JavaScript or TypeScript in `.fs`
-- Write pages, APIs, middleware, jobs, and database workflows in `.fs`
+- Write pages, APIs, middleware, jobs, and app workflows in `.fs`
 - Keep compatibility with normal `.js` packages and modules
 - Treat FastScript-specific syntax as optional sugar, not a requirement
 - Govern compatibility claims through a source-of-truth support matrix
@@ -38,7 +38,7 @@ What is now proven:
 
 Important caveat:
 
-- In this environment, the only incomplete end-to-end proof was live Postgres infrastructure, not FastScript's full-stack app capability.
+- Infrastructure choices like databases and hosts still need real reachable services in the target environment. FastScript's full-stack app capability is proven, while lane-specific support remains governed by `/docs/support`.
 
 ## What FastScript Is
 
