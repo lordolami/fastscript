@@ -1,4 +1,4 @@
-import {getCapstones} from "../../lib/learn-school.mjs";
+import {getCapstonePresets, getCapstoneRecommendation, getCapstones} from "../../lib/learn-school.mjs";
 function capstoneCard(capstone) {
   const concepts = capstone.concepts.map(item => `<li>${item}</li>`).join("");
   const checklist = capstone.checklist.map(item => `<li>${item}</li>`).join("");
@@ -19,6 +19,18 @@ function capstoneCard(capstone) {
 }
 export default function LearnCapstonePage() {
   const cards = getCapstones().map(capstoneCard).join("");
+  const presets = getCapstonePresets().map(preset => `
+    <button
+      type="button"
+      class="btn btn-ghost btn-lg"
+      id="${preset.slug}"
+      data-capstone-preset="${preset.slug}"
+      data-capstone-stage-value="${preset.values.stage}"
+      data-capstone-product-value="${preset.values.product}"
+      data-capstone-baseline-value="${preset.values.baseline}"
+      data-capstone-deploy-value="${preset.values.deploy}"
+    >${preset.title}</button>
+  `).join("");
   return `
     <section class="learn-school">
       <header class="sec-header learn-hero">
@@ -43,6 +55,7 @@ export default function LearnCapstonePage() {
           <p class="docs-card-copy">The mastery lessons point here, and this hub points back into the final mastery module when you want the planning checklist first.</p>
           <a class="docs-card-link" href="/learn/mastery/capstone-product-architecture">Back to mastery lesson &#8594;</a>
           <a class="docs-card-link" href="/learn/mastery/delivery-checklist-and-release-readiness">Open release-readiness lesson &#8594;</a>
+          <a class="docs-card-link" href="/learn/mastery-summary">Open mastery summary &#8594;</a>
         </div>
       </div>
 
@@ -57,6 +70,9 @@ export default function LearnCapstonePage() {
           <div class="docs-card" data-capstone-generator>
             <p class="docs-card-title">Your setup</p>
             <p class="docs-card-copy">Choose the shape you want to build and the generator will recommend the best baseline, docs, and first commands.</p>
+            <div class="cta-actions">
+              ${presets}
+            </div>
             <div class="steps">
               <label class="step">
                 <span class="step-num">1</span>
@@ -143,24 +159,13 @@ export function hydrate({root}) {
   const baselineLink = root.querySelector("[data-capstone-baseline-link]");
   const buildButton = root.querySelector("[data-capstone-build]");
   const copyButton = root.querySelector("[data-capstone-copy]");
-  const resolveRecommendation = () => {
-    const stageValue = stage?.value || "beginner";
-    const productValue = product?.value || "greenfield-saas";
-    const baselineValue = baseline?.value || "auto";
-    const deployValue = deploy?.value || "adapter";
-    const recommendedBaseline = baselineValue !== "auto" ? baselineValue : productValue === "migration" || productValue === "service-delivery" || stageValue === "professional" ? "agency-ops" : "startup-mvp";
-    const baselineDoc = recommendedBaseline === "agency-ops" ? "/docs/agency-ops" : "/docs/team-dashboard-saas";
-    const proofCommand = recommendedBaseline === "agency-ops" ? "npm run test:agency-ops" : "npm run test:startup-mvp-saas";
-    const buildTarget = productValue === "migration" ? "convert one route or feature slice first" : productValue === "internal-ops" ? "ship an authenticated dashboard with one mutation and one job" : productValue === "service-delivery" ? "build a service-delivery workflow with assignments or reminders" : "ship a greenfield SaaS baseline with auth, billing, and QA";
-    const deployNote = deployValue === "custom" ? "Document the custom-host runtime handoff and the deployable dist artifact." : "Use the adapter path first, then prove the generated deployment output end to end.";
-    return {
-      recommendedBaseline,
-      baselineDoc,
-      proofCommand,
-      summary: `Start from ${recommendedBaseline}, ${buildTarget}, then run ${proofCommand} and npm run validate before widening scope.`,
-      checklist: [`Create your first slice: ${buildTarget}.`, `Open ${recommendedBaseline === "agency-ops" ? "Agency Ops" : "Team Dashboard SaaS"} docs and map features to /docs/support.`, `Run ${proofCommand}.`, "Run npm run validate and keep the support lane honest.", deployNote]
-    };
-  };
+  const presetButtons = [...root.querySelectorAll("[data-capstone-preset]")];
+  const resolveRecommendation = () => getCapstoneRecommendation({
+    stage: stage?.value || "beginner",
+    product: product?.value || "greenfield-saas",
+    baseline: baseline?.value || "auto",
+    deploy: deploy?.value || "adapter"
+  });
   const render = () => {
     const recommendation = resolveRecommendation();
     if (summary) summary.textContent = recommendation.summary;
@@ -179,6 +184,15 @@ export function hydrate({root}) {
       baselineLink.textContent = `Open ${recommendation.recommendedBaseline} docs`;
     }
   };
+  presetButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      if (stage) stage.value = button.getAttribute("data-capstone-stage-value") || "beginner";
+      if (product) product.value = button.getAttribute("data-capstone-product-value") || "greenfield-saas";
+      if (baseline) baseline.value = button.getAttribute("data-capstone-baseline-value") || "auto";
+      if (deploy) deploy.value = button.getAttribute("data-capstone-deploy-value") || "adapter";
+      render();
+    });
+  });
   const copyPlan = async () => {
     const recommendation = resolveRecommendation();
     const text = [recommendation.summary, "", ...recommendation.checklist.map((item, index) => `${index + 1}. ${item}`)].join("\n");

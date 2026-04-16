@@ -1,4 +1,4 @@
-import {getCompletedLessonCount, getLegacySchoolStorageKey, getLessonCount, getModuleCompletion, getModuleStats, getModules, getResumeFallback, getSchoolStorageKey, getTrackSummary, parseSchoolState, renderModulePills, serializeSchoolState} from "../../lib/learn-school.mjs";
+import {getCompletedLessonCount, getEarnedBadgeCount, getLegacySchoolStorageKey, getLessonCount, getMasterySummary, getModuleCompletion, getModuleStats, getModules, getResumeFallback, getSchoolStorageKey, getTrackSummary, parseSchoolState, renderModulePills, serializeSchoolState} from "../../lib/learn-school.mjs";
 function moduleCard(module) {
   const links = module.lessons.map(lesson => `
     <a class="docs-card-link" href="/learn/${module.slug}/${lesson.slug}">${lesson.title} &#8594;</a>
@@ -49,9 +49,11 @@ export default function LearnSchoolPage() {
               <div class="learn-progress-bar"><div class="learn-progress-fill" data-school-progress-fill></div></div>
               <p class="learn-progress-label" data-school-progress-label>0 of ${getLessonCount()} lessons completed</p>
             </div>
+            <p class="learn-path-note" data-school-badge-count>0 badges earned</p>
             <div class="cta-actions">
               <a class="btn btn-primary btn-lg" href="${getResumeFallback()}" data-school-continue>Start the first lesson</a>
               <a class="btn btn-secondary btn-lg" href="/learn/capstone">Open capstone hub</a>
+              <a class="btn btn-ghost btn-lg" href="/learn/mastery-summary">Mastery summary</a>
               <button type="button" class="btn btn-ghost btn-lg" data-school-export>Export progress</button>
               <button type="button" class="btn btn-ghost btn-lg" data-school-import>Import progress</button>
               <button type="button" class="btn btn-ghost btn-lg" data-school-reset>Reset local progress</button>
@@ -99,6 +101,11 @@ export default function LearnSchoolPage() {
                 <a class="docs-card-link" href="/docs/team-dashboard-saas">Study startup-mvp &#8594;</a>
                 <a class="docs-card-link" href="/docs/agency-ops">Study agency-ops &#8594;</a>
               </div>
+              <div class="docs-card">
+                <p class="docs-card-title">Mastery summary</p>
+                <p class="docs-card-copy">Print a browser-only summary of your lesson progress, badges, and next capstone recommendation.</p>
+                <a class="docs-card-link" href="/learn/mastery-summary">Open mastery summary &#8594;</a>
+              </div>
             </div>
           </section>
         </div>
@@ -117,6 +124,7 @@ export function hydrate({root}) {
   const importButton = root.querySelector("[data-school-import]");
   const importInput = root.querySelector("[data-school-import-input]");
   const importNote = root.querySelector("[data-school-import-note]");
+  const badgeCount = root.querySelector("[data-school-badge-count]");
   const totalLessons = getLessonCount();
   const moduleCards = [...root.querySelectorAll("[data-school-module-card]")];
   const writeState = state => {
@@ -153,8 +161,10 @@ export function hydrate({root}) {
     const completed = getCompletedLessonCount(state);
     const percent = totalLessons ? Math.round(completed / totalLessons * 100) : 0;
     const nextHref = state.lastLesson || getResumeFallback();
+    const mastery = getMasterySummary(state);
     if (progressFill) progressFill.style.width = `${percent}%`;
     if (progressLabel) progressLabel.textContent = `${completed} of ${totalLessons} lessons completed`;
+    if (badgeCount) badgeCount.textContent = `${getEarnedBadgeCount(state)} badges earned${mastery.masteryBadgeEarned ? " • mastery unlocked" : ""}`;
     if (continueLink) continueLink.setAttribute("href", nextHref);
     if (continueLink) continueLink.textContent = completed > 0 ? "Resume where you left off" : "Start the first lesson";
     moduleCards.forEach(card => {

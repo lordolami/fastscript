@@ -1,4 +1,7 @@
 import {getLegacySchoolStorageKey, getLesson, getLessonKey, getPrevNext, getSchoolStorageKey, parseSchoolState, renderLessonResources, renderModulePills, serializeSchoolState} from "../../../lib/learn-school.mjs";
+function escapeAttr(value) {
+  return String(value || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+}
 function codeCard(title, code) {
   return `
     <div class="code-block">
@@ -21,10 +24,57 @@ function checklist(lesson) {
 function cardList(items) {
   return items.map(item => `<li>${item}</li>`).join("");
 }
-function quizOptions(lesson) {
-  return lesson.quiz.options.map(([id, copy]) => `
+function choiceOptions(assessment, prefix) {
+  return assessment.options.map(([id, copy]) => `
     <button type="button" class="btn btn-ghost btn-lg" data-school-quiz-option="${id}">${copy}</button>
   `).join("");
+}
+function sequenceOptions(assessment) {
+  return assessment.options.map(([id, copy]) => `
+    <button type="button" class="btn btn-ghost btn-lg" data-school-sequence-option="${id}">${copy}</button>
+  `).join("");
+}
+function assessmentCards(lesson) {
+  return lesson.assessments.map((assessment, index) => {
+    const title = assessment.title || `Assessment ${index + 1}`;
+    if (assessment.type === "sequence") {
+      return `
+        <div
+          class="docs-card"
+          data-school-assessment
+          data-school-assessment-index="${index}"
+          data-school-assessment-type="${assessment.type}"
+          data-school-assessment-order="${escapeAttr(assessment.correctOrder.join(","))}"
+          data-school-assessment-success="${escapeAttr(assessment.success)}"
+          data-school-assessment-retry="${escapeAttr(assessment.retry)}"
+        >
+          <p class="docs-card-title">${title}</p>
+          <p class="docs-card-copy">${assessment.question}</p>
+          <div class="cta-actions">${sequenceOptions(assessment)}</div>
+          <p class="learn-path-note" data-school-sequence-status>Tap the steps in order. Use reset if you want to try again.</p>
+          <button type="button" class="btn btn-ghost btn-lg" data-school-sequence-reset>Reset sequence</button>
+          <p class="learn-path-note" data-school-quiz-feedback>Build the full sequence to check your understanding.</p>
+        </div>
+      `;
+    }
+    return `
+      <div
+        class="docs-card"
+        data-school-assessment
+        data-school-assessment-index="${index}"
+        data-school-assessment-type="${assessment.type}"
+        data-school-quiz-correct="${escapeAttr(assessment.correct)}"
+        data-school-quiz-success="${escapeAttr(assessment.success)}"
+        data-school-quiz-retry="${escapeAttr(assessment.retry)}"
+      >
+        <p class="docs-card-title">${title}</p>
+        <p class="docs-card-copy">${assessment.question}</p>
+        ${assessment.snippet ? codeCard("Spot the bug", assessment.snippet) : ""}
+        <div class="cta-actions">${choiceOptions(assessment, index)}</div>
+        <p class="learn-path-note" data-school-quiz-feedback>Choose one answer to check your understanding.</p>
+      </div>
+    `;
+  }).join("");
 }
 export async function load(ctx) {
   const result = getLesson(ctx.params.module, ctx.params.lesson);
@@ -80,6 +130,7 @@ export default function LearnLessonPage({module, lesson, nav}) {
               <button type="button" class="btn btn-ghost btn-lg" data-school-share>Share this lesson</button>
               <button type="button" class="btn btn-ghost btn-lg" data-school-export>Export progress</button>
               <button type="button" class="btn btn-ghost btn-lg" data-school-import>Import progress</button>
+              <a class="btn btn-ghost btn-lg" href="/learn/mastery-summary">Mastery summary</a>
             </div>
             <input hidden type="file" accept="application/json" data-school-import-input />
             <p class="learn-path-note" data-school-portability-note>This lesson stores progress locally in your browser. No account is required.</p>
@@ -161,24 +212,14 @@ export default function LearnLessonPage({module, lesson, nav}) {
               <h2 class="h2">Do not leave the lesson until these are true.</h2>
             </header>
             <div class="learn-checklist">${checklist(lesson)}</div>
-            <div
-              class="docs-card"
-              data-school-quiz
-              data-school-quiz-correct="${lesson.quiz.correct}"
-              data-school-quiz-success="${lesson.quiz.success.replace(/"/g, "&quot;")}"
-              data-school-quiz-retry="${lesson.quiz.retry.replace(/"/g, "&quot;")}"
-            >
-              <p class="docs-card-title">Mini quiz</p>
-              <p class="docs-card-copy">${lesson.quiz.question}</p>
-              <div class="cta-actions">${quizOptions(lesson)}</div>
-              <p class="learn-path-note" data-school-quiz-feedback>Choose one answer to check your understanding.</p>
-            </div>
+            <div class="docs-card-grid">${assessmentCards(lesson)}</div>
             <div class="docs-card" data-school-complete-banner hidden>
               <p class="docs-card-title">Lesson completed</p>
               <p class="learn-callout-copy">You have finished this lesson locally. Keep going while the concepts are still fresh.</p>
               <div class="cta-actions">
                 <a class="btn btn-secondary btn-lg" href="${prevHref}">&larr; ${prevLabel}</a>
                 <a class="btn btn-primary btn-lg" href="${nextHref}">${nextLabel} &#8594;</a>
+                <a class="btn btn-ghost btn-lg" href="/learn/mastery-summary">View mastery summary</a>
               </div>
             </div>
           </section>
@@ -224,12 +265,7 @@ export function hydrate({root}) {
   const importButton = root.querySelector("[data-school-import]");
   const importInput = root.querySelector("[data-school-import-input]");
   const portabilityNote = root.querySelector("[data-school-portability-note]");
-  const quizCard = root.querySelector("[data-school-quiz]");
-  const quizFeedback = root.querySelector("[data-school-quiz-feedback]");
-  const quizOptions = [...root.querySelectorAll("[data-school-quiz-option]")];
-  const quizCorrect = quizCard?.getAttribute("data-school-quiz-correct") || "";
-  const quizSuccess = quizCard?.getAttribute("data-school-quiz-success") || "Correct.";
-  const quizRetry = quizCard?.getAttribute("data-school-quiz-retry") || "Try again.";
+  const assessmentCards = [...root.querySelectorAll("[data-school-assessment]")];
   const lessonKey = lab?.getAttribute("data-school-lesson-key");
   const lastLesson = lab?.getAttribute("data-school-last");
   const checks = [...root.querySelectorAll("[data-school-check]")];
@@ -282,7 +318,7 @@ export function hydrate({root}) {
     const lessonState = state.lessons?.[lessonKey] || ({
       checks: [],
       complete: false,
-      quizPassed: false
+      assessments: assessmentCards.map(() => false)
     });
     const doneCount = lessonState.checks.filter(Boolean).length;
     const total = checks.length || 1;
@@ -295,15 +331,31 @@ export function hydrate({root}) {
       if (row) row.classList.toggle("is-done", active);
     });
     if (fill) fill.style.width = `${percent}%`;
-    if (label) label.textContent = lessonState.complete ? "Lesson complete" : `${doneCount} of ${checks.length} checkpoints marked${lessonState.quizPassed ? " • quiz passed" : " • quiz pending"}`;
+    const passedAssessments = lessonState.assessments.filter(Boolean).length;
+    if (label) label.textContent = lessonState.complete ? "Lesson complete" : `${doneCount} of ${checks.length} checkpoints marked • ${passedAssessments} of ${assessmentCards.length} assessments passed`;
     if (completeBanner) completeBanner.hidden = !lessonState.complete;
-    quizOptions.forEach(button => {
-      button.classList.toggle("btn-primary", lessonState.quizPassed && button.getAttribute("data-school-quiz-option") === quizCorrect);
-      button.classList.toggle("btn-ghost", !lessonState.quizPassed || button.getAttribute("data-school-quiz-option") !== quizCorrect);
+    assessmentCards.forEach((card, index) => {
+      const passed = Boolean(lessonState.assessments[index]);
+      const type = card.getAttribute("data-school-assessment-type");
+      const feedback = card.querySelector("[data-school-quiz-feedback]");
+      if (type === "sequence") {
+        const selected = card.getAttribute("data-school-sequence-selected") || "";
+        card.querySelectorAll("[data-school-sequence-option]").forEach(button => {
+          const id = button.getAttribute("data-school-sequence-option") || "";
+          button.classList.toggle("btn-primary", selected.split(",").filter(Boolean).includes(id));
+          button.classList.toggle("btn-ghost", !selected.split(",").filter(Boolean).includes(id));
+        });
+      } else {
+        const correct = card.getAttribute("data-school-quiz-correct") || "";
+        card.querySelectorAll("[data-school-quiz-option]").forEach(button => {
+          const chosen = button.getAttribute("data-school-quiz-option") || "";
+          button.classList.toggle("btn-primary", passed && chosen === correct);
+          button.classList.toggle("btn-ghost", !passed || chosen !== correct);
+        });
+      }
+      const success = card.getAttribute("data-school-quiz-success") || "Correct.";
+      if (feedback && !passed && feedback.textContent === success) feedback.textContent = type === "sequence" ? "Build the full sequence to check your understanding." : "Choose one answer to check your understanding.";
     });
-    if (quizFeedback && !lessonState.quizPassed && quizFeedback.textContent === quizSuccess) {
-      quizFeedback.textContent = "Choose one answer to check your understanding.";
-    }
   };
   const patchState = mutate => {
     const state = readState();
@@ -311,7 +363,7 @@ export function hydrate({root}) {
       state.lessons[lessonKey] = {
         checks: checks.map(() => false),
         complete: false,
-        quizPassed: false
+        assessments: assessmentCards.map(() => false)
       };
     }
     mutate(state.lessons[lessonKey], state);
@@ -357,29 +409,78 @@ export function hydrate({root}) {
     patchState(lessonState => {
       lessonState.checks = checks.map(() => true);
       lessonState.complete = true;
-      lessonState.quizPassed = true;
+      lessonState.assessments = assessmentCards.map(() => true);
     });
-    if (quizFeedback) quizFeedback.textContent = quizSuccess;
+    assessmentCards.forEach(card => {
+      const feedback = card.querySelector("[data-school-quiz-feedback]");
+      const success = card.getAttribute("data-school-quiz-success") || "Correct.";
+      if (feedback) feedback.textContent = success;
+    });
   });
   resetButton?.addEventListener("click", () => {
     patchState(lessonState => {
       lessonState.checks = checks.map(() => false);
       lessonState.complete = false;
-      lessonState.quizPassed = false;
+      lessonState.assessments = assessmentCards.map(() => false);
     });
     if (input) input.value = starter;
     if (output) output.textContent = compileSnippet(starter);
     if (portabilityNote) portabilityNote.textContent = "Lesson progress reset locally.";
-    if (quizFeedback) quizFeedback.textContent = "Choose one answer to check your understanding.";
+    assessmentCards.forEach(card => {
+      card.setAttribute("data-school-sequence-selected", "");
+      const feedback = card.querySelector("[data-school-quiz-feedback]");
+      const status = card.querySelector("[data-school-sequence-status]");
+      if (feedback) feedback.textContent = "Build the full sequence to check your understanding.";
+      if (status) status.textContent = "Tap the steps in order. Use reset if you want to try again.";
+    });
   });
-  quizOptions.forEach(button => {
-    button.addEventListener("click", () => {
-      const answer = button.getAttribute("data-school-quiz-option");
-      const passed = answer === quizCorrect;
-      patchState(lessonState => {
-        lessonState.quizPassed = passed;
+  assessmentCards.forEach((card, index) => {
+    const feedback = card.querySelector("[data-school-quiz-feedback]");
+    const success = card.getAttribute("data-school-quiz-success") || "Correct.";
+    const retry = card.getAttribute("data-school-quiz-retry") || "Try again.";
+    if (card.getAttribute("data-school-assessment-type") === "sequence") {
+      const correctOrder = (card.getAttribute("data-school-assessment-order") || "").split(",").filter(Boolean);
+      const status = card.querySelector("[data-school-sequence-status]");
+      const readSelected = () => (card.getAttribute("data-school-sequence-selected") || "").split(",").filter(Boolean);
+      const writeSelected = values => card.setAttribute("data-school-sequence-selected", values.join(","));
+      card.querySelectorAll("[data-school-sequence-option]").forEach(button => {
+        button.addEventListener("click", () => {
+          const id = button.getAttribute("data-school-sequence-option") || "";
+          const selected = readSelected();
+          if (!selected.includes(id)) selected.push(id);
+          writeSelected(selected);
+          const full = selected.length === correctOrder.length;
+          const passed = full && selected.every((entry, orderIndex) => entry === correctOrder[orderIndex]);
+          patchState(lessonState => {
+            if (!Array.isArray(lessonState.assessments)) lessonState.assessments = assessmentCards.map(() => false);
+            lessonState.assessments[index] = passed;
+          });
+          if (status) status.textContent = full ? selected.join(" → ") : `${selected.join(" → ")}${selected.length ? " → ..." : ""}`;
+          if (feedback) feedback.textContent = full ? passed ? success : retry : "Keep going until you place every step.";
+        });
       });
-      if (quizFeedback) quizFeedback.textContent = passed ? quizSuccess : quizRetry;
+      card.querySelector("[data-school-sequence-reset]")?.addEventListener("click", () => {
+        writeSelected([]);
+        patchState(lessonState => {
+          if (!Array.isArray(lessonState.assessments)) lessonState.assessments = assessmentCards.map(() => false);
+          lessonState.assessments[index] = false;
+        });
+        if (status) status.textContent = "Tap the steps in order. Use reset if you want to try again.";
+        if (feedback) feedback.textContent = "Build the full sequence to check your understanding.";
+      });
+      return;
+    }
+    const correct = card.getAttribute("data-school-quiz-correct") || "";
+    card.querySelectorAll("[data-school-quiz-option]").forEach(button => {
+      button.addEventListener("click", () => {
+        const answer = button.getAttribute("data-school-quiz-option");
+        const passed = answer === correct;
+        patchState(lessonState => {
+          if (!Array.isArray(lessonState.assessments)) lessonState.assessments = assessmentCards.map(() => false);
+          lessonState.assessments[index] = passed;
+        });
+        if (feedback) feedback.textContent = passed ? success : retry;
+      });
     });
   });
   shareButton?.addEventListener("click", async () => {

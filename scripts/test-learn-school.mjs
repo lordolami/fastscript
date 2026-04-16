@@ -42,7 +42,7 @@ try {
 
   assert.equal(existsSync(join(distRoot, "fastscript-manifest.json")), true);
   const manifest = JSON.parse(readFileSync(join(distRoot, "fastscript-manifest.json"), "utf8"));
-  for (const route of ["/learn", "/learn/capstone", "/learn/:module", "/learn/:module/:lesson"]) {
+  for (const route of ["/learn", "/learn/capstone", "/learn/mastery-summary", "/learn/:module", "/learn/:module/:lesson"]) {
     assert.equal(manifest.routes.some((entry) => entry.path === route), true, `missing route ${route}`);
   }
 
@@ -80,6 +80,8 @@ try {
   assert.match(capstoneHtml, /agency-ops/);
   assert.match(capstoneHtml, /data-capstone-generator/);
   assert.match(capstoneHtml, /data-capstone-build/);
+  assert.match(capstoneHtml, /Beginner SaaS/);
+  assert.match(capstoneHtml, /Migration First/);
 
   const migration = await fetch("http://localhost:4173/learn/migration/dry-run-convert-rollback");
   const migrationHtml = await migration.text();
@@ -89,8 +91,16 @@ try {
   assert.match(migrationHtml, /data-school-complete/);
   assert.match(migrationHtml, /data-school-share/);
   assert.match(migrationHtml, /data-school-export/);
-  assert.match(migrationHtml, /Mini quiz/);
+  assert.match(migrationHtml, /Quick check/);
+  assert.match(migrationHtml, /Sequence the migration loop|Spot the bug/);
   assert.match(migrationHtml, /data-school-quiz-option/);
+
+  const summary = await fetch("http://localhost:4173/learn/mastery-summary");
+  const summaryHtml = await summary.text();
+  assert.equal(summary.status, 200);
+  assert.match(summaryHtml, /Mastery summary/);
+  assert.match(summaryHtml, /data-school-summary-badge-grid/);
+  assert.match(summaryHtml, /data-school-summary-print/);
 
   const mastery = await fetch("http://localhost:4173/learn/mastery/delivery-checklist-and-release-readiness");
   const masteryHtml = await mastery.text();

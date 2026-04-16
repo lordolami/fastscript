@@ -1,6 +1,6 @@
-const SCHOOL_STORAGE_KEY = "fs-school-v2";
+const SCHOOL_STORAGE_KEY = "fs-school-v3";
 const LEGACY_SCHOOL_STORAGE_KEY = "fs-school-v1";
-const SCHOOL_STATE_VERSION = 2;
+const SCHOOL_STATE_VERSION = 3;
 
 function lesson(config) {
   return {
@@ -10,10 +10,41 @@ function lesson(config) {
   };
 }
 
-function quiz(question, correct, success, retry, options) {
+function assessment(config) {
+  return config;
+}
+
+function choiceAssessment(title, question, correct, success, retry, options) {
   return {
+    type: "choice",
+    title,
     question,
     correct,
+    success,
+    retry,
+    options
+  };
+}
+
+function bugAssessment(title, question, snippet, correct, success, retry, options) {
+  return {
+    type: "bug",
+    title,
+    question,
+    snippet,
+    correct,
+    success,
+    retry,
+    options
+  };
+}
+
+function sequenceAssessment(title, question, correctOrder, success, retry, options) {
+  return {
+    type: "sequence",
+    title,
+    question,
+    correctOrder,
     success,
     retry,
     options
@@ -505,103 +536,199 @@ const CAPSTONES = [
   }
 ];
 
-const QUIZ_BANK = {
-  "beginner/what-is-code": quiz("What does the browser do with the HTML your route returns?", "render", "Right. The browser turns returned HTML into the interface the learner can see and use.", "Not quite. Think about the browser as the thing that renders structure, style, and behavior into a page.", [
+const PRIMARY_ASSESSMENT_BANK = {
+  "beginner/what-is-code": choiceAssessment("Quick check", "What does the browser do with the HTML your route returns?", "render", "Right. The browser turns returned HTML into the interface the learner can see and use.", "Not quite. Think about the browser as the thing that renders structure, style, and behavior into a page.", [
     ["store", "It stores the HTML forever in a database."],
     ["render", "It renders the HTML, CSS, and JavaScript into the visible page."],
     ["compile", "It compiles the route into a new programming language."]
   ]),
-  "beginner/browser-requests-and-forms": quiz("What happens when a learner submits a form?", "request", "Exactly. The browser sends a request to the route or API target in the form action.", "Close, but the key idea is that forms trigger requests your app can handle.", [
+  "beginner/browser-requests-and-forms": choiceAssessment("Quick check", "What happens when a learner submits a form?", "request", "Exactly. The browser sends a request to the route or API target in the form action.", "Close, but the key idea is that forms trigger requests your app can handle.", [
     ["request", "The browser sends a request with the form data."],
     ["refresh", "The browser only refreshes the page without sending data."],
     ["style", "The browser only changes CSS classes locally."]
   ]),
-  "foundations/your-first-fs-file": quiz("What is the safest way to describe .fs to another developer?", "container", "Yes. .fs is a universal JS/TS container inside the FastScript runtime contract.", "Try the explanation that keeps normal JS/TS authoring intact instead of inventing a second language.", [
+  "foundations/your-first-fs-file": choiceAssessment("Quick check", "What is the safest way to describe .fs to another developer?", "container", "Yes. .fs is a universal JS/TS container inside the FastScript runtime contract.", "Try the explanation that keeps normal JS/TS authoring intact instead of inventing a second language.", [
     ["language", ".fs is a completely separate language you must rewrite everything into."],
     ["container", ".fs is a universal JS/TS container for the FastScript runtime."],
     ["alias", ".fs is only a cosmetic alias for .txt files."]
   ]),
-  "foundations/cli-and-app-structure": quiz("Where should route rendering usually live in a FastScript app?", "pages", "Right. Page rendering belongs in app/pages, with APIs and middleware in their own clear places.", "Think about the folder that maps most directly to routes users visit.", [
+  "foundations/cli-and-app-structure": choiceAssessment("Quick check", "Where should route rendering usually live in a FastScript app?", "pages", "Right. Page rendering belongs in app/pages, with APIs and middleware in their own clear places.", "Think about the folder that maps most directly to routes users visit.", [
     ["jobs", "Inside app/jobs because every page is background work."],
     ["pages", "Inside app/pages because that is the route-rendering surface."],
     ["db", "Inside app/db because routes are database records."]
   ]),
-  "fullstack/pages-routes-and-loaders": quiz("What is the clearest difference between a page route and an API route?", "ui", "Correct. Pages render what users see, while APIs handle data and mutation operations.", "Try the option that separates user-visible rendering from data or mutation logic.", [
+  "fullstack/pages-routes-and-loaders": choiceAssessment("Quick check", "What is the clearest difference between a page route and an API route?", "ui", "Correct. Pages render what users see, while APIs handle data and mutation operations.", "Try the option that separates user-visible rendering from data or mutation logic.", [
     ["ui", "Pages render UI; APIs handle data and mutations."],
     ["same", "They are the same thing with different file names only."],
     ["auth", "Pages are for auth and APIs are for CSS."]
   ]),
-  "fullstack/request-lifecycle-in-products": quiz("Why do product apps queue jobs instead of doing every side effect inline?", "responsive", "Exactly. Jobs keep the request responsive while follow-up work still happens reliably.", "The key tradeoff is speed and reliability during the request lifecycle.", [
+  "fullstack/request-lifecycle-in-products": choiceAssessment("Quick check", "Why do product apps queue jobs instead of doing every side effect inline?", "responsive", "Exactly. Jobs keep the request responsive while follow-up work still happens reliably.", "The key tradeoff is speed and reliability during the request lifecycle.", [
     ["responsive", "To keep the request fast while async follow-up work happens separately."],
     ["random", "Because jobs are more random and harder to trace."],
     ["styles", "Because CSS can only load after a job runs."]
   ]),
-  "databases/state-and-persistence": quiz("What makes data persistent in a full-stack app?", "survive", "Yes. Persistent data survives refresh, restart, and deployment instead of living only in the current tab.", "Look for the answer about data surviving beyond the current request or tab.", [
+  "databases/state-and-persistence": choiceAssessment("Quick check", "What makes data persistent in a full-stack app?", "survive", "Yes. Persistent data survives refresh, restart, and deployment instead of living only in the current tab.", "Look for the answer about data surviving beyond the current request or tab.", [
     ["survive", "It survives refresh, restart, and deployment."],
     ["hidden", "It is hidden from the user interface."],
     ["styled", "It uses the right CSS classes."]
   ]),
-  "databases/migrations-and-seed-discipline": quiz("Why is realistic seed data useful?", "proof", "Right. Realistic seed data makes demos, tests, and workflows prove believable product behavior.", "Think about what helps routes and tests reveal real product problems earlier.", [
+  "databases/migrations-and-seed-discipline": choiceAssessment("Quick check", "Why is realistic seed data useful?", "proof", "Right. Realistic seed data makes demos, tests, and workflows prove believable product behavior.", "Think about what helps routes and tests reveal real product problems earlier.", [
     ["proof", "It makes demos, tests, and workflows prove believable product behavior."],
     ["speed", "It removes the need for migrations entirely."],
     ["secrets", "It hides environment configuration from operators."]
   ]),
-  "styling/css-with-purpose": quiz("What should come before flashy styling in product UI work?", "hierarchy", "Exactly. Layout, grouping, and hierarchy should be clear before decorative choices.", "The best answer focuses on structure and readability first.", [
+  "styling/css-with-purpose": choiceAssessment("Quick check", "What should come before flashy styling in product UI work?", "hierarchy", "Exactly. Layout, grouping, and hierarchy should be clear before decorative choices.", "The best answer focuses on structure and readability first.", [
     ["animation", "Heavy motion and gradients should always come first."],
     ["hierarchy", "Clear layout, spacing, and hierarchy should come first."],
     ["icons", "Icons should replace layout decisions entirely."]
   ]),
-  "styling/responsive-layout-and-ui-patterns": quiz("Why do teams start responsive layout work from constrained screens?", "mobile", "Yes. Starting from smaller screens keeps the layout honest and easier to scale up.", "Think mobile-first and readable flow, not ideal desktop screenshots.", [
+  "styling/responsive-layout-and-ui-patterns": choiceAssessment("Quick check", "Why do teams start responsive layout work from constrained screens?", "mobile", "Yes. Starting from smaller screens keeps the layout honest and easier to scale up.", "Think mobile-first and readable flow, not ideal desktop screenshots.", [
     ["mobile", "It keeps the layout honest and easier to scale up."],
     ["desktop", "Because mobile can always be fixed at the end."],
     ["fonts", "Because only small screens support typography."]
   ]),
-  "shipping/build-validate-and-start": quiz("Why is a green build not enough before shipping?", "qa", "Correct. You still need validation, QA, and runtime checks before calling the app ready.", "The missing step is the broader verification loop, not more bundling.", [
+  "shipping/build-validate-and-start": choiceAssessment("Quick check", "Why is a green build not enough before shipping?", "qa", "Correct. You still need validation, QA, and runtime checks before calling the app ready.", "The missing step is the broader verification loop, not more bundling.", [
     ["qa", "Because validation, QA, and runtime checks still need to pass."],
     ["copy", "Because landing-page copy must always be longer."],
     ["css", "Because builds never include styles."]
   ]),
-  "shipping/adapters-custom-hosts-and-release-discipline": quiz("What is the universal deployable unit on a custom host?", "dist", "Right. Teams deploy the app plus dist and then start the FastScript runtime.", "Look for the option that keeps the built app and runtime together, not a random provider file.", [
+  "shipping/adapters-custom-hosts-and-release-discipline": choiceAssessment("Quick check", "What is the universal deployable unit on a custom host?", "dist", "Right. Teams deploy the app plus dist and then start the FastScript runtime.", "Look for the option that keeps the built app and runtime together, not a random provider file.", [
     ["worker", "A single provider-specific worker file in every case."],
     ["dist", "The app plus dist, then the FastScript production runtime."],
     ["screenshot", "A screenshot of the app so operators know what it looked like."]
   ]),
-  "professional/support-matrix-and-proof-lanes": quiz("How should a team treat the support matrix?", "contract", "Yes. It is a product contract for adoption decisions, not decorative docs copy.", "Choose the answer that ties support claims directly to delivery risk and rollout choices.", [
+  "professional/support-matrix-and-proof-lanes": choiceAssessment("Quick check", "How should a team treat the support matrix?", "contract", "Yes. It is a product contract for adoption decisions, not decorative docs copy.", "Choose the answer that ties support claims directly to delivery risk and rollout choices.", [
     ["contract", "As a product contract for proven, partial, and planned lanes."],
     ["marketing", "As optional marketing copy that can be ignored."],
     ["theme", "As a visual theme guide for docs pages."]
   ]),
-  "professional/runtime-boundaries-and-proof-backed-rollout": quiz("What should happen when a compatibility gap appears during rollout?", "escalate", "Exactly. Escalate it into compatibility or proof work instead of hiding it locally.", "The safe move is to surface the gap, not patch around it quietly.", [
+  "professional/runtime-boundaries-and-proof-backed-rollout": choiceAssessment("Quick check", "What should happen when a compatibility gap appears during rollout?", "escalate", "Exactly. Escalate it into compatibility or proof work instead of hiding it locally.", "The safe move is to surface the gap, not patch around it quietly.", [
     ["escalate", "Escalate it into compatibility or proof work."],
     ["hide", "Hide it in one app with a local hack."],
     ["ship", "Ship first and document it later only if someone complains."]
   ]),
-  "migration/dry-run-convert-rollback": quiz("Why does dry-run come before write mode in migration work?", "review", "Correct. Dry-run lets you review the proposed impact before real files change.", "Pick the option that protects teams from blind edits.", [
+  "migration/dry-run-convert-rollback": choiceAssessment("Quick check", "Why does dry-run come before write mode in migration work?", "review", "Correct. Dry-run lets you review the proposed impact before real files change.", "Pick the option that protects teams from blind edits.", [
     ["review", "It shows the proposed impact before real files change."],
     ["speed", "It is always faster than write mode in production."],
     ["styles", "It checks CSS before JavaScript."]
   ]),
-  "migration/manifest-diffs-and-compatibility-gaps": quiz("What should skipped or review-needed files change?", "plan", "Right. They should make the rollout plan more cautious and more explicit.", "The clue is that partial migration output affects delivery planning, not just curiosity.", [
+  "migration/manifest-diffs-and-compatibility-gaps": choiceAssessment("Quick check", "What should skipped or review-needed files change?", "plan", "Right. They should make the rollout plan more cautious and more explicit.", "The clue is that partial migration output affects delivery planning, not just curiosity.", [
     ["plan", "They should change the rollout plan and trigger more review."],
     ["nothing", "They change nothing if most files converted."],
     ["theme", "They only affect documentation styling."]
   ]),
-  "mastery/capstone-product-architecture": quiz("When is agency-ops usually the better reference than startup-mvp?", "strict", "Yes. Agency Ops is the stricter TS-in-.fs proving-ground app for product-shaped work.", "Choose the option about strict TypeScript product proving, not the general greenfield starter.", [
+  "mastery/capstone-product-architecture": choiceAssessment("Quick check", "When is agency-ops usually the better reference than startup-mvp?", "strict", "Yes. Agency Ops is the stricter TS-in-.fs proving-ground app for product-shaped work.", "Choose the option about strict TypeScript product proving, not the general greenfield starter.", [
     ["strict", "When you want the stricter TS-in-.fs proving-ground reference."],
     ["always", "Always, because startup-mvp should never be used."],
     ["never", "Never, because reference apps should not influence architecture."]
   ]),
-  "mastery/delivery-checklist-and-release-readiness": quiz("What turns a capstone from feature-complete into release-ready?", "discipline", "Exactly. QA, deployment docs, support-lane judgment, and proof discipline make it release-ready.", "Look for the answer about delivery discipline, not only finished screens.", [
+  "mastery/delivery-checklist-and-release-readiness": choiceAssessment("Quick check", "What turns a capstone from feature-complete into release-ready?", "discipline", "Exactly. QA, deployment docs, support-lane judgment, and proof discipline make it release-ready.", "Look for the answer about delivery discipline, not only finished screens.", [
     ["discipline", "QA, deployment docs, proof, and support-lane discipline."],
     ["screens", "A few more rendered screens with no verification."],
     ["speed", "Only faster build times."]
   ])
 };
 
-function attachQuiz(moduleSlug, lessonSlug, entry) {
+const SECONDARY_ASSESSMENT_BANK = {
+  "beginner/what-is-code": sequenceAssessment("Sequence the page flow", "Put these browser steps in the right order.", ["request", "html", "render"], "Exactly. The browser receives the request response, parses the HTML, and then renders the page.", "Almost. Start from the request/response, then move to parsing and rendering.", [
+    ["request", "The browser requests the route."],
+    ["html", "The route responds with HTML."],
+    ["render", "The browser renders the page."]
+  ]),
+  "beginner/browser-requests-and-forms": bugAssessment("Spot the bug", "Which part of this form makes the action unclear for a beginner?", "<form method=\"post\" action=\"/api/hello\">\\n  <button type=\"submit\">Go</button>\\n</form>", "button", "Yes. The vague button label hides what request will happen next.", "Look for the part that makes the user's next action ambiguous, not the working HTML itself.", [
+    ["button", "The button label is too vague to explain the action."],
+    ["form", "The form element itself is always wrong."],
+    ["method", "Using post automatically breaks the request flow."]
+  ]),
+  "foundations/your-first-fs-file": bugAssessment("Spot the bug", "What explanation would mislead another developer here?", "type HeroProps = { title: string };\\n\\nexport default function Hero({ title }: HeroProps) {\\n  return `<h1>${title}</h1>`;\\n}", "language", "Right. Calling .fs a completely separate language would make adoption harder and less truthful.", "The issue is the explanation, not the code sample itself.", [
+    ["language", "Telling the team .fs is a totally separate language."],
+    ["title", "Using a title prop in a typed component."],
+    ["return", "Returning HTML from a page component."]
+  ]),
+  "foundations/cli-and-app-structure": sequenceAssessment("Sequence the workflow", "Put the CLI workflow in a sane order for a new app.", ["create", "dev", "validate"], "Yes. Create first, iterate in dev, then validate before calling it solid.", "Close. The safe order starts with create, not validate.", [
+    ["create", "Create the app."],
+    ["dev", "Run the app locally."],
+    ["validate", "Run validation before shipping."]
+  ]),
+  "fullstack/pages-routes-and-loaders": bugAssessment("Spot the bug", "Which explanation mixes page and API responsibilities?", "export default function Dashboard() {\\n  return `<main>Dashboard</main>`;\\n}\\n\\nexport async function POST(ctx, h) {\\n  return h.json({ ok: true });\\n}", "same", "Exactly. Saying pages and APIs are the same would erase an important full-stack boundary.", "Pick the answer that confuses rendering with mutations.", [
+    ["same", "Treat page routes and API routes as the same responsibility."],
+    ["post", "Use POST for a mutation."],
+    ["json", "Return JSON from an API handler."]
+  ]),
+  "fullstack/request-lifecycle-in-products": sequenceAssessment("Sequence the lifecycle", "What is the correct protected-request order?", ["middleware", "route", "job"], "Correct. Middleware guards first, route logic runs next, and jobs handle follow-up work.", "Not quite. Guard first, then route logic, then async follow-up.", [
+    ["middleware", "Middleware checks the request."],
+    ["route", "Route logic renders or mutates."],
+    ["job", "Queued follow-up work runs after the request."]
+  ]),
+  "databases/state-and-persistence": bugAssessment("Spot the bug", "Which storage idea would break serious business data?", "const invoiceDraft = window.localStorage.getItem(\"invoice\");", "browser", "Right. Browser-only storage cannot stand in for durable business records.", "Look for the option that confuses local browser state with durable app state.", [
+    ["browser", "Treat local browser state as the durable business system of record."],
+    ["loader", "Read persistent data in a loader."],
+    ["count", "Display how many invoice records exist."]
+  ]),
+  "databases/migrations-and-seed-discipline": sequenceAssessment("Sequence the state discipline", "Put these in the safest order when changing data shape.", ["migration", "seed", "proof"], "Exactly. Change the shape safely, seed realistic data, then prove the app behavior.", "Almost. You need the migration before believable seed data and proofs.", [
+    ["migration", "Apply the migration."],
+    ["seed", "Seed realistic records."],
+    ["proof", "Run the route/app proof."]
+  ]),
+  "styling/css-with-purpose": bugAssessment("Spot the bug", "What design habit causes fragile UI systems?", ".hero-title-red-large-homepage {\\n  font-size: 4rem;\\n}", "oneoff", "Yes. One-off, page-specific styling names make product UI harder to maintain.", "Look for the answer about maintainability, not whether the rule compiles.", [
+    ["oneoff", "Using one-off class names tied to a single page moment."],
+    ["font", "Setting a font size in CSS."],
+    ["rule", "Writing a CSS rule at all."]
+  ]),
+  "styling/responsive-layout-and-ui-patterns": sequenceAssessment("Sequence the layout mindset", "What is the best responsive flow?", ["mobile", "structure", "expand"], "Right. Start with constrained layouts, get the structure right, then expand to wider screens.", "Close. Begin with the smallest layout and only then scale out.", [
+    ["mobile", "Start with the narrow layout."],
+    ["structure", "Make hierarchy and flow readable."],
+    ["expand", "Add wider-screen enhancements."]
+  ]),
+  "shipping/build-validate-and-start": sequenceAssessment("Sequence the shipping loop", "What is the safest order before release?", ["build", "validate", "start"], "Exactly. Build, validate, then prove production start instead of guessing.", "Almost. Production start belongs after build and validate.", [
+    ["build", "Build the app."],
+    ["validate", "Run the full validation gate."],
+    ["start", "Start the production runtime."]
+  ]),
+  "shipping/adapters-custom-hosts-and-release-discipline": bugAssessment("Spot the bug", "What deployment belief creates avoidable production confusion?", "Upload worker.js to every platform and ignore the rest of the built app.", "worker", "Yes. Treating one provider artifact as universal breaks the custom-host model.", "Choose the answer that mistakes one provider output for the universal deployable unit.", [
+    ["worker", "Treat one provider-specific file as the deployable unit everywhere."],
+    ["dist", "Deploy the app plus dist on custom hosts."],
+    ["smoke", "Run smoke checks after start."]
+  ]),
+  "professional/support-matrix-and-proof-lanes": bugAssessment("Spot the bug", "Which team habit creates adoption risk?", "const plan = { promiseLane: \"partial\", release: true };", "partial", "Right. Promising partial lanes as if they were proven creates rollout risk.", "The issue is not using a config object; it is promising the wrong lane.", [
+    ["partial", "Treat a partial lane as if it were proven in production."],
+    ["plan", "Use a plan object to discuss rollout."],
+    ["release", "Have a release flag in code."]
+  ]),
+  "professional/runtime-boundaries-and-proof-backed-rollout": sequenceAssessment("Sequence the rollout", "What is the safest adoption loop?", ["proven", "proof", "expand"], "Exactly. Start with proven lanes, add proof, then widen scope.", "Close. Proven lanes come first, not expansion.", [
+    ["proven", "Start with proven lanes."],
+    ["proof", "Add proof for new needs."],
+    ["expand", "Expand only after the proof supports it."]
+  ]),
+  "migration/dry-run-convert-rollback": sequenceAssessment("Sequence the migration loop", "What is the safe migration order?", ["dry-run", "write", "rollback"], "Correct. Review first, write second, and keep rollback ready as a first-class step.", "Almost. The safest order starts with dry-run, not write mode.", [
+    ["dry-run", "Preview the conversion."],
+    ["write", "Apply the conversion."],
+    ["rollback", "Revert if the written result is unsafe."]
+  ]),
+  "migration/manifest-diffs-and-compatibility-gaps": bugAssessment("Spot the bug", "Which rollout reaction is unsafe when the manifest shows skipped files?", "{ converted: 8, skipped: 2, action: \"ship anyway\" }", "ship-anyway", "Exactly. Skipped or review-needed files should slow the rollout down, not disappear from the plan.", "Pick the response that hides risk instead of escalating it.", [
+    ["ship-anyway", "Ship anyway and ignore skipped files."],
+    ["review", "Review the manifest and diff before widening scope."],
+    ["proof", "Escalate compatibility gaps into proof work."]
+  ]),
+  "mastery/capstone-product-architecture": sequenceAssessment("Sequence the capstone start", "What is the best planning order for a serious capstone?", ["baseline", "workflow", "proof"], "Yes. Choose the baseline first, define the workflow, then wire the proof loop before scope widens.", "Close. Start by choosing the right baseline before implementation details.", [
+    ["baseline", "Choose the reference baseline."],
+    ["workflow", "Define the first product workflow."],
+    ["proof", "Lock the validation and proof loop."]
+  ]),
+  "mastery/delivery-checklist-and-release-readiness": bugAssessment("Spot the bug", "Which release-ready claim is still incomplete?", "const done = [\"features finished\", \"screens render\"];", "missing-proof", "Right. Feature-complete is not release-ready without proof, deployment discipline, and support-lane judgment.", "Look for what is missing from a serious release checklist.", [
+    ["missing-proof", "It is missing proof, validation, and deployment discipline."],
+    ["features", "It includes finished features."],
+    ["render", "It says screens render."]
+  ])
+};
+
+function attachAssessments(moduleSlug, lessonSlug, entry) {
   return {
     ...entry,
-    quiz: QUIZ_BANK[getLessonKey(moduleSlug, lessonSlug)]
+    assessments: [
+      PRIMARY_ASSESSMENT_BANK[getLessonKey(moduleSlug, lessonSlug)],
+      SECONDARY_ASSESSMENT_BANK[getLessonKey(moduleSlug, lessonSlug)]
+    ]
   };
 }
 
@@ -611,15 +738,15 @@ const LESSONS = MODULES.flatMap(module =>
     moduleTitle: module.title,
     moduleLevel: module.level,
     lessonIndex,
-    ...attachQuiz(module.slug, entry.slug, entry)
+    ...attachAssessments(module.slug, entry.slug, entry)
   }))
 );
 
-function emptyLessonState(checkpointCount) {
+function emptyLessonState(checkpointCount, assessmentCount = 2) {
   return {
     checks: Array.from({ length: checkpointCount }, () => false),
     complete: false,
-    quizPassed: false
+    assessments: Array.from({ length: assessmentCount }, () => false)
   };
 }
 
@@ -650,7 +777,7 @@ export function getLesson(moduleSlug, lessonSlug) {
   if (!entry) return null;
   return {
     module,
-    lesson: attachQuiz(moduleSlug, lessonSlug, entry)
+    lesson: attachAssessments(moduleSlug, lessonSlug, entry)
   };
 }
 
@@ -681,6 +808,7 @@ export function getModuleStats() {
   return [
     ["Levels", MODULES.length],
     ["Interactive lessons", LESSONS.length],
+    ["Assessment blocks", LESSONS.length * 2],
     ["Capstone tracks", CAPSTONES.length],
     ["Reference apps", 2]
   ];
@@ -718,12 +846,13 @@ export function normalizeSchoolState(rawState) {
     for (const moduleLesson of module.lessons) {
       const lessonKey = getLessonKey(module.slug, moduleLesson.slug);
       const incoming = inputLessons[lessonKey] || (moduleLesson === module.lessons[0] ? legacyEntry : null);
-      const nextEntry = emptyLessonState(moduleLesson.checkpoints.length);
+      const nextEntry = emptyLessonState(moduleLesson.checkpoints.length, 2);
       if (incoming && typeof incoming === "object") {
         const checks = Array.isArray(incoming.checks) ? incoming.checks : [];
+        const assessments = Array.isArray(incoming.assessments) ? incoming.assessments : [];
         nextEntry.checks = nextEntry.checks.map((_, index) => Boolean(checks[index]));
         nextEntry.complete = Boolean(incoming.complete);
-        nextEntry.quizPassed = Boolean(incoming.quizPassed || incoming.complete);
+        nextEntry.assessments = nextEntry.assessments.map((_, index) => Boolean(assessments[index] || incoming.quizPassed || incoming.complete));
       }
       normalized.lessons[lessonKey] = nextEntry;
     }
@@ -752,6 +881,11 @@ export function getCompletedLessonCount(state) {
   return Object.values(normalized.lessons).filter(entry => entry.complete).length;
 }
 
+export function getAssessmentPassCount(state) {
+  const normalized = normalizeSchoolState(state);
+  return Object.values(normalized.lessons).reduce((count, entry) => count + entry.assessments.filter(Boolean).length, 0);
+}
+
 export function getModuleCompletion(state, moduleSlug) {
   const normalized = normalizeSchoolState(state);
   const module = getModule(moduleSlug);
@@ -775,4 +909,107 @@ export function renderLessonResources(lesson) {
   return (lesson.resources || []).map(([label, href]) => `
     <a class="docs-card-link" href="${href}">${label} &#8594;</a>
   `).join("");
+}
+
+export function getCapstonePresets() {
+  return [
+    {
+      slug: "beginner-saas",
+      title: "Beginner SaaS",
+      copy: "Start from the stable greenfield SaaS baseline and ship one simple customer-facing workflow.",
+      values: {
+        stage: "beginner",
+        product: "greenfield-saas",
+        baseline: "startup-mvp",
+        deploy: "adapter"
+      }
+    },
+    {
+      slug: "internal-ops",
+      title: "Internal Ops",
+      copy: "Build an authenticated operator dashboard with one mutation, one job, and a clear deploy path.",
+      values: {
+        stage: "intermediate",
+        product: "internal-ops",
+        baseline: "agency-ops",
+        deploy: "custom"
+      }
+    },
+    {
+      slug: "migration-first",
+      title: "Migration First",
+      copy: "Keep the scope tight, prove a TS-to-.fs slice safely, and document rollback from the start.",
+      values: {
+        stage: "professional",
+        product: "migration",
+        baseline: "agency-ops",
+        deploy: "custom"
+      }
+    }
+  ];
+}
+
+export function getCapstoneRecommendation({ stage = "beginner", product = "greenfield-saas", baseline = "auto", deploy = "adapter" } = {}) {
+  const recommendedBaseline = baseline !== "auto" ? baseline : product === "migration" || product === "service-delivery" || stage === "professional" ? "agency-ops" : "startup-mvp";
+  const baselineDoc = recommendedBaseline === "agency-ops" ? "/docs/agency-ops" : "/docs/team-dashboard-saas";
+  const proofCommand = recommendedBaseline === "agency-ops" ? "npm run test:agency-ops" : "npm run test:startup-mvp-saas";
+  const buildTarget = product === "migration" ? "convert one route or feature slice first" : product === "internal-ops" ? "ship an authenticated dashboard with one mutation and one job" : product === "service-delivery" ? "build a service-delivery workflow with assignments or reminders" : "ship a greenfield SaaS baseline with auth, billing, and QA";
+  const deployNote = deploy === "custom" ? "Document the custom-host runtime handoff and the deployable dist artifact." : "Use the adapter path first, then prove the generated deployment output end to end.";
+  return {
+    recommendedBaseline,
+    baselineDoc,
+    proofCommand,
+    summary: `Start from ${recommendedBaseline}, ${buildTarget}, then run ${proofCommand} and npm run validate before widening scope.`,
+    checklist: [
+      `Create your first slice: ${buildTarget}.`,
+      `Open ${recommendedBaseline === "agency-ops" ? "Agency Ops" : "Team Dashboard SaaS"} docs and map features to /docs/support.`,
+      `Run ${proofCommand}.`,
+      "Run npm run validate and keep the support lane honest.",
+      deployNote
+    ]
+  };
+}
+
+export function getModuleBadges(state) {
+  const normalized = normalizeSchoolState(state);
+  return MODULES.map(module => {
+    const summary = getModuleCompletion(normalized, module.slug);
+    return {
+      slug: module.slug,
+      title: module.title,
+      level: module.level,
+      earned: summary.completed === summary.total && summary.total > 0,
+      completed: summary.completed,
+      total: summary.total
+    };
+  });
+}
+
+export function getEarnedBadgeCount(state) {
+  return getModuleBadges(state).filter(entry => entry.earned).length;
+}
+
+export function getMasterySummary(state) {
+  const normalized = normalizeSchoolState(state);
+  const badges = getModuleBadges(normalized);
+  const completedLessons = getCompletedLessonCount(normalized);
+  const totalLessons = getLessonCount();
+  const earnedBadges = badges.filter(entry => entry.earned).length;
+  const assessmentCount = getAssessmentPassCount(normalized);
+  const migrationEarned = badges.find(entry => entry.slug === "migration")?.earned;
+  const professionalEarned = badges.find(entry => entry.slug === "professional")?.earned;
+  const recommendedPreset = migrationEarned && professionalEarned ? "migration-first" : completedLessons >= Math.ceil(totalLessons / 2) ? "internal-ops" : "beginner-saas";
+  return {
+    completedLessons,
+    totalLessons,
+    earnedBadges,
+    totalBadges: badges.length + 1,
+    moduleBadges: badges,
+    masteryBadgeEarned: badges.every(entry => entry.earned),
+    assessmentCount,
+    totalAssessments: totalLessons * 2,
+    resumeHref: normalized.lastLesson || getResumeFallback(),
+    recommendedPreset,
+    recommendedCapstone: recommendedPreset === "migration-first" ? "Professional migration capstone" : recommendedPreset === "internal-ops" ? "Intermediate full-stack capstone" : "Beginner capstone"
+  };
 }
