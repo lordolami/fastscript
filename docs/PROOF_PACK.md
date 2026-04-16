@@ -1,6 +1,6 @@
 # FastScript Proof Pack
 
-- Generated: 2026-04-15T22:37:40.660Z
+- Generated: 2026-04-16T20:09:48.165Z
 
 ## Summary
 - Routes: n/a
@@ -16,11 +16,11 @@
 - `.fs` parity proof: pass
 - Parser/frontend parity: pass (5 cases)
 - Runtime/platform parity: pass (12 runtime cases, 1 build corpus)
-- Compatibility registry entries: 30
-- Compatibility proven entries: 28
-- Framework proof rows: 12
-- Agency Ops warm build p95 trimmed: 1065.4504ms
-- Agency Ops cold build: 895.7894000000001ms
+- Compatibility registry entries: 34
+- Compatibility proven entries: 32
+- Framework proof rows: 15
+- Agency Ops warm build p95 trimmed: 2362.4096ms
+- Agency Ops cold build: 2220.1167ms
 - Agency Ops runtime /dashboard: 37.35ms
 - Launch line: FastScript v3
 - Product contract: `.fs` is a universal JS/TS container and valid JS/TS failures in `.fs` are treated as FastScript compatibility bugs
@@ -30,11 +30,11 @@
 
 # FastScript Benchmark Report
 
-- Build time: 1062.10ms
-- Routes: 34
+- Build time: 1960.96ms
+- Routes: 38
 - API routes: 5
-- JS first-load gzip: 12.53KB
-- CSS first-load gzip: 14.80KB
+- JS first-load gzip: 12.65KB
+- CSS first-load gzip: 14.99KB
 
 ## Budgets
 - JS budget (30KB): PASS
@@ -56,8 +56,8 @@ See full matrix: `docs/INTEROP_MATRIX.md`
 
 ## Agency Ops Speed Proof
 - Benchmark corpus id: `example-agency-ops`
-- Warm build p95 trimmed: 1065.4504ms
-- Cold build: 895.7894000000001ms
+- Warm build p95 trimmed: 2362.4096ms
+- Cold build: 2220.1167ms
 - Runtime /: 6.43ms
 - Runtime /dashboard: 37.35ms
 - Runtime /dashboard/clients: 10.52ms
@@ -75,7 +75,7 @@ See full matrix: `docs/INTEROP_MATRIX.md`
 
 # FastScript Interop Matrix
 
-- Generated: 2026-04-15T19:18:08.251Z
+- Generated: 2026-04-16T20:09:44.322Z
 - Profile: report
 - Total: 17
 - Pass: 17

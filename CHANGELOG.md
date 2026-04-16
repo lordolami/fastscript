@@ -14,6 +14,21 @@
   - `spec/V2_0_MIGRATION_PROOF_REPORT.md`
   - `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`
 
+## v3.0.8 - 2026-04-16
+- Stop caching SSR HTML at the runtime layer so plain root requests stop serving stale deploy shells while cache-busted requests are already fresh
+- Keep the `3.0.7` production-shell and logical-manifest fixes intact while applying the no-store policy across Cloudflare and Node HTML responses
+- Re-publish npm and redeploy the root FastScript worker from the final no-stale-HTML source state
+
+## v3.0.7 - 2026-04-16
+- Reconcile the final production shell so root deploys emit `isDevMode = false` in shipped HTML while preserving dev-only HMR behavior
+- Keep the logical `fastscript-manifest.json` plus hashed `asset-manifest.json` contract intact and make the repeated-build fingerprint path deterministic, including sourcemap handling
+- Re-ship the proof, benchmark, docs-search, API reference, SBOM, npm package, and root Cloudflare worker from one final green release state
+
+## v3.0.6 - 2026-04-16
+- Remove asset multi-hash drift at the source by keeping `fastscript-manifest.json` logical and using `asset-manifest.json` as the only hash lookup layer
+- Make browser hydration, Node SSR, Cloudflare worker deploys, and build-time SSG all resolve route/layout/api modules through the asset manifest instead of embedding hashed module ids in the app graph
+- Add regression coverage that rebuilds twice, proves there are no `foo.hash1.hash2.js` outputs, and re-sync the benchmark baseline plus release artifacts from the cleaned contract
+
 ## v3.0.2 - 2026-04-15
 - Elevate `startup-mvp` into the Team Dashboard SaaS baseline and make it the first official FastScript greenfield product starting point
 - Publish the dedicated baseline guide at `/docs/team-dashboard-saas` and promote it across docs, adoption, examples, showcase, and README surfaces
@@ -53,3 +68,22 @@
 - Promote RC to stable and publish final release notes
 - Finalize formal sign-off, blocker audit, and v1 scope freeze records
 - Complete Master TODO steps 1-8 with evidence links
+## v3.0.3 - 2026-04-16
+- Refresh generated compatibility, proof, API reference, support matrix, SBOM, benchmark, and docs-search artifacts from code-truth outputs
+- Restore the full release gate to green by regenerating the compatibility matrix inputs consumed by `test:core`
+- Re-verify parser, typecheck, runtime-scope, ambient runtime, DOM, inference, zero-authored-JS, conformance, and release-discipline coverage through `test:core`, `qa:gate`, and `qa:all`
+- Ship the language/compiler/parser foundation as a stabilized `3.0.3` patch release with no public bridge-surface breakage
+## v3.0.4 - 2026-04-16
+- Align the published npm package with the final foundation-grade source state after the post-publish site/meta fixes
+- Refresh the public release line to `3.0.4`, including homepage meta shell, changelog surface, benchmark baseline, and regenerated proof/search artifacts
+- Re-run `qa:gate`, `qa:all`, pack verification, root deploy, and live boundary smoke checks from the final release state
+## v3.0.5 - 2026-04-16
+- Stabilize runtime updates so deployed FastScript apps auto-refresh themselves when a new service worker version activates
+- Repair the production Node SSR/runtime contract by resolving emitted route modules through the asset manifest instead of assuming unhashed `dist/pages/*.js` paths
+- Resync the release line, regenerated proof/search/support artifacts, benchmark baselines, npm package, and root Cloudflare deploy from one final source state
+## v3.0.6 - 2026-04-16
+- release prep
+## v3.0.7 - 2026-04-16
+- release prep
+## v3.0.8 - 2026-04-16
+- release prep

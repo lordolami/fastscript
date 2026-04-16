@@ -19,11 +19,19 @@ const t1 = performance.now();
 
 const dist = resolve('dist');
 const manifest = JSON.parse(readFileSync(join(dist, 'fastscript-manifest.json'), 'utf8'));
-const jsAssets = [join(dist, 'router.js')];
-if (manifest.layout) jsAssets.push(join(dist, manifest.layout.replace(/^\.\//, '')));
+const assetManifestPath = join(dist, 'asset-manifest.json');
+const assetManifest = existsSync(assetManifestPath) ? JSON.parse(readFileSync(assetManifestPath, 'utf8')) : { mapping: {} };
+function resolveAsset(logicalName) {
+  const direct = join(dist, logicalName);
+  if (existsSync(direct)) return direct;
+  const mapped = assetManifest?.mapping?.[logicalName];
+  return join(dist, (mapped || logicalName).replace(/^\.\//, ''));
+}
+const jsAssets = [resolveAsset('router.js')];
+if (manifest.layout) jsAssets.push(resolveAsset(manifest.layout.replace(/^\.\//, '')));
 const home = manifest.routes.find((r) => r.path === '/');
-if (home?.module) jsAssets.push(join(dist, home.module.replace(/^\.\//, '')));
-const cssAssets = [join(dist, 'styles.css')];
+if (home?.module) jsAssets.push(resolveAsset(home.module.replace(/^\.\//, '')));
+const cssAssets = [resolveAsset('styles.css')];
 
 const js = jsAssets.reduce((s, p) => s + gzipSize(p), 0);
 const css = cssAssets.reduce((s, p) => s + gzipSize(p), 0);

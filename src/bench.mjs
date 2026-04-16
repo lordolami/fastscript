@@ -40,9 +40,9 @@ export async function runBench() {
   const jsAssets = [resolveAsset(DIST, assetManifest, "router.js")];
   const cssAssets = [resolveAsset(DIST, assetManifest, "styles.css")];
 
-  if (manifest.layout) jsAssets.push(join(DIST, manifest.layout.replace(/^\.\//, "")));
+  if (manifest.layout) jsAssets.push(resolveAsset(DIST, assetManifest, manifest.layout.replace(/^\.\//, "")));
   const root = manifest.routes.find((r) => r.path === "/");
-  if (root?.module) jsAssets.push(join(DIST, root.module.replace(/^\.\//, "")));
+  if (root?.module) jsAssets.push(resolveAsset(DIST, assetManifest, root.module.replace(/^\.\//, "")));
 
   const totalJs = jsAssets.reduce((sum, p) => sum + gzipSize(p), 0);
   const totalCss = cssAssets.reduce((sum, p) => sum + gzipSize(p), 0);

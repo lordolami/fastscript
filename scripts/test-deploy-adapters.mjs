@@ -28,8 +28,21 @@ const wrangler = readFileSync(resolve("wrangler.toml"), "utf8");
 assert.equal(wrangler.includes("FASTSCRIPT_DEPLOY_TARGET = \"cloudflare\""), true);
 assert.equal(wrangler.includes("[observability.logs]"), true);
 
+const manifest = JSON.parse(readFileSync(resolve("dist", "fastscript-manifest.json"), "utf8"));
+const assetManifest = JSON.parse(readFileSync(resolve("dist", "asset-manifest.json"), "utf8"));
+assert.equal(/\.[a-f0-9]{8}\.[mc]?js$/i.test(String(manifest.routes[0]?.module || "")), false);
+assert.equal(Boolean(assetManifest.mapping?.[String(manifest.routes[0]?.module || "").replace(/^\.\//, "")]), true);
+
 const worker = readFileSync(resolve("dist", "worker.js"), "utf8");
 assert.equal(worker.includes("applySecurityHeaders"), true);
 assert.equal(worker.includes("cache-control"), true);
+assert.equal(worker.includes("FASTSCRIPT_RELOAD"), true);
+assert.equal(worker.includes('navigator.serviceWorker.addEventListener("controllerchange", refresh)'), true);
+assert.equal(worker.includes(`"${manifest.routes[0]?.module}":`), true);
+assert.equal(worker.includes(assetManifest.mapping?.[String(manifest.routes[0]?.module || "").replace(/^\.\//, "")]), true);
+
+const serviceWorker = readFileSync(resolve("dist", "service-worker.js"), "utf8");
+assert.equal(serviceWorker.includes("FASTSCRIPT_RELOAD"), true);
+assert.equal(serviceWorker.includes("broadcastReload"), true);
 
 console.log("test-deploy-adapters pass");

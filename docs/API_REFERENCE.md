@@ -18,16 +18,13 @@ Auto-generated from `src/*.mjs`.
 - `hashPassword`
 - `verifyPassword`
 
-## auth.mjs
-
-- `createSessionManager`
-- `parseCookies`
-- `requireUser`
-- `serializeCookie`
-
 ## bench.mjs
 
 - `runBench`
+
+## benchmark-discipline.mjs
+
+- `runBenchmarkDiscipline`
 
 ## build.mjs
 
@@ -49,6 +46,24 @@ Auto-generated from `src/*.mjs`.
 - `run`
 - `runCompat`
 - `value`
+
+## compatibility-governance.mjs
+
+- `COMPATIBILITY_REPORT`
+- `buildCompatibilityReport`
+- `collectProofMap`
+- `generateSupportMatrixMarkdown`
+- `loadCompatibilityArtifacts`
+- `loadCompatibilityRegistry`
+- `runCompatibilityGovernanceCheck`
+- `validateCompatibilityGovernance`
+- `writeCompatibilityArtifacts`
+
+## conversion-manifest.mjs
+
+- `loadConversionManifest`
+- `runManifest`
+- `summarizeConversionManifest`
 
 ## create.mjs
 
@@ -84,13 +99,13 @@ Auto-generated from `src/*.mjs`.
 
 - `createFileDatabase`
 
-## deploy.mjs
-
-- `runDeploy`
-
 ## dev.mjs
 
 - `runDev`
+
+## diagnostics.mjs
+
+- `runDiagnostics`
 
 ## docs-search.mjs
 
@@ -136,15 +151,6 @@ Auto-generated from `src/*.mjs`.
 - `normalizeFastScriptWithMetadata`
 - `stripTypeScriptHints`
 
-## fs-parser.mjs
-
-- `FASTSCRIPT_AST_VERSION`
-- `buildInlineSourceMapComment`
-- `compileFastScript`
-- `formatDiagnostic`
-- `parseFastScript`
-- `tokenizeFastScript`
-
 ## i18n.mjs
 
 - `getI18nConfig`
@@ -179,9 +185,13 @@ Auto-generated from `src/*.mjs`.
 
 - `composeMiddleware`
 
+## migrate-rollback.mjs
+
+- `runMigrateRollback`
+
 ## migrate.mjs
 
-- `$1`
+- `createStrictConversionPlan`
 - `runMigrate`
 
 ## migration-wizard.mjs
@@ -203,10 +213,22 @@ Auto-generated from `src/*.mjs`.
 - `createOtelExporter`
 - `createTracer`
 
+## permissions-cli.mjs
+
+- `runPermissions`
+
 ## plugins.mjs
 
 - `PLUGIN_API_VERSION`
 - `createPluginRuntime`
+
+## profile.mjs
+
+- `runProfile`
+
+## regression-guard.mjs
+
+- `runRegressionGuard`
 
 ## retention.mjs
 
@@ -223,6 +245,17 @@ Auto-generated from `src/*.mjs`.
 - `isLayoutFile`
 - `isNotFoundFile`
 - `sortRoutesByPriority`
+
+## runtime-permissions.mjs
+
+- `createPermissionRuntime`
+- `evaluateRuntimePermission`
+- `loadPermissionPolicy`
+- `permissionAwareEnvGet`
+- `permissionAwareFetch`
+- `permissionAwarePluginAccess`
+- `permissionAwareReadFile`
+- `permissionAwareSpawn`
 
 ## scheduler.mjs
 
@@ -254,11 +287,6 @@ Auto-generated from `src/*.mjs`.
 
 - `runStart`
 
-## storage.mjs
-
-- `createLocalStorage`
-- `createS3CompatibleStorage`
-
 ## style-system.mjs
 
 - `ensureDesignSystem`
@@ -270,9 +298,9 @@ Auto-generated from `src/*.mjs`.
 - `scopeCacheByTenant`
 - `scopeDbByTenant`
 
-## typecheck.mjs
+## trace.mjs
 
-- `runTypeCheck`
+- `runTrace`
 
 ## validate.mjs
 
@@ -283,14 +311,6 @@ Auto-generated from `src/*.mjs`.
 - `readBody`
 - `readJsonBody`
 - `validateShape`
-
-## webhook.mjs
-
-- `isReplay`
-- `readRawBody`
-- `signPayload`
-- `verifySignature`
-- `verifyWebhookRequest`
 
 ## worker.mjs
 

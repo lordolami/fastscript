@@ -1,4 +1,28 @@
 const RELEASES = [{
+  version: "v3.0.8",
+  date: "April 2026",
+  copy: "Release-line cache policy cleanup: SSR HTML now ships with no-store semantics so plain root requests stop lagging behind deploys, while the production shell and logical-manifest asset contract remain stable."
+}, {
+  version: "v3.0.7",
+  date: "April 2026",
+  copy: "Final language-line wrap-up: the production shell now ships with the correct non-dev service-worker posture, the logical-manifest plus asset-manifest contract remains stable, and the root npm plus Cloudflare release surfaces are resynced from one green source state."
+}, {
+  version: "v3.0.6",
+  date: "April 2026",
+  copy: "Asset fingerprint cleanup release: FastScript now keeps a logical app graph in fastscript-manifest.json, resolves hashed modules exclusively through asset-manifest.json, and prevents multi-hash drift across repeated builds."
+}, {
+  version: "v3.0.5",
+  date: "April 2026",
+  copy: "Stabilization release: deployed apps now auto-refresh after service worker activation, production SSR resolves emitted modules through the asset manifest, and npm plus the root Cloudflare runtime are resynced from one final source state."
+}, {
+  version: "v3.0.4",
+  date: "April 2026",
+  copy: "Final foundation-grade ship line: npm, release notes, root Cloudflare deploy, and generated proof/search/benchmark surfaces aligned on the same post-gate source state."
+}, {
+  version: "v3.0.3",
+  date: "April 2026",
+  copy: "Foundation-grade release hardening: compatibility-matrix artifacts regenerated from code truth, proof/search/API/support outputs refreshed, and the full parser/typecheck/runtime gate chain re-verified green for public shipping."
+}, {
   version: "v3.0.2",
   date: "April 2026",
   copy: "Team Dashboard SaaS baseline elevated across examples, showcase, adoption docs, npm metadata, and release surfaces, with validator-safe styling, CSRF/session-safe proof flow, and corrected runtime port behavior in the reference app suite."
