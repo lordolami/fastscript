@@ -1,11 +1,11 @@
 import {getLegacySchoolStorageKey, getModule, getModuleCompletion, getSchoolStorageKey, parseSchoolState, renderModulePills, serializeSchoolState} from "../../lib/learn-school.mjs";
-
 export async function load(ctx) {
   const module = getModule(ctx.params.module);
   if (!module) return null;
-  return { module };
+  return {
+    module
+  };
 }
-
 function lessonCard(module, lesson) {
   return `
     <div class="docs-card">
@@ -17,7 +17,6 @@ function lessonCard(module, lesson) {
     </div>
   `;
 }
-
 export default function LearnModulePage({module}) {
   if (!module) {
     return `
@@ -101,7 +100,6 @@ export default function LearnModulePage({module}) {
     </section>
   `;
 }
-
 export function hydrate({root}) {
   const storageKey = getSchoolStorageKey();
   const legacyStorageKey = getLegacySchoolStorageKey();

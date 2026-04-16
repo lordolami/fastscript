@@ -1,5 +1,4 @@
 import {getCapstones} from "../../lib/learn-school.mjs";
-
 function capstoneCard(capstone) {
   const concepts = capstone.concepts.map(item => `<li>${item}</li>`).join("");
   const checklist = capstone.checklist.map(item => `<li>${item}</li>`).join("");
@@ -18,7 +17,6 @@ function capstoneCard(capstone) {
     </article>
   `;
 }
-
 export default function LearnCapstonePage() {
   const cards = getCapstones().map(capstoneCard).join("");
   return `

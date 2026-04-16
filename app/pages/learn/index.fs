@@ -1,5 +1,4 @@
 import {getCompletedLessonCount, getLegacySchoolStorageKey, getLessonCount, getModuleCompletion, getModuleStats, getModules, getResumeFallback, getSchoolStorageKey, getTrackSummary, parseSchoolState, renderModulePills, serializeSchoolState} from "../../lib/learn-school.mjs";
-
 function moduleCard(module) {
   const links = module.lessons.map(lesson => `
     <a class="docs-card-link" href="/learn/${module.slug}/${lesson.slug}">${lesson.title} &#8594;</a>
@@ -16,7 +15,6 @@ function moduleCard(module) {
     </article>
   `;
 }
-
 export default function LearnSchoolPage() {
   const tracks = getTrackSummary().map(track => `
     <div class="docs-card">
@@ -108,7 +106,6 @@ export default function LearnSchoolPage() {
     </section>
   `;
 }
-
 export function hydrate({root}) {
   const storageKey = getSchoolStorageKey();
   const legacyStorageKey = getLegacySchoolStorageKey();
@@ -122,7 +119,6 @@ export function hydrate({root}) {
   const importNote = root.querySelector("[data-school-import-note]");
   const totalLessons = getLessonCount();
   const moduleCards = [...root.querySelectorAll("[data-school-module-card]")];
-
   const writeState = state => {
     try {
       window.localStorage.setItem(storageKey, serializeSchoolState(state));
@@ -140,7 +136,9 @@ export function hydrate({root}) {
     return state;
   };
   const downloadProgress = state => {
-    const blob = new Blob([serializeSchoolState(state)], { type: "application/json" });
+    const blob = new Blob([serializeSchoolState(state)], {
+      type: "application/json"
+    });
     const href = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = href;
@@ -166,7 +164,6 @@ export function hydrate({root}) {
       if (status) status.textContent = `${summary.completed} of ${summary.total} lessons completed`;
     });
   };
-
   resetButton?.addEventListener("click", () => {
     writeState(parseSchoolState(""));
     window.localStorage.removeItem(legacyStorageKey);
@@ -193,6 +190,5 @@ export function hydrate({root}) {
       importInput.value = "";
     }
   });
-
   render();
 }

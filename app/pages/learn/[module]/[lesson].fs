@@ -1,5 +1,4 @@
 import {getLegacySchoolStorageKey, getLesson, getLessonKey, getPrevNext, getSchoolStorageKey, parseSchoolState, renderLessonResources, renderModulePills, serializeSchoolState} from "../../../lib/learn-school.mjs";
-
 function codeCard(title, code) {
   return `
     <div class="code-block">
@@ -11,7 +10,6 @@ function codeCard(title, code) {
     </div>
   `;
 }
-
 function checklist(lesson) {
   return lesson.checkpoints.map((item, index) => `
     <div class="learn-check" data-school-check-row>
@@ -20,11 +18,9 @@ function checklist(lesson) {
     </div>
   `).join("");
 }
-
 function cardList(items) {
   return items.map(item => `<li>${item}</li>`).join("");
 }
-
 export async function load(ctx) {
   const result = getLesson(ctx.params.module, ctx.params.lesson);
   if (!result) return null;
@@ -34,7 +30,6 @@ export async function load(ctx) {
     nav: getPrevNext(ctx.params.module, ctx.params.lesson)
   };
 }
-
 export default function LearnLessonPage({module, lesson, nav}) {
   if (!module || !lesson) {
     return `
@@ -196,7 +191,6 @@ export default function LearnLessonPage({module, lesson, nav}) {
     </section>
   `;
 }
-
 export function hydrate({root}) {
   const storageKey = getSchoolStorageKey();
   const legacyStorageKey = getLegacySchoolStorageKey();
@@ -218,7 +212,6 @@ export function hydrate({root}) {
   const checks = [...root.querySelectorAll("[data-school-check]")];
   const starter = input ? input.value : "";
   const reference = root.querySelector("[data-school-reference]")?.value || starter;
-
   const writeState = state => {
     try {
       window.localStorage.setItem(storageKey, serializeSchoolState(state));
@@ -249,7 +242,9 @@ export function hydrate({root}) {
     return `// lesson preview\n${compiled}\n\n// what this teaches\n${notes.map(item => `- ${item}`).join("\n")}`;
   };
   const exportState = state => {
-    const blob = new Blob([serializeSchoolState(state)], { type: "application/json" });
+    const blob = new Blob([serializeSchoolState(state)], {
+      type: "application/json"
+    });
     const href = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = href;
@@ -261,7 +256,10 @@ export function hydrate({root}) {
   };
   const updateVisualState = () => {
     const state = readState();
-    const lessonState = state.lessons?.[lessonKey] || { checks: [], complete: false };
+    const lessonState = state.lessons?.[lessonKey] || ({
+      checks: [],
+      complete: false
+    });
     const doneCount = lessonState.checks.filter(Boolean).length;
     const total = checks.length || 1;
     const percent = lessonState.complete ? 100 : Math.round(doneCount / total * 100);
@@ -279,20 +277,21 @@ export function hydrate({root}) {
   const patchState = mutate => {
     const state = readState();
     if (!state.lessons[lessonKey]) {
-      state.lessons[lessonKey] = { checks: checks.map(() => false), complete: false };
+      state.lessons[lessonKey] = {
+        checks: checks.map(() => false),
+        complete: false
+      };
     }
     mutate(state.lessons[lessonKey], state);
     if (lastLesson) state.lastLesson = lastLesson;
     writeState(state);
     updateVisualState();
   };
-
   if (lastLesson) {
     const state = readState();
     state.lastLesson = lastLesson;
     writeState(state);
   }
-
   root.querySelectorAll("[data-school-load]").forEach(button => {
     button.addEventListener("click", () => {
       if (!input) return;
@@ -365,7 +364,6 @@ export function hydrate({root}) {
       importInput.value = "";
     }
   });
-
   if (output) output.textContent = compileSnippet(starter);
   updateVisualState();
 }
