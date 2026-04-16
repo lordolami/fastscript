@@ -555,7 +555,7 @@ ul, ol { list-style: none; }
   padding-bottom: 64px;
 }
 
-.hero-left { display: flex; flex-direction: column; }
+.hero-left { display: flex; flex-direction: column; min-width: 0; }
 
 .hero-right {
   display: flex;
@@ -823,7 +823,7 @@ ul, ol { list-style: none; }
 .hero-desc {
   font-size: clamp(1rem, 2vw, 1.125rem);
   color: var(--c-muted);
-  max-width: 50ch;
+  max-width: 38ch;
   line-height: 1.75;
   margin-bottom: 36px;
   overflow-wrap: anywhere;
@@ -2536,7 +2536,6 @@ ul, ol { list-style: none; }
   background: var(--c-border);
 }
 
-/* ─── SOCIAL PROOF STRIP ─────────────────────────────────────────────── */
 .social-strip {
   display: flex;
   align-items: center;
@@ -2558,7 +2557,6 @@ ul, ol { list-style: none; }
   font-variant-numeric: tabular-nums;
 }
 
-/* ─── HOW IT WORKS ───────────────────────────────────────────────────── */
 .how-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2594,7 +2592,7 @@ ul, ol { list-style: none; }
 
 @media (max-width: 768px) {
   .how-grid { grid-template-columns: 1fr; }
-  .social-strip { gap: 20px; }
+  .social-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .install-row { font-size: 0.8125rem; }
 }
 @media (max-width: 520px) {
@@ -2607,6 +2605,7 @@ ul, ol { list-style: none; }
   .footer-links { grid-template-columns: repeat(2, 1fr); }
   .hero-actions { flex-direction: column; align-items: flex-start; }
   .install-row { align-items: flex-start; }
+  .social-strip { grid-template-columns: 1fr; }
   .copy-btn {
     width: 100%;
     justify-content: center;
@@ -2616,13 +2615,11 @@ ul, ol { list-style: none; }
 
 
 
-/* SCHOOL / LEARN */
 .learn-layout {
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr);
   gap: 24px;
 }
-.learn-sidebar-card,
 .learn-sidebar-card { background: var(--c-bg1); border: 1px solid var(--c-border); border-radius: var(--r-lg); }
 .learn-sidebar-card {
   display: grid;
@@ -2631,6 +2628,7 @@ ul, ol { list-style: none; }
 }
 .learn-sidebar-title { color: var(--c-white); font-weight: 700; }
 .learn-sidebar-copy { color: var(--c-muted); }
+.learn-hero .lead { max-width: 40ch; }
 .learn-progress-bar {
   width: 100%;
   height: 12px;
@@ -2672,3 +2670,16 @@ ul, ol { list-style: none; }
     grid-template-columns: 1fr;
   }
 }
+@media (max-width: 768px) {
+  .learn-sidebar-card {
+    padding: 20px;
+  }
+  .learn-check {
+    grid-template-columns: 1fr;
+  }
+  .learn-check-btn {
+    justify-self: start;
+  }
+}
+
+

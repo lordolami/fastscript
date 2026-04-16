@@ -9,15 +9,12 @@ export default function Home() {
           </div>
 
           <h1 class="hero-title">
-            The proven full-stack<br>
-            <span class="hero-title-muted">JS/TS runtime pipeline.</span>
+            Proven full-stack<br>
+            <span class="hero-title-muted">JS/TS runtime.</span>
           </h1>
 
           <p class="hero-desc">
-            Write normal <code class="ic">js</code>, <code class="ic">ts</code>, <code class="ic">jsx</code>, or <code class="ic">tsx</code> in <code class="ic">.fs</code>,
-            keep full package compatibility, compile to optimized JavaScript, and ship frontend, backend, jobs, APIs, billing flows, and product-shaped workflows through one runtime pipeline.
-            FastScript-specific syntax is optional. Real full-stack app capability is now proven through governed evidence, including strict-TypeScript product apps and SaaS-shaped reference flows. The current proof pack shows 2.71KB first-load gzip, 702.98ms builds, 17/17 interop passing, and governed ecosystem proof across Next-style, React, Node, Vue, and npm package patterns.
-            The main language/runtime stays proprietary and source-available so the platform can compound into the next FastScript AI products.
+            Write normal <code class="ic">js</code>, <code class="ic">ts</code>, <code class="ic">jsx</code>, or <code class="ic">tsx</code> in <code class="ic">.fs</code> and ship pages, APIs, and jobs through one proof-backed runtime.
           </p>
 
           <div class="install-row">
@@ -85,7 +82,7 @@ export default function Home() {
               <div class="hero-stack-card hero-stack-card-primary">
                 <span class="hero-stack-label">Runtime</span>
                 <strong class="hero-stack-title">Frontend + backend + jobs</strong>
-                <span class="hero-stack-copy">One runtime pipeline. No split-brain stack.</span>
+                <span class="hero-stack-copy">One runtime. One delivery loop.</span>
               </div>
               <div class="hero-stack-card hero-stack-card-secondary">
                 <span class="hero-stack-label">Targets</span>

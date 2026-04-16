@@ -35,7 +35,7 @@ export default function LearnSchoolPage() {
       <header class="sec-header learn-hero">
         <p class="kicker">FastScript school</p>
         <h1 class="h1">From zero knowledge to FastScript mastery.</h1>
-        <p class="lead">Learn full-stack development inside FastScript through guided lessons, interactive examples, local checkpoints, capstones, and a browser-only progress system. No signup, no paywall, no hidden account system.</p>
+        <p class="lead">Learn FastScript from zero to full-stack mastery with browser-only lessons, labs, and capstones.</p>
       </header>
 
       <div class="docs-card-grid">${stats}</div>
@@ -44,7 +44,7 @@ export default function LearnSchoolPage() {
         <aside class="learn-sidebar">
           <div class="learn-sidebar-card">
             <p class="learn-sidebar-title">How this school works</p>
-            <p class="learn-sidebar-copy">Start with the beginner track if you are brand new. Start with the professional track if you already ship TS/JS and want secure migration and production adoption. Progress stays in your browser unless you export it.</p>
+            <p class="learn-sidebar-copy">Start with beginner if you are new. Start with professional if you already ship TS/JS. Progress stays in your browser unless you export it.</p>
             <div class="learn-progress" data-school-progress>
               <div class="learn-progress-bar"><div class="learn-progress-fill" data-school-progress-fill></div></div>
               <p class="learn-progress-label" data-school-progress-label>0 of ${getLessonCount()} lessons completed</p>

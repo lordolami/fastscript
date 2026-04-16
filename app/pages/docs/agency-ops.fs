@@ -166,6 +166,25 @@ export default function AgencyOpsGuidePage() {
           </div>
         </div>
       </section>
+
+      <hr class="section-divider">
+
+      <section class="docs-syntax">
+        <header class="sec-header-sm">
+          <p class="kicker">Learn this in the school</p>
+          <h2 class="h2">Use the school to understand why Agency Ops works the way it does.</h2>
+        </header>
+        <div class="docs-card-grid">
+          <div class="docs-card">
+            <p class="docs-card-title">Strict TS in .fs</p>
+            <p class="docs-card-copy">Start with the school path that teaches ordinary TypeScript inside <code class="ic">.fs</code> and the app/runtime contract around it.</p>
+            <a class="docs-card-link" href="/learn/foundations/your-first-fs-file">Study strict TS in .fs &#8594;</a>
+            <a class="docs-card-link" href="/learn/professional/support-matrix-and-proof-lanes">Study support-lane judgment &#8594;</a>
+            <a class="docs-card-link" href="/learn/migration/dry-run-convert-rollback">Study migration safety &#8594;</a>
+            <a class="docs-card-link" href="/learn/mastery/delivery-checklist-and-release-readiness">Finish with release readiness &#8594;</a>
+          </div>
+        </div>
+      </section>
     </section>
   `;
 }

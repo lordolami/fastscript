@@ -10,6 +10,16 @@ function lesson(config) {
   };
 }
 
+function quiz(question, correct, success, retry, options) {
+  return {
+    question,
+    correct,
+    success,
+    retry,
+    options
+  };
+}
+
 const MODULES = [
   {
     slug: "beginner",
@@ -495,20 +505,121 @@ const CAPSTONES = [
   }
 ];
 
+const QUIZ_BANK = {
+  "beginner/what-is-code": quiz("What does the browser do with the HTML your route returns?", "render", "Right. The browser turns returned HTML into the interface the learner can see and use.", "Not quite. Think about the browser as the thing that renders structure, style, and behavior into a page.", [
+    ["store", "It stores the HTML forever in a database."],
+    ["render", "It renders the HTML, CSS, and JavaScript into the visible page."],
+    ["compile", "It compiles the route into a new programming language."]
+  ]),
+  "beginner/browser-requests-and-forms": quiz("What happens when a learner submits a form?", "request", "Exactly. The browser sends a request to the route or API target in the form action.", "Close, but the key idea is that forms trigger requests your app can handle.", [
+    ["request", "The browser sends a request with the form data."],
+    ["refresh", "The browser only refreshes the page without sending data."],
+    ["style", "The browser only changes CSS classes locally."]
+  ]),
+  "foundations/your-first-fs-file": quiz("What is the safest way to describe .fs to another developer?", "container", "Yes. .fs is a universal JS/TS container inside the FastScript runtime contract.", "Try the explanation that keeps normal JS/TS authoring intact instead of inventing a second language.", [
+    ["language", ".fs is a completely separate language you must rewrite everything into."],
+    ["container", ".fs is a universal JS/TS container for the FastScript runtime."],
+    ["alias", ".fs is only a cosmetic alias for .txt files."]
+  ]),
+  "foundations/cli-and-app-structure": quiz("Where should route rendering usually live in a FastScript app?", "pages", "Right. Page rendering belongs in app/pages, with APIs and middleware in their own clear places.", "Think about the folder that maps most directly to routes users visit.", [
+    ["jobs", "Inside app/jobs because every page is background work."],
+    ["pages", "Inside app/pages because that is the route-rendering surface."],
+    ["db", "Inside app/db because routes are database records."]
+  ]),
+  "fullstack/pages-routes-and-loaders": quiz("What is the clearest difference between a page route and an API route?", "ui", "Correct. Pages render what users see, while APIs handle data and mutation operations.", "Try the option that separates user-visible rendering from data or mutation logic.", [
+    ["ui", "Pages render UI; APIs handle data and mutations."],
+    ["same", "They are the same thing with different file names only."],
+    ["auth", "Pages are for auth and APIs are for CSS."]
+  ]),
+  "fullstack/request-lifecycle-in-products": quiz("Why do product apps queue jobs instead of doing every side effect inline?", "responsive", "Exactly. Jobs keep the request responsive while follow-up work still happens reliably.", "The key tradeoff is speed and reliability during the request lifecycle.", [
+    ["responsive", "To keep the request fast while async follow-up work happens separately."],
+    ["random", "Because jobs are more random and harder to trace."],
+    ["styles", "Because CSS can only load after a job runs."]
+  ]),
+  "databases/state-and-persistence": quiz("What makes data persistent in a full-stack app?", "survive", "Yes. Persistent data survives refresh, restart, and deployment instead of living only in the current tab.", "Look for the answer about data surviving beyond the current request or tab.", [
+    ["survive", "It survives refresh, restart, and deployment."],
+    ["hidden", "It is hidden from the user interface."],
+    ["styled", "It uses the right CSS classes."]
+  ]),
+  "databases/migrations-and-seed-discipline": quiz("Why is realistic seed data useful?", "proof", "Right. Realistic seed data makes demos, tests, and workflows prove believable product behavior.", "Think about what helps routes and tests reveal real product problems earlier.", [
+    ["proof", "It makes demos, tests, and workflows prove believable product behavior."],
+    ["speed", "It removes the need for migrations entirely."],
+    ["secrets", "It hides environment configuration from operators."]
+  ]),
+  "styling/css-with-purpose": quiz("What should come before flashy styling in product UI work?", "hierarchy", "Exactly. Layout, grouping, and hierarchy should be clear before decorative choices.", "The best answer focuses on structure and readability first.", [
+    ["animation", "Heavy motion and gradients should always come first."],
+    ["hierarchy", "Clear layout, spacing, and hierarchy should come first."],
+    ["icons", "Icons should replace layout decisions entirely."]
+  ]),
+  "styling/responsive-layout-and-ui-patterns": quiz("Why do teams start responsive layout work from constrained screens?", "mobile", "Yes. Starting from smaller screens keeps the layout honest and easier to scale up.", "Think mobile-first and readable flow, not ideal desktop screenshots.", [
+    ["mobile", "It keeps the layout honest and easier to scale up."],
+    ["desktop", "Because mobile can always be fixed at the end."],
+    ["fonts", "Because only small screens support typography."]
+  ]),
+  "shipping/build-validate-and-start": quiz("Why is a green build not enough before shipping?", "qa", "Correct. You still need validation, QA, and runtime checks before calling the app ready.", "The missing step is the broader verification loop, not more bundling.", [
+    ["qa", "Because validation, QA, and runtime checks still need to pass."],
+    ["copy", "Because landing-page copy must always be longer."],
+    ["css", "Because builds never include styles."]
+  ]),
+  "shipping/adapters-custom-hosts-and-release-discipline": quiz("What is the universal deployable unit on a custom host?", "dist", "Right. Teams deploy the app plus dist and then start the FastScript runtime.", "Look for the option that keeps the built app and runtime together, not a random provider file.", [
+    ["worker", "A single provider-specific worker file in every case."],
+    ["dist", "The app plus dist, then the FastScript production runtime."],
+    ["screenshot", "A screenshot of the app so operators know what it looked like."]
+  ]),
+  "professional/support-matrix-and-proof-lanes": quiz("How should a team treat the support matrix?", "contract", "Yes. It is a product contract for adoption decisions, not decorative docs copy.", "Choose the answer that ties support claims directly to delivery risk and rollout choices.", [
+    ["contract", "As a product contract for proven, partial, and planned lanes."],
+    ["marketing", "As optional marketing copy that can be ignored."],
+    ["theme", "As a visual theme guide for docs pages."]
+  ]),
+  "professional/runtime-boundaries-and-proof-backed-rollout": quiz("What should happen when a compatibility gap appears during rollout?", "escalate", "Exactly. Escalate it into compatibility or proof work instead of hiding it locally.", "The safe move is to surface the gap, not patch around it quietly.", [
+    ["escalate", "Escalate it into compatibility or proof work."],
+    ["hide", "Hide it in one app with a local hack."],
+    ["ship", "Ship first and document it later only if someone complains."]
+  ]),
+  "migration/dry-run-convert-rollback": quiz("Why does dry-run come before write mode in migration work?", "review", "Correct. Dry-run lets you review the proposed impact before real files change.", "Pick the option that protects teams from blind edits.", [
+    ["review", "It shows the proposed impact before real files change."],
+    ["speed", "It is always faster than write mode in production."],
+    ["styles", "It checks CSS before JavaScript."]
+  ]),
+  "migration/manifest-diffs-and-compatibility-gaps": quiz("What should skipped or review-needed files change?", "plan", "Right. They should make the rollout plan more cautious and more explicit.", "The clue is that partial migration output affects delivery planning, not just curiosity.", [
+    ["plan", "They should change the rollout plan and trigger more review."],
+    ["nothing", "They change nothing if most files converted."],
+    ["theme", "They only affect documentation styling."]
+  ]),
+  "mastery/capstone-product-architecture": quiz("When is agency-ops usually the better reference than startup-mvp?", "strict", "Yes. Agency Ops is the stricter TS-in-.fs proving-ground app for product-shaped work.", "Choose the option about strict TypeScript product proving, not the general greenfield starter.", [
+    ["strict", "When you want the stricter TS-in-.fs proving-ground reference."],
+    ["always", "Always, because startup-mvp should never be used."],
+    ["never", "Never, because reference apps should not influence architecture."]
+  ]),
+  "mastery/delivery-checklist-and-release-readiness": quiz("What turns a capstone from feature-complete into release-ready?", "discipline", "Exactly. QA, deployment docs, support-lane judgment, and proof discipline make it release-ready.", "Look for the answer about delivery discipline, not only finished screens.", [
+    ["discipline", "QA, deployment docs, proof, and support-lane discipline."],
+    ["screens", "A few more rendered screens with no verification."],
+    ["speed", "Only faster build times."]
+  ])
+};
+
+function attachQuiz(moduleSlug, lessonSlug, entry) {
+  return {
+    ...entry,
+    quiz: QUIZ_BANK[getLessonKey(moduleSlug, lessonSlug)]
+  };
+}
+
 const LESSONS = MODULES.flatMap(module =>
   module.lessons.map((entry, lessonIndex) => ({
     moduleSlug: module.slug,
     moduleTitle: module.title,
     moduleLevel: module.level,
     lessonIndex,
-    ...entry
+    ...attachQuiz(module.slug, entry.slug, entry)
   }))
 );
 
 function emptyLessonState(checkpointCount) {
   return {
     checks: Array.from({ length: checkpointCount }, () => false),
-    complete: false
+    complete: false,
+    quizPassed: false
   };
 }
 
@@ -539,7 +650,7 @@ export function getLesson(moduleSlug, lessonSlug) {
   if (!entry) return null;
   return {
     module,
-    lesson: entry
+    lesson: attachQuiz(moduleSlug, lessonSlug, entry)
   };
 }
 
@@ -612,6 +723,7 @@ export function normalizeSchoolState(rawState) {
         const checks = Array.isArray(incoming.checks) ? incoming.checks : [];
         nextEntry.checks = nextEntry.checks.map((_, index) => Boolean(checks[index]));
         nextEntry.complete = Boolean(incoming.complete);
+        nextEntry.quizPassed = Boolean(incoming.quizPassed || incoming.complete);
       }
       normalized.lessons[lessonKey] = nextEntry;
     }

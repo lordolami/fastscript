@@ -24,7 +24,7 @@ export default function LearnCapstonePage() {
       <header class="sec-header learn-hero">
         <p class="kicker">Capstone hub</p>
         <h1 class="h1">Turn the school into real product work.</h1>
-        <p class="lead">Choose the capstone that matches your stage, then build against the most honest FastScript reference app for the job.</p>
+        <p class="lead">Choose a capstone, pick a baseline, and leave with a practical build plan.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -50,6 +50,81 @@ export default function LearnCapstonePage() {
 
       <section class="learn-next">
         <header class="sec-header-sm">
+          <p class="kicker">Starter generator</p>
+          <h2 class="h2">Get a guided first build plan.</h2>
+        </header>
+        <div class="docs-card-grid">
+          <div class="docs-card" data-capstone-generator>
+            <p class="docs-card-title">Your setup</p>
+            <p class="docs-card-copy">Choose the shape you want to build and the generator will recommend the best baseline, docs, and first commands.</p>
+            <div class="steps">
+              <label class="step">
+                <span class="step-num">1</span>
+                <span class="step-body">
+                  <span class="step-title">Learner stage</span>
+                  <select class="input" data-capstone-stage>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="professional">Professional</option>
+                    <option value="mastery">Mastery</option>
+                  </select>
+                </span>
+              </label>
+              <label class="step">
+                <span class="step-num">2</span>
+                <span class="step-body">
+                  <span class="step-title">Product shape</span>
+                  <select class="input" data-capstone-product>
+                    <option value="greenfield-saas">Greenfield SaaS</option>
+                    <option value="internal-ops">Internal ops dashboard</option>
+                    <option value="service-delivery">Service delivery workflow</option>
+                    <option value="migration">Strict TS migration slice</option>
+                  </select>
+                </span>
+              </label>
+              <label class="step">
+                <span class="step-num">3</span>
+                <span class="step-body">
+                  <span class="step-title">Baseline preference</span>
+                  <select class="input" data-capstone-baseline>
+                    <option value="auto">Auto choose</option>
+                    <option value="startup-mvp">startup-mvp</option>
+                    <option value="agency-ops">agency-ops</option>
+                  </select>
+                </span>
+              </label>
+              <label class="step">
+                <span class="step-num">4</span>
+                <span class="step-body">
+                  <span class="step-title">Deployment posture</span>
+                  <select class="input" data-capstone-deploy>
+                    <option value="adapter">Adapter-first</option>
+                    <option value="custom">Custom-host-first</option>
+                  </select>
+                </span>
+              </label>
+            </div>
+            <div class="cta-actions">
+              <button type="button" class="btn btn-primary btn-lg" data-capstone-build>Generate starter plan</button>
+              <button type="button" class="btn btn-ghost btn-lg" data-capstone-copy>Copy plan</button>
+            </div>
+          </div>
+          <div class="docs-card" data-capstone-output>
+            <p class="docs-card-title">Starter recommendation</p>
+            <p class="docs-card-copy" data-capstone-summary>Generate a plan to see your recommended baseline, first workflow, and proof commands.</p>
+            <div class="steps" data-capstone-checklist></div>
+            <div class="cta-actions">
+              <a class="btn btn-secondary btn-lg" href="/docs/team-dashboard-saas" data-capstone-baseline-link>Open recommended baseline</a>
+              <a class="btn btn-ghost btn-lg" href="/docs/support" data-capstone-support-link>Open support matrix</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section class="learn-next">
+        <header class="sec-header-sm">
           <p class="kicker">Capstone tracks</p>
           <h2 class="h2">Choose the build that matches your current level.</h2>
         </header>
@@ -57,4 +132,87 @@ export default function LearnCapstonePage() {
       </section>
     </section>
   `;
+}
+
+export function hydrate({root}) {
+  const stage = root.querySelector("[data-capstone-stage]");
+  const product = root.querySelector("[data-capstone-product]");
+  const baseline = root.querySelector("[data-capstone-baseline]");
+  const deploy = root.querySelector("[data-capstone-deploy]");
+  const summary = root.querySelector("[data-capstone-summary]");
+  const checklist = root.querySelector("[data-capstone-checklist]");
+  const baselineLink = root.querySelector("[data-capstone-baseline-link]");
+  const buildButton = root.querySelector("[data-capstone-build]");
+  const copyButton = root.querySelector("[data-capstone-copy]");
+
+  const resolveRecommendation = () => {
+    const stageValue = stage?.value || "beginner";
+    const productValue = product?.value || "greenfield-saas";
+    const baselineValue = baseline?.value || "auto";
+    const deployValue = deploy?.value || "adapter";
+    const recommendedBaseline = baselineValue !== "auto"
+      ? baselineValue
+      : (productValue === "migration" || productValue === "service-delivery" || stageValue === "professional" ? "agency-ops" : "startup-mvp");
+    const baselineDoc = recommendedBaseline === "agency-ops" ? "/docs/agency-ops" : "/docs/team-dashboard-saas";
+    const proofCommand = recommendedBaseline === "agency-ops" ? "npm run test:agency-ops" : "npm run test:startup-mvp-saas";
+    const buildTarget = productValue === "migration"
+      ? "convert one route or feature slice first"
+      : productValue === "internal-ops"
+        ? "ship an authenticated dashboard with one mutation and one job"
+        : productValue === "service-delivery"
+          ? "build a service-delivery workflow with assignments or reminders"
+          : "ship a greenfield SaaS baseline with auth, billing, and QA";
+    const deployNote = deployValue === "custom"
+      ? "Document the custom-host runtime handoff and the deployable dist artifact."
+      : "Use the adapter path first, then prove the generated deployment output end to end.";
+    return {
+      recommendedBaseline,
+      baselineDoc,
+      proofCommand,
+      summary: `Start from ${recommendedBaseline}, ${buildTarget}, then run ${proofCommand} and npm run validate before widening scope.`,
+      checklist: [
+        `Create your first slice: ${buildTarget}.`,
+        `Open ${recommendedBaseline === "agency-ops" ? "Agency Ops" : "Team Dashboard SaaS"} docs and map features to /docs/support.`,
+        `Run ${proofCommand}.`,
+        "Run npm run validate and keep the support lane honest.",
+        deployNote
+      ]
+    };
+  };
+
+  const render = () => {
+    const recommendation = resolveRecommendation();
+    if (summary) summary.textContent = recommendation.summary;
+    if (checklist) {
+      checklist.innerHTML = recommendation.checklist.map((item, index) => `
+        <div class="step">
+          <span class="step-num">0${index + 1}</span>
+          <span class="step-body">
+            <span class="step-copy">${item}</span>
+          </span>
+        </div>
+      `).join("");
+    }
+    if (baselineLink) {
+      baselineLink.setAttribute("href", recommendation.baselineDoc);
+      baselineLink.textContent = `Open ${recommendation.recommendedBaseline} docs`;
+    }
+  };
+
+  const copyPlan = async () => {
+    const recommendation = resolveRecommendation();
+    const text = [recommendation.summary, "", ...recommendation.checklist.map((item, index) => `${index + 1}. ${item}`)].join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      if (copyButton) copyButton.textContent = "Copied plan";
+      setTimeout(() => {
+        if (copyButton) copyButton.textContent = "Copy plan";
+      }, 1200);
+    } catch (_) {}
+  };
+
+  [stage, product, baseline, deploy].forEach(control => control?.addEventListener("change", render));
+  buildButton?.addEventListener("click", render);
+  copyButton?.addEventListener("click", copyPlan);
+  render();
 }

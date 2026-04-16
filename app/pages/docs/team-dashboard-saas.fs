@@ -112,6 +112,14 @@ export default function TeamDashboardSaasDocsPage() {
         </header>
         <div class="docs-card-grid">
           <div class="docs-card">
+            <p class="docs-card-title">Learn this in the school</p>
+            <p class="docs-card-copy">Use the school when you want the baseline explained step by step before you fork it into a real product.</p>
+            <a class="docs-card-link" href="/learn/beginner/what-is-code">Begin with web basics &#8594;</a>
+            <a class="docs-card-link" href="/learn/fullstack/pages-routes-and-loaders">Study the full-stack flow &#8594;</a>
+            <a class="docs-card-link" href="/learn/shipping/build-validate-and-start">Study shipping discipline &#8594;</a>
+            <a class="docs-card-link" href="/learn/mastery/capstone-product-architecture">Use the mastery capstone path &#8594;</a>
+          </div>
+          <div class="docs-card">
             <p class="docs-card-title">Open adoption flow</p>
             <p class="docs-card-copy">See how this baseline fits into the broader greenfield and migration program.</p>
             <a class="docs-card-link" href="/docs/adoption">Open adoption guide &#8594;</a>

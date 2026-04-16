@@ -21,6 +21,11 @@ function checklist(lesson) {
 function cardList(items) {
   return items.map(item => `<li>${item}</li>`).join("");
 }
+function quizOptions(lesson) {
+  return lesson.quiz.options.map(([id, copy]) => `
+    <button type="button" class="btn btn-ghost btn-lg" data-school-quiz-option="${id}">${copy}</button>
+  `).join("");
+}
 export async function load(ctx) {
   const result = getLesson(ctx.params.module, ctx.params.lesson);
   if (!result) return null;
@@ -156,6 +161,18 @@ export default function LearnLessonPage({module, lesson, nav}) {
               <h2 class="h2">Do not leave the lesson until these are true.</h2>
             </header>
             <div class="learn-checklist">${checklist(lesson)}</div>
+            <div
+              class="docs-card"
+              data-school-quiz
+              data-school-quiz-correct="${lesson.quiz.correct}"
+              data-school-quiz-success="${lesson.quiz.success.replace(/"/g, "&quot;")}"
+              data-school-quiz-retry="${lesson.quiz.retry.replace(/"/g, "&quot;")}"
+            >
+              <p class="docs-card-title">Mini quiz</p>
+              <p class="docs-card-copy">${lesson.quiz.question}</p>
+              <div class="cta-actions">${quizOptions(lesson)}</div>
+              <p class="learn-path-note" data-school-quiz-feedback>Choose one answer to check your understanding.</p>
+            </div>
             <div class="docs-card" data-school-complete-banner hidden>
               <p class="docs-card-title">Lesson completed</p>
               <p class="learn-callout-copy">You have finished this lesson locally. Keep going while the concepts are still fresh.</p>
@@ -207,6 +224,12 @@ export function hydrate({root}) {
   const importButton = root.querySelector("[data-school-import]");
   const importInput = root.querySelector("[data-school-import-input]");
   const portabilityNote = root.querySelector("[data-school-portability-note]");
+  const quizCard = root.querySelector("[data-school-quiz]");
+  const quizFeedback = root.querySelector("[data-school-quiz-feedback]");
+  const quizOptions = [...root.querySelectorAll("[data-school-quiz-option]")];
+  const quizCorrect = quizCard?.getAttribute("data-school-quiz-correct") || "";
+  const quizSuccess = quizCard?.getAttribute("data-school-quiz-success") || "Correct.";
+  const quizRetry = quizCard?.getAttribute("data-school-quiz-retry") || "Try again.";
   const lessonKey = lab?.getAttribute("data-school-lesson-key");
   const lastLesson = lab?.getAttribute("data-school-last");
   const checks = [...root.querySelectorAll("[data-school-check]")];
@@ -258,7 +281,8 @@ export function hydrate({root}) {
     const state = readState();
     const lessonState = state.lessons?.[lessonKey] || ({
       checks: [],
-      complete: false
+      complete: false,
+      quizPassed: false
     });
     const doneCount = lessonState.checks.filter(Boolean).length;
     const total = checks.length || 1;
@@ -271,15 +295,23 @@ export function hydrate({root}) {
       if (row) row.classList.toggle("is-done", active);
     });
     if (fill) fill.style.width = `${percent}%`;
-    if (label) label.textContent = lessonState.complete ? "Lesson complete" : `${doneCount} of ${checks.length} checkpoints marked`;
+    if (label) label.textContent = lessonState.complete ? "Lesson complete" : `${doneCount} of ${checks.length} checkpoints marked${lessonState.quizPassed ? " • quiz passed" : " • quiz pending"}`;
     if (completeBanner) completeBanner.hidden = !lessonState.complete;
+    quizOptions.forEach(button => {
+      button.classList.toggle("btn-primary", lessonState.quizPassed && button.getAttribute("data-school-quiz-option") === quizCorrect);
+      button.classList.toggle("btn-ghost", !lessonState.quizPassed || button.getAttribute("data-school-quiz-option") !== quizCorrect);
+    });
+    if (quizFeedback && !lessonState.quizPassed && quizFeedback.textContent === quizSuccess) {
+      quizFeedback.textContent = "Choose one answer to check your understanding.";
+    }
   };
   const patchState = mutate => {
     const state = readState();
     if (!state.lessons[lessonKey]) {
       state.lessons[lessonKey] = {
         checks: checks.map(() => false),
-        complete: false
+        complete: false,
+        quizPassed: false
       };
     }
     mutate(state.lessons[lessonKey], state);
@@ -325,16 +357,30 @@ export function hydrate({root}) {
     patchState(lessonState => {
       lessonState.checks = checks.map(() => true);
       lessonState.complete = true;
+      lessonState.quizPassed = true;
     });
+    if (quizFeedback) quizFeedback.textContent = quizSuccess;
   });
   resetButton?.addEventListener("click", () => {
     patchState(lessonState => {
       lessonState.checks = checks.map(() => false);
       lessonState.complete = false;
+      lessonState.quizPassed = false;
     });
     if (input) input.value = starter;
     if (output) output.textContent = compileSnippet(starter);
     if (portabilityNote) portabilityNote.textContent = "Lesson progress reset locally.";
+    if (quizFeedback) quizFeedback.textContent = "Choose one answer to check your understanding.";
+  });
+  quizOptions.forEach(button => {
+    button.addEventListener("click", () => {
+      const answer = button.getAttribute("data-school-quiz-option");
+      const passed = answer === quizCorrect;
+      patchState(lessonState => {
+        lessonState.quizPassed = passed;
+      });
+      if (quizFeedback) quizFeedback.textContent = passed ? quizSuccess : quizRetry;
+    });
   });
   shareButton?.addEventListener("click", async () => {
     const href = window.location.href;
