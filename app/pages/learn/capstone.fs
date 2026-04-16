@@ -133,7 +133,6 @@ export default function LearnCapstonePage() {
     </section>
   `;
 }
-
 export function hydrate({root}) {
   const stage = root.querySelector("[data-capstone-stage]");
   const product = root.querySelector("[data-capstone-product]");
@@ -144,42 +143,24 @@ export function hydrate({root}) {
   const baselineLink = root.querySelector("[data-capstone-baseline-link]");
   const buildButton = root.querySelector("[data-capstone-build]");
   const copyButton = root.querySelector("[data-capstone-copy]");
-
   const resolveRecommendation = () => {
     const stageValue = stage?.value || "beginner";
     const productValue = product?.value || "greenfield-saas";
     const baselineValue = baseline?.value || "auto";
     const deployValue = deploy?.value || "adapter";
-    const recommendedBaseline = baselineValue !== "auto"
-      ? baselineValue
-      : (productValue === "migration" || productValue === "service-delivery" || stageValue === "professional" ? "agency-ops" : "startup-mvp");
+    const recommendedBaseline = baselineValue !== "auto" ? baselineValue : productValue === "migration" || productValue === "service-delivery" || stageValue === "professional" ? "agency-ops" : "startup-mvp";
     const baselineDoc = recommendedBaseline === "agency-ops" ? "/docs/agency-ops" : "/docs/team-dashboard-saas";
     const proofCommand = recommendedBaseline === "agency-ops" ? "npm run test:agency-ops" : "npm run test:startup-mvp-saas";
-    const buildTarget = productValue === "migration"
-      ? "convert one route or feature slice first"
-      : productValue === "internal-ops"
-        ? "ship an authenticated dashboard with one mutation and one job"
-        : productValue === "service-delivery"
-          ? "build a service-delivery workflow with assignments or reminders"
-          : "ship a greenfield SaaS baseline with auth, billing, and QA";
-    const deployNote = deployValue === "custom"
-      ? "Document the custom-host runtime handoff and the deployable dist artifact."
-      : "Use the adapter path first, then prove the generated deployment output end to end.";
+    const buildTarget = productValue === "migration" ? "convert one route or feature slice first" : productValue === "internal-ops" ? "ship an authenticated dashboard with one mutation and one job" : productValue === "service-delivery" ? "build a service-delivery workflow with assignments or reminders" : "ship a greenfield SaaS baseline with auth, billing, and QA";
+    const deployNote = deployValue === "custom" ? "Document the custom-host runtime handoff and the deployable dist artifact." : "Use the adapter path first, then prove the generated deployment output end to end.";
     return {
       recommendedBaseline,
       baselineDoc,
       proofCommand,
       summary: `Start from ${recommendedBaseline}, ${buildTarget}, then run ${proofCommand} and npm run validate before widening scope.`,
-      checklist: [
-        `Create your first slice: ${buildTarget}.`,
-        `Open ${recommendedBaseline === "agency-ops" ? "Agency Ops" : "Team Dashboard SaaS"} docs and map features to /docs/support.`,
-        `Run ${proofCommand}.`,
-        "Run npm run validate and keep the support lane honest.",
-        deployNote
-      ]
+      checklist: [`Create your first slice: ${buildTarget}.`, `Open ${recommendedBaseline === "agency-ops" ? "Agency Ops" : "Team Dashboard SaaS"} docs and map features to /docs/support.`, `Run ${proofCommand}.`, "Run npm run validate and keep the support lane honest.", deployNote]
     };
   };
-
   const render = () => {
     const recommendation = resolveRecommendation();
     if (summary) summary.textContent = recommendation.summary;
@@ -198,7 +179,6 @@ export function hydrate({root}) {
       baselineLink.textContent = `Open ${recommendation.recommendedBaseline} docs`;
     }
   };
-
   const copyPlan = async () => {
     const recommendation = resolveRecommendation();
     const text = [recommendation.summary, "", ...recommendation.checklist.map((item, index) => `${index + 1}. ${item}`)].join("\n");
@@ -210,7 +190,6 @@ export function hydrate({root}) {
       }, 1200);
     } catch (_) {}
   };
-
   [stage, product, baseline, deploy].forEach(control => control?.addEventListener("change", render));
   buildButton?.addEventListener("click", render);
   copyButton?.addEventListener("click", copyPlan);
