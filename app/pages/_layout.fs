@@ -3,7 +3,7 @@ const NAV = [{
   label: "Docs"
 }, {
   href: "/learn",
-  label: "Quickstart"
+  label: "Learn"
 }, {
   href: "/why-fastscript",
   label: "Why FS"
@@ -28,7 +28,7 @@ const NAV = [{
 }];
 const FOOTER_COLS = [{
   title: "Product",
-  links: [["Overview", "/"], ["Why FastScript", "/why-fastscript"], ["Quickstart", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"], ["Playground", "/docs/playground"]]
+  links: [["Overview", "/"], ["Why FastScript", "/why-fastscript"], ["Learn", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"], ["Playground", "/docs/playground"]]
 }, {
   title: "Language",
   links: [["Docs", "/docs"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"], ["Interop", "/docs/interop"], ["Spec", "/docs/v3"]]
@@ -86,7 +86,7 @@ export default function Layout({content, pathname}) {
             <span class="theme-icon" aria-hidden="true">&#9790;</span>
           </button>
           <a class="btn btn-ghost btn-sm" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="FastScript on GitHub">GitHub</a>
-          <a class="btn btn-primary btn-sm" href="/learn">Get Started</a>
+          <a class="btn btn-primary btn-sm" href="/learn">Start learning</a>
           <button type="button" class="menu-toggle" id="menu-toggle" data-nav-toggle aria-expanded="false" aria-label="Open menu" aria-controls="mobile-panel">&#9776;</button>
         </div>
       </div>

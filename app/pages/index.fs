@@ -29,7 +29,7 @@ export default function Home() {
           </div>
 
           <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="/learn">Get Started</a>
+            <a class="btn btn-primary btn-lg" href="/learn">Start learning</a>
             <a class="btn btn-secondary btn-lg" href="/why-fastscript">Why FastScript</a>
           </div>
         </div>
@@ -454,7 +454,7 @@ export default function Home() {
         <h2 class="cta-title">Build once in .fs. Ship anywhere.</h2>
         <p class="cta-copy">FastScript keeps the JavaScript ecosystem while cutting stack sprawl, payload weight, and build drag. Use <code class="ic">.fs</code> as your source of truth, keep package compatibility, and build on the same protected runtime foundation that powers the next FastScript AI products.</p>
         <div class="cta-actions">
-          <a class="btn btn-primary btn-lg" href="/learn">Start in 15 minutes</a>
+          <a class="btn btn-primary btn-lg" href="/learn">Enter the school</a>
           <a class="btn btn-secondary btn-lg" href="/why-fastscript">Why developers choose FastScript</a>
           <a class="btn btn-secondary btn-lg" href="/examples">Browse examples</a>
           <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub &rarr;</a>

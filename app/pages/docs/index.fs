@@ -16,7 +16,7 @@ const SECTIONS = [{
 }, {
   label: "Guides",
   links: [{
-    label: "Quickstart",
+    label: "FastScript school",
     href: "/learn"
   }, {
     label: "Why FastScript",
@@ -85,10 +85,10 @@ const CARDS = [{
   href: "/docs/agency-ops",
   cta: "Open Agency Ops"
 }, {
-  title: "Quickstart",
-  copy: "Install the CLI, create, build, and deploy a FastScript app in 15 minutes. Clone the repo when you want to work on the language itself.",
+  title: "FastScript school",
+  copy: "Start the interactive no-signup learning path that takes beginners from zero to full-stack FastScript mastery and gives professionals a safe migration path into .fs.",
   href: "/learn",
-  cta: "Get started"
+  cta: "Open school"
 }, {
   title: "Styling primitives",
   copy: "Primitive-first UI authoring with Box, Stack, Row, Text, Heading, Button, semantic props, and token-backed variants.",
