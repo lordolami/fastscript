@@ -128,6 +128,7 @@ try {
     "/api/work-items",
     "/api/agency-settings",
     "/api/billing/checkout",
+    "/api/billing/reminders",
     "/api/notifications/retry"
   ]) {
     assert.equal(manifest.apiRoutes.some((entry) => entry.path === route), true, `missing api route ${route}`);
@@ -184,6 +185,8 @@ try {
   assert.equal(authedDashboard.status, 200);
   assert.match(dashboardHtml, /Agency overview/);
   assert.match(dashboardHtml, /Northstar Client Ops/);
+  assert.match(dashboardHtml, /Queued reminders/i);
+  assert.match(dashboardHtml, /Overdue invoices/i);
 
   const clientResponse = await fetch(`${baseUrl}/api/clients`, {
     method: "POST",
@@ -278,6 +281,35 @@ try {
   assert.equal(billingJson.ok, true);
   assert.equal(billingJson.plan.name, "Growth");
 
+  const agencySnapshotResponse = await fetch(`${baseUrl}/api/agency`, {
+    headers: { cookie: cookieHeader(), accept: "application/json" }
+  });
+  updateCookies(agencySnapshotResponse);
+  const agencySnapshotJson = await agencySnapshotResponse.json();
+  assert.equal(agencySnapshotResponse.status, 200);
+  assert.equal(agencySnapshotJson.ok, true);
+  const dueInvoice = agencySnapshotJson.snapshot.invoices.find((entry) => entry.status === "due" || entry.status === "overdue");
+  assert.equal(Boolean(dueInvoice), true);
+
+  const reminderResponse = await fetch(`${baseUrl}/api/billing/reminders`, {
+    method: "POST",
+    headers: {
+      ...csrfHeaders(),
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      invoiceId: dueInvoice.id,
+      action: "resend"
+    })
+  });
+  updateCookies(reminderResponse);
+  const reminderJson = await reminderResponse.json();
+  assert.equal(reminderResponse.status, 200);
+  assert.equal(reminderJson.ok, true);
+  assert.equal(reminderJson.invoice.id, dueInvoice.id);
+  assert.equal(reminderJson.invoice.reminderStatus, "delivered");
+  assert.match(reminderJson.job.kind, /invoice-reminder/);
+
   const settingsResponse = await fetch(`${baseUrl}/api/agency-settings`, {
     method: "POST",
     headers: {
@@ -329,7 +361,9 @@ try {
   const billingHtml = await billingPage.text();
   assert.equal(billingPage.status, 200);
   assert.match(billingHtml, /Growth/);
-  assert.match(billingHtml, /invoice trail/i);
+  assert.match(billingHtml, /Invoice reminders/i);
+  assert.match(billingHtml, /Reminder history/i);
+  assert.match(billingHtml, /Resend now|Send now/);
 
   const opsPage = await fetch(`${baseUrl}/dashboard/ops`, { headers: { cookie: cookieHeader() } });
   updateCookies(opsPage);
@@ -340,6 +374,8 @@ try {
   assert.match(opsHtml, /Kemi Delivery/);
   assert.match(opsHtml, /Save assignment/);
   assert.match(opsHtml, /Support email:/);
+  assert.match(opsHtml, /Queued reminders/i);
+  assert.match(opsHtml, /Queue reminder|Resend now|Send now/);
 
   console.log("test-agency-ops pass");
 } finally {

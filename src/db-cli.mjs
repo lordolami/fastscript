@@ -45,47 +45,45 @@ async function createLedgerAdapter(driver = (process.env.DB_DRIVER || "file").to
     };
   }
 
-  try {
-    const { Client } = await import("pg");
-    const client = new Client({ connectionString: process.env.DATABASE_URL });
-    await client.connect();
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS fs_migrations_ledger (
-        id text PRIMARY KEY,
-        applied_at timestamptz NOT NULL DEFAULT now()
-      );
-    `);
-    return {
-      type: "postgres",
-      async listApplied() {
-        const rows = (await client.query("SELECT id FROM fs_migrations_ledger ORDER BY applied_at ASC")).rows;
-        return rows.map((row) => row.id);
-      },
-      async markApplied(id) {
-        await client.query(
-          "INSERT INTO fs_migrations_ledger(id) VALUES($1) ON CONFLICT(id) DO NOTHING",
-          [id],
-        );
-      },
-      async markRolledBack(id) {
-        await client.query("DELETE FROM fs_migrations_ledger WHERE id=$1", [id]);
-      },
-      async close() {
-        await client.end();
-      },
-    };
-  } catch {
-    return createLedgerAdapter("file");
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is required when DB_DRIVER=postgres");
   }
+  const { Client } = await import("pg");
+  const client = new Client({ connectionString: process.env.DATABASE_URL });
+  await client.connect();
+  await client.query(`
+    CREATE TABLE IF NOT EXISTS fs_migrations_ledger (
+      id text PRIMARY KEY,
+      applied_at timestamptz NOT NULL DEFAULT now()
+    );
+  `);
+  return {
+    type: "postgres",
+    async listApplied() {
+      const rows = (await client.query("SELECT id FROM fs_migrations_ledger ORDER BY applied_at ASC")).rows;
+      return rows.map((row) => row.id);
+    },
+    async markApplied(id) {
+      await client.query(
+        "INSERT INTO fs_migrations_ledger(id) VALUES($1) ON CONFLICT(id) DO NOTHING",
+        [id],
+      );
+    },
+    async markRolledBack(id) {
+      await client.query("DELETE FROM fs_migrations_ledger WHERE id=$1", [id]);
+    },
+    async close() {
+      await client.end();
+    },
+  };
 }
 
 async function createMigrationDatabase(driver = (process.env.DB_DRIVER || "file").toLowerCase()) {
   if (driver !== "postgres") return createFileDatabase({ dir: ".fastscript", name: "appdb" });
-  try {
-    return await createPostgresCollectionDatabase({ connectionString: process.env.DATABASE_URL });
-  } catch {
-    return createFileDatabase({ dir: ".fastscript", name: "appdb" });
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is required when DB_DRIVER=postgres");
   }
+  return await createPostgresCollectionDatabase({ connectionString: process.env.DATABASE_URL });
 }
 
 function migrationFiles() {

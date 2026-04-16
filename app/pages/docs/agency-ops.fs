@@ -10,7 +10,7 @@ export default function AgencyOpsGuidePage() {
       <div class="docs-card-grid">
         <div class="docs-card">
           <p class="docs-card-title">What it is</p>
-          <p class="docs-card-copy">A small-agency client-ops product with clients, engagements, team, billing, assignment-aware delivery queue, settings, and ops follow-up flows. It is documented publicly, but it does not replace the official <code class="ic">startup-mvp</code> starter contract.</p>
+          <p class="docs-card-copy">A small-agency client-ops product with clients, engagements, team, billing, invoice reminders, assignment-aware delivery queue, settings, and ops follow-up flows. It is documented publicly, but it does not replace the official <code class="ic">startup-mvp</code> starter contract.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Why it exists</p>
@@ -67,7 +67,7 @@ export default function AgencyOpsGuidePage() {
           </div>
           <div class="story-cell">
             <p class="story-cell-title">APIs</p>
-            <p class="story-cell-copy">Mutations and workflow actions live in <code class="ic">app/api</code>: session bootstrap, agency snapshot, client create/list, team invite, settings update, billing checkout, and notification replay.</p>
+          <p class="story-cell-copy">Mutations and workflow actions live in <code class="ic">app/api</code>: session bootstrap, agency snapshot, client create/list, team invite, settings update, billing checkout, billing reminders, and notification replay.</p>
           </div>
           <div class="story-cell">
             <p class="story-cell-title">Jobs</p>
@@ -125,12 +125,12 @@ export default function AgencyOpsGuidePage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">Cloudflare env/bindings</p>
-            <p class="docs-card-copy">Use <code class="ic">app/env.schema.fs</code>, <code class="ic">.dev.vars.example</code>, and <code class="ic">wrangler.toml.example</code> to wire branding, support contact, notification sender, and region without inventing a second deployment layer.</p>
-          </div>
-          <div class="docs-card">
-            <p class="docs-card-title">Custom host path</p>
-            <p class="docs-card-copy">If you deploy on Google, AWS, Oracle, or another Node/container host, ship the app with <code class="ic">dist/</code> intact, run the standard production entrypoint, and use the documented <code class="ic">DB_DRIVER=postgres</code> + <code class="ic">DATABASE_URL</code> path when you want real persistence.</p>
-          </div>
+          <p class="docs-card-copy">Use <code class="ic">app/env.schema.fs</code>, <code class="ic">.dev.vars.example</code>, and <code class="ic">wrangler.toml.example</code> to wire branding, support contact, notification sender, and region without inventing a second deployment layer.</p>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Custom host path</p>
+          <p class="docs-card-copy">If you deploy on Google, AWS, Oracle, or another Node/container host, ship the app with <code class="ic">dist/</code> intact, run the standard production entrypoint, and use the documented <code class="ic">DB_DRIVER=postgres</code> + <code class="ic">DATABASE_URL</code> path when you want real persistence. FastScript now fails fast if that Postgres path is misconfigured.</p>
+        </div>
           <div class="docs-card">
             <p class="docs-card-title">Governed proof lane</p>
             <p class="docs-card-copy">The product-shaped strict-TypeScript app pattern and the custom Node/container deploy path now belong in the governed compatibility system instead of living only as loose docs claims.</p>

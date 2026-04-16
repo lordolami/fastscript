@@ -10,7 +10,7 @@ This app proves a small agency can run client operations inside one FastScript a
 - authenticated agency dashboard
 - client and engagement management flows
 - team invite and workload tracking
-- billing, invoices, and follow-up flow
+- billing, invoices, reminder coverage, and follow-up flow
 - notification and receipt jobs
 - DB-backed agency state
 - Cloudflare-ready deployment path
@@ -25,6 +25,7 @@ This app proves a small agency can run client operations inside one FastScript a
 - agency/client/team domain model
 - API routes and queue jobs
 - billing upgrade flow
+- invoice reminder queue/send/resend flow
 - operator assignment and workload visibility
 - governed compatibility in real product usage
 
@@ -57,8 +58,11 @@ Manual production start on a custom Node/container host:
 
 ```bash
 node ../../src/cli.mjs build
+DB_DRIVER=postgres DATABASE_URL=postgres://agency_ops:change_me@127.0.0.1:5432/agency_ops node ../../src/cli.mjs db:migrate
 NODE_ENV=production PORT=4173 SESSION_SECRET=replace_me DB_DRIVER=postgres DATABASE_URL=postgres://agency_ops:change_me@127.0.0.1:5432/agency_ops node ../../src/cli.mjs start
 ```
+
+If you do not have an explicit `app/db/seed` file, the first owner sign-in bootstraps seeded agency data automatically. The important thing is that the runtime now fails fast if `DB_DRIVER=postgres` is set without a working `DATABASE_URL`.
 
 Cloudflare env/binding examples for the internal product track live here:
 
@@ -94,5 +98,6 @@ Check `/docs/support` in the main FastScript site for the governed support matri
 - Cloudflare deployment adapter generation
 - manual Node/container production start from built `dist/`
 - authenticated dashboard assignment and workload flows
+- authenticated billing reminder and follow-up flows
 
 If a valid JS/TS pattern used here fails in `.fs`, that is a FastScript compatibility bug.

@@ -82,8 +82,10 @@ For stateful internal products like Agency Ops, also run:
 
 ```bash
 DB_DRIVER=postgres DATABASE_URL=postgres://... node ./src/cli.mjs db:migrate
-DB_DRIVER=postgres DATABASE_URL=postgres://... node ./src/cli.mjs db:seed
 ```
+
+If the app has no explicit `app/db/seed` file, first-user bootstrap can seed the initial product data instead.
+When `DB_DRIVER=postgres` is set, FastScript now fails fast if Postgres is unavailable or `DATABASE_URL` is missing. It will not silently fall back to file storage.
 
 ## What to do on Google, AWS, Oracle, or similar providers
 
@@ -103,8 +105,9 @@ For `examples/agency-ops`, the same rule applies. The app-specific speed proof a
 
 1. `cd examples/agency-ops`
 2. `node ../../src/cli.mjs build`
-3. deploy the app with its `dist/` directory intact
-4. run `node ../../src/cli.mjs start` on a Node-capable target
+3. `DB_DRIVER=postgres DATABASE_URL=postgres://... node ../../src/cli.mjs db:migrate`
+4. deploy the app with its `dist/` directory intact
+5. run `NODE_ENV=production PORT=4173 SESSION_SECRET=... DB_DRIVER=postgres DATABASE_URL=... node ../../src/cli.mjs start` on a Node-capable target
 
 ## Node/PM2 (Stable Path)
 1. `npm run qa:all`

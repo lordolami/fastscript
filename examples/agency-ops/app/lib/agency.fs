@@ -4,23 +4,12 @@ const DEFAULT_PLANS = [
   { id: "plan_scale", name: "Scale", price: 349, seats: 40, support: "Priority ops support" }
 ];
 
-export function getAgencyOpsConfig(env = process.env) {
-  const fromEnv = (key, fallback = "") => {
-    const value = env[key];
-    if (!value) return fallback;
-    return String(value);
-  };
-  return {
-    appName: fromEnv("AGENCY_OPS_APP_NAME", "Agency Ops SaaS"),
-    supportEmail: fromEnv("AGENCY_OPS_SUPPORT_EMAIL", "ops@agencyops.local"),
-    notifyFrom: fromEnv("AGENCY_OPS_NOTIFY_FROM", "notifications@agencyops.local"),
-    primaryRegion: fromEnv("AGENCY_OPS_PRIMARY_REGION", "global"),
-    environment: fromEnv("NODE_ENV", "development")
-  };
-}
-
 function nowIso() {
   return new Date().toISOString();
+}
+
+function shiftIso(days) {
+  return new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
 }
 
 function id(prefix) {
@@ -54,6 +43,40 @@ function displayNameFromEmail(email = "") {
   return local.split(/\s+/).map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" ");
 }
 
+function buildInvoiceRecord(agencyId, planId, total, status, summary, issuedAt, dueAt, reminder = {}) {
+  return {
+    id: id("invoice"),
+    agencyId,
+    planId,
+    total,
+    status,
+    issuedAt: issuedAt || nowIso(),
+    dueAt: dueAt || shiftIso(7),
+    summary,
+    reminderStatus: reminder.reminderStatus || (status === "paid" ? "settled" : "idle"),
+    reminderCount: Number(reminder.reminderCount || 0),
+    lastReminderAt: reminder.lastReminderAt || "",
+    nextReminderAt: reminder.nextReminderAt || "",
+    reminderLabel: reminder.reminderLabel || (status === "overdue" ? "Needs follow-up" : "Watching due date"),
+    reminderChannel: reminder.reminderChannel || "email"
+  };
+}
+
+export function getAgencyOpsConfig(env = process.env) {
+  const fromEnv = (key, fallback = "") => {
+    const value = env[key];
+    if (!value) return fallback;
+    return String(value);
+  };
+  return {
+    appName: fromEnv("AGENCY_OPS_APP_NAME", "Agency Ops SaaS"),
+    supportEmail: fromEnv("AGENCY_OPS_SUPPORT_EMAIL", "ops@agencyops.local"),
+    notifyFrom: fromEnv("AGENCY_OPS_NOTIFY_FROM", "notifications@agencyops.local"),
+    primaryRegion: fromEnv("AGENCY_OPS_PRIMARY_REGION", "global"),
+    environment: fromEnv("NODE_ENV", "development")
+  };
+}
+
 export function seedPlans(db) {
   for (const plan of DEFAULT_PLANS) {
     if (!get(db, "plans", plan.id)) set(db, "plans", plan.id, plan);
@@ -72,14 +95,15 @@ export function createActivity(db, agencyId, type, message, actorId = "system") 
   return set(db, "activity", event.id, event);
 }
 
-export function queueNotificationJob(db, agencyId, kind, payload = {}) {
+export function queueNotificationJob(db, agencyId, kind, payload = {}, options = {}) {
   const record = {
     id: id("job"),
     agencyId,
     kind,
-    status: "queued",
+    status: options.status || "queued",
     payload,
-    createdAt: nowIso()
+    createdAt: options.createdAt || nowIso(),
+    deliveredAt: options.deliveredAt || ""
   };
   return set(db, "notificationJobs", record.id, record);
 }
@@ -280,22 +304,76 @@ export function createAgency(db, owner, options = {}) {
   ];
   for (const item of workItems) set(db, "workItems", item.id, item);
 
-  const invoice = {
-    id: id("invoice"),
-    agencyId: agency.id,
-    planId: starter.id,
-    total: starter.price,
-    status: "paid",
-    issuedAt: nowIso(),
-    summary: `${starter.name} plan invoice`
-  };
-  set(db, "invoices", invoice.id, invoice);
+  const invoices = [
+    buildInvoiceRecord(
+      agency.id,
+      starter.id,
+      starter.price,
+      "paid",
+      `${starter.name} plan invoice`,
+      shiftIso(-21),
+      shiftIso(-14),
+      {
+        reminderStatus: "settled",
+        reminderLabel: "No reminder needed",
+        reminderCount: 0
+      }
+    ),
+    buildInvoiceRecord(
+      agency.id,
+      starter.id,
+      1800,
+      "due",
+      "Cinder Studio onboarding invoice",
+      shiftIso(-2),
+      shiftIso(3),
+      {
+        reminderStatus: "queued",
+        nextReminderAt: shiftIso(1),
+        reminderLabel: "Queued for tomorrow",
+        reminderCount: 1
+      }
+    ),
+    buildInvoiceRecord(
+      agency.id,
+      starter.id,
+      950,
+      "overdue",
+      "Maple Health audit follow-up invoice",
+      shiftIso(-12),
+      shiftIso(-5),
+      {
+        reminderStatus: "delivered",
+        lastReminderAt: shiftIso(-1),
+        reminderLabel: "Last reminder sent yesterday",
+        reminderCount: 2
+      }
+    )
+  ];
+  for (const invoice of invoices) set(db, "invoices", invoice.id, invoice);
 
   createActivity(db, agency.id, "agency.created", `Agency ${agency.name} created`, owner.id);
   createActivity(db, agency.id, "client.seeded", `Seeded ${clientRows.length} client records`, owner.id);
   createActivity(db, agency.id, "ops.seeded", `Seeded ${workItems.length} delivery queue items`, owner.id);
   createActivity(db, agency.id, "billing.started", `Activated ${starter.name} plan`, owner.id);
+  createActivity(db, agency.id, "invoice-reminder.seeded", `Queued reminder coverage for ${invoices[1].summary}`, owner.id);
+  createActivity(db, agency.id, "invoice-reminder.seeded", `Logged delivered reminder for ${invoices[2].summary}`, owner.id);
+
   queueNotificationJob(db, agency.id, "weekly-client-recap", { agencyId: agency.id, clientCount: clientRows.length });
+  queueNotificationJob(
+    db,
+    agency.id,
+    "invoice-reminder",
+    { invoiceId: invoices[1].id, invoiceSummary: invoices[1].summary, mode: "queue" },
+    { status: "queued" }
+  );
+  queueNotificationJob(
+    db,
+    agency.id,
+    "invoice-reminder",
+    { invoiceId: invoices[2].id, invoiceSummary: invoices[2].summary, mode: "send" },
+    { status: "delivered", createdAt: shiftIso(-1), deliveredAt: shiftIso(-1) }
+  );
 
   return agency;
 }
@@ -312,6 +390,22 @@ export function requireAgencyForUser(db, user) {
   return { agency, membership };
 }
 
+export function summarizeWorkload(memberships, workItems) {
+  const activeMembers = (memberships || []).filter((entry) => entry.status === "active");
+  return activeMembers.map((member) => {
+    const assigned = (workItems || []).filter((item) => item.assigneeMembershipId === member.id && item.status !== "done");
+    return {
+      membershipId: member.id,
+      name: member.name || displayNameFromEmail(member.email),
+      email: member.email,
+      role: member.role,
+      assignedCount: assigned.length,
+      atRiskCount: assigned.filter((item) => item.status === "at-risk").length,
+      queuedCount: assigned.filter((item) => item.status === "queued").length
+    };
+  });
+}
+
 export function listAgencyData(db, agencyId) {
   const agency = get(db, "agencies", agencyId);
   const memberships = all(db, "memberships").filter((entry) => entry.agencyId === agencyId);
@@ -321,6 +415,7 @@ export function listAgencyData(db, agencyId) {
   const invoices = all(db, "invoices").filter((entry) => entry.agencyId === agencyId).sort((a, b) => String(b.issuedAt).localeCompare(String(a.issuedAt)));
   const notificationJobs = all(db, "notificationJobs").filter((entry) => entry.agencyId === agencyId).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
   const subscription = all(db, "subscriptions").filter((entry) => entry.agencyId === agencyId).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))[0] || null;
+  const reminderJobs = notificationJobs.filter((entry) => entry.kind === "invoice-reminder");
   const metrics = {
     teamMembers: memberships.filter((entry) => entry.status === "active").length,
     pendingInvites: memberships.filter((entry) => entry.status !== "active").length,
@@ -330,7 +425,10 @@ export function listAgencyData(db, agencyId) {
     queuedJobs: notificationJobs.filter((entry) => entry.status === "queued").length,
     activeWorkItems: workItems.filter((entry) => entry.status !== "done").length,
     atRiskWorkItems: workItems.filter((entry) => entry.status === "at-risk").length,
-    unassignedWorkItems: workItems.filter((entry) => !entry.assigneeMembershipId && entry.status !== "done").length
+    unassignedWorkItems: workItems.filter((entry) => !entry.assigneeMembershipId && entry.status !== "done").length,
+    dueInvoices: invoices.filter((entry) => entry.status === "due").length,
+    overdueInvoices: invoices.filter((entry) => entry.status === "overdue").length,
+    queuedReminders: reminderJobs.filter((entry) => entry.status === "queued").length
   };
   return {
     agency,
@@ -340,6 +438,7 @@ export function listAgencyData(db, agencyId) {
     activities,
     invoices,
     notificationJobs,
+    reminderJobs,
     subscription,
     metrics,
     plans: listPlans(db),
@@ -405,22 +504,6 @@ export function assignWorkItem(db, agencyId, actor, body) {
   return next;
 }
 
-export function summarizeWorkload(memberships, workItems) {
-  const activeMembers = (memberships || []).filter((entry) => entry.status === "active");
-  return activeMembers.map((member) => {
-    const assigned = (workItems || []).filter((item) => item.assigneeMembershipId === member.id && item.status !== "done");
-    return {
-      membershipId: member.id,
-      name: member.name || displayNameFromEmail(member.email),
-      email: member.email,
-      role: member.role,
-      assignedCount: assigned.length,
-      atRiskCount: assigned.filter((item) => item.status === "at-risk").length,
-      queuedCount: assigned.filter((item) => item.status === "queued").length
-    };
-  });
-}
-
 export function updateAgencySettings(db, agencyId, body) {
   const current = get(db, "agencies", agencyId);
   const next = {
@@ -448,19 +531,63 @@ export function upgradePlan(db, agencyId, actor, planId) {
     createdAt: nowIso()
   };
   set(db, "subscriptions", subscription.id, subscription);
-  const invoice = {
-    id: id("invoice"),
+  const invoice = buildInvoiceRecord(
     agencyId,
-    planId: plan.id,
-    total: plan.price,
-    status: "paid",
-    issuedAt: nowIso(),
-    summary: `${plan.name} plan invoice`
-  };
+    plan.id,
+    plan.price,
+    "paid",
+    `${plan.name} plan invoice`,
+    nowIso(),
+    shiftIso(30),
+    {
+      reminderStatus: "settled",
+      reminderLabel: "Receipt delivered",
+      reminderCount: 0
+    }
+  );
   set(db, "invoices", invoice.id, invoice);
   createActivity(db, agencyId, "plan.upgraded", `Moved to ${plan.name}`, actor.id);
   queueNotificationJob(db, agencyId, "billing-receipt", { invoiceId: invoice.id, planId: plan.id });
   return { plan, subscription, invoice };
+}
+
+export function queueInvoiceReminder(db, agencyId, actor, body) {
+  const current = get(db, "invoices", body.invoiceId);
+  if (!current || current.agencyId !== agencyId) throw new Error("Unknown invoice");
+  const action = String(body.action || "queue").toLowerCase();
+  const isImmediate = action === "send" || action === "resend";
+  const job = queueNotificationJob(
+    db,
+    agencyId,
+    "invoice-reminder",
+    {
+      invoiceId: current.id,
+      invoiceSummary: current.summary,
+      mode: action
+    },
+    {
+      status: isImmediate ? "delivered" : "queued",
+      deliveredAt: isImmediate ? nowIso() : ""
+    }
+  );
+  const next = {
+    ...current,
+    reminderStatus: isImmediate ? "delivered" : "queued",
+    reminderCount: Number(current.reminderCount || 0) + 1,
+    lastReminderAt: isImmediate ? job.deliveredAt || nowIso() : current.lastReminderAt || "",
+    nextReminderAt: isImmediate ? "" : shiftIso(1),
+    reminderLabel: isImmediate ? "Reminder sent to client" : "Queued for delivery queue",
+    reminderChannel: "email"
+  };
+  set(db, "invoices", current.id, next);
+  createActivity(
+    db,
+    agencyId,
+    isImmediate ? "invoice-reminder.sent" : "invoice-reminder.queued",
+    `${isImmediate ? "Sent" : "Queued"} reminder for ${current.summary}`,
+    actor.id
+  );
+  return { invoice: next, job };
 }
 
 export function summarizeOps(db) {
@@ -477,6 +604,8 @@ export function summarizeOps(db) {
       clients: clients.length,
       invoices: invoices.length,
       queuedJobs: jobs.filter((entry) => entry.status === "queued").length,
+      queuedReminderJobs: jobs.filter((entry) => entry.kind === "invoice-reminder" && entry.status === "queued").length,
+      overdueInvoices: invoices.filter((entry) => entry.status === "overdue").length,
       openWorkItems: workItems.filter((entry) => entry.status !== "done").length,
       unassignedWorkItems: workItems.filter((entry) => entry.status !== "done" && !entry.assigneeMembershipId).length
     },

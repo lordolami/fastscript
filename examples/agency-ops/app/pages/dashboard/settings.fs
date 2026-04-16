@@ -30,14 +30,14 @@ export default function SettingsPage({ agency, config }) {
       </section>
 
       <section class="list-card">
-        <h2>Cloudflare runtime config</h2>
+        <h2>Runtime config</h2>
         <div class="detail-list">
           <div><div class="detail-label">App name</div><div class="detail-value">${config.appName}</div></div>
           <div><div class="detail-label">Support email</div><div class="detail-value">${config.supportEmail}</div></div>
           <div><div class="detail-label">Notify from</div><div class="detail-value">${config.notifyFrom}</div></div>
           <div><div class="detail-label">Primary region</div><div class="detail-value">${config.primaryRegion}</div></div>
         </div>
-        <p class="mini-note">These values come from the app env schema and Cloudflare-friendly env vars, so the same app can move from local proof to internal deployment without rewriting route code.</p>
+        <p class="mini-note">These values come from the app env schema and env examples, so the same app can move from local proof to Cloudflare or custom Postgres-backed Node/container deployment without rewriting route code.</p>
       </section>
     </section>
   `;

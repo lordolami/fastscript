@@ -165,10 +165,11 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
+    "@fastscript/core-private": "file:../fastscript-core-private",
     "acorn": "^8.16.0",
     "acorn-walk": "^8.3.5",
     "astring": "^1.9.0",
     "esbuild": "^0.25.11",
-    "@fastscript/core-private": "file:../fastscript-core-private"
+    "pg": "^8.20.0"
   }
 }

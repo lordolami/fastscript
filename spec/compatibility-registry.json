@@ -382,6 +382,17 @@
       "docsNote": "Covers assignment-capable work-item APIs, seeded assignee state, workload views, and authenticated dashboard mutation flow in Agency Ops."
     },
     {
+      "id": "authenticated-billing-reminder-flows",
+      "category": "framework-patterns",
+      "feature": "Authenticated billing reminder and follow-up flows",
+      "status": "proven",
+      "contractNote": "Product-shaped billing flows such as due and overdue invoice visibility, reminder queueing, resend actions, and follow-up history should remain valid .fs dashboard patterns.",
+      "proofIds": [
+        "script:test:agency-ops"
+      ],
+      "docsNote": "Covers invoice reminder queue/send actions, due and overdue invoice visibility, reminder history, and billing-to-ops follow-up flow in Agency Ops."
+    },
+    {
       "id": "future-tc39-and-ts-additions",
       "category": "ecmascript",
       "feature": "Future TC39 and TypeScript additions",

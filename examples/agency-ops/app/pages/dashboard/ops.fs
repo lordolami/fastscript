@@ -48,7 +48,19 @@ export default function OpsPage({ agency, ops, notificationJobs, invoices, workI
       <div class="inline-actions">
         <span class="status-pill">${invoice.status}</span>
         <span class="meta-pill">$${invoice.total}</span>
+        <span class="meta-pill">${invoice.reminderStatus}</span>
       </div>
+      <p>${invoice.reminderLabel || "No reminder activity yet."}</p>
+      <div class="inline-actions">
+        ${invoice.dueAt ? `<span class="meta-pill">Due ${invoice.dueAt}</span>` : ""}
+        ${invoice.lastReminderAt ? `<span class="meta-pill">Last reminder ${invoice.lastReminderAt}</span>` : ""}
+      </div>
+      ${invoice.status !== "paid" ? `
+        <div class="inline-actions">
+          <button class="btn-inline btn-secondary" type="button" data-invoice-reminder-action="queue" data-invoice-id="${invoice.id}">Queue reminder</button>
+          <button class="btn-inline" type="button" data-invoice-reminder-action="${Number(invoice.reminderCount || 0) > 0 ? "resend" : "send"}" data-invoice-id="${invoice.id}">${Number(invoice.reminderCount || 0) > 0 ? "Resend now" : "Send now"}</button>
+        </div>
+      ` : ""}
     </div>
   `).join("");
 
@@ -64,6 +76,8 @@ export default function OpsPage({ agency, ops, notificationJobs, invoices, workI
         <div class="metric-card"><div class="detail-label">Clients</div><h2>${ops.totals.clients}</h2></div>
         <div class="metric-card"><div class="detail-label">Invoices</div><h2>${ops.totals.invoices}</h2></div>
         <div class="metric-card"><div class="detail-label">Queued jobs</div><h2>${ops.totals.queuedJobs}</h2></div>
+        <div class="metric-card"><div class="detail-label">Queued reminders</div><h2>${ops.totals.queuedReminderJobs}</h2></div>
+        <div class="metric-card"><div class="detail-label">Overdue invoices</div><h2>${ops.totals.overdueInvoices}</h2></div>
         <div class="metric-card"><div class="detail-label">Open work items</div><h2>${ops.totals.openWorkItems}</h2></div>
         <div class="metric-card"><div class="detail-label">Unassigned work</div><h2>${ops.totals.unassignedWorkItems}</h2></div>
       </div>
@@ -161,6 +175,26 @@ export function hydrate({ root }) {
       const json = await response.json();
       if (!response.ok || !json.ok) {
         msg.textContent = json.reason || "Could not save assignment";
+        return;
+      }
+      location.reload();
+    });
+  }
+
+  for (const button of root.querySelectorAll("[data-invoice-reminder-action]")) {
+    button.addEventListener("click", async () => {
+      msg.textContent = "Updating invoice reminder...";
+      const response = await fetch("/api/billing/reminders", {
+        method: "POST",
+        headers: createJsonHeaders(),
+        body: JSON.stringify({
+          invoiceId: button.getAttribute("data-invoice-id") || "",
+          action: button.getAttribute("data-invoice-reminder-action") || "queue"
+        })
+      });
+      const json = await response.json();
+      if (!response.ok || !json.ok) {
+        msg.textContent = json.reason || "Could not update reminder";
         return;
       }
       location.reload();

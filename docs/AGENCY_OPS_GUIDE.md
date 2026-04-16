@@ -8,7 +8,7 @@ Use it when you want:
 
 - a greenfield agency or client-ops SaaS
 - an internal service-delivery dashboard
-- a retainers, billing, assignment, and follow-up workflow app
+- a retainers, billing, invoice-reminder, assignment, and follow-up workflow app
 - a small-team admin product with notifications, workload visibility, and invoice trails
 
 ## What it proves
@@ -19,7 +19,7 @@ Use it when you want:
 - client and engagement CRUD
 - team invite flow
 - operator assignment and workload visibility
-- billing and invoice flow
+- billing, invoice, and reminder flow
 - queue-backed notification and receipt jobs
 - Cloudflare-ready adapter generation
 - custom Node/container deployment from the same built `dist/` output
@@ -36,7 +36,7 @@ Use it when you want:
 ## Architecture map
 
 - Pages: UI routes and server-rendered screens
-- APIs: session, billing, work-item mutation, assignment, and workflow actions
+- APIs: session, billing checkout, billing reminders, work-item mutation, assignment, and workflow actions
 - Jobs: async receipts and follow-up notifications
 - DB: seed data and collection-backed product state
 - Middleware: auth/session guardrails
@@ -66,12 +66,13 @@ If you deploy Agency Ops to Google Cloud Run, AWS ECS/EC2, Oracle Cloud compute,
 1. `cd examples/agency-ops`
 2. `node ../../src/cli.mjs build`
 3. `DB_DRIVER=postgres DATABASE_URL=... node ../../src/cli.mjs db:migrate`
-4. `DB_DRIVER=postgres DATABASE_URL=... node ../../src/cli.mjs db:seed`
+4. owner sign-in bootstraps the first seeded agency if no explicit seed file exists
 5. ship the app with `dist/`, `app/`, `src/`, `package.json`, and installed production dependencies
 6. set `NODE_ENV=production`, `PORT`, `SESSION_SECRET`, `DB_DRIVER=postgres`, and `DATABASE_URL`
 7. run `node ../../src/cli.mjs start`
 
 So the thing you are really deploying is the app plus its built `dist/` directory. The server reads `dist/fastscript-manifest.json` at startup.
+If `DB_DRIVER=postgres` is set and Postgres is unavailable, FastScript now fails loudly instead of silently switching to file storage.
 
 If you are targeting a provider-specific function runtime instead of a Node/container runtime, treat that as a custom integration unless FastScript already has a first-party adapter for it.
 

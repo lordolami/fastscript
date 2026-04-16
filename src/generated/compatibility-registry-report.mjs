@@ -1,13 +1,13 @@
 export const COMPATIBILITY_REPORT = {
-  "generatedAt": "2026-04-15T23:53:22.536Z",
+  "generatedAt": "2026-04-16T00:10:39.928Z",
   "governanceTrack": "4.0",
   "stableLine": "3.0.x",
   "packageVersion": "3.0.2",
   "contract": "If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.",
   "summary": {
-    "entries": 33,
+    "entries": 34,
     "byStatus": {
-      "proven": 31,
+      "proven": 32,
       "partial": 1,
       "planned": 1
     },
@@ -17,12 +17,12 @@ export const COMPATIBILITY_REPORT = {
       "typescript": 2,
       "jsx-tsx": 1,
       "fastscript-sugar": 1,
-      "framework-patterns": 14,
+      "framework-patterns": 15,
       "runtime-targets": 1,
       "deployment-adapters": 2,
       "tooling": 3
     },
-    "provenEntries": 31
+    "provenEntries": 32
   },
   "artifacts": {
     "jsTsSyntaxCases": 8,
@@ -852,6 +852,24 @@ export const COMPATIBILITY_REPORT = {
         "script:test:agency-ops"
       ],
       "docsNote": "Covers assignment-capable work-item APIs, seeded assignee state, workload views, and authenticated dashboard mutation flow in Agency Ops.",
+      "proofDetails": [
+        {
+          "id": "script:test:agency-ops",
+          "status": "configured",
+          "kind": "script"
+        }
+      ]
+    },
+    {
+      "id": "authenticated-billing-reminder-flows",
+      "category": "framework-patterns",
+      "feature": "Authenticated billing reminder and follow-up flows",
+      "status": "proven",
+      "contractNote": "Product-shaped billing flows such as due and overdue invoice visibility, reminder queueing, resend actions, and follow-up history should remain valid .fs dashboard patterns.",
+      "proofIds": [
+        "script:test:agency-ops"
+      ],
+      "docsNote": "Covers invoice reminder queue/send actions, due and overdue invoice visibility, reminder history, and billing-to-ops follow-up flow in Agency Ops.",
       "proofDetails": [
         {
           "id": "script:test:agency-ops",
