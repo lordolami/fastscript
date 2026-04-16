@@ -4,7 +4,7 @@ export default function DocsLatest() {
       <header class="sec-header">
         <p class="kicker">Docs latest</p>
         <h1 class="h1">Current docs track: FastScript v3</h1>
-        <p class="lead">This alias is the canonical entrypoint for the current v3 product contract: universal JS/TS in <code class="ic">.fs</code>, optional FastScript sugar, proof-backed speed, governed compatibility evidence, and a protected core that compounds into future FastScript AI tooling.</p>
+        <p class="lead">This alias is the canonical entrypoint for the current v3 product contract: FastScript has now proven real full-stack app capability through universal JS/TS in <code class="ic">.fs</code>, optional FastScript sugar, proof-backed speed, governed compatibility evidence, and a protected core that compounds into future FastScript AI tooling.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -15,7 +15,7 @@ export default function DocsLatest() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">v3 overview</p>
-          <p class="docs-card-copy">Current public line: <code class="ic">.fs</code> as a universal JS/TS container, optional sugar, parity proof, benchmark discipline, and a governed compatibility matrix tied to release evidence.</p>
+          <p class="docs-card-copy">Current public line: <code class="ic">.fs</code> as a universal JS/TS container, optional sugar, parity proof, benchmark discipline, and a governed compatibility matrix tied to release evidence for real full-stack app work.</p>
           <a class="docs-card-link" href="/docs/v3">Open v3 &#8594;</a>
         </div>
         <div class="docs-card">
@@ -50,7 +50,7 @@ export default function DocsLatest() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Agency Ops strict-TypeScript guide</p>
-          <p class="docs-card-copy">Use the public proving-ground app when you want the clearest “only the filename changes” demo: strict ordinary TypeScript inside <code class="ic">.fs</code> with pages, APIs, jobs, billing, and deploy flow already wired.</p>
+          <p class="docs-card-copy">Use the public proving-ground app when you want the clearest "only the filename changes" demo: strict ordinary TypeScript inside <code class="ic">.fs</code> with pages, APIs, jobs, billing, and deploy flow already wired.</p>
           <a class="docs-card-link" href="/docs/agency-ops">Open Agency Ops guide &#8594;</a>
         </div>
         <div class="docs-card">
@@ -64,6 +64,29 @@ export default function DocsLatest() {
           <a class="docs-card-link" href="/changelog">Open release notes &#8594;</a>
         </div>
       </div>
+
+      <hr class="section-divider">
+
+      <section class="docs-syntax">
+        <header class="sec-header-sm">
+          <p class="kicker">What is now proven</p>
+          <h2 class="h2">FastScript is now beyond the promising stage.</h2>
+        </header>
+        <div class="docs-card-grid">
+          <div class="docs-card">
+            <p class="docs-card-title">Full-stack capability</p>
+            <p class="docs-card-copy">FastScript now proves product-shaped full-stack apps, frontend pages, backend APIs, authenticated mutations, middleware, session flows, queue-backed jobs, billing workflows, deploy adapter generation, and custom-host runtime handoff.</p>
+          </div>
+          <div class="docs-card">
+            <p class="docs-card-title">Strict TS in <code class="ic">.fs</code></p>
+            <p class="docs-card-copy">Agency Ops proves that the only visible FastScript difference can be the <code class="ic">.fs</code> filename while the authored code stays ordinary TypeScript.</p>
+          </div>
+          <div class="docs-card">
+            <p class="docs-card-title">Honest caveat</p>
+            <p class="docs-card-copy">In this environment, the only incomplete end-to-end proof was live Postgres infrastructure. The FastScript app and runtime path are ready, but real database infra still has to exist.</p>
+          </div>
+        </div>
+      </section>
     </section>
   `;
 }

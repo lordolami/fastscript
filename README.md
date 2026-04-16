@@ -2,6 +2,8 @@
 
 FastScript is a proprietary, source-available JavaScript-first full-stack runtime built around a first-class `.fs` file format.
 
+FastScript has now proven real full-stack app capability in one JS/TS-native runtime pipeline.
+
 It is designed to feel easier to read than heavyweight stack combinations while staying compatible with the JavaScript ecosystem developers already use.
 
 - Write normal JavaScript or TypeScript in `.fs`
@@ -22,6 +24,21 @@ The v3 product contract is simple:
 - FastScript-specific syntax is optional sugar
 - valid JS/TS failures in `.fs` are FastScript compatibility bugs
 - the speed story is earned by the runtime/compiler/toolchain and backed by release proof artifacts
+- real full-stack app capability is now proven through governed product-shaped app evidence
+
+What is now proven:
+
+- product-shaped full-stack apps
+- frontend pages and server-rendered routes
+- backend APIs and authenticated mutations
+- middleware and session flows
+- queue-backed jobs and billing workflows
+- deploy adapter generation and custom-host runtime handoff
+- strict TypeScript authoring inside `.fs`
+
+Important caveat:
+
+- In this environment, the only incomplete end-to-end proof was live Postgres infrastructure, not FastScript's full-stack app capability.
 
 ## What FastScript Is
 
@@ -86,6 +103,7 @@ FastScript is built for developers who want one system instead of a pile of coop
 
 - Write ordinary TS/JS/JSX/TSX in `.fs`
 - Use the same runtime for frontend pages, backend APIs, middleware, jobs, and workers
+- Build pages, APIs, middleware, jobs, billing flows, and product-shaped app logic in one FastScript runtime boundary
 - Keep npm packages and ecosystem code while migrating incrementally
 - See exactly what is `proven`, `partial`, `planned`, or `blocked` in the governed support matrix
 - Convert existing route-based codebases safely with dry-run previews, diff artifacts, validation, and rollback

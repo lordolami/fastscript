@@ -1,6 +1,6 @@
 # FastScript Compatibility Matrix
 
-- Generated: 2026-04-16T00:10:39.928Z
+- Generated: 2026-04-16T00:44:46.260Z
 - Current stable line: `3.0.x`
 - Governance track: FastScript `4.0` compatibility system
 - Product contract: If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.

@@ -4,7 +4,7 @@ export default function DocsAdoptionPage() {
       <header class="sec-header">
         <p class="kicker">Real-world adoption</p>
         <h1 class="h1">The canonical path from evaluation to real product work.</h1>
-        <p class="lead">FastScript 3.0.2 is the first real-world adoption line. Use this flow to start a new <code class="ic">.fs</code> app or migrate an existing JS/TS codebase without guessing what is proven, partial, planned, or blocked.</p>
+        <p class="lead">FastScript 3.0.2 is the first real-world adoption line, and FastScript has now proven real full-stack app capability. Use this flow to start a new <code class="ic">.fs</code> app or migrate an existing JS/TS codebase without guessing what is proven, partial, planned, or blocked.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -22,9 +22,24 @@ export default function DocsAdoptionPage() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Full-stack scope</p>
-          <p class="docs-card-copy">Use FastScript for frontend pages, backend APIs, middleware, jobs, workers, and deploy adapters in one runtime boundary. The matrix tells you which patterns are already proven for real-world work.</p>
+          <p class="docs-card-copy">Use FastScript for frontend pages, backend APIs, middleware, jobs, workers, billing flows, and deploy adapters in one runtime boundary. The matrix tells you which patterns are already proven for real-world work.</p>
         </div>
       </div>
+
+      <section class="docs-card-grid">
+        <div class="docs-card">
+          <p class="docs-card-title">What is now proven</p>
+          <p class="docs-card-copy">FastScript now proves product-shaped full-stack apps, server-rendered routes, authenticated mutations, middleware and session flows, queue-backed jobs, billing workflows, deploy adapter generation, and custom-host runtime handoff.</p>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Strict TypeScript proof</p>
+          <p class="docs-card-copy">Agency Ops proves that the only visible FastScript difference can be the <code class="ic">.fs</code> filename while the authored code stays ordinary TypeScript.</p>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Infrastructure caveat</p>
+          <p class="docs-card-copy">In this environment, the only incomplete end-to-end proof was live Postgres infrastructure, not FastScript's full-stack app capability.</p>
+        </div>
+      </section>
 
       <hr class="section-divider">
 
@@ -46,7 +61,7 @@ export default function DocsAdoptionPage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">1. Create the app</p>
-            <p class="docs-card-copy"><code class="ic">fastscript create my-app</code> gives you pages, API routes, middleware, migrations, and styling primitives in a full-stack starter you can ship from.</p>
+            <p class="docs-card-copy"><code class="ic">fastscript create my-app</code> gives you pages, API routes, middleware, migrations, and styling primitives in a full-stack starter you can ship from now.</p>
           </div>
           <div class="docs-card">
             <p class="docs-card-title">2. Build in one runtime</p>

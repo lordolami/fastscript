@@ -9,14 +9,14 @@ export default function Home() {
           </div>
 
           <h1 class="hero-title">
-            The universal JS/TS<br>
-            <span class="hero-title-muted">runtime container.</span>
+            The proven full-stack<br>
+            <span class="hero-title-muted">JS/TS runtime pipeline.</span>
           </h1>
 
           <p class="hero-desc">
             Write normal <code class="ic">js</code>, <code class="ic">ts</code>, <code class="ic">jsx</code>, or <code class="ic">tsx</code> in <code class="ic">.fs</code>,
-            keep full package compatibility, compile to optimized JavaScript, and ship frontend, backend, jobs, and APIs through one runtime pipeline.
-            FastScript-specific syntax is optional. The current proof pack shows 2.71KB first-load gzip, 702.98ms builds, 17/17 interop passing, and governed ecosystem proof across Next-style, React, Node, Vue, and npm package patterns.
+            keep full package compatibility, compile to optimized JavaScript, and ship frontend, backend, jobs, APIs, billing flows, and product-shaped workflows through one runtime pipeline.
+            FastScript-specific syntax is optional. Real full-stack app capability is now proven through governed evidence, including strict-TypeScript product apps and SaaS-shaped reference flows. The current proof pack shows 2.71KB first-load gzip, 702.98ms builds, 17/17 interop passing, and governed ecosystem proof across Next-style, React, Node, Vue, and npm package patterns.
             The main language/runtime stays proprietary and source-available so the platform can compound into the next FastScript AI products.
           </p>
 
@@ -172,7 +172,7 @@ export default function Home() {
       <header class="sec-header reveal">
         <p class="kicker">How it works</p>
         <h2 class="h2">Three steps from idea to production.</h2>
-        <p class="lead">Use FastScript as one frontend + backend runtime, keep normal TS/JS authoring habits, and ship through one toolchain instead of managing a parallel stack.</p>
+        <p class="lead">Use FastScript as one proven frontend + backend runtime pipeline, keep normal TS/JS authoring habits, and ship through one toolchain instead of managing a parallel stack.</p>
       </header>
       <div class="how-grid reveal-children">
         <div class="how-cell">
@@ -201,7 +201,7 @@ export default function Home() {
         <div class="split-cell">
           <p class="kicker">Developer experience</p>
           <h2 class="h2 split-h2">Write once.<br>Ship anywhere.</h2>
-          <p class="body-copy split-copy">One runtime-native container. One proof-backed toolchain. No frontend/backend split brain, no adapter sprawl, no extra authored language tax. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
+          <p class="body-copy split-copy">One proof-backed full-stack runtime pipeline. No frontend/backend split brain, no adapter sprawl, no extra authored language tax. FastScript compiles <code class="ic">.fs</code> to hardened JS and generates deploy adapters per target.</p>
           <div class="terminal">
             <div class="terminal-bar">
               <span class="terminal-dot-r"></span><span class="terminal-dot-y"></span><span class="terminal-dot-g"></span>
@@ -301,7 +301,11 @@ export default function Home() {
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The promise</p>
-          <p class="story-cell-copy">FastScript v3 treats valid JS/TS in <code class="ic">.fs</code> as first-class source. If valid JS/TS fails in <code class="ic">.fs</code>, that is a FastScript compatibility bug. You keep your code style, keep the npm ecosystem, and get a governed support matrix that shows which framework and module patterns are already proven.</p>
+          <p class="story-cell-copy">FastScript v3 treats valid JS/TS in <code class="ic">.fs</code> as first-class source. If valid JS/TS fails in <code class="ic">.fs</code>, that is a FastScript compatibility bug. You keep your code style, keep the npm ecosystem, and get a governed support matrix that shows which framework and module patterns are already proven for real product work.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">What is now proven</p>
+          <p class="story-cell-copy">FastScript now proves product-shaped full-stack apps, server-rendered pages, authenticated APIs, middleware and session flows, queue-backed jobs, billing workflows, deploy adapter generation, custom-host runtime handoff, and strict TypeScript authoring inside <code class="ic">.fs</code>.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The moat</p>

@@ -4,7 +4,7 @@ export default function WhyFastScriptPage() {
       <header class="sec-header">
         <p class="kicker">For developers</p>
         <h1 class="h1">Why developers choose FastScript.</h1>
-        <p class="lead">FastScript gives teams one runtime-native source container for frontend, backend, middleware, jobs, and APIs without asking them to abandon normal JavaScript or TypeScript habits.</p>
+        <p class="lead">FastScript gives teams one runtime-native source container for frontend, backend, middleware, jobs, and APIs without asking them to abandon normal JavaScript or TypeScript habits, and it has now proven real full-stack app capability through governed product evidence.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -14,7 +14,7 @@ export default function WhyFastScriptPage() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Frontend + backend in one runtime</p>
-          <p class="docs-card-copy">Build pages, API routes, middleware, loaders, jobs, auth, and storage flows in one full-stack runtime instead of wiring together parallel tools.</p>
+          <p class="docs-card-copy">Build pages, API routes, middleware, loaders, jobs, auth, storage, and billing flows in one full-stack runtime instead of wiring together parallel tools.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Keep your ecosystem</p>
@@ -41,6 +41,10 @@ export default function WhyFastScriptPage() {
           <div class="story-cell">
             <p class="story-cell-title">Full-stack surface</p>
             <p class="story-cell-copy">The same project can hold UI routes, backend APIs, middleware, database migrations, workers, and deploy adapters. FastScript is not just a template layer; it is the runtime, framework, and language container together.</p>
+          </div>
+          <div class="story-cell">
+            <p class="story-cell-title">What is now proven</p>
+            <p class="story-cell-copy">FastScript now proves product-shaped full-stack apps, authenticated dashboard mutations, queue-backed jobs, billing workflows, deploy adapter generation, custom-host runtime handoff, and strict TypeScript authoring inside <code class="ic">.fs</code>.</p>
           </div>
           <div class="story-cell">
             <p class="story-cell-title">Migration path</p>
