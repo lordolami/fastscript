@@ -1,5 +1,4 @@
-import { getLesson, getPrevNext, getSchoolStorageKey, renderLessonResources, renderModulePills } from "../../../lib/learn-school.mjs";
-
+import {getLesson, getPrevNext, getSchoolStorageKey, renderLessonResources, renderModulePills} from "../../../lib/learn-school.mjs";
 function codeCard(title, code) {
   return `
     <div class="code-block">
@@ -11,7 +10,6 @@ function codeCard(title, code) {
     </div>
   `;
 }
-
 function checklist(lesson) {
   return lesson.checkpoints.map((item, index) => `
     <div class="learn-check" data-school-check-row>
@@ -20,11 +18,9 @@ function checklist(lesson) {
     </div>
   `).join("");
 }
-
 function cardList(items) {
-  return items.map((item) => `<li>${item}</li>`).join("");
+  return items.map(item => `<li>${item}</li>`).join("");
 }
-
 export async function load(ctx) {
   const result = getLesson(ctx.params.module, ctx.params.lesson);
   if (!result) return null;
@@ -35,8 +31,7 @@ export async function load(ctx) {
     nav
   };
 }
-
-export default function LearnLessonPage({ module, lesson, nav }) {
+export default function LearnLessonPage({module, lesson, nav}) {
   if (!module || !lesson) {
     return `
       <div class="not-found">
@@ -49,13 +44,11 @@ export default function LearnLessonPage({ module, lesson, nav }) {
       </div>
     `;
   }
-
   const prevHref = nav.prev ? `/learn/${nav.prev.moduleSlug}/${nav.prev.slug}` : `/learn/${module.slug}`;
   const nextHref = nav.next ? `/learn/${nav.next.moduleSlug}/${nav.next.slug}` : "/learn";
   const prevLabel = nav.prev ? nav.prev.title : "Back to level";
   const nextLabel = nav.next ? nav.next.title : "Return to school hub";
   const lessonKey = `${module.slug}`;
-
   return `
     <section class="learn-lesson-page">
       <header class="sec-header learn-lesson-top">
@@ -195,8 +188,7 @@ export default function LearnLessonPage({ module, lesson, nav }) {
     </section>
   `;
 }
-
-export function hydrate({ root }) {
+export function hydrate({root}) {
   const storageKey = getSchoolStorageKey();
   const lab = root.querySelector("[data-school-lab]");
   const input = root.querySelector("[data-school-input]");
@@ -211,7 +203,6 @@ export function hydrate({ root }) {
   const checks = [...root.querySelectorAll("[data-school-check]")];
   const starter = input ? input.value : "";
   const reference = root.querySelector("[data-school-reference]")?.value || starter;
-
   const readState = () => {
     try {
       return JSON.parse(window.localStorage.getItem(storageKey) || "{}");
@@ -219,36 +210,33 @@ export function hydrate({ root }) {
       return {};
     }
   };
-
-  const writeState = (state) => {
+  const writeState = state => {
     try {
       window.localStorage.setItem(storageKey, JSON.stringify(state));
     } catch (_) {}
   };
-
-  const compileSnippet = (source) => {
+  const compileSnippet = source => {
     let compiled = String(source || "").trim();
     compiled = compiled.replace(/^(\s*)~\s*(\w+)\s*=/gm, "$1let $2 =");
     compiled = compiled.replace(/^(\s*)state\s+(\w+)\s*=/gm, "$1let $2 =");
     compiled = compiled.replace(/\bfn\s+(\w+)\s*\(/g, "function $1(");
-
     const notes = [];
-    if (/export default function/.test(source)) notes.push("Strict JS/TS-in-.fs page authoring detected.");
-    if (/load\(ctx\)|ctx\.params|ctx\.pathname/.test(source)) notes.push("Route or loader contract detected.");
-    if (/POST\(ctx|h\.json|\/api\//.test(source)) notes.push("API mutation pattern detected.");
-    if (/ctx\.db|db:migrate|DATABASE_URL|seed/i.test(source)) notes.push("Persistence or deployment thinking detected.");
+    if ((/export default function/).test(source)) notes.push("Strict JS/TS-in-.fs page authoring detected.");
+    if ((/load\(ctx\)|ctx\.params|ctx\.pathname/).test(source)) notes.push("Route or loader contract detected.");
+    if ((/POST\(ctx|h\.json|\/api\//).test(source)) notes.push("API mutation pattern detected.");
+    if ((/ctx\.db|db:migrate|DATABASE_URL|seed/i).test(source)) notes.push("Persistence or deployment thinking detected.");
     if (!notes.length) notes.push("FastScript accepts ordinary JS/TS in .fs and optional sugar where useful.");
-
-    return `// lesson preview\n${compiled}\n\n// what this teaches\n${notes.map((item) => `- ${item}`).join("\n")}`;
+    return `// lesson preview\n${compiled}\n\n// what this teaches\n${notes.map(item => `- ${item}`).join("\n")}`;
   };
-
   const updateVisualState = () => {
     const state = readState();
-    const lessonState = state.lessons?.[lessonKey] || { checks: [], complete: false };
+    const lessonState = state.lessons?.[lessonKey] || ({
+      checks: [],
+      complete: false
+    });
     const doneCount = lessonState.checks.filter(Boolean).length;
     const total = checks.length || 1;
     const percent = lessonState.complete ? 100 : Math.round(doneCount / total * 100);
-
     checks.forEach((button, index) => {
       const active = Boolean(lessonState.checks[index]);
       button.setAttribute("aria-pressed", active ? "true" : "false");
@@ -256,29 +244,28 @@ export function hydrate({ root }) {
       const row = button.closest("[data-school-check-row]");
       if (row) row.classList.toggle("is-done", active);
     });
-
     if (fill) fill.style.width = `${percent}%`;
     if (label) label.textContent = lessonState.complete ? "Lesson complete" : `${doneCount} of ${checks.length} checkpoints marked`;
     if (completeBanner) completeBanner.hidden = !lessonState.complete;
   };
-
-  const patchState = (mutate) => {
+  const patchState = mutate => {
     const state = readState();
     if (!state.lessons) state.lessons = {};
-    if (!state.lessons[lessonKey]) state.lessons[lessonKey] = { checks: checks.map(() => false), complete: false };
+    if (!state.lessons[lessonKey]) state.lessons[lessonKey] = {
+      checks: checks.map(() => false),
+      complete: false
+    };
     mutate(state.lessons[lessonKey], state);
     if (lastLesson) state.lastLesson = lastLesson;
     writeState(state);
     updateVisualState();
   };
-
   if (lastLesson) {
     const state = readState();
     state.lastLesson = lastLesson;
     writeState(state);
   }
-
-  root.querySelectorAll("[data-school-load]").forEach((button) => {
+  root.querySelectorAll("[data-school-load]").forEach(button => {
     button.addEventListener("click", () => {
       if (!input) return;
       if (button.getAttribute("data-school-load") === "starter") {
@@ -289,45 +276,39 @@ export function hydrate({ root }) {
       if (output) output.textContent = compileSnippet(input.value);
     });
   });
-
-  if (input) input.addEventListener("keydown", (event) => {
+  if (input) input.addEventListener("keydown", event => {
     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
       event.preventDefault();
       if (output) output.textContent = compileSnippet(input.value);
     }
   });
-
   root.querySelector("[data-school-run]")?.addEventListener("click", () => {
     if (input && output) output.textContent = compileSnippet(input.value);
   });
-
   root.querySelector("[data-school-restore]")?.addEventListener("click", () => {
     if (input) input.value = starter;
     if (output) output.textContent = compileSnippet(starter);
   });
-
   checks.forEach((button, index) => {
     button.addEventListener("click", () => {
-      patchState((lessonState) => {
+      patchState(lessonState => {
         if (!Array.isArray(lessonState.checks)) lessonState.checks = checks.map(() => false);
         lessonState.checks[index] = !lessonState.checks[index];
-        if (lessonState.complete && lessonState.checks.some((entry) => !entry)) lessonState.complete = false;
+        if (lessonState.complete && lessonState.checks.some(entry => !entry)) lessonState.complete = false;
       });
     });
   });
-
   if (completeButton) {
     completeButton.addEventListener("click", () => {
-      patchState((lessonState) => {
+      patchState(lessonState => {
         lessonState.checks = checks.map(() => true);
         lessonState.complete = true;
       });
     });
   }
-
   if (resetButton) {
     resetButton.addEventListener("click", () => {
-      patchState((lessonState) => {
+      patchState(lessonState => {
         lessonState.checks = checks.map(() => false);
         lessonState.complete = false;
       });
@@ -335,7 +316,6 @@ export function hydrate({ root }) {
       if (output) output.textContent = compileSnippet(starter);
     });
   }
-
   if (output) output.textContent = compileSnippet(starter);
   updateVisualState();
 }

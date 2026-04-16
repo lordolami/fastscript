@@ -1,12 +1,12 @@
-import { getModule, getSchoolStorageKey, renderModulePills } from "../../lib/learn-school.mjs";
-
+import {getModule, getSchoolStorageKey, renderModulePills} from "../../lib/learn-school.mjs";
 export async function load(ctx) {
   const module = getModule(ctx.params.module);
   if (!module) return null;
-  return { module };
+  return {
+    module
+  };
 }
-
-export default function LearnModulePage({ module }) {
+export default function LearnModulePage({module}) {
   if (!module) {
     return `
       <div class="not-found">
@@ -19,11 +19,9 @@ export default function LearnModulePage({ module }) {
       </div>
     `;
   }
-
   const lesson = module.lesson;
-  const checkpoints = lesson.checkpoints.map((item) => `<li>${item}</li>`).join("");
-  const outcomes = module.outcomes.map((item) => `<li>${item}</li>`).join("");
-
+  const checkpoints = lesson.checkpoints.map(item => `<li>${item}</li>`).join("");
+  const outcomes = module.outcomes.map(item => `<li>${item}</li>`).join("");
   return `
     <section class="learn-lesson-page">
       <header class="sec-header learn-lesson-top">
@@ -98,19 +96,16 @@ export default function LearnModulePage({ module }) {
     </section>
   `;
 }
-
-export function hydrate({ root }) {
+export function hydrate({root}) {
   const storageKey = getSchoolStorageKey();
   const moduleSlug = root.querySelector("[data-module-slug]")?.getAttribute("data-module-slug");
   const fill = root.querySelector("[data-module-progress-fill]");
   const label = root.querySelector("[data-module-progress-label]");
   if (!moduleSlug) return;
-
   let state = {};
   try {
     state = JSON.parse(window.localStorage.getItem(storageKey) || "{}");
   } catch (_) {}
-
   const entry = state.lessons?.[moduleSlug];
   if (entry?.complete) {
     if (fill) fill.style.width = "100%";

@@ -1,5 +1,4 @@
-import { getLessonCount, getModuleStats, getModules, getResumeFallback, getSchoolStorageKey, getTrackSummary, renderModulePills } from "../../lib/learn-school.mjs";
-
+import {getLessonCount, getModuleStats, getModules, getResumeFallback, getSchoolStorageKey, getTrackSummary, renderModulePills} from "../../lib/learn-school.mjs";
 function moduleCard(module) {
   return `
     <article class="docs-card">
@@ -11,25 +10,21 @@ function moduleCard(module) {
     </article>
   `;
 }
-
 export default function LearnSchoolPage() {
-  const tracks = getTrackSummary().map((track) => `
+  const tracks = getTrackSummary().map(track => `
     <div class="docs-card">
       <p class="docs-card-title">${track.title}</p>
       <p class="docs-card-copy">${track.copy}</p>
       <a class="docs-card-link" href="${track.href}">Start track &#8594;</a>
     </div>
   `).join("");
-
   const stats = getModuleStats().map(([title, value]) => `
     <div class="docs-card">
       <p class="kicker">${title}</p>
       <p class="h3">${value}</p>
     </div>
   `).join("");
-
   const moduleCards = getModules().map(moduleCard).join("");
-
   return `
     <section class="learn-school">
       <header class="sec-header learn-hero">
@@ -106,15 +101,13 @@ export default function LearnSchoolPage() {
     </section>
   `;
 }
-
-export function hydrate({ root }) {
+export function hydrate({root}) {
   const storageKey = getSchoolStorageKey();
   const continueLink = root.querySelector("[data-school-continue]");
   const progressFill = root.querySelector("[data-school-progress-fill]");
   const progressLabel = root.querySelector("[data-school-progress-label]");
   const resetButton = root.querySelector("[data-school-reset]");
   const totalLessons = getLessonCount();
-
   const readState = () => {
     try {
       return JSON.parse(window.localStorage.getItem(storageKey) || "{}");
@@ -122,16 +115,14 @@ export function hydrate({ root }) {
       return {};
     }
   };
-
-  const writeState = (state) => {
+  const writeState = state => {
     try {
       window.localStorage.setItem(storageKey, JSON.stringify(state));
     } catch (_) {}
   };
-
   const render = () => {
     const state = readState();
-    const completed = Object.values(state.lessons || {}).filter((entry) => entry && entry.complete).length;
+    const completed = Object.values(state.lessons || ({})).filter(entry => entry && entry.complete).length;
     const percent = totalLessons ? Math.round(completed / totalLessons * 100) : 0;
     const nextHref = state.lastLesson || getResumeFallback();
     if (progressFill) progressFill.style.width = `${percent}%`;
@@ -139,13 +130,11 @@ export function hydrate({ root }) {
     if (continueLink) continueLink.setAttribute("href", nextHref);
     if (continueLink) continueLink.textContent = completed > 0 ? "Resume where you left off" : "Start the first lesson";
   };
-
   if (resetButton) {
     resetButton.addEventListener("click", () => {
       writeState({});
       render();
     });
   }
-
   render();
 }
