@@ -1,4 +1,14 @@
-const SCHOOL_STORAGE_KEY = "fs-school-v1";
+const SCHOOL_STORAGE_KEY = "fs-school-v2";
+const LEGACY_SCHOOL_STORAGE_KEY = "fs-school-v1";
+const SCHOOL_STATE_VERSION = 2;
+
+function lesson(config) {
+  return {
+    minutes: 35,
+    resources: [],
+    ...config
+  };
+}
 
 const MODULES = [
   {
@@ -6,678 +16,512 @@ const MODULES = [
     level: "Level 0",
     title: "Programming and web basics",
     audience: "Absolute beginners",
-    time: "60-90 min",
+    time: "90-120 min",
     summary: "Start from zero: what code is, what the browser does, how pages render, and how user actions become app behavior.",
     outcomes: [
       "Explain what HTML, CSS, and JavaScript each do.",
       "Describe what a browser, route, and request are.",
       "Recognize how FastScript fits into the normal web model."
     ],
-    lesson: {
-      slug: "what-is-code",
-      title: "What code, the browser, and the web actually do",
-      summary: "Learn the mental model first so FastScript feels simple instead of magical.",
-      minutes: 45,
-      workedExample: {
-        title: "A browser page in plain FastScript",
-        code: `export default function Home() {
-  return \`<main>
-    <h1>Hello, school.</h1>
-    <p>The browser turns this HTML string into a visible page.</p>
-  </main>\`;
-}`
-      },
-      exercise: {
-        title: "Edit the first page",
-        prompt: "Change the heading and add one paragraph that explains what a browser does.",
-        starter: `export default function Home() {
-  return \`<main>
-    <h1>Hello, world.</h1>
-  </main>\`;
-}`,
-        reference: `export default function Home() {
-  return \`<main>
-    <h1>Hello from FastScript School.</h1>
-    <p>The browser receives HTML, CSS, and JavaScript and turns them into the page you can see and use.</p>
-  </main>\`;
-}`
-      },
-      concepts: [
-        "Code is a set of instructions the computer follows.",
-        "The browser receives HTML, CSS, and JavaScript and turns them into an interface.",
-        "A route is a URL path such as /learn or /dashboard.",
-        "FastScript keeps these same web rules; it does not invent a separate internet."
-      ],
-      checkpoints: [
-        "I can explain the difference between HTML structure, CSS styling, and JavaScript behavior.",
-        "I understand that a page route returns something the browser can display.",
-        "I can describe FastScript as one runtime boundary for normal web pieces."
-      ],
-      mistakes: [
-        "Thinking FastScript replaces the browser. It does not; it works with the browser.",
-        "Treating routes like files only. Routes are the public paths users actually visit.",
-        "Trying to memorize syntax before understanding the request-to-page flow."
-      ],
-      realUse: [
-        "Landing pages and docs sites still depend on the same browser rules you are learning here.",
-        "Every product dashboard begins with routes, rendered pages, and user actions."
-      ],
-      resources: [
-        ["Open Playground", "/docs/playground"],
-        ["Why FastScript", "/why-fastscript"]
-      ]
-    }
+    lessons: [
+      lesson({
+        slug: "what-is-code",
+        title: "What code, the browser, and the web actually do",
+        summary: "Learn the mental model first so FastScript feels simple instead of magical.",
+        minutes: 45,
+        workedExample: {
+          title: "A browser page in plain FastScript",
+          code: "export default function Home() {\n  return `<main>\\n    <h1>Hello, school.</h1>\\n    <p>The browser turns this HTML string into a visible page.</p>\\n  </main>`;\n}"
+        },
+        exercise: {
+          title: "Edit the first page",
+          prompt: "Change the heading and add one paragraph that explains what a browser does.",
+          starter: "export default function Home() {\n  return `<main>\\n    <h1>Hello, world.</h1>\\n  </main>`;\n}",
+          reference: "export default function Home() {\n  return `<main>\\n    <h1>Hello from FastScript School.</h1>\\n    <p>The browser receives HTML, CSS, and JavaScript and turns them into the page you can see and use.</p>\\n  </main>`;\n}"
+        },
+        concepts: [
+          "Code is a set of instructions the computer follows.",
+          "The browser receives HTML, CSS, and JavaScript and turns them into an interface.",
+          "A route is a URL path such as /learn or /dashboard.",
+          "FastScript keeps these same web rules; it does not invent a separate internet."
+        ],
+        checkpoints: [
+          "I can explain the difference between HTML structure, CSS styling, and JavaScript behavior.",
+          "I understand that a page route returns something the browser can display.",
+          "I can describe FastScript as one runtime boundary for normal web pieces."
+        ],
+        mistakes: [
+          "Thinking FastScript replaces the browser. It does not; it works with the browser.",
+          "Treating routes like files only. Routes are the public paths users actually visit.",
+          "Trying to memorize syntax before understanding the request-to-page flow."
+        ],
+        realUse: [
+          "Landing pages and docs sites still depend on the same browser rules you are learning here.",
+          "Every product dashboard begins with routes, rendered pages, and user actions."
+        ],
+        resources: [["Open Playground", "/docs/playground"], ["Why FastScript", "/why-fastscript"]]
+      }),
+      lesson({
+        slug: "browser-requests-and-forms",
+        title: "Browser requests, forms, and user actions",
+        summary: "See how clicking, typing, and submitting become requests that your app can respond to.",
+        workedExample: {
+          title: "A page with a form action",
+          code: "export default function ContactLesson() {\n  return `<form method=\"post\" action=\"/api/hello\">\\n    <label>Name <input name=\"name\" /></label>\\n    <button type=\"submit\">Send</button>\\n  </form>`;\n}"
+        },
+        exercise: {
+          title: "Make the form clearer",
+          prompt: "Add one helper paragraph and rename the button so the user understands what happens next.",
+          starter: "export default function ContactLesson() {\n  return `<form method=\"post\" action=\"/api/hello\">\\n    <label>Email <input name=\"email\" /></label>\\n    <button type=\"submit\">Go</button>\\n  </form>`;\n}",
+          reference: "export default function ContactLesson() {\n  return `<form method=\"post\" action=\"/api/hello\">\\n    <p>Submit this form to send a browser request to your app.</p>\\n    <label>Email <input name=\"email\" /></label>\\n    <button type=\"submit\">Send request</button>\\n  </form>`;\n}"
+        },
+        concepts: [
+          "Browsers send requests when a user follows a link, loads a page, or submits a form.",
+          "Forms are one of the simplest ways to understand user input flowing into an app.",
+          "A request has a destination route and often includes data.",
+          "Good interfaces explain what action a button or form will trigger."
+        ],
+        checkpoints: [
+          "I can explain what happens when a form is submitted.",
+          "I can describe the difference between a page load and a form action.",
+          "I know that user actions become requests the app must handle safely."
+        ],
+        mistakes: [
+          "Thinking the browser guesses what to do after a click. It follows markup and routes.",
+          "Building forms with unclear labels so learners cannot see the request flow.",
+          "Skipping the idea of method and action when learning input handling."
+        ],
+        realUse: [
+          "Every sign-in, search, checkout, and settings screen begins with user actions becoming requests.",
+          "This is the mental model behind both simple forms and full product workflows."
+        ],
+        resources: [["Team Dashboard baseline", "/docs/team-dashboard-saas"], ["Learn support matrix", "/docs/support"]]
+      })
+    ]
   },
   {
     slug: "foundations",
     level: "Level 1",
     title: "FastScript basics",
     audience: "Beginners and switchers",
-    time: "45-75 min",
+    time: "75-105 min",
     summary: "Learn the .fs contract, the CLI, and the normal JS/TS authoring model FastScript expects.",
     outcomes: [
       "Install the CLI and create an app.",
       "Understand that .fs is a universal JS/TS container.",
       "Run dev, build, and inspect the app structure."
     ],
-    lesson: {
-      slug: "your-first-fs-file",
-      title: "Your first .fs file without learning a second language",
-      summary: "Use ordinary JavaScript and TypeScript inside .fs and see how FastScript treats it.",
-      minutes: 40,
-      workedExample: {
-        title: "Strict TS in .fs",
-        code: `type HeroProps = { title: string };
-
-export default function Hero({ title }: HeroProps) {
-  return \`<section>
-    <h1>\${title}</h1>
-    <p>Ordinary TypeScript can live directly inside .fs.</p>
-  </section>\`;
-}`
-      },
-      exercise: {
-        title: "Make the page personal",
-        prompt: "Change the prop shape so the component renders a title and a subtitle.",
-        starter: `type HeroProps = { title: string };
-
-export default function Hero({ title }: HeroProps) {
-  return \`<section>
-    <h1>\${title}</h1>
-  </section>\`;
-}`,
-        reference: `type HeroProps = {
-  title: string;
-  subtitle: string;
-};
-
-export default function Hero({ title, subtitle }: HeroProps) {
-  return \`<section>
-    <h1>\${title}</h1>
-    <p>\${subtitle}</p>
-  </section>\`;
-}`
-      },
-      concepts: [
-        "FastScript-specific syntax is optional sugar, not a requirement.",
-        ".fs accepts normal JS, TS, JSX, and TSX inside the FastScript runtime contract.",
-        "If valid JS/TS fails in .fs, that is a FastScript compatibility bug.",
-        "The CLI gives you create, dev, build, deploy, validate, and migration workflows."
-      ],
-      checkpoints: [
-        "I can explain what .fs is without calling it a totally different language.",
-        "I know how to create and run a FastScript app locally.",
-        "I understand that the source format and the runtime contract belong together."
-      ],
-      mistakes: [
-        "Assuming you must use fn, state, or ~ to be a real FastScript user.",
-        "Skipping validate and QA because the app rendered once in dev mode.",
-        "Treating .fs like a file extension change with no runtime meaning."
-      ],
-      realUse: [
-        "Agency Ops proves strict TS-in-.fs for product-shaped development.",
-        "startup-mvp proves the greenfield starter path for serious full-stack work."
-      ],
-      resources: [
-        ["Real-world adoption", "/docs/adoption"],
-        ["Agency Ops guide", "/docs/agency-ops"]
-      ]
-    }
+    lessons: [
+      lesson({
+        slug: "your-first-fs-file",
+        title: "Your first .fs file without learning a second language",
+        summary: "Use ordinary JavaScript and TypeScript inside .fs and see how FastScript treats it.",
+        minutes: 40,
+        workedExample: {
+          title: "Strict TS in .fs",
+          code: "type HeroProps = { title: string };\n\nexport default function Hero({ title }: HeroProps) {\n  return `<section>\\n    <h1>${title}</h1>\\n    <p>Ordinary TypeScript can live directly inside .fs.</p>\\n  </section>`;\n}"
+        },
+        exercise: {
+          title: "Make the page personal",
+          prompt: "Change the prop shape so the component renders a title and a subtitle.",
+          starter: "type HeroProps = { title: string };\n\nexport default function Hero({ title }: HeroProps) {\n  return `<section>\\n    <h1>${title}</h1>\\n  </section>`;\n}",
+          reference: "type HeroProps = {\n  title: string;\n  subtitle: string;\n};\n\nexport default function Hero({ title, subtitle }: HeroProps) {\n  return `<section>\\n    <h1>${title}</h1>\\n    <p>${subtitle}</p>\\n  </section>`;\n}"
+        },
+        concepts: [
+          "FastScript-specific syntax is optional sugar, not a requirement.",
+          ".fs accepts normal JS, TS, JSX, and TSX inside the FastScript runtime contract.",
+          "If valid JS/TS fails in .fs, that is a FastScript compatibility bug.",
+          "The CLI gives you create, dev, build, deploy, validate, and migration workflows."
+        ],
+        checkpoints: [
+          "I can explain what .fs is without calling it a totally different language.",
+          "I know how to create and run a FastScript app locally.",
+          "I understand that the source format and the runtime contract belong together."
+        ],
+        mistakes: [
+          "Assuming you must use fn, state, or ~ to be a real FastScript user.",
+          "Skipping validate and QA because the app rendered once in dev mode.",
+          "Treating .fs like a file extension change with no runtime meaning."
+        ],
+        realUse: [
+          "Agency Ops proves strict TS-in-.fs for product-shaped development.",
+          "startup-mvp proves the greenfield starter path for serious full-stack work."
+        ],
+        resources: [["Real-world adoption", "/docs/adoption"], ["Agency Ops guide", "/docs/agency-ops"]]
+      }),
+      lesson({
+        slug: "cli-and-app-structure",
+        title: "CLI workflow, app structure, and the .fs contract in practice",
+        summary: "Move from a single file to understanding how a real FastScript app is laid out and shipped.",
+        workedExample: {
+          title: "A tiny FastScript project map",
+          code: "app/\n  pages/\n    index.fs\n  api/\n    health.fs\n  middleware.fs\npackage.json"
+        },
+        exercise: {
+          title: "Document the app tree",
+          prompt: "Add one API file line and one note that explains what middleware does.",
+          starter: "app/\n  pages/\n    index.fs",
+          reference: "app/\n  pages/\n    index.fs\n  api/\n    health.fs\n  middleware.fs\n\n// middleware runs before route logic and can redirect, guard, or enrich requests."
+        },
+        concepts: [
+          "FastScript apps have a predictable shape: pages, APIs, shared logic, middleware, and jobs.",
+          "The CLI is how you create, run, build, validate, and deploy the app.",
+          "A good project structure lowers migration risk and makes QA easier.",
+          "The .fs contract is about both authored source and runtime behavior."
+        ],
+        checkpoints: [
+          "I can name the main directories in a FastScript app.",
+          "I know which command to use for dev, build, and validate.",
+          "I can explain where pages, APIs, and middleware usually live."
+        ],
+        mistakes: [
+          "Treating the CLI as optional once the project exists.",
+          "Mixing route responsibilities so pages and APIs become hard to reason about.",
+          "Skipping the project map when onboarding new developers."
+        ],
+        realUse: [
+          "The school, startup-mvp, and agency-ops all rely on predictable app structure to stay teachable.",
+          "Production teams move faster when every route and mutation has an obvious home."
+        ],
+        resources: [["Team Dashboard baseline", "/docs/team-dashboard-saas"], ["Full-stack proof", "/docs/latest"]]
+      })
+    ]
   },
   {
     slug: "fullstack",
     level: "Level 2",
     title: "Pages, routes, APIs, and app flow",
     audience: "All learners",
-    time: "75-105 min",
+    time: "90-120 min",
     summary: "Move from static pages to full-stack thinking: rendered routes, APIs, middleware, auth/session, and jobs.",
     outcomes: [
       "Build pages and API routes in one app boundary.",
       "Understand middleware and session flow at a practical level.",
       "See how product workflows connect frontend and backend together."
     ],
-    lesson: {
-      slug: "pages-routes-and-loaders",
-      title: "Pages, routes, loaders, APIs, middleware, and jobs in one runtime",
-      summary: "This is where FastScript becomes obviously full-stack instead of just a page engine.",
-      minutes: 55,
-      workedExample: {
-        title: "Page plus API mental model",
-        code: `export async function load(ctx) {
-  return {
-    route: ctx.pathname,
-    signedIn: Boolean(ctx.user)
-  };
-}
-
-export default function Dashboard({ route, signedIn }) {
-  return \`<main>
-    <h1>\${route}</h1>
-    <p>Signed in: \${signedIn ? "yes" : "no"}</p>
-  </main>\`;
-}
-
-export async function POST(ctx, h) {
-  return h.json({ ok: true, route: ctx.pathname });
-}`
-      },
-      exercise: {
-        title: "Turn a page into a full-stack feature",
-        prompt: "Add one loader field and one API JSON field that describe the current lesson route.",
-        starter: `export async function load(ctx) {
-  return {};
-}
-
-export default function LessonPage() {
-  return \`<main><h1>Lesson</h1></main>\`;
-}
-
-export async function POST(ctx, h) {
-  return h.json({ ok: true });
-}`,
-        reference: `export async function load(ctx) {
-  return {
-    pathname: ctx.pathname
-  };
-}
-
-export default function LessonPage({ pathname }) {
-  return \`<main>
-    <h1>Lesson</h1>
-    <p>Current route: \${pathname}</p>
-  </main>\`;
-}
-
-export async function POST(ctx, h) {
-  return h.json({
-    ok: true,
-    route: ctx.pathname
-  });
-}`
-      },
-      concepts: [
-        "Pages render what users see.",
-        "API routes handle mutations and data operations.",
-        "Middleware enforces rules such as auth or redirects before route logic runs.",
-        "Jobs handle async work that should not block the user request."
-      ],
-      checkpoints: [
-        "I can explain the difference between a page route and an API route.",
-        "I know where middleware fits in the request lifecycle.",
-        "I understand why jobs exist instead of stuffing every side effect into a page request."
-      ],
-      mistakes: [
-        "Putting every mutation directly in page rendering code.",
-        "Treating auth as only a UI concern instead of a request boundary concern.",
-        "Ignoring jobs until the app becomes slow or unreliable."
-      ],
-      realUse: [
-        "Dashboards, admin tools, and SaaS apps all depend on this page-plus-API model.",
-        "Agency Ops uses pages, APIs, middleware, billing actions, and jobs in one runtime boundary."
-      ],
-      resources: [
-        ["Team Dashboard baseline", "/docs/team-dashboard-saas"],
-        ["Agency Ops guide", "/docs/agency-ops"]
-      ]
-    }
+    lessons: [
+      lesson({
+        slug: "pages-routes-and-loaders",
+        title: "Pages, routes, loaders, APIs, middleware, and jobs in one runtime",
+        summary: "This is where FastScript becomes obviously full-stack instead of just a page engine.",
+        minutes: 55,
+        workedExample: {
+          title: "Page plus API mental model",
+          code: "export async function load(ctx) {\n  return { route: ctx.pathname, signedIn: Boolean(ctx.user) };\n}\n\nexport default function Dashboard({ route, signedIn }) {\n  return `<main>\\n    <h1>${route}</h1>\\n    <p>Signed in: ${signedIn ? \"yes\" : \"no\"}</p>\\n  </main>`;\n}\n\nexport async function POST(ctx, h) {\n  return h.json({ ok: true, route: ctx.pathname });\n}"
+        },
+        exercise: {
+          title: "Turn a page into a full-stack feature",
+          prompt: "Add one loader field and one API JSON field that describe the current lesson route.",
+          starter: "export async function load(ctx) {\n  return {};\n}\n\nexport default function LessonPage() {\n  return `<main><h1>Lesson</h1></main>`;\n}\n\nexport async function POST(ctx, h) {\n  return h.json({ ok: true });\n}",
+          reference: "export async function load(ctx) {\n  return { pathname: ctx.pathname };\n}\n\nexport default function LessonPage({ pathname }) {\n  return `<main>\\n    <h1>Lesson</h1>\\n    <p>Current route: ${pathname}</p>\\n  </main>`;\n}\n\nexport async function POST(ctx, h) {\n  return h.json({ ok: true, route: ctx.pathname });\n}"
+        },
+        concepts: ["Pages render what users see.", "API routes handle mutations and data operations.", "Middleware enforces request rules before route logic runs.", "Jobs handle async work that should not block the user request."],
+        checkpoints: ["I can explain the difference between a page route and an API route.", "I know where middleware fits in the request lifecycle.", "I understand why jobs exist instead of stuffing every side effect into a page request."],
+        mistakes: ["Putting every mutation directly in page rendering code.", "Treating auth as only a UI concern instead of a request boundary concern.", "Ignoring jobs until the app becomes slow or unreliable."],
+        realUse: ["Dashboards, admin tools, and SaaS apps all depend on this page-plus-API model.", "Agency Ops uses pages, APIs, middleware, billing actions, and jobs in one runtime boundary."],
+        resources: [["Team Dashboard baseline", "/docs/team-dashboard-saas"], ["Agency Ops guide", "/docs/agency-ops"]]
+      }),
+      lesson({
+        slug: "request-lifecycle-in-products",
+        title: "Middleware, auth, and jobs in a real product request lifecycle",
+        summary: "Follow one user request all the way from browser hit to protected route to async follow-up work.",
+        workedExample: {
+          title: "A protected request lifecycle",
+          code: "export async function middleware(ctx, h) {\n  if (!ctx.user) return h.redirect(\"/sign-in\");\n  return h.next();\n}\n\nexport async function POST(ctx, h) {\n  await ctx.jobs.enqueue(\"send-receipt\", { invoiceId: \"inv_01\" });\n  return h.json({ queued: true });\n}"
+        },
+        exercise: {
+          title: "Explain the lifecycle",
+          prompt: "Add one comment describing the redirect guard and one comment describing why the job is queued.",
+          starter: "export async function middleware(ctx, h) {\n  if (!ctx.user) return h.redirect(\"/sign-in\");\n  return h.next();\n}\n\nexport async function POST(ctx, h) {\n  await ctx.jobs.enqueue(\"send-receipt\", { invoiceId: \"inv_01\" });\n  return h.json({ queued: true });\n}",
+          reference: "export async function middleware(ctx, h) {\n  // Guard protected routes before page or API logic runs.\n  if (!ctx.user) return h.redirect(\"/sign-in\");\n  return h.next();\n}\n\nexport async function POST(ctx, h) {\n  // Queue follow-up work so the request can finish quickly.\n  await ctx.jobs.enqueue(\"send-receipt\", { invoiceId: \"inv_01\" });\n  return h.json({ queued: true });\n}"
+        },
+        concepts: ["Auth belongs to the request boundary, not just the visual layer.", "Middleware is the earliest safe place to make route-wide decisions.", "Jobs keep product workflows responsive while still handling important follow-up work.", "Product requests often touch pages, APIs, sessions, and async work together."],
+        checkpoints: ["I can describe the order: browser request, middleware, route logic, async follow-up.", "I know why redirects and auth checks happen before protected content renders.", "I understand when to queue a job instead of doing everything inline."],
+        mistakes: ["Using middleware for everything, even when route-local logic is clearer.", "Making background work invisible so operators cannot trace what happened.", "Treating auth state as a visual toggle instead of a request contract."],
+        realUse: ["Sign-in flows, receipt sending, admin actions, and notifications all use this lifecycle.", "The product-proof apps show this exact pattern under real user-facing routes."],
+        resources: [["Agency Ops guide", "/docs/agency-ops"], ["Support matrix", "/docs/support"]]
+      })
+    ]
   },
   {
     slug: "databases",
     level: "Level 3",
     title: "Data, persistence, and safety",
     audience: "Builders and operators",
-    time: "60-90 min",
+    time: "75-105 min",
     summary: "Teach persistence clearly without turning the school into a database war. Learn data flow, migrations, seeds, and safe app-state thinking.",
-    outcomes: [
-      "Explain what persistence means in a full-stack app.",
-      "Understand migrations, seed data, and controlled change.",
-      "Know how app state, user input, and durable storage fit together."
-    ],
-    lesson: {
-      slug: "state-and-persistence",
-      title: "Persistence without confusion: app state, storage, and database concepts",
-      summary: "Learn what must survive after refresh, restart, and deployment, and why that changes architecture.",
-      minutes: 50,
-      workedExample: {
-        title: "Reading persisted data in a loader",
-        code: `export async function load(ctx) {
-  const invoices = await ctx.db.list("invoices");
-  return {
-    count: invoices.length
-  };
-}
-
-export default function BillingOverview({ count }) {
-  return \`<section>
-    <h1>Invoices</h1>
-    <p>Total records: \${count}</p>
-  </section>\`;
-}`
-      },
-      exercise: {
-        title: "Describe durable data clearly",
-        prompt: "Add one loader field that would matter after the app restarts, such as invoice count or user count.",
-        starter: `export async function load(ctx) {
-  return {
-    status: "draft"
-  };
-}
-
-export default function DataPage({ status }) {
-  return \`<section><p>\${status}</p></section>\`;
-}`,
-        reference: `export async function load(ctx) {
-  const userCount = await ctx.db.count("users");
-  return {
-    userCount
-  };
-}
-
-export default function DataPage({ userCount }) {
-  return \`<section>
-    <p>Users stored durably: \${userCount}</p>
-  </section>\`;
-}`
-      },
-      concepts: [
-        "State in memory disappears; persisted data survives requests and restarts.",
-        "Migrations describe controlled schema changes over time.",
-        "Seed data creates a trustworthy baseline for development and demos.",
-        "FastScript teaches database thinking as part of app architecture, not as trivia."
-      ],
-      checkpoints: [
-        "I know why durable data is different from temporary in-memory state.",
-        "I understand what migrations and seed scripts are for.",
-        "I can explain persistence without tying the idea to one vendor."
-      ],
-      mistakes: [
-        "Assuming local variables survive after a request finishes.",
-        "Changing data models without migrations or rollback thinking.",
-        "Treating seed data like fake fluff instead of a reproducible app baseline."
-      ],
-      realUse: [
-        "Billing, users, memberships, and audit trails all depend on durable data.",
-        "The support matrix governs infrastructure-specific lanes while the concept stays universal."
-      ],
-      resources: [
-        ["Deploy guide", "/docs/latest"],
-        ["Support matrix", "/docs/support"]
-      ]
-    }
+    outcomes: ["Explain what persistence means in a full-stack app.", "Understand migrations, seed data, and controlled change.", "Know how app state, user input, and durable storage fit together."],
+    lessons: [
+      lesson({
+        slug: "state-and-persistence",
+        title: "Persistence without confusion: app state, storage, and database concepts",
+        summary: "Learn what must survive after refresh, restart, and deployment, and why that changes architecture.",
+        minutes: 50,
+        workedExample: { title: "Reading persisted data in a loader", code: "export async function load(ctx) {\n  const invoices = await ctx.db.list(\"invoices\");\n  return { count: invoices.length };\n}\n\nexport default function BillingOverview({ count }) {\n  return `<section>\\n    <h1>Invoices</h1>\\n    <p>Total records: ${count}</p>\\n  </section>`;\n}" },
+        exercise: { title: "Describe durable state", prompt: "Add one sentence explaining why invoice records must survive a page refresh.", starter: "export default function Notes() {\n  return `<section>\\n    <p>Invoices are important.</p>\\n  </section>`;\n}", reference: "export default function Notes() {\n  return `<section>\\n    <p>Invoices are important.</p>\\n    <p>Durable records must survive refresh, restart, and deployment so the business history stays trustworthy.</p>\\n  </section>`;\n}" },
+        concepts: ["Persistence means important data survives beyond the current request or tab.", "App state, browser state, and durable data are not the same thing.", "Loaders and APIs often read and write the persistent layer.", "A full-stack app becomes more serious the moment business data must survive."],
+        checkpoints: ["I can explain what persistence means without naming one specific database.", "I know that durable business data must survive refresh and restart.", "I can distinguish browser-only state from app-level persistent state."],
+        mistakes: ["Treating local browser state as a substitute for business persistence.", "Turning the data conversation into vendor preferences too early.", "Ignoring how persistence changes testing and deployment discipline."],
+        realUse: ["Invoices, memberships, projects, work items, and billing events all require durable state.", "Reference apps prove the app shape while keeping infrastructure specifics governed separately."],
+        resources: [["Support matrix", "/docs/support"], ["Deploy guide", "/docs/deploy-guide"]]
+      }),
+      lesson({
+        slug: "migrations-and-seed-discipline",
+        title: "Migrations, seed data, and durable state discipline",
+        summary: "See how data shape changes safely over time and why good seed data makes app proofs believable.",
+        workedExample: { title: "Migration plus seed mindset", code: "export async function up(db) {\n  await db.createCollection(\"clients\");\n}\n\nexport async function seed(db) {\n  await db.insert(\"clients\", { name: \"Northline Studio\" });\n}" },
+        exercise: { title: "Make the seed more useful", prompt: "Add one more client record and one note that explains why seed data should feel real.", starter: "export async function seed(db) {\n  await db.insert(\"clients\", { name: \"Northline Studio\" });\n}", reference: "export async function seed(db) {\n  await db.insert(\"clients\", { name: \"Northline Studio\" });\n  await db.insert(\"clients\", { name: \"Hinterland Health\" });\n}\n\n// Real seed data helps routes, demos, and tests prove believable product behavior." },
+        concepts: ["Migrations track how durable state changes safely over time.", "Seed data gives teams a believable starting point for demos, tests, and onboarding.", "Realistic data catches UI, workflow, and query mistakes earlier.", "Safe persistence discipline matters before production, not after a failure."],
+        checkpoints: ["I know why migrations exist instead of editing durable data shape manually.", "I can explain why seed data should look product-real, not random.", "I understand that state discipline is part of shipping, not just database administration."],
+        mistakes: ["Using fake seed data so unrealistic that it hides workflow problems.", "Changing durable state shape without a migration path.", "Forgetting that tests and docs depend on believable seeded scenarios."],
+        realUse: ["Both startup-mvp and agency-ops rely on seeded data to prove product flows clearly.", "Migration discipline becomes critical as teams add billing, auth, and ops workflows."],
+        resources: [["Agency Ops guide", "/docs/agency-ops"], ["Reference apps", "/docs/reference-apps"]]
+      })
+    ]
   },
   {
     slug: "styling",
     level: "Level 4",
-    title: "CSS, UI patterns, and product interfaces",
-    audience: "Beginners and frontend-focused learners",
-    time: "60-90 min",
-    summary: "Teach CSS, layout, spacing, tokens, and interface decisions so learners can build polished product surfaces instead of only working logic demos.",
-    outcomes: [
-      "Use CSS deliberately instead of guessing at spacing and layout.",
-      "Understand reusable interface patterns in FastScript apps.",
-      "Ship product-looking pages, not raw prototype fragments."
-    ],
-    lesson: {
-      slug: "css-and-ui-systems",
-      title: "CSS and UI systems that make product work feel real",
-      summary: "Learn how layout, spacing, hierarchy, and reuse turn basic routes into interfaces people can trust.",
-      minutes: 45,
-      workedExample: {
-        title: "A small design system slice",
-        code: `.card {
-  padding: 24px;
-  border: 1px solid var(--c-border);
-  border-radius: 14px;
-  background: var(--c-bg1);
-}
-
-.card h2 {
-  margin-bottom: 8px;
-}
-
-.card p {
-  color: var(--c-muted);
-}`
-      },
-      exercise: {
-        title: "Improve hierarchy and spacing",
-        prompt: "Add spacing and muted body text so the card feels intentional instead of raw.",
-        starter: `.card {
-  border: 1px solid var(--c-border);
-}
-
-.card p {
-}`,
-        reference: `.card {
-  padding: 24px;
-  border: 1px solid var(--c-border);
-  border-radius: 14px;
-  background: var(--c-bg1);
-}
-
-.card p {
-  margin-top: 8px;
-  color: var(--c-muted);
-  line-height: 1.6;
-}`
-      },
-      concepts: [
-        "CSS controls layout, spacing, color, type, and interaction feel.",
-        "Reusable classes and tokens beat random one-off styling decisions.",
-        "Good product UI communicates trust and hierarchy before the user clicks anything.",
-        "FastScript works with CSS as a normal web primitive, not as an afterthought."
-      ],
-      checkpoints: [
-        "I can explain why spacing and hierarchy matter in product interfaces.",
-        "I know how to improve a raw block into a reusable card pattern.",
-        "I understand that CSS is a core full-stack skill, not optional decoration."
-      ],
-      mistakes: [
-        "Treating CSS as memorized magic instead of layout and communication rules.",
-        "Using visual noise where consistent spacing and structure would solve the problem.",
-        "Avoiding interface polish until the very end of the build."
-      ],
-      realUse: [
-        "Dashboards, settings screens, billing pages, and docs all depend on clear hierarchy.",
-        "The school itself should model product-quality CSS rather than abstract teaching alone."
-      ],
-      resources: [
-        ["Styling primitives", "/docs/primitives"],
-        ["Examples", "/examples"]
-      ]
-    }
+    title: "Styling, CSS, and UI systems",
+    audience: "Design-minded builders",
+    time: "75-105 min",
+    summary: "Learn how to make FastScript apps feel intentional: CSS structure, layout, hierarchy, reusable classes, and responsive thinking.",
+    outcomes: ["Understand CSS as a system instead of random overrides.", "Build readable layout hierarchy and reusable component classes.", "Use styling decisions that hold up in real product work."],
+    lessons: [
+      lesson({
+        slug: "css-with-purpose",
+        title: "CSS with purpose: spacing, hierarchy, and readable interfaces",
+        summary: "Learn why UI clarity comes from structure and hierarchy before visual flourish.",
+        workedExample: { title: "A simple UI block", code: ".card {\n  padding: 1rem;\n  border-radius: 1rem;\n}\n\n.card-title {\n  font-weight: 700;\n}\n\n.card-copy {\n  color: var(--c-muted);\n}" },
+        exercise: { title: "Clarify the hierarchy", prompt: "Add one class for a subtitle and one class that separates primary from secondary text.", starter: ".card-title {\n  font-weight: 700;\n}", reference: ".card-title {\n  font-weight: 700;\n}\n\n.card-subtitle {\n  font-size: .95rem;\n}\n\n.card-copy {\n  color: var(--c-muted);\n}" },
+        concepts: ["Good CSS communicates hierarchy before decoration.", "Spacing, typography, and grouping create clarity.", "Reusable classes are easier to maintain than ad-hoc visual overrides.", "Product UI should feel intentional on both desktop and mobile."],
+        checkpoints: ["I can explain why layout and hierarchy come before flashy styling.", "I understand why reusable classes scale better than random one-offs.", "I know that readable UI is part of product quality, not a finishing detail."],
+        mistakes: ["Jumping straight to colors and motion before the layout works.", "Styling only for desktop and calling it done.", "Creating class names that describe one exact page instead of reusable roles."],
+        realUse: ["Docs, dashboards, billing pages, and admin tools all need calm visual hierarchy.", "FastScript product apps rely on CSS discipline just as much as route discipline."],
+        resources: [["Learn playground", "/docs/playground"], ["Agency Ops guide", "/docs/agency-ops"]]
+      }),
+      lesson({
+        slug: "responsive-layout-and-ui-patterns",
+        title: "Responsive layout, visual hierarchy, and reusable UI patterns",
+        summary: "Apply styling ideas to product-shaped interfaces that have cards, grids, sidebars, and action areas.",
+        workedExample: { title: "Responsive page shell", code: ".dashboard {\n  display: grid;\n  gap: 1.5rem;\n}\n\n@media (min-width: 920px) {\n  .dashboard {\n    grid-template-columns: 280px 1fr;\n  }\n}" },
+        exercise: { title: "Add a mobile-first note", prompt: "Add one comment that explains why the single-column layout is the default and the second column comes later.", starter: ".dashboard {\n  display: grid;\n  gap: 1.5rem;\n}\n\n@media (min-width: 920px) {\n  .dashboard {\n    grid-template-columns: 280px 1fr;\n  }\n}", reference: ".dashboard {\n  display: grid;\n  gap: 1.5rem;\n}\n\n/* Start mobile-first, then add the sidebar when wider screens have room for it. */\n@media (min-width: 920px) {\n  .dashboard {\n    grid-template-columns: 280px 1fr;\n  }\n}" },
+        concepts: ["Responsive design starts from constrained layouts and grows outward.", "Page shells, cards, sidebars, and action rows are reusable product patterns.", "Hierarchy should survive on small screens, not collapse into noise.", "UI systems get stronger when components have clear structural roles."],
+        checkpoints: ["I can explain why mobile-first layout decisions reduce complexity.", "I know how to think about shell, content area, and secondary context.", "I understand that responsive design is about readable flow, not just shrink-to-fit."],
+        mistakes: ["Designing for one ideal desktop screenshot only.", "Making cards and sidebars so rigid that they break on smaller screens.", "Treating responsive work as a late polish step instead of part of core layout planning."],
+        realUse: ["Product dashboards like startup-mvp and agency-ops depend on stable layout patterns.", "Learning reusable UI patterns now makes capstone work much faster later."],
+        resources: [["Reference apps", "/docs/reference-apps"], ["FastScript school", "/learn"]]
+      })
+    ]
   },
   {
     slug: "shipping",
     level: "Level 5",
-    title: "Build, QA, deploy, and production discipline",
-    audience: "All learners",
-    time: "60-90 min",
-    summary: "Teach how real apps get validated and shipped, not just how they run once on localhost.",
-    outcomes: [
-      "Use build and validation as normal development habits.",
-      "Understand the role of smoke checks, QA gates, and deploy handoff.",
-      "Know what gets deployed on adapters and custom hosts."
-    ],
-    lesson: {
-      slug: "build-qa-deploy",
-      title: "Build, validate, deploy: the shipping loop that makes FastScript serious",
-      summary: "A product is not done when it renders. It is done when it can be checked, built, and shipped with confidence.",
-      minutes: 50,
-      workedExample: {
-        title: "A practical shipping loop",
-        code: `fastscript dev
-npm run validate
-npm run qa:all
-fastscript deploy --target cloudflare`
-      },
-      exercise: {
-        title: "Write your own release checklist",
-        prompt: "Add build, validation, and deploy steps in the order you would trust for a real project.",
-        starter: `# release checklist
-1. Run the app
-2. ???
-3. Deploy`,
-        reference: `# release checklist
-1. Run local development and confirm the feature works.
-2. Run validate to catch structure, build, and contract problems.
-3. Run qa:all before release.
-4. Generate the deploy target or custom-host handoff.
-5. Smoke-check the live routes after deployment.`
-      },
-      concepts: [
-        "Build output is a deployable product artifact, not just a local side effect.",
-        "QA gates protect confidence across formatting, lint, typecheck, tests, smoke, and proof work.",
-        "Adapters exist for convenience, but the runtime can also hand off to custom hosts.",
-        "Shipping discipline is part of FastScript mastery, not a separate ops-only world."
-      ],
-      checkpoints: [
-        "I know the difference between dev, build, validate, and full QA.",
-        "I understand that deployment starts from the built app artifact, not from guesses.",
-        "I can explain how custom-host handoff differs from adapter-specific deploy files."
-      ],
-      mistakes: [
-        "Thinking a successful local render means the release is safe.",
-        "Skipping validation because the feature looks simple.",
-        "Confusing adapter files with the whole deployable application."
-      ],
-      realUse: [
-        "Agency Ops and startup-mvp both rely on this build-and-ship discipline.",
-        "The same loop prepares you for Node, Vercel, Cloudflare, and custom-host deployment paths."
-      ],
-      resources: [
-        ["Current docs track", "/docs/latest"],
-        ["Benchmarks", "/benchmarks"]
-      ]
-    }
+    title: "Deployment, QA, and shipping",
+    audience: "People who want to ship for real",
+    time: "75-105 min",
+    summary: "Learn how FastScript moves from a local app to a shippable product: build artifacts, QA gates, adapters, and custom-host handoff.",
+    outcomes: ["Understand build, validate, and production start.", "Know the difference between adapter deployment and custom-host deployment.", "Use smoke checks and QA gates before calling a product done."],
+    lessons: [
+      lesson({
+        slug: "build-validate-and-start",
+        title: "Build, validate, and production start without guessing",
+        summary: "Learn the discipline that turns a project into something you can trust before deploy.",
+        workedExample: { title: "Basic release checklist", code: "npm run build\nnpm run validate\nnpm run qa:all\nnode ./src/cli.mjs start" },
+        exercise: { title: "Strengthen the checklist", prompt: "Add one line for docs indexing or app proof so the release flow is not just build-and-hope.", starter: "npm run build\nnpm run validate\nnode ./src/cli.mjs start", reference: "npm run build\nnpm run docs:index\nnpm run validate\nnpm run qa:all\nnode ./src/cli.mjs start" },
+        concepts: ["A green build is not the whole shipping story.", "Validation and QA gates catch class, routing, docs, and runtime problems earlier.", "Production start should be testable before deployment.", "Shipping discipline creates confidence for both beginners and teams."],
+        checkpoints: ["I know the difference between build and validate.", "I can explain why QA gates belong before release.", "I understand that production start is a real runtime check, not a paperwork step."],
+        mistakes: ["Stopping after dev mode looked fine once.", "Skipping runtime smoke checks because the build succeeded.", "Treating docs and proof artifacts as optional afterthoughts."],
+        realUse: ["Every serious FastScript app should pass through build, validate, and production start before deployment.", "This discipline is what makes product-shaped apps teachable and supportable."],
+        resources: [["Deploy guide", "/docs/deploy-guide"], ["Latest proof update", "/docs/latest"]]
+      }),
+      lesson({
+        slug: "adapters-custom-hosts-and-release-discipline",
+        title: "Adapters, custom-host handoff, smoke checks, and release discipline",
+        summary: "Understand what gets deployed, when adapters help, and how custom Node/container hosts fit the contract.",
+        workedExample: { title: "Custom-host deployment view", code: "dist/\n  fastscript-manifest.json\n\n# start production\nnode ./src/cli.mjs start" },
+        exercise: { title: "Explain the deployable unit", prompt: "Add one note that explains why teams deploy the app plus dist instead of uploading a random adapter file.", starter: "dist/\n  fastscript-manifest.json", reference: "dist/\n  fastscript-manifest.json\n\n// Deploy the app plus built output, then start the FastScript runtime for custom hosts." },
+        concepts: ["Adapters are provider-specific helpers, not the whole deployment story.", "Custom Node or container hosts deploy the built app plus dist and then start the runtime.", "Smoke checks prove the deployment is healthy after start.", "Release discipline means knowing what artifact you are actually shipping."],
+        checkpoints: ["I can explain the difference between an adapter artifact and the universal build artifact.", "I know what a smoke check should verify after production start.", "I understand how custom hosts fit the FastScript deployment contract."],
+        mistakes: ["Assuming one provider-specific file is the universal deployment artifact.", "Skipping health checks after production start.", "Treating deployment as separate from runtime understanding."],
+        realUse: ["Agency Ops docs explain the custom-host path clearly for non-adapter infrastructure.", "Release discipline matters even more as products gain billing, jobs, and protected routes."],
+        resources: [["Agency Ops guide", "/docs/agency-ops"], ["Deploy guide", "/docs/deploy-guide"]]
+      })
+    ]
   },
   {
     slug: "professional",
     level: "Level 6",
-    title: "Professional FastScript thinking",
-    audience: "Experienced developers",
-    time: "45-75 min",
-    summary: "Teach experienced teams how to reason about runtime boundaries, support claims, and real product adoption instead of treating FastScript like a gimmick.",
-    outcomes: [
-      "Think in governed lanes, not vibes.",
-      "Adopt FastScript with compatibility discipline.",
-      "Translate existing production instincts into the FastScript model."
-    ],
-    lesson: {
-      slug: "from-ts-thinking-to-fs-thinking",
-      title: "From TypeScript habits to FastScript production habits",
-      summary: "This lesson is for professionals who already know TS/JS but need the right FastScript mental model.",
-      minutes: 40,
-      workedExample: {
-        title: "Same app logic, smaller surface area",
-        code: `export async function load(ctx) {
-  return {
-    env: ctx.runtime,
-    user: ctx.user ?? null
-  };
-}
-
-export default function Settings({ env, user }) {
-  return \`<section>
-    <h1>Runtime: \${env}</h1>
-    <p>User: \${user ? user.email : "anonymous"}</p>
-  </section>\`;
-}`
-      },
-      exercise: {
-        title: "Describe the runtime boundary",
-        prompt: "Add one comment or line that explains what belongs inside the FastScript app boundary.",
-        starter: `export default function Notes() {
-  return \`<section>
-    <p>App boundary notes</p>
-  </section>\`;
-}`,
-        reference: `export default function Notes() {
-  return \`<section>
-    <p>Pages, APIs, middleware, jobs, and shared logic can live in one FastScript app boundary when the support matrix covers the lanes we need.</p>
-  </section>\`;
-}`
-      },
-      concepts: [
-        "FastScript is a runtime pipeline, not just a prettier file extension.",
-        "The support matrix is part of the product contract, not optional paperwork.",
-        "Teams should expand only through proven or intentionally-governed lanes.",
-        "FastScript mastery includes knowing what not to promise yet."
-      ],
-      checkpoints: [
-        "I can explain FastScript without reducing it to syntax sugar.",
-        "I know where /docs/support fits into technical decision-making.",
-        "I understand that production discipline includes claim discipline."
-      ],
-      mistakes: [
-        "Assuming every JS ecosystem shape is automatically production-proven.",
-        "Selling framework support before checking the matrix.",
-        "Treating adoption as a rewrite instead of a governed expansion."
-      ],
-      realUse: [
-        "This is the lesson that helps senior engineers adopt FastScript responsibly on live products.",
-        "It also sets up the migration workflow that follows next."
-      ],
-      resources: [
-        ["Support matrix", "/docs/support"],
-        ["Real-world adoption", "/docs/adoption"]
-      ]
-    }
+    title: "Professional adoption and judgment",
+    audience: "Experienced developers and teams",
+    time: "75-105 min",
+    summary: "Learn how to adopt FastScript responsibly in real teams: support lanes, runtime boundaries, and proof-backed rollout decisions.",
+    outcomes: ["Read the support matrix as a product contract.", "Adopt FastScript through proven lanes instead of guesswork.", "Recognize when a gap is a compatibility bug versus an unsupported path."],
+    lessons: [
+      lesson({
+        slug: "support-matrix-and-proof-lanes",
+        title: "Read the support matrix like a production contract",
+        summary: "Professional adoption starts with knowing which lanes are proven, partial, or still planned.",
+        workedExample: { title: "Judgment before adoption", code: "if (lane.status !== \"proven\") {\n  throw new Error(\"Do not promise this in production yet.\");\n}" },
+        exercise: { title: "Make the rule explicit", prompt: "Add one comment that explains why promising unsupported lanes is worse than saying not yet.", starter: "if (lane.status !== \"proven\") {\n  throw new Error(\"Do not promise this in production yet.\");\n}", reference: "if (lane.status !== \"proven\") {\n  // Honest support boundaries protect teams more than over-promising and discovering gaps late.\n  throw new Error(\"Do not promise this in production yet.\");\n}" },
+        concepts: ["The support matrix is a contract, not a decorative docs page.", "Proven, partial, and planned have different consequences for delivery risk.", "Professional adoption means choosing proven lanes first.", "Compatibility bugs should be surfaced and added to proof, not hidden."],
+        checkpoints: ["I know why the support matrix belongs in adoption decisions.", "I can explain the difference between proven, partial, and planned lanes.", "I understand why hidden gaps become team risk later."],
+        mistakes: ["Treating docs language as less important than code reality.", "Assuming a demo equals a governed support claim.", "Promising a lane before the proof work exists."],
+        realUse: ["This is how you decide whether to roll FastScript into an existing org or product line.", "It keeps adoption honest even when enthusiasm is high."],
+        resources: [["Support matrix", "/docs/support"], ["Adoption guide", "/docs/adoption"]]
+      }),
+      lesson({
+        slug: "runtime-boundaries-and-proof-backed-rollout",
+        title: "Runtime boundaries, support judgment, and proof-backed rollout",
+        summary: "Learn how to judge what belongs in one runtime boundary and how to adopt gradually without creating hidden risk.",
+        workedExample: { title: "A safe rollout note", code: "const rollout = {\n  startWith: \"proven full-stack lanes\",\n  escalateWith: \"proof\",\n  treatGapsAs: \"compatibility work\"\n};" },
+        exercise: { title: "Write the rollout rule", prompt: "Add one property that reminds the team to avoid local hacks for compatibility gaps.", starter: "const rollout = {\n  startWith: \"proven full-stack lanes\",\n  escalateWith: \"proof\"\n};", reference: "const rollout = {\n  startWith: \"proven full-stack lanes\",\n  escalateWith: \"proof\",\n  avoid: \"local hacks that hide compatibility gaps\"\n};" },
+        concepts: ["One runtime boundary can make pages, APIs, jobs, and shared logic easier to reason about.", "Safe rollout is incremental, evidence-backed, and aligned to governed support.", "Teams should expand only when proof and product needs justify it.", "Compatibility issues belong in the shared contract, not buried in one app."],
+        checkpoints: ["I can explain what a runtime boundary is in practice.", "I know how to grow adoption from proven lanes outward.", "I understand why proof-backed rollout beats internal folklore."],
+        mistakes: ["Adopting everything at once without lane-level judgment.", "Using app-specific hacks instead of escalating compatibility work.", "Ignoring how runtime boundaries affect team clarity and QA."],
+        realUse: ["Professional teams need this mindset to keep migrations and new builds sane.", "The proof apps exist so rollout decisions are grounded instead of speculative."],
+        resources: [["Agency Ops guide", "/docs/agency-ops"], ["Latest proof update", "/docs/latest"]]
+      })
+    ]
   },
   {
     slug: "migration",
     level: "Level 7",
-    title: "Secure TS/JS migration to .fs",
-    audience: "Professional teams",
-    time: "60-90 min",
-    summary: "Teach the safe migration loop: dry runs, diff previews, manifests, rollback, and governed follow-up.",
-    outcomes: [
-      "Run migration safely before touching tracked files.",
-      "Use manifests and rollback instead of hope.",
-      "Treat compatibility gaps as product work, not silent hacks."
-    ],
-    lesson: {
-      slug: "dry-run-convert-rollback",
-      title: "Dry-run, convert, rollback: the secure path from TS/JS to .fs",
-      summary: "FastScript migration is strongest when teams can inspect and reverse it confidently.",
-      minutes: 55,
-      workedExample: {
-        title: "The safe migration flow",
-        code: `npm run migrate -- app --dry-run
-npm run migrate -- app
-npm run migrate:rollback`
-      },
-      exercise: {
-        title: "Write the migration policy",
-        prompt: "Add the step where a professional team checks support before promising the converted slice.",
-        starter: `1. Dry-run the migration
-2. Convert the files
-3. Ship it`,
-        reference: `1. Dry-run the migration and inspect the diff preview.
-2. Cross-check the lanes the converted code depends on in /docs/support.
-3. Run the real conversion only after the diff is trusted.
-4. Use rollback if confidence drops.
-5. Log any valid JS/TS failure in .fs as compatibility work.`
-      },
-      concepts: [
-        "Dry-run protects confidence before any tracked source changes.",
-        "Manifest output records what changed and makes rollback predictable.",
-        "Rollback is part of a trustworthy migration story, not a sign of failure.",
-        "Secure migration means compatibility visibility, not blind rename success."
-      ],
-      checkpoints: [
-        "I understand why dry-run comes before real conversion.",
-        "I know what the manifest and rollback flow are for.",
-        "I can explain how migration and governed compatibility fit together."
-      ],
-      mistakes: [
-        "Running conversion on production code without inspection.",
-        "Treating a rename as proof the whole runtime shape is safe.",
-        "Ignoring a compatibility gap because the converted code mostly looks right."
-      ],
-      realUse: [
-        "This is the path professionals use to move existing codebases into FastScript incrementally.",
-        "It protects trust while making real adoption possible."
-      ],
-      resources: [
-        ["Interop guide", "/docs/interop"],
-        ["Real-world adoption", "/docs/adoption"]
-      ]
-    }
+    title: "Migration from TS/JS to .fs",
+    audience: "Professionals and maintainers",
+    time: "90-120 min",
+    summary: "Learn how to migrate safely: dry-runs, manifests, rollback, proof lanes, and what secure adoption actually looks like.",
+    outcomes: ["Use dry-run conversion before editing real files.", "Read manifests and rollback safely.", "Treat conversion gaps as governed compatibility work."],
+    lessons: [
+      lesson({
+        slug: "dry-run-convert-rollback",
+        title: "Dry-run, convert, rollback: the safe professional migration loop",
+        summary: "Learn the discipline that keeps adoption safe instead of impulsive.",
+        workedExample: { title: "A migration loop", code: "fastscript migrate src --dry-run\nfastscript migrate src --write\nfastscript migrate src --rollback" },
+        exercise: { title: "Document the safe order", prompt: "Add one note explaining why dry-run comes first and rollback must stay ready.", starter: "fastscript migrate src --dry-run\nfastscript migrate src --write\nfastscript migrate src --rollback", reference: "fastscript migrate src --dry-run\nfastscript migrate src --write\nfastscript migrate src --rollback\n\n// Dry-run shows the impact first. Rollback protects you if the written conversion is not safe yet." },
+        concepts: ["Dry-run protects you from blind edits.", "Write mode should come only after reviewing the proposed changes.", "Rollback is part of the migration contract, not an embarrassing fallback.", "Professional migration is a reversible workflow, not a leap of faith."],
+        checkpoints: ["I know why dry-run should come before write mode.", "I can explain why rollback is a first-class safety tool.", "I understand that migration discipline matters as much as conversion output."],
+        mistakes: ["Running write mode immediately because the code looked simple.", "Ignoring rollback until after a messy conversion.", "Treating migration as search-and-replace instead of a governed workflow."],
+        realUse: ["This is the path professionals use when they have real TS/JS code and delivery pressure.", "Fast adoption gets safer when the workflow stays reversible."],
+        resources: [["Adoption guide", "/docs/adoption"], ["Support matrix", "/docs/support"]]
+      }),
+      lesson({
+        slug: "manifest-diffs-and-compatibility-gaps",
+        title: "Manifest reading, diff preview, rollback drills, and compatibility gaps",
+        summary: "Go beyond the command sequence and learn how to inspect what changed, what failed, and what to do next.",
+        workedExample: { title: "A migration manifest mindset", code: "{\n  \"converted\": 8,\n  \"skipped\": 2,\n  \"needsReview\": [\"src/auth/session.ts\"]\n}" },
+        exercise: { title: "Interpret the manifest", prompt: "Add one sentence that explains why skipped or review-needed files should change the rollout plan.", starter: "{\n  \"converted\": 8,\n  \"skipped\": 2,\n  \"needsReview\": [\"src/auth/session.ts\"]\n}", reference: "{\n  \"converted\": 8,\n  \"skipped\": 2,\n  \"needsReview\": [\"src/auth/session.ts\"]\n}\n\n// Review-needed files mean the migration is not fully routine yet and the rollout plan should stay cautious." },
+        concepts: ["Migration output should be read, not merely generated.", "Diff preview and manifest review help you see what needs human judgment.", "Skipped or review-needed files are signals, not inconveniences.", "Compatibility gaps should become proof work, not hidden app-local hacks."],
+        checkpoints: ["I know how to treat a partial migration result honestly.", "I can explain why manifests and diffs are part of secure adoption.", "I understand when to stop and escalate a compatibility issue."],
+        mistakes: ["Treating skipped files as harmless by default.", "Rolling forward without reading the manifest or diff.", "Patching around incompatibilities locally and calling the migration done."],
+        realUse: ["This is how mature teams keep migrations auditable and reversible.", "The same habits protect both greenfield adoption and legacy transitions."],
+        resources: [["Latest proof update", "/docs/latest"], ["Support matrix", "/docs/support"]]
+      })
+    ]
   },
   {
     slug: "mastery",
     level: "Level 8",
     title: "Capstones and FastScript mastery",
-    audience: "Graduates",
+    audience: "Graduates and serious builders",
     time: "90-120 min",
-    summary: "Bring everything together through product-shaped capstones so learners leave able to ship real FastScript systems, not just finish lessons.",
-    outcomes: [
-      "Plan and ship a real FastScript app end to end.",
-      "Use the right starter or proving-ground app deliberately.",
-      "Operate inside the full FastScript contract with confidence."
-    ],
-    lesson: {
-      slug: "capstone-product-architecture",
-      title: "Capstone architecture: from lesson knowledge to real FastScript products",
-      summary: "Mastery means you can choose the right starting point, structure the app correctly, and ship with governed confidence.",
-      minutes: 65,
-      workedExample: {
-        title: "The capstone path",
-        code: `fastscript create my-product --template startup-mvp
-npm run validate
-npm run qa:all
-fastscript deploy --target node`
-      },
-      exercise: {
-        title: "Choose the right baseline",
-        prompt: "Write one sentence for when to use startup-mvp and one for when to study agency-ops.",
-        starter: `startup-mvp:
-agency-ops:`,
-        reference: `startup-mvp: Use it when you want the stable public greenfield baseline for real full-stack product work.
-agency-ops: Use it when you want the clearest strict-TypeScript-in-.fs proving-ground app to study and adapt.`
-      },
-      concepts: [
-        "Mastery is about architecture, delivery, and judgment, not just knowing commands.",
-        "Capstones should force pages, APIs, styling, data, jobs, QA, and deployment to work together.",
-        "The support matrix remains the source of truth for lane-level promises.",
-        "FastScript mastery includes knowing how to keep learning from proofs, examples, and governed gaps."
-      ],
-      checkpoints: [
-        "I can choose the right baseline for a new FastScript product.",
-        "I can describe the full stack of a serious FastScript app from UI to deploy.",
-        "I know how to ship while staying inside the compatibility contract."
-      ],
-      mistakes: [
-        "Confusing lesson completion with product readiness.",
-        "Skipping capstones because the concepts felt understandable in isolation.",
-        "Choosing architecture by hype instead of proof and app shape."
-      ],
-      realUse: [
-        "This is the bridge from school content to real product delivery inside FastScript.",
-        "A learner who finishes here should be able to build serious full-stack systems with confidence."
-      ],
-      resources: [
-        ["Team Dashboard SaaS", "/docs/team-dashboard-saas"],
-        ["Agency Ops guide", "/docs/agency-ops"]
-      ]
-    }
+    summary: "Pull everything together into real build-and-ship discipline: capstones, reference app choice, QA gates, and release readiness.",
+    outcomes: ["Choose the right baseline for a real product.", "Plan and ship a capstone with QA, deployment, and support-matrix discipline.", "Demonstrate FastScript mastery through product-shaped work."],
+    lessons: [
+      lesson({
+        slug: "capstone-product-architecture",
+        title: "Capstone architecture: choosing the right baseline and app shape",
+        summary: "Learn how to move from lessons into a serious product-shaped build without guessing your starting point.",
+        workedExample: { title: "Baseline choice", code: "const baseline = projectType === \"greenfield\"\n  ? \"startup-mvp\"\n  : \"agency-ops\";" },
+        exercise: { title: "Explain the choice", prompt: "Add one sentence that explains when startup-mvp is the right baseline and when agency-ops is the better reference.", starter: "const baseline = projectType === \"greenfield\"\n  ? \"startup-mvp\"\n  : \"agency-ops\";", reference: "const baseline = projectType === \"greenfield\"\n  ? \"startup-mvp\"\n  : \"agency-ops\";\n\n// startup-mvp is the stable greenfield baseline. agency-ops is the stricter TS-in-.fs product reference." },
+        concepts: ["Mastery includes choosing a good starting point, not just writing route code.", "Reference apps shorten decision time when they are mapped honestly to product goals.", "Greenfield work and strict-TS proving work benefit from different examples.", "Good architecture decisions happen before the first feature branch."],
+        checkpoints: ["I can explain when to start from startup-mvp versus agency-ops.", "I know how reference apps help me avoid inventing app structure from scratch.", "I understand that baseline choice changes migration and delivery speed."],
+        mistakes: ["Choosing a baseline for aesthetics instead of workflow fit.", "Ignoring the support matrix while planning a capstone.", "Starting a serious app without deciding what proof app it maps to."],
+        realUse: ["Capstone work gets dramatically easier when your starting point already matches the product shape.", "This is also how real teams reduce churn in early architecture decisions."],
+        resources: [["Capstone hub", "/learn/capstone"], ["Reference apps", "/docs/reference-apps"]]
+      }),
+      lesson({
+        slug: "delivery-checklist-and-release-readiness",
+        title: "Capstone planning, delivery checklist, and release readiness",
+        summary: "Finish the mastery ladder with the habits that make a serious FastScript app ready to ship.",
+        workedExample: { title: "Release readiness checklist", code: "const releaseReady = [\n  \"support lane chosen\",\n  \"tests green\",\n  \"validate green\",\n  \"deployment path documented\"\n];" },
+        exercise: { title: "Add the missing guardrail", prompt: "Add one checklist item that reminds the team to treat compatibility gaps as proof work.", starter: "const releaseReady = [\n  \"support lane chosen\",\n  \"tests green\",\n  \"validate green\",\n  \"deployment path documented\"\n];", reference: "const releaseReady = [\n  \"support lane chosen\",\n  \"tests green\",\n  \"validate green\",\n  \"deployment path documented\",\n  \"compatibility gaps escalated into proof work\"\n];" },
+        concepts: ["Mastery means finishing the app with discipline, not just getting the feature to render.", "QA, deployment docs, and support-lane judgment are part of the product.", "A capstone proves judgment as much as coding skill.", "Release readiness is what turns a practice app into a credible deliverable."],
+        checkpoints: ["I can describe a release-ready FastScript capstone.", "I know which proof, QA, and docs checks belong before shipping.", "I understand how to keep the delivery process honest when gaps appear."],
+        mistakes: ["Stopping at feature-complete instead of release-ready.", "Leaving deployment, docs, or validation for the very end.", "Ignoring compatibility gaps because the capstone mostly works locally."],
+        realUse: ["This is the skill set that separates experimentation from professional delivery.", "A mastered FastScript workflow is observable in the checklist, not just the code."],
+        resources: [["Capstone hub", "/learn/capstone"], ["Latest proof update", "/docs/latest"]]
+      })
+    ]
   }
 ];
 
-function flattenLessons() {
-  return MODULES.map((module) => ({
+const CAPSTONES = [
+  {
+    slug: "beginner",
+    title: "Beginner capstone",
+    goal: "Build a small multi-page app that proves you understand routes, forms, and simple full-stack flow.",
+    build: "A tiny school directory or portfolio app with a home page, one details page, one form, and one API action.",
+    concepts: ["Pages and routes", "HTML/CSS basics", "Simple form actions", "Local progress and QA habits"],
+    checklist: ["Create at least two page routes.", "Style the UI so the hierarchy is clear.", "Add one form that sends input to an API route.", "Explain where browser behavior ends and app logic begins."],
+    done: "You can navigate the app, submit a form, explain the route flow, and show clean structure in app/pages and app/api."
+  },
+  {
+    slug: "intermediate",
+    title: "Intermediate full-stack capstone",
+    goal: "Build an authenticated dashboard with pages, APIs, jobs, and realistic seeded state.",
+    build: "A simple ops dashboard with sign-in, protected routes, one billing or notification action, and a queue-backed follow-up.",
+    concepts: ["Middleware and auth", "APIs and mutations", "Jobs", "Seed data", "Build and validate"],
+    checklist: ["Protect one route with middleware or session checks.", "Add one mutation API that changes app state.", "Queue one job for follow-up work.", "Run build, validate, and a smoke test."],
+    done: "The app feels product-shaped, not like a static lesson exercise, and you can explain the request lifecycle clearly."
+  },
+  {
+    slug: "professional",
+    title: "Professional migration capstone",
+    goal: "Safely migrate one TS/JS slice into .fs with dry-run, review, rollback discipline, and proof-backed decisions.",
+    build: "A small converted route or feature slice with manifest review, compatibility notes, and rollback readiness.",
+    concepts: ["Dry-run conversion", "Manifest reading", "Rollback", "Support-lane judgment", "Compatibility escalation"],
+    checklist: ["Run and review dry-run before write mode.", "Capture manifest or diff findings.", "Document rollback steps.", "Escalate any gap as compatibility work instead of hiding it."],
+    done: "You can show both the converted slice and the professional process that made it safe."
+  },
+  {
+    slug: "mastery",
+    title: "Mastery capstone",
+    goal: "Ship a production-shaped FastScript app using the right baseline, QA gates, deployment handoff, and support-matrix discipline.",
+    build: "Start from startup-mvp or agency-ops, extend it into a real product slice, and finish with proof-backed release readiness.",
+    concepts: ["Baseline choice", "Reference apps", "QA and validate", "Deployment handoff", "Support matrix"],
+    checklist: ["Choose startup-mvp or agency-ops intentionally.", "Implement at least one real product workflow.", "Document deployment and smoke checks.", "Pass validate and route-level proof checks."],
+    done: "You can justify the architecture, show the proof lane, and hand the app to another developer with confidence."
+  }
+];
+
+const LESSONS = MODULES.flatMap(module =>
+  module.lessons.map((entry, lessonIndex) => ({
     moduleSlug: module.slug,
     moduleTitle: module.title,
-    level: module.level,
-    ...module.lesson
-  }));
-}
+    moduleLevel: module.level,
+    lessonIndex,
+    ...entry
+  }))
+);
 
-const LESSONS = flattenLessons();
+function emptyLessonState(checkpointCount) {
+  return {
+    checks: Array.from({ length: checkpointCount }, () => false),
+    complete: false
+  };
+}
 
 export function getSchoolStorageKey() {
   return SCHOOL_STORAGE_KEY;
+}
+
+export function getLegacySchoolStorageKey() {
+  return LEGACY_SCHOOL_STORAGE_KEY;
+}
+
+export function getSchoolStateVersion() {
+  return SCHOOL_STATE_VERSION;
 }
 
 export function getModules() {
@@ -685,16 +529,22 @@ export function getModules() {
 }
 
 export function getModule(slug) {
-  return MODULES.find((module) => module.slug === slug) || null;
+  return MODULES.find(module => module.slug === slug) || null;
 }
 
 export function getLesson(moduleSlug, lessonSlug) {
   const module = getModule(moduleSlug);
-  if (!module || module.lesson.slug !== lessonSlug) return null;
+  if (!module) return null;
+  const entry = module.lessons.find(lessonEntry => lessonEntry.slug === lessonSlug);
+  if (!entry) return null;
   return {
     module,
-    lesson: module.lesson
+    lesson: entry
   };
+}
+
+export function getLessonKey(moduleSlug, lessonSlug) {
+  return `${moduleSlug}/${lessonSlug}`;
 }
 
 export function getLessonCount() {
@@ -705,12 +555,12 @@ export function getTrackSummary() {
   return [
     {
       title: "Beginner track",
-      copy: "Start at zero and learn the web, FastScript basics, CSS, APIs, data, and shipping in the order a real beginner actually needs.",
+      copy: "Start from literal zero: code, browsers, routes, forms, CSS, APIs, persistence, and the path to your first shipped FastScript app.",
       href: "/learn/beginner"
     },
     {
       title: "Professional track",
-      copy: "Learn safe TS/JS migration, support-matrix decisions, rollback discipline, and production adoption without guessing.",
+      copy: "Start from governed adoption, TS/JS migration, support-lane judgment, rollback, and product-shaped release discipline.",
       href: "/learn/professional"
     }
   ];
@@ -718,36 +568,99 @@ export function getTrackSummary() {
 
 export function getModuleStats() {
   return [
-    ["Levels", String(MODULES.length)],
-    ["Interactive lessons", String(LESSONS.length)],
-    ["Signup required", "0"],
-    ["Outcome", "FastScript mastery"]
+    ["Levels", MODULES.length],
+    ["Interactive lessons", LESSONS.length],
+    ["Capstone tracks", CAPSTONES.length],
+    ["Reference apps", 2]
   ];
 }
 
+export function getCapstones() {
+  return CAPSTONES;
+}
+
 export function getPrevNext(moduleSlug, lessonSlug) {
-  const index = LESSONS.findIndex((entry) => entry.moduleSlug === moduleSlug && entry.slug === lessonSlug);
+  const index = LESSONS.findIndex(entry => entry.moduleSlug === moduleSlug && entry.slug === lessonSlug);
   if (index === -1) return { prev: null, next: null };
-  const prev = index > 0 ? LESSONS[index - 1] : null;
-  const next = index < LESSONS.length - 1 ? LESSONS[index + 1] : null;
-  return { prev, next };
+  return {
+    prev: index > 0 ? LESSONS[index - 1] : null,
+    next: index < LESSONS.length - 1 ? LESSONS[index + 1] : null
+  };
 }
 
 export function getResumeFallback() {
-  const first = LESSONS[0];
-  return `/learn/${first.moduleSlug}/${first.slug}`;
+  const firstLesson = LESSONS[0];
+  return firstLesson ? `/learn/${firstLesson.moduleSlug}/${firstLesson.slug}` : "/learn";
+}
+
+export function normalizeSchoolState(rawState) {
+  const source = rawState && typeof rawState === "object" ? rawState : {};
+  const inputLessons = source.lessons && typeof source.lessons === "object" ? source.lessons : {};
+  const normalized = {
+    version: SCHOOL_STATE_VERSION,
+    lessons: {},
+    lastLesson: typeof source.lastLesson === "string" && source.lastLesson ? source.lastLesson : getResumeFallback()
+  };
+
+  for (const module of MODULES) {
+    const legacyEntry = inputLessons[module.slug];
+    for (const moduleLesson of module.lessons) {
+      const lessonKey = getLessonKey(module.slug, moduleLesson.slug);
+      const incoming = inputLessons[lessonKey] || (moduleLesson === module.lessons[0] ? legacyEntry : null);
+      const nextEntry = emptyLessonState(moduleLesson.checkpoints.length);
+      if (incoming && typeof incoming === "object") {
+        const checks = Array.isArray(incoming.checks) ? incoming.checks : [];
+        nextEntry.checks = nextEntry.checks.map((_, index) => Boolean(checks[index]));
+        nextEntry.complete = Boolean(incoming.complete);
+      }
+      normalized.lessons[lessonKey] = nextEntry;
+    }
+  }
+
+  const matched = normalized.lastLesson.match(/^\/learn\/([^/]+)\/([^/]+)$/);
+  if (matched && !getLesson(matched[1], matched[2])) normalized.lastLesson = getResumeFallback();
+  return normalized;
+}
+
+export function parseSchoolState(rawValue) {
+  if (!rawValue) return normalizeSchoolState({});
+  try {
+    return normalizeSchoolState(JSON.parse(rawValue));
+  } catch (_) {
+    return normalizeSchoolState({});
+  }
+}
+
+export function serializeSchoolState(state) {
+  return JSON.stringify(normalizeSchoolState(state), null, 2);
+}
+
+export function getCompletedLessonCount(state) {
+  const normalized = normalizeSchoolState(state);
+  return Object.values(normalized.lessons).filter(entry => entry.complete).length;
+}
+
+export function getModuleCompletion(state, moduleSlug) {
+  const normalized = normalizeSchoolState(state);
+  const module = getModule(moduleSlug);
+  if (!module) return { completed: 0, total: 0, percent: 0 };
+  const total = module.lessons.length;
+  const completed = module.lessons.filter(moduleLesson => normalized.lessons[getLessonKey(module.slug, moduleLesson.slug)]?.complete).length;
+  return { completed, total, percent: total ? Math.round(completed / total * 100) : 0 };
 }
 
 export function renderModulePills(module) {
   return `
-    <div class="tag-row">
-      <span class="tag">${module.level}</span>
-      <span class="tag">${module.audience}</span>
-      <span class="tag">${module.time}</span>
+    <div class="learn-pill-row">
+      <span class="learn-pill">${module.audience}</span>
+      <span class="learn-pill">${module.time}</span>
+      <span class="learn-pill">${module.lessons.length} lessons</span>
     </div>
   `;
 }
 
 export function renderLessonResources(lesson) {
-  return (lesson.resources || []).map(([label, href]) => `<a class="docs-card-link" href="${href}">${label} &#8594;</a>`).join("");
+  return (lesson.resources || []).map(([label, href]) => `
+    <a class="docs-card-link" href="${href}">${label} &#8594;</a>
+  `).join("");
 }

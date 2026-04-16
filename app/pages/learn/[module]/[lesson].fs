@@ -1,4 +1,5 @@
-import {getLesson, getPrevNext, getSchoolStorageKey, renderLessonResources, renderModulePills} from "../../../lib/learn-school.mjs";
+import {getLegacySchoolStorageKey, getLesson, getLessonKey, getPrevNext, getSchoolStorageKey, parseSchoolState, renderLessonResources, renderModulePills, serializeSchoolState} from "../../../lib/learn-school.mjs";
+
 function codeCard(title, code) {
   return `
     <div class="code-block">
@@ -6,10 +7,11 @@ function codeCard(title, code) {
         <span class="code-block-file">${title}</span>
         <span class="code-block-lang">lesson</span>
       </div>
-      <pre class="code-block-body">${code.replace(/</g, "&lt;")}</pre>
+      <pre class="code-block-body">${String(code).replace(/</g, "&lt;")}</pre>
     </div>
   `;
 }
+
 function checklist(lesson) {
   return lesson.checkpoints.map((item, index) => `
     <div class="learn-check" data-school-check-row>
@@ -18,19 +20,21 @@ function checklist(lesson) {
     </div>
   `).join("");
 }
+
 function cardList(items) {
   return items.map(item => `<li>${item}</li>`).join("");
 }
+
 export async function load(ctx) {
   const result = getLesson(ctx.params.module, ctx.params.lesson);
   if (!result) return null;
-  const nav = getPrevNext(ctx.params.module, ctx.params.lesson);
   return {
     module: result.module,
     lesson: result.lesson,
-    nav
+    nav: getPrevNext(ctx.params.module, ctx.params.lesson)
   };
 }
+
 export default function LearnLessonPage({module, lesson, nav}) {
   if (!module || !lesson) {
     return `
@@ -45,10 +49,10 @@ export default function LearnLessonPage({module, lesson, nav}) {
     `;
   }
   const prevHref = nav.prev ? `/learn/${nav.prev.moduleSlug}/${nav.prev.slug}` : `/learn/${module.slug}`;
-  const nextHref = nav.next ? `/learn/${nav.next.moduleSlug}/${nav.next.slug}` : "/learn";
+  const nextHref = nav.next ? `/learn/${nav.next.moduleSlug}/${nav.next.slug}` : "/learn/capstone";
   const prevLabel = nav.prev ? nav.prev.title : "Back to level";
-  const nextLabel = nav.next ? nav.next.title : "Return to school hub";
-  const lessonKey = `${module.slug}`;
+  const nextLabel = nav.next ? nav.next.title : "Capstone hub";
+  const lessonKey = getLessonKey(module.slug, lesson.slug);
   return `
     <section class="learn-lesson-page">
       <header class="sec-header learn-lesson-top">
@@ -73,8 +77,12 @@ export default function LearnLessonPage({module, lesson, nav}) {
             <div class="cta-actions">
               <button type="button" class="btn btn-primary btn-lg" data-school-complete>Mark lesson complete</button>
               <button type="button" class="btn btn-ghost btn-lg" data-school-reset>Reset lesson</button>
+              <button type="button" class="btn btn-ghost btn-lg" data-school-share>Share this lesson</button>
+              <button type="button" class="btn btn-ghost btn-lg" data-school-export>Export progress</button>
+              <button type="button" class="btn btn-ghost btn-lg" data-school-import>Import progress</button>
             </div>
-            <p class="learn-path-note">This lesson stores progress locally in your browser. No account is required.</p>
+            <input hidden type="file" accept="application/json" data-school-import-input />
+            <p class="learn-path-note" data-school-portability-note>This lesson stores progress locally in your browser. No account is required.</p>
           </div>
         </aside>
 
@@ -188,8 +196,10 @@ export default function LearnLessonPage({module, lesson, nav}) {
     </section>
   `;
 }
+
 export function hydrate({root}) {
   const storageKey = getSchoolStorageKey();
+  const legacyStorageKey = getLegacySchoolStorageKey();
   const lab = root.querySelector("[data-school-lab]");
   const input = root.querySelector("[data-school-input]");
   const output = root.querySelector("[data-school-output]");
@@ -198,22 +208,32 @@ export function hydrate({root}) {
   const completeButton = root.querySelector("[data-school-complete]");
   const resetButton = root.querySelector("[data-school-reset]");
   const completeBanner = root.querySelector("[data-school-complete-banner]");
+  const shareButton = root.querySelector("[data-school-share]");
+  const exportButton = root.querySelector("[data-school-export]");
+  const importButton = root.querySelector("[data-school-import]");
+  const importInput = root.querySelector("[data-school-import-input]");
+  const portabilityNote = root.querySelector("[data-school-portability-note]");
   const lessonKey = lab?.getAttribute("data-school-lesson-key");
   const lastLesson = lab?.getAttribute("data-school-last");
   const checks = [...root.querySelectorAll("[data-school-check]")];
   const starter = input ? input.value : "";
   const reference = root.querySelector("[data-school-reference]")?.value || starter;
-  const readState = () => {
-    try {
-      return JSON.parse(window.localStorage.getItem(storageKey) || "{}");
-    } catch (_) {
-      return {};
-    }
-  };
+
   const writeState = state => {
     try {
-      window.localStorage.setItem(storageKey, JSON.stringify(state));
+      window.localStorage.setItem(storageKey, serializeSchoolState(state));
+      window.localStorage.removeItem(legacyStorageKey);
     } catch (_) {}
+  };
+  const readState = () => {
+    const current = window.localStorage.getItem(storageKey);
+    const legacy = current ? "" : window.localStorage.getItem(legacyStorageKey);
+    const state = parseSchoolState(current || legacy || "");
+    if (!current && legacy) {
+      writeState(state);
+      window.localStorage.removeItem(legacyStorageKey);
+    }
+    return state;
   };
   const compileSnippet = source => {
     let compiled = String(source || "").trim();
@@ -228,12 +248,20 @@ export function hydrate({root}) {
     if (!notes.length) notes.push("FastScript accepts ordinary JS/TS in .fs and optional sugar where useful.");
     return `// lesson preview\n${compiled}\n\n// what this teaches\n${notes.map(item => `- ${item}`).join("\n")}`;
   };
+  const exportState = state => {
+    const blob = new Blob([serializeSchoolState(state)], { type: "application/json" });
+    const href = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = href;
+    anchor.download = "fastscript-school-progress.json";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(href);
+  };
   const updateVisualState = () => {
     const state = readState();
-    const lessonState = state.lessons?.[lessonKey] || ({
-      checks: [],
-      complete: false
-    });
+    const lessonState = state.lessons?.[lessonKey] || { checks: [], complete: false };
     const doneCount = lessonState.checks.filter(Boolean).length;
     const total = checks.length || 1;
     const percent = lessonState.complete ? 100 : Math.round(doneCount / total * 100);
@@ -250,33 +278,29 @@ export function hydrate({root}) {
   };
   const patchState = mutate => {
     const state = readState();
-    if (!state.lessons) state.lessons = {};
-    if (!state.lessons[lessonKey]) state.lessons[lessonKey] = {
-      checks: checks.map(() => false),
-      complete: false
-    };
+    if (!state.lessons[lessonKey]) {
+      state.lessons[lessonKey] = { checks: checks.map(() => false), complete: false };
+    }
     mutate(state.lessons[lessonKey], state);
     if (lastLesson) state.lastLesson = lastLesson;
     writeState(state);
     updateVisualState();
   };
+
   if (lastLesson) {
     const state = readState();
     state.lastLesson = lastLesson;
     writeState(state);
   }
+
   root.querySelectorAll("[data-school-load]").forEach(button => {
     button.addEventListener("click", () => {
       if (!input) return;
-      if (button.getAttribute("data-school-load") === "starter") {
-        input.value = starter;
-      } else {
-        input.value = reference;
-      }
+      input.value = button.getAttribute("data-school-load") === "starter" ? starter : reference;
       if (output) output.textContent = compileSnippet(input.value);
     });
   });
-  if (input) input.addEventListener("keydown", event => {
+  input?.addEventListener("keydown", event => {
     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
       event.preventDefault();
       if (output) output.textContent = compileSnippet(input.value);
@@ -298,24 +322,50 @@ export function hydrate({root}) {
       });
     });
   });
-  if (completeButton) {
-    completeButton.addEventListener("click", () => {
-      patchState(lessonState => {
-        lessonState.checks = checks.map(() => true);
-        lessonState.complete = true;
-      });
+  completeButton?.addEventListener("click", () => {
+    patchState(lessonState => {
+      lessonState.checks = checks.map(() => true);
+      lessonState.complete = true;
     });
-  }
-  if (resetButton) {
-    resetButton.addEventListener("click", () => {
-      patchState(lessonState => {
-        lessonState.checks = checks.map(() => false);
-        lessonState.complete = false;
-      });
-      if (input) input.value = starter;
-      if (output) output.textContent = compileSnippet(starter);
+  });
+  resetButton?.addEventListener("click", () => {
+    patchState(lessonState => {
+      lessonState.checks = checks.map(() => false);
+      lessonState.complete = false;
     });
-  }
+    if (input) input.value = starter;
+    if (output) output.textContent = compileSnippet(starter);
+    if (portabilityNote) portabilityNote.textContent = "Lesson progress reset locally.";
+  });
+  shareButton?.addEventListener("click", async () => {
+    const href = window.location.href;
+    try {
+      await navigator.clipboard.writeText(href);
+      if (portabilityNote) portabilityNote.textContent = "Lesson link copied to your clipboard.";
+    } catch (_) {
+      if (portabilityNote) portabilityNote.textContent = href;
+    }
+  });
+  exportButton?.addEventListener("click", () => {
+    exportState(readState());
+    if (portabilityNote) portabilityNote.textContent = "Progress exported as JSON.";
+  });
+  importButton?.addEventListener("click", () => importInput?.click());
+  importInput?.addEventListener("change", async () => {
+    const file = importInput.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      writeState(parseSchoolState(text));
+      if (portabilityNote) portabilityNote.textContent = "Progress imported successfully.";
+      updateVisualState();
+    } catch (_) {
+      if (portabilityNote) portabilityNote.textContent = "Import failed. Use a progress JSON exported from this school.";
+    } finally {
+      importInput.value = "";
+    }
+  });
+
   if (output) output.textContent = compileSnippet(starter);
   updateVisualState();
 }

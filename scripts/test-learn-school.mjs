@@ -42,7 +42,7 @@ try {
 
   assert.equal(existsSync(join(distRoot, "fastscript-manifest.json")), true);
   const manifest = JSON.parse(readFileSync(join(distRoot, "fastscript-manifest.json"), "utf8"));
-  for (const route of ["/learn", "/learn/:module", "/learn/:module/:lesson"]) {
+  for (const route of ["/learn", "/learn/capstone", "/learn/:module", "/learn/:module/:lesson"]) {
     assert.equal(manifest.routes.some((entry) => entry.path === route), true, `missing route ${route}`);
   }
 
@@ -70,6 +70,14 @@ try {
   assert.equal(beginner.status, 200);
   assert.match(beginnerHtml, /Programming and web basics/);
   assert.match(beginnerHtml, /What code, the browser, and the web actually do/);
+  assert.match(beginnerHtml, /Browser requests, forms, and user actions/);
+
+  const capstone = await fetch("http://localhost:4173/learn/capstone");
+  const capstoneHtml = await capstone.text();
+  assert.equal(capstone.status, 200);
+  assert.match(capstoneHtml, /Capstone hub/);
+  assert.match(capstoneHtml, /startup-mvp/);
+  assert.match(capstoneHtml, /agency-ops/);
 
   const migration = await fetch("http://localhost:4173/learn/migration/dry-run-convert-rollback");
   const migrationHtml = await migration.text();
@@ -77,6 +85,14 @@ try {
   assert.match(migrationHtml, /Dry-run, convert, rollback/);
   assert.match(migrationHtml, /data-school-lab/);
   assert.match(migrationHtml, /data-school-complete/);
+  assert.match(migrationHtml, /data-school-share/);
+  assert.match(migrationHtml, /data-school-export/);
+
+  const mastery = await fetch("http://localhost:4173/learn/mastery/delivery-checklist-and-release-readiness");
+  const masteryHtml = await mastery.text();
+  assert.equal(mastery.status, 200);
+  assert.match(masteryHtml, /delivery checklist/i);
+  assert.match(masteryHtml, /Capstone hub/);
 
   console.log("test-learn-school pass");
 } finally {
