@@ -1,4 +1,4 @@
-import {getCapstonePresets, getLegacySchoolStorageKey, getMasterySummary, getResumeFallback, getSchoolStorageKey, parseSchoolState, serializeSchoolState} from "../../lib/learn-school.mjs";
+import {getCapstonePresets, getLegacySchoolStorageKey, getMasterySummary, getPrintableCapstonePlan, getResumeFallback, getSchoolStorageKey, parseSchoolState, serializeSchoolState} from "../../lib/learn-school.mjs";
 function badgeCard(badge) {
   return `
     <article class="docs-card">
@@ -45,6 +45,7 @@ export default function LearnMasterySummaryPage() {
               <a class="btn btn-primary btn-lg" href="/learn" data-school-summary-resume>Resume learning</a>
               <a class="btn btn-secondary btn-lg" href="/learn/capstone" data-school-summary-capstone-link>Open capstone hub</a>
               <button type="button" class="btn btn-ghost btn-lg" data-school-summary-print>Print summary</button>
+              <button type="button" class="btn btn-ghost btn-lg" data-school-summary-print-capstone>Print capstone plan</button>
               <button type="button" class="btn btn-ghost btn-lg" data-school-summary-export>Export progress JSON</button>
             </div>
             <p class="learn-path-note" data-school-summary-note>No account needed. Everything stays in this browser unless you export it yourself.</p>
@@ -96,6 +97,7 @@ export function hydrate({root}) {
   const resumeLink = root.querySelector("[data-school-summary-resume]");
   const capstoneLink = root.querySelector("[data-school-summary-capstone-link]");
   const printButton = root.querySelector("[data-school-summary-print]");
+  const printCapstoneButton = root.querySelector("[data-school-summary-print-capstone]");
   const exportButton = root.querySelector("[data-school-summary-export]");
   const note = root.querySelector("[data-school-summary-note]");
   const readState = () => {
@@ -147,6 +149,44 @@ export function hydrate({root}) {
   };
   printButton?.addEventListener("click", () => {
     window.print();
+  });
+  printCapstoneButton?.addEventListener("click", () => {
+    const plan = getPrintableCapstonePlan(readState());
+    const popup = window.open("", "_blank", "width=900,height=700");
+    if (!popup) {
+      if (note) note.textContent = "Pop-up blocked. Allow pop-ups to print the capstone plan.";
+      return;
+    }
+    popup.document.write(`<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>${plan.presetTitle} capstone plan</title>
+    <style>
+      body { font-family: Georgia, serif; margin: 40px; color: #111; line-height: 1.5; }
+      h1, h2 { margin-bottom: 12px; }
+      p, li { font-size: 16px; }
+      ul { padding-left: 20px; }
+      .meta { margin-bottom: 24px; }
+    </style>
+  </head>
+  <body>
+    <h1>${plan.presetTitle}</h1>
+    <div>
+      <p><strong>Recommended capstone:</strong> ${plan.capstoneTitle}</p>
+      <p><strong>Recommended baseline:</strong> ${plan.recommendedBaseline}</p>
+      <p><strong>Proof command:</strong> ${plan.proofCommand}</p>
+      <p><strong>Resume lesson:</strong> ${plan.resumeHref}</p>
+    </div>
+    <h2>Plan summary</h2>
+    <p>${plan.summary}</p>
+    <h2>Checklist</h2>
+    <ul>${plan.checklist.map(item => `<li>${item}</li>`).join("")}</ul>
+  </body>
+</html>`);
+    popup.document.close();
+    popup.focus();
+    popup.print();
   });
   exportButton?.addEventListener("click", () => {
     downloadProgress(readState());

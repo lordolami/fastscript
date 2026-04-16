@@ -1,4 +1,4 @@
-import {getLegacySchoolStorageKey, getLesson, getLessonKey, getPrevNext, getSchoolStorageKey, parseSchoolState, renderLessonResources, renderModulePills, serializeSchoolState} from "../../../lib/learn-school.mjs";
+import {getLegacySchoolStorageKey, getLesson, getLessonKey, getLessonReviewRecommendation, getPrevNext, getSchoolStorageKey, parseSchoolState, renderLessonResources, renderModulePills, serializeSchoolState} from "../../../lib/learn-school.mjs";
 function escapeAttr(value) {
   return String(value || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
 }
@@ -134,6 +134,11 @@ export default function LearnLessonPage({module, lesson, nav}) {
             </div>
             <input hidden type="file" accept="application/json" data-school-import-input />
             <p class="learn-path-note" data-school-portability-note>This lesson stores progress locally in your browser. No account is required.</p>
+            <div class="docs-card" data-school-review-card hidden>
+              <p class="docs-card-title">Review this first</p>
+              <p class="docs-card-copy" data-school-review-copy>Review the concept lesson before retrying the applied check.</p>
+              <a class="docs-card-link" href="/learn" data-school-review-link>Open review lesson &#8594;</a>
+            </div>
           </div>
         </aside>
 
@@ -213,6 +218,11 @@ export default function LearnLessonPage({module, lesson, nav}) {
             </header>
             <div class="learn-checklist">${checklist(lesson)}</div>
             <div class="docs-card-grid">${assessmentCards(lesson)}</div>
+            <div class="docs-card" data-school-review-inline hidden>
+              <p class="docs-card-title">Need a quick reset?</p>
+              <p class="docs-card-copy" data-school-review-inline-copy>Revisit the concept lesson, then come back to this applied exercise.</p>
+              <a class="docs-card-link" href="/learn" data-school-review-inline-link>Open review lesson &#8594;</a>
+            </div>
             <div class="docs-card" data-school-complete-banner hidden>
               <p class="docs-card-title">Lesson completed</p>
               <p class="learn-callout-copy">You have finished this lesson locally. Keep going while the concepts are still fresh.</p>
@@ -266,7 +276,16 @@ export function hydrate({root}) {
   const importInput = root.querySelector("[data-school-import-input]");
   const portabilityNote = root.querySelector("[data-school-portability-note]");
   const assessmentCards = [...root.querySelectorAll("[data-school-assessment]")];
+  const reviewCard = root.querySelector("[data-school-review-card]");
+  const reviewCopy = root.querySelector("[data-school-review-copy]");
+  const reviewLink = root.querySelector("[data-school-review-link]");
+  const reviewInline = root.querySelector("[data-school-review-inline]");
+  const reviewInlineCopy = root.querySelector("[data-school-review-inline-copy]");
+  const reviewInlineLink = root.querySelector("[data-school-review-inline-link]");
   const lessonKey = lab?.getAttribute("data-school-lesson-key");
+  const lessonKeyParts = String(lessonKey || "").split("/");
+  const currentModuleSlug = lessonKeyParts[0] || "";
+  const currentLessonSlug = lessonKeyParts[1] || "";
   const lastLesson = lab?.getAttribute("data-school-last");
   const checks = [...root.querySelectorAll("[data-school-check]")];
   const starter = input ? input.value : "";
@@ -334,6 +353,21 @@ export function hydrate({root}) {
     const passedAssessments = lessonState.assessments.filter(Boolean).length;
     if (label) label.textContent = lessonState.complete ? "Lesson complete" : `${doneCount} of ${checks.length} checkpoints marked • ${passedAssessments} of ${assessmentCards.length} assessments passed`;
     if (completeBanner) completeBanner.hidden = !lessonState.complete;
+    const recommendation = getLessonReviewRecommendation(state, currentModuleSlug, currentLessonSlug);
+    if (reviewCard) reviewCard.hidden = !recommendation;
+    if (reviewInline) reviewInline.hidden = !recommendation;
+    if (recommendation) {
+      if (reviewCopy) reviewCopy.textContent = recommendation.copy;
+      if (reviewLink) {
+        reviewLink.setAttribute("href", recommendation.href);
+        reviewLink.textContent = `Open ${recommendation.title} →`;
+      }
+      if (reviewInlineCopy) reviewInlineCopy.textContent = recommendation.copy;
+      if (reviewInlineLink) {
+        reviewInlineLink.setAttribute("href", recommendation.href);
+        reviewInlineLink.textContent = `Open ${recommendation.title} →`;
+      }
+    }
     assessmentCards.forEach((card, index) => {
       const passed = Boolean(lessonState.assessments[index]);
       const type = card.getAttribute("data-school-assessment-type");

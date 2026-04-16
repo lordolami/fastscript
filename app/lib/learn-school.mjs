@@ -895,6 +895,43 @@ export function getModuleCompletion(state, moduleSlug) {
   return { completed, total, percent: total ? Math.round(completed / total * 100) : 0 };
 }
 
+export function getLessonRole(moduleSlug, lessonSlug) {
+  const module = getModule(moduleSlug);
+  if (!module) return "concept";
+  const index = module.lessons.findIndex(entry => entry.slug === lessonSlug);
+  return index <= 0 ? "concept" : "applied";
+}
+
+export function getLessonProgress(state, moduleSlug, lessonSlug) {
+  const normalized = normalizeSchoolState(state);
+  const lesson = getLesson(moduleSlug, lessonSlug)?.lesson;
+  if (!lesson) return null;
+  const entry = normalized.lessons[getLessonKey(moduleSlug, lessonSlug)] || emptyLessonState(lesson.checkpoints.length, lesson.assessments.length);
+  const passedAssessments = entry.assessments.filter(Boolean).length;
+  const doneChecks = entry.checks.filter(Boolean).length;
+  return {
+    role: getLessonRole(moduleSlug, lessonSlug),
+    complete: Boolean(entry.complete),
+    passedAssessments,
+    totalAssessments: lesson.assessments.length,
+    doneChecks,
+    totalChecks: lesson.checkpoints.length,
+    status: entry.complete ? "complete" : doneChecks || passedAssessments ? "in-progress" : "not-started"
+  };
+}
+
+export function getModuleAssessmentSummary(state, moduleSlug) {
+  const normalized = normalizeSchoolState(state);
+  const module = getModule(moduleSlug);
+  if (!module) return { passed: 0, total: 0, percent: 0 };
+  const total = module.lessons.length * 2;
+  const passed = module.lessons.reduce((count, lessonEntry) => {
+    const lessonState = normalized.lessons[getLessonKey(module.slug, lessonEntry.slug)];
+    return count + (lessonState?.assessments?.filter(Boolean).length || 0);
+  }, 0);
+  return { passed, total, percent: total ? Math.round(passed / total * 100) : 0 };
+}
+
 export function renderModulePills(module) {
   return `
     <div class="learn-pill-row">
@@ -1011,5 +1048,48 @@ export function getMasterySummary(state) {
     resumeHref: normalized.lastLesson || getResumeFallback(),
     recommendedPreset,
     recommendedCapstone: recommendedPreset === "migration-first" ? "Professional migration capstone" : recommendedPreset === "internal-ops" ? "Intermediate full-stack capstone" : "Beginner capstone"
+  };
+}
+
+export function getLessonReviewRecommendation(state, moduleSlug, lessonSlug) {
+  const module = getModule(moduleSlug);
+  const lesson = getLesson(moduleSlug, lessonSlug)?.lesson;
+  if (!module || !lesson) return null;
+  const progress = getLessonProgress(state, moduleSlug, lessonSlug);
+  if (!progress || progress.role !== "applied") return null;
+  if (progress.passedAssessments === progress.totalAssessments) return null;
+  const conceptLesson = module.lessons[0];
+  if (!conceptLesson || conceptLesson.slug === lessonSlug) {
+    return {
+      href: `/learn/${moduleSlug}/${lessonSlug}`,
+      title: lesson.title,
+      copy: "Retry the current lesson and walk the worked example again before moving on."
+    };
+  }
+  return {
+    href: `/learn/${moduleSlug}/${conceptLesson.slug}`,
+    title: conceptLesson.title,
+    copy: `Review ${conceptLesson.title} first, then come back to this applied lesson.`
+  };
+}
+
+export function getPrintableCapstonePlan(state) {
+  const summary = getMasterySummary(state);
+  const presets = getCapstonePresets();
+  const preset = presets.find(entry => entry.slug === summary.recommendedPreset) || presets[0];
+  const recommendation = getCapstoneRecommendation({
+    stage: preset.values.stage,
+    product: preset.values.product,
+    baseline: preset.values.baseline,
+    deploy: preset.values.deploy
+  });
+  return {
+    presetTitle: preset.title,
+    capstoneTitle: summary.recommendedCapstone,
+    recommendedBaseline: recommendation.recommendedBaseline,
+    proofCommand: recommendation.proofCommand,
+    checklist: recommendation.checklist,
+    summary: recommendation.summary,
+    resumeHref: summary.resumeHref || getResumeFallback()
   };
 }
