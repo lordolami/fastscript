@@ -1,5 +1,5 @@
 export const COMPATIBILITY_REPORT = {
-  "generatedAt": "2026-04-17T15:33:29.347Z",
+  "generatedAt": "2026-04-17T15:40:31.335Z",
   "governanceTrack": "4.0",
   "stableLine": "4.0.x",
   "packageVersion": "4.0.1",
