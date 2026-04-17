@@ -3,6 +3,11 @@
 ## Unreleased
 - Release branch work for the next public line.
 
+## v4.1.0 - 2026-04-17
+- Ratify FastScript as a security-first TypeScript platform line with secure-by-default scaffolds, explicit runtime permissions policy, and validator-backed security-readiness reporting
+- Fail validation on missing production policy, non-secure preset use, obvious secret exposure, missing env-schema security keys, and missing deploy-header baseline
+- Upgrade the Team Dashboard SaaS and Agency Ops proof apps, `/learn`, homepage, docs, and security surfaces so trust is visible in both tooling and public proof
+
 ## v4.0.2 - 2026-04-17
 - Fix the template-literal normalization path so built docs and public pages stop dropping characters like `<` from closing tags or deleting copy inside emitted HTML
 - Align the active public release surfaces to the `4.0.2` hotfix line while keeping the FastScript-only platform IA intact

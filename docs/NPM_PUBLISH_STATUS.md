@@ -2,9 +2,10 @@
 
 ## Current state
 
-FastScript `v4.0.2` is the current public release target in the repo:
+FastScript `v4.1.0` is the current public release target in the repo:
 
 - website, docs, changelog, and support surfaces align to the v4 platform line
+- security-first platform messaging aligns with validator-backed readiness and secure-by-default scaffolds
 - `/learn` is treated as a first-class proof surface
 - `npm run build` must pass
 - `npm run validate` must pass
@@ -22,11 +23,11 @@ FastScript uses a self-contained public npm packaging model:
 - npm users do not need access to a second private registry package
 - `npm run pack:check` validates the generated public release instead of packing the repo root directly
 
-## v4.0.2 packaging checklist
+## v4.1.0 packaging checklist
 
-- bump `package.json` and `package-lock.json` to `4.0.2`
+- bump `package.json` and `package-lock.json` to `4.1.0`
 - prepare `.release/npm-public`
 - run `npm run pack:check`
 - publish the npm package from `.release/npm-public`
 - publish the matching GitHub release and tag with the same v4 proof summary
-- keep npm-facing copy aligned with the current support matrix, proof pack, website platform story, and canonical reference apps
+- keep npm-facing copy aligned with the current support matrix, proof pack, website platform story, canonical reference apps, and security-readiness contract

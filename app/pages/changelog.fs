@@ -1,4 +1,8 @@
 const RELEASES = [{
+  version: "v4.1.0",
+  date: "April 2026",
+  copy: "Security-first platform release: FastScript adds validator-backed security readiness, secure-by-default policy scaffolds, explicit permissions baselines, secret-exposure diagnostics, proof-app webhook verification, and public docs/site alignment around trust as a core platform pillar."
+}, {
   version: "v4.0.2",
   date: "April 2026",
   copy: "Post-v4 cleanup hotfix: FastScript repairs template-literal build corruption at the compiler layer, aligns the public version/copy surfaces, fixes GitHub license links, and republishes regenerated docs, compatibility, and proof artifacts from one clean state."

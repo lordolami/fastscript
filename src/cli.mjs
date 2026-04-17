@@ -24,6 +24,7 @@ import { runManifest } from "./conversion-manifest.mjs";
 import { runPermissions } from "./permissions-cli.mjs";
 import { runBenchmarkDiscipline } from "./benchmark-discipline.mjs";
 import { runRegressionGuard } from "./regression-guard.mjs";
+import { runSecurityReadiness } from "./security-readiness.mjs";
 
 const [, , command, ...args] = process.argv;
 
@@ -97,6 +98,9 @@ async function main() {
     case "permissions":
       await runPermissions(args);
       break;
+    case "security:report":
+      await runSecurityReadiness(args);
+      break;
     case "format":
       await runFormat(args);
       break;
@@ -120,7 +124,7 @@ async function main() {
       break;
     default:
       console.log("FastScript CLI");
-      console.log("Commands: create, dev, start, build, ssg, check, migrate, convert, migrate:rollback, manifest, wizard:migrate, bench, bench:discipline, regression, export, compat, validate, typecheck, profile, trace, diagnostics, permissions, format, lint, db:migrate, db:seed, db:rollback, deploy, worker");
+      console.log("Commands: create, dev, start, build, ssg, check, migrate, convert, migrate:rollback, manifest, wizard:migrate, bench, bench:discipline, regression, export, compat, validate, typecheck, profile, trace, diagnostics, permissions, security:report, format, lint, db:migrate, db:seed, db:rollback, deploy, worker");
   }
 }
 

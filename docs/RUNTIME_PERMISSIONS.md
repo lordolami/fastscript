@@ -1,6 +1,12 @@
 # Runtime Permissions
 
-FastScript exposes explicit runtime permission boundaries for:
+FastScript v4.1 treats runtime permissions as part of the production security contract, not as optional hardening trivia.
+
+Default policy path: `fastscript.permissions.json`
+
+Example policy: `fastscript.permissions.example.json`
+
+## What the policy controls
 
 1. file access
 2. environment access
@@ -9,22 +15,35 @@ FastScript exposes explicit runtime permission boundaries for:
 5. dynamic imports
 6. plugin access
 
-Default policy path: `fastscript.permissions.json`.
+## v4.1 security-first posture
 
-Example policy: `fastscript.permissions.example.json`.
+- New apps now emit an explicit `fastscript.permissions.json`
+- New apps default to the `secure` preset
+- Production guidance treats missing explicit policy as a release-readiness failure
+- Security readiness reporting uses the same policy as the validator, proof apps, and release flow
+
+## Secure preset
+
+The secure preset is the v4.1 default for new apps and proof apps:
+
+1. deny network access by default
+2. deny subprocess execution by default
+3. deny plugin access by default
+4. allow dynamic import only for local/file/data-url kinds
+5. keep env access explicit and reviewable
 
 ## CLI
 
 1. Show active policy summary:
 `npm run permissions`
 
-2. Check a specific permission in report mode:
-`npm run permissions -- --kind dynamicImportAccess --resource ./app/pages/index.fs`
+2. Generate security-readiness evidence:
+`npm run security:report`
 
-3. Enforce assertion mode:
-`npm run permissions -- --mode assert --kind envAccess --resource FASTSCRIPT_PROFILE`
+3. Validate the full production contract:
+`npm run validate`
 
-## Runtime Helpers
+## Runtime helpers
 
 FastScript exposes permission-aware runtime helpers:
 
@@ -34,16 +53,7 @@ FastScript exposes permission-aware runtime helpers:
 4. `permissionAwareSpawn(command, args, options)`
 5. `permissionAwarePluginAccess(pluginId, { onAllowed })`
 
-## Secure Preset
-
-Set `FASTSCRIPT_PERMISSION_PRESET=secure` to apply a stricter runtime profile:
-
-1. deny network access by default
-2. deny subprocess execution by default
-3. deny plugin access by default
-4. allow dynamic import only for local/file/data-url kinds
-
-## Audit Log
+## Audit log
 
 Permission decisions are written to:
 

@@ -21,8 +21,71 @@ export async function createApp(target = "app", { template = "default" } = {}) {
   ensureDir(pagesRoot);
   ensureDir(join(appRoot, "api"));
   ensureDir(join(appRoot, "db", "migrations"));
+  ensureDir(join(appRoot, "src"));
 
   const files = [
+    {
+      path: join(root, "fastscript.permissions.json"),
+      content: `{
+  "version": 1,
+  "preset": "secure",
+  "audit": {
+    "enabled": true,
+    "path": ".fastscript/permissions-audit.jsonl"
+  },
+  "fileAccess": {
+    "mode": "allow",
+    "allow": ["app/**", "dist/**", ".fastscript/**"],
+    "deny": ["secrets/**"]
+  },
+  "envAccess": {
+    "mode": "allow",
+    "allow": ["FASTSCRIPT_*", "NODE_ENV", "PORT", "SESSION_SECRET", "WEBHOOK_SECRET", "MAX_BODY_BYTES", "REQUEST_TIMEOUT_MS"],
+    "deny": ["*PRIVATE*", "*PASSWORD*"]
+  },
+  "networkAccess": {
+    "mode": "deny",
+    "allowHosts": []
+  },
+  "subprocessExecution": {
+    "mode": "deny",
+    "allowPrefixes": []
+  },
+  "dynamicImports": {
+    "mode": "allow",
+    "allowKinds": ["relative", "absolute", "fileUrl", "dataUrl"],
+    "denyKinds": ["httpUrl", "httpsUrl", "package"]
+  },
+  "pluginAccess": {
+    "mode": "deny",
+    "allow": []
+  }
+}
+`,
+    },
+    {
+      path: join(root, ".env.example"),
+      content: `NODE_ENV=development
+PORT=3000
+SESSION_SECRET=replace_me_with_a_long_random_secret
+WEBHOOK_SECRET=replace_me_if_you_enable_webhooks
+MAX_BODY_BYTES=1048576
+REQUEST_TIMEOUT_MS=15000
+`,
+    },
+    {
+      path: join(appRoot, "env.schema.fs"),
+      content: `export const schema = {
+  SESSION_SECRET: "string?",
+  WEBHOOK_SECRET: "string?",
+  NODE_ENV: "string?",
+  PORT: "int?",
+  MAX_BODY_BYTES: "int?",
+  REQUEST_TIMEOUT_MS: "int?",
+  FASTSCRIPT_DEPLOY_TARGET: "string?"
+};
+`,
+    },
     {
       path: join(pagesRoot, "index.fs"),
       content: `export default function Home() {
@@ -191,13 +254,80 @@ export async function POST(ctx) {
     },
     {
       path: join(appRoot, "api", "webhook.js"),
-      content: `export async function POST(ctx) {
-  const received = ctx.req.headers.get("x-webhook-secret");
-  const expected = process.env.WEBHOOK_SECRET || "dev-secret";
-  if (received !== expected) {
-    return ctx.helpers.json({ ok: false, reason: "invalid-signature" }, 401);
+      content: `import { verifyWebhookRequest } from "../src/webhook.mjs";
+
+export async function POST(ctx) {
+  const result = await verifyWebhookRequest(ctx.req, {
+    secret: process.env.WEBHOOK_SECRET || "dev-secret",
+    replayDir: ".fastscript"
+  });
+  if (!result.ok) {
+    return ctx.helpers.json({ ok: false, reason: result.reason }, 401);
   }
   return ctx.helpers.json({ ok: true });
+}
+`,
+    },
+    {
+      path: join(appRoot, "src", "webhook.mjs"),
+      content: `import { createHmac, timingSafeEqual } from "node:crypto";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+
+function sign(secret, payload) {
+  return createHmac("sha256", secret).update(payload).digest("hex");
+}
+
+function readHeader(req, name) {
+  if (!req?.headers) return null;
+  if (typeof req.headers.get === "function") return req.headers.get(name);
+  return req.headers[name] ?? req.headers[name.toLowerCase()] ?? null;
+}
+
+function safeEqual(a, b) {
+  const left = Buffer.from(String(a || ""));
+  const right = Buffer.from(String(b || ""));
+  if (left.length !== right.length) return false;
+  return timingSafeEqual(left, right);
+}
+
+export async function verifyWebhookRequest(req, { secret, replayDir = ".fastscript" } = {}) {
+  if (!secret) return { ok: false, reason: "missing-secret" };
+  const signature = readHeader(req, "x-fastscript-signature");
+  const eventId = readHeader(req, "x-fastscript-event");
+  if (!signature || !eventId) return { ok: false, reason: "missing-signature" };
+
+  let payload;
+  try {
+    payload = typeof req?.json === "function" ? await req.json() : {};
+  } catch {
+    return { ok: false, reason: "invalid-json" };
+  }
+
+  const canonicalPayload = JSON.stringify(payload);
+  const expected = sign(secret, canonicalPayload);
+  if (!safeEqual(signature, expected)) {
+    return { ok: false, reason: "bad-signature" };
+  }
+
+  try {
+    mkdirSync(replayDir, { recursive: true });
+    const replayFile = join(replayDir, "webhook-replay.json");
+    const seen = new Set(
+      JSON.parse(readFileSync(replayFile, "utf8")).events || []
+    );
+    if (seen.has(eventId)) return { ok: false, reason: "replayed-event" };
+    seen.add(eventId);
+    writeFileSync(
+      replayFile,
+      JSON.stringify({ events: Array.from(seen).slice(-200) }, null, 2),
+      "utf8"
+    );
+  } catch {
+    return { ok: false, reason: "replay-store-error" };
+  }
+
+  return { ok: true, payload };
 }
 `,
     },

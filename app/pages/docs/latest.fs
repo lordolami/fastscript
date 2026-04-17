@@ -3,8 +3,8 @@ export default function DocsLatest() {
     <section class="docs-latest-page">
       <header class="sec-header">
         <p class="kicker">Docs latest</p>
-        <h1 class="h1">Current docs track: FastScript v4.0</h1>
-        <p class="lead">This is the canonical entrypoint for the v4.0 platform contract: FastScript as the complete TypeScript full-stack platform, with ordinary TS in <code class="ic">.fs</code>, first-party validation, visible proof apps, governed support evidence, and a structured language/runtime layer that stays better aligned for machine reasoning and model-training workflows.</p>
+        <h1 class="h1">Current docs track: FastScript v4.1</h1>
+        <p class="lead">This is the canonical entrypoint for the v4.1 platform contract: FastScript as the complete TypeScript full-stack platform, with ordinary TS in <code class="ic">.fs</code>, first-party validation, secure-by-default scaffolds, visible proof apps, governed support evidence, and a structured language/runtime layer that stays better aligned for machine reasoning and model-training workflows.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -15,7 +15,7 @@ export default function DocsLatest() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Platform overview</p>
-          <p class="docs-card-copy">Read the v4 line as a full platform contract: pages, APIs, auth, data, jobs, proof discipline, and deploy outputs aligned under one FastScript runtime.</p>
+          <p class="docs-card-copy">Read the v4.1 line as a full platform contract: pages, APIs, auth, data, jobs, security readiness, proof discipline, and deploy outputs aligned under one FastScript runtime.</p>
           <a class="docs-card-link" href="/docs">Open docs overview &#8594;</a>
         </div>
         <div class="docs-card">
@@ -53,15 +53,19 @@ export default function DocsLatest() {
             <p class="docs-card-copy">Authored TS and JS stay familiar. The platform value comes from the runtime, validation, deploy, and product scaffolding around that code, not from forcing a different coding identity.</p>
           </div>
           <div class="docs-card">
-            <p class="docs-card-title">Proof-backed platform pillars</p>
-            <p class="docs-card-copy">Auth, roles, migrations, seeds, jobs, notifications, admin patterns, tests, observability, and deploy flow are all exercised through FastScript's docs, proof apps, and release gates.</p>
-          </div>
-          <div class="docs-card">
-            <p class="docs-card-title">Structured runtime moat</p>
-            <p class="docs-card-copy">FastScript still owns its own language and runtime surface, which is part of why the platform can be more controlled for validation, machine reasoning, and future model-training workflows than a generic ecosystem-only stack.</p>
-          </div>
+          <p class="docs-card-title">Proof-backed platform pillars</p>
+          <p class="docs-card-copy">Auth, roles, migrations, seeds, jobs, notifications, admin patterns, tests, observability, deploy flow, and validator-backed security readiness are all exercised through FastScript's docs, proof apps, and release gates.</p>
         </div>
-      </section>
+        <div class="docs-card">
+          <p class="docs-card-title">Structured runtime moat</p>
+          <p class="docs-card-copy">FastScript still owns its own language and runtime surface, which is part of why the platform can be more controlled for validation, machine reasoning, and future model-training workflows than a generic ecosystem-only stack.</p>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Security-first contract</p>
+          <p class="docs-card-copy">v4.1 adds runtime scopes, explicit permissions policy, secret-exposure diagnostics, security-readiness reporting, and proof-app verification as public parts of the FastScript contract.</p>
+        </div>
+      </div>
+    </section>
     </section>
   `;
 }

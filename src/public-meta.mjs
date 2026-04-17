@@ -4,11 +4,11 @@ import { resolve } from "node:path";
 const DIST_INDEX_PATH = resolve("dist", "index.html");
 const DIST_WORKER_PATH = resolve("dist", "worker.js");
 
-export const PUBLIC_TITLE = "FastScript v4.0.2 - Complete TypeScript full-stack platform";
-export const PUBLIC_DESCRIPTION = "Write ordinary TS and JS in .fs, then ship pages, APIs, jobs, auth, data flows, and deploy-ready builds through one FastScript platform.";
-export const PUBLIC_OG_DESCRIPTION = "FastScript v4 turns .fs into the calm full-stack TypeScript platform surface: familiar authoring, first-party validation, deploy discipline, and a structured runtime for machine reasoning.";
-export const PUBLIC_TWITTER_DESCRIPTION = "FastScript 4.0.2 is the complete TypeScript platform release: ordinary TS in .fs, proof-backed validation, reference apps, and deploy-ready outputs from one runtime.";
-export const PUBLIC_SSR_SHELL_DESCRIPTION = "FastScript v4.0.2 serves a complete TypeScript full-stack runtime: ordinary TS in .fs, proof-backed validation, and deploy-ready pages, APIs, jobs, and data flows.";
+export const PUBLIC_TITLE = "FastScript v4.1.0 - Security-first TypeScript full-stack platform";
+export const PUBLIC_DESCRIPTION = "Write ordinary TS and JS in .fs, then ship pages, APIs, jobs, auth, and deploy-ready builds through one secure-by-default, validator-backed FastScript platform.";
+export const PUBLIC_OG_DESCRIPTION = "FastScript v4.1 adds the security-first platform contract: secure-by-default scaffolds, runtime boundaries, validation discipline, and a structured runtime for machine reasoning.";
+export const PUBLIC_TWITTER_DESCRIPTION = "FastScript 4.1.0 is the security-first TypeScript platform release: ordinary TS in .fs, validator-backed readiness, secure scaffolds, proof apps, and deploy-ready output.";
+export const PUBLIC_SSR_SHELL_DESCRIPTION = "FastScript v4.1.0 serves a security-first TypeScript full-stack runtime: ordinary TS in .fs, validator-backed security readiness, and deploy-ready pages, APIs, jobs, and data flows.";
 
 function rewriteTag(html, pattern, replacement) {
   return html.replace(pattern, replacement);

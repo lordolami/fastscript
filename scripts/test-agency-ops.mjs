@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHmac } from "node:crypto";
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -77,6 +78,7 @@ let startProc = null;
 
 try {
   cpSync(exampleRoot, appRoot, { recursive: true });
+  cpSync(resolve("src"), join(tempRoot, "src"), { recursive: true });
   rmSync(join(appRoot, "dist"), { recursive: true, force: true });
   rmSync(join(appRoot, ".fastscript"), { recursive: true, force: true });
 
@@ -103,6 +105,7 @@ try {
   assert.equal(existsSync(join(appRoot, "dist", "fastscript-manifest.json")), true);
   assert.equal(existsSync(join(appRoot, "wrangler.toml")), true);
   assert.equal(existsSync(join(appRoot, "dist", "worker.js")), true);
+  assert.equal(existsSync(join(appRoot, "fastscript.permissions.json")), true);
   assert.equal(existsSync(join(appRoot, "app", "env.schema.fs")), true);
   assert.equal(existsSync(join(appRoot, ".dev.vars.example")), true);
   assert.equal(existsSync(join(appRoot, ".env.production.example")), true);
@@ -131,7 +134,8 @@ try {
     "/api/agency-settings",
     "/api/billing/checkout",
     "/api/billing/reminders",
-    "/api/notifications/retry"
+    "/api/notifications/retry",
+    "/api/webhook"
   ]) {
     assert.equal(manifest.apiRoutes.some((entry) => entry.path === route), true, `missing api route ${route}`);
   }
@@ -143,7 +147,8 @@ try {
       ...process.env,
       PORT: String(port),
       NODE_ENV: "production",
-      SESSION_SECRET: process.env.SESSION_SECRET || "agency-ops-start-secret-0123456789abcdef"
+      SESSION_SECRET: process.env.SESSION_SECRET || "agency-ops-start-secret-0123456789abcdef",
+      WEBHOOK_SECRET: process.env.WEBHOOK_SECRET || "agency-ops-webhook-secret-0123456789abcdef"
     }
   });
 
@@ -343,6 +348,24 @@ try {
   const notifyJson = await notifyResponse.json();
   assert.equal(notifyResponse.status, 200);
   assert.equal(notifyJson.ok, true);
+
+  const webhookPayload = JSON.stringify({ event: "invoice.reminder.sent" });
+  const webhookSecret = process.env.WEBHOOK_SECRET || "agency-ops-webhook-secret-0123456789abcdef";
+  const webhookTs = String(Math.floor(Date.now() / 1000));
+  const webhookSignature = createHmac("sha256", webhookSecret).update(Buffer.from(webhookPayload)).digest("hex");
+  const webhookResponse = await fetch(`${baseUrl}/api/webhook`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-timestamp": webhookTs,
+      "x-event-id": "evt_agency_ops_security",
+      "x-signature": `sha256=${webhookSignature}`
+    },
+    body: webhookPayload
+  });
+  const webhookJson = await webhookResponse.json();
+  assert.equal(webhookResponse.status, 200);
+  assert.equal(webhookJson.ok, true);
 
   const clientsPage = await fetch(`${baseUrl}/dashboard/clients`, { headers: { cookie: cookieHeader() } });
   updateCookies(clientsPage);

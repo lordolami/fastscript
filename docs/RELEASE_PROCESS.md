@@ -16,6 +16,11 @@
 4. `npm run release:patch|minor|major`
 5. Re-run `npm run qa:all`
 
+## Security-first v4.1 additions
+- `npm run validate` now includes security readiness enforcement
+- `npm run security:report` emits release-facing trust evidence
+- release readiness now assumes explicit permissions policy, env schema, deploy-header baseline, and secret-exposure checks are part of the contract
+
 ## Required Language v1 Gates
 - `npm run test:fs-diag`
 - `npm run test:sourcemap-fidelity`

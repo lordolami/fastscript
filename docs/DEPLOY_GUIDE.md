@@ -51,6 +51,9 @@ npm run build
    - `NODE_ENV=production`
    - `PORT`
    - `SESSION_SECRET`
+   - `WEBHOOK_SECRET` when webhook routes exist
+   - `MAX_BODY_BYTES`
+   - `REQUEST_TIMEOUT_MS`
    - `DB_DRIVER=postgres` when you want Postgres-backed persistence
    - `DATABASE_URL` when `DB_DRIVER=postgres`
 
@@ -67,16 +70,19 @@ That means the deployed runtime is the normal FastScript production server, and 
 For teams doing a completely manual handoff instead of a first-party adapter:
 
 1. Run `npm run build`
-2. Inspect `dist/fastscript-manifest.json` to confirm the build succeeded
-3. Upload the app package to your server, image, or container context
-4. Make sure `dist/` is present on the target
-5. Install production dependencies on the target if they are not baked into the image
-6. Start with `node ./src/cli.mjs start`
-7. Probe:
+2. Run `npm run validate`
+3. Confirm `.fastscript/security-readiness-report.json` is clean
+4. Inspect `dist/fastscript-manifest.json` to confirm the build succeeded
+5. Upload the app package to your server, image, or container context
+6. Make sure `dist/` is present on the target
+7. Install production dependencies on the target if they are not baked into the image
+8. Start with `node ./src/cli.mjs start`
+9. Probe:
    - `/`
    - one authenticated route
    - one API route
    - static assets under `/assets/...`
+   - one webhook path if the app exposes webhook routes
 
 For stateful internal products like Agency Ops, also run:
 
@@ -86,6 +92,17 @@ DB_DRIVER=postgres DATABASE_URL=postgres://... node ./src/cli.mjs db:migrate
 
 If the app has no explicit `app/db/seed` file, first-user bootstrap can seed the initial product data instead.
 When `DB_DRIVER=postgres` is set, FastScript now fails fast if Postgres is unavailable or `DATABASE_URL` is missing. It will not silently fall back to file storage.
+
+## Security-first note
+
+FastScript v4.1 expects deployment to preserve:
+
+- `fastscript.permissions.json`
+- `app/env.schema.fs`
+- secure header baseline
+- session and webhook secrets where relevant
+
+Deployment is considered incomplete if the app builds but the security-readiness contract is missing.
 
 ## What to do on Google, AWS, Oracle, or similar providers
 

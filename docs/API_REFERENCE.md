@@ -73,9 +73,11 @@ Auto-generated from `src/*.mjs`.
 - `createApp`
 - `hydrate`
 - `middleware`
+- `schema`
 - `schemas`
 - `seed`
 - `up`
+- `verifyWebhookRequest`
 
 ## csp.mjs
 
@@ -275,6 +277,10 @@ Auto-generated from `src/*.mjs`.
 - `nextCronRun`
 - `normalizeScheduleEntry`
 - `parseCronExpression`
+
+## security-readiness.mjs
+
+- `runSecurityReadiness`
 
 ## security.mjs
 

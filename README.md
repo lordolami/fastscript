@@ -4,17 +4,18 @@ FastScript is the complete TypeScript full-stack platform.
 
 It keeps ordinary JavaScript and TypeScript authoring familiar by treating `.fs` as the runtime-native source surface, then brings compiler, framework, runtime, validation, and deployment into one system.
 
-## FastScript v4 contract
+## FastScript v4.1 contract
 
 - Write ordinary JS, TS, JSX, and TSX in `.fs`
 - Build pages, APIs, middleware, migrations, seeds, jobs, and workers in one project
 - Keep npm ecosystem compatibility and incremental migration paths
 - Use one quality gate for formatting, linting, typecheck, validation, tests, smoke checks, benchmarks, and proof artifacts
+- Start new apps with secure-by-default permissions policy and validator-backed security readiness
 - Deploy the same app to Node, Vercel, or Cloudflare
 - Learn the platform through `/learn` and inspect product-shaped proof apps before you ship
 - Benefit from a structured FastScript language/runtime layer that stays better aligned for machine reasoning, validation, and future model-training workflows without forcing a new day-to-day coding style
 
-## What v4 ratifies
+## What v4.1 ratifies
 
 FastScript now presents itself as a batteries-included TypeScript platform, not just a compatibility line.
 
@@ -28,6 +29,7 @@ Core platform pillars exercised in the repo include:
 - notifications, billing workflows, and webhook handling
 - admin and operator product surfaces
 - release-proof validation and compatibility artifacts
+- security-readiness validation, explicit permissions policy, and secure deploy baseline
 - deploy adapters and runtime observability
 
 ## Two canonical proof apps
@@ -141,7 +143,7 @@ Public proof surfaces:
 
 - `/learn` - browser-first FastScript school
 - `/docs` - documentation entrypoint
-- `/docs/latest` - current v4 platform track
+- `/docs/latest` - current v4.1 platform track
 - `/docs/support` - governed support matrix
 - `/benchmarks` - proof-backed performance and artifact trail
 - `/showcase` - visible project and reference-app surface

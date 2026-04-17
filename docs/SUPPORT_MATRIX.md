@@ -1,9 +1,9 @@
 # FastScript Compatibility Matrix
 
-- Generated: 2026-04-17T16:24:26.502Z
-- Current stable line: `4.0.x`
-- Governance track: FastScript `4.0` compatibility system
-- Product contract: If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.
+- Generated: 2026-04-17T17:45:36.870Z
+- Current stable line: `4.1.x`
+- Governance track: FastScript `4.1` compatibility system
+- Product contract: If a feature, ecosystem pattern, or security claim is marked proven, it must have automated coverage and release gates must fail when that proof regresses.
 - Proven means: linked automated coverage and CI-enforced release discipline
 
 ## Status Legend

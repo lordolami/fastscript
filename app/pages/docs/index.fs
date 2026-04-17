@@ -58,7 +58,7 @@ const SECTIONS = [{
 }];
 const CARDS = [{
   title: "Current platform line",
-  copy: "FastScript v4 is the complete TypeScript platform release: ordinary TS in .fs, one runtime for product work, proof-backed validation, and deploy-ready outputs.",
+  copy: "FastScript v4.1 is the security-first TypeScript platform release: ordinary TS in .fs, one runtime for product work, validator-backed security readiness, and deploy-ready outputs.",
   href: "/docs/latest",
   cta: "Read v4"
 }, {
@@ -128,7 +128,7 @@ export default function DocsIndex({pathname}) {
         <header class="sec-header">
           <p class="kicker">Documentation</p>
           <h1 class="h1">FastScript docs.</h1>
-          <p class="lead">Everything you need to build, validate, and ship with FastScript v4.0: the complete TypeScript platform line, visible proof apps, governed compatibility evidence, and browser-first learning through <a href="/learn">/learn</a>.</p>
+          <p class="lead">Everything you need to build, validate, and ship with FastScript v4.1: the complete TypeScript platform line, visible proof apps, governed compatibility evidence, browser-first learning through <a href="/learn">/learn</a>, and a public security-first platform contract.</p>
         </header>
 
         <div class="docs-card-grid docs-entry-cards">${cards}</div>
@@ -138,7 +138,7 @@ export default function DocsIndex({pathname}) {
         <section class="docs-syntax">
           <header class="sec-header-sm">
             <p class="kicker">Platform baseline</p>
-            <h2 class="h2">FastScript v4.0 at a glance.</h2>
+            <h2 class="h2">FastScript v4.1 at a glance.</h2>
           </header>
           <div class="code-pair">
             <div class="code-block">
@@ -162,7 +162,7 @@ export default function DocsIndex({pathname}) {
               <div class="code-block-body"><span class="code-cmt">// FastScript owns the pipeline around that code</span>
 <span class="code-kw">const</span> pillars = [
   <span class="code-str">"auth"</span>, <span class="code-str">"migrations"</span>, <span class="code-str">"jobs"</span>, <span class="code-str">"notifications"</span>,
-  <span class="code-str">"validation"</span>, <span class="code-str">"proof apps"</span>, <span class="code-str">"deploy adapters"</span>
+  <span class="code-str">"validation"</span>, <span class="code-str">"security readiness"</span>, <span class="code-str">"proof apps"</span>, <span class="code-str">"deploy adapters"</span>
 ]
 
 <span class="code-kw">export</span> <span class="code-kw">default</span> pillars</div>

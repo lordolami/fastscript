@@ -422,6 +422,18 @@ const MODULES = [
         mistakes: ["Adopting everything at once without lane-level judgment.", "Using app-specific hacks instead of escalating compatibility work.", "Ignoring how runtime boundaries affect team clarity and QA."],
         realUse: ["Professional teams need this mindset to keep migrations and new builds sane.", "The proof apps exist so rollout decisions are grounded instead of speculative."],
         resources: [["Agency Ops guide", "/docs/agency-ops"], ["Latest proof update", "/docs/latest"]]
+      }),
+      lesson({
+        slug: "security-boundaries-and-validator-backed-trust",
+        title: "Security boundaries, permissions, and validator-backed trust",
+        summary: "Learn how FastScript turns security into platform behavior through explicit policy, secret-exposure checks, and secure deploy discipline.",
+        workedExample: { title: "A security-first baseline", code: "{\n  \"preset\": \"secure\",\n  \"env\": [\"SESSION_SECRET\", \"WEBHOOK_SECRET\"],\n  \"ship\": \"only after validate passes\"\n}" },
+        exercise: { title: "Write the trust rule", prompt: "Add one property that reminds the team not to expose secrets in browser or public response paths.", starter: "const trust = {\n  policy: \"secure\",\n  release: \"validate first\"\n};", reference: "const trust = {\n  policy: \"secure\",\n  release: \"validate first\",\n  avoid: \"secret exposure in browser or public API paths\"\n};" },
+        concepts: ["Secure-by-default scaffolds reduce cleanup work later.", "Explicit permissions policy makes production posture visible and reviewable.", "Secret exposure belongs in validator failure, not post-incident surprise.", "Security trust is stronger when proof apps and release gates exercise the same contract."],
+        checkpoints: ["I can explain why FastScript prefers validator-backed trust over obscurity.", "I know what fastscript.permissions.json does in production readiness.", "I understand why secret exposure and webhook verification belong in the platform loop."],
+        mistakes: ["Treating security as a docs-only promise instead of a checked contract.", "Assuming a secure preset matters only after launch.", "Leaking env-backed secrets into public page or API response paths."],
+        realUse: ["This is the mindset teams need when shipping authenticated dashboards, billing flows, and webhook integrations.", "The security-readiness report gives release and ops work a shared source of truth."],
+        resources: [["Security contract", "/security"], ["Runtime permissions", "/docs/latest"]]
       })
     ]
   },
@@ -607,6 +619,11 @@ const PRIMARY_ASSESSMENT_BANK = {
     ["hide", "Hide it in one app with a local hack."],
     ["ship", "Ship first and document it later only if someone complains."]
   ]),
+  "professional/security-boundaries-and-validator-backed-trust": choiceAssessment("Quick check", "What makes FastScript's security posture stronger than a docs-only promise?", "validator", "Right. The platform now checks permissions, secret exposure, and readiness in tooling instead of relying on memory.", "Pick the answer that turns security into checked platform behavior.", [
+    ["validator", "Validator-backed policy, secret checks, and readiness reporting."],
+    ["obscure", "Making the stack harder to read so attackers give up."],
+    ["later", "Deferring security cleanup until after launch."]
+  ]),
   "migration/dry-run-convert-rollback": choiceAssessment("Quick check", "Why does dry-run come before write mode in migration work?", "review", "Correct. Dry-run lets you review the proposed impact before real files change.", "Pick the option that protects teams from blind edits.", [
     ["review", "It shows the proposed impact before real files change."],
     ["speed", "It is always faster than write mode in production."],
@@ -699,6 +716,11 @@ const SECONDARY_ASSESSMENT_BANK = {
     ["proven", "Start with proven lanes."],
     ["proof", "Add proof for new needs."],
     ["expand", "Expand only after the proof supports it."]
+  ]),
+  "professional/security-boundaries-and-validator-backed-trust": bugAssessment("Spot the bug", "Which security habit creates preventable release risk?", "return { ok: true, secret: process.env.SESSION_SECRET };", "secret", "Exactly. Secret exposure belongs in validator failure, not public output.", "Choose the option that leaks sensitive data across the public boundary.", [
+    ["secret", "Return a secret-like env value in a public response path."],
+    ["policy", "Commit an explicit secure permissions policy."],
+    ["report", "Generate a security-readiness report before release."]
   ]),
   "migration/dry-run-convert-rollback": sequenceAssessment("Sequence the migration loop", "What is the safe migration order?", ["dry-run", "write", "rollback"], "Correct. Review first, write second, and keep rollback ready as a first-class step.", "Almost. The safest order starts with dry-run, not write mode.", [
     ["dry-run", "Preview the conversion."],

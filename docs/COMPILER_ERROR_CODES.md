@@ -29,6 +29,12 @@
 - `FS4106`: Non-callable value invoked.
 - `FS4107`: Invalid operator operand types.
 - `FS4201`: Symbol used outside available runtime context.
+- `FS4301`: Secret-like env value referenced from browser/public page surface.
+- `FS4302`: Secret-like env value appears to flow into a public API response.
+- `FS4303`: Missing explicit `fastscript.permissions.json` production policy.
+- `FS4304`: Permissions policy does not use the required secure preset.
+- `FS4305`: Required security env-schema contract is missing.
+- `FS4306`: Required deploy header baseline is missing.
 
 ## Modes
 

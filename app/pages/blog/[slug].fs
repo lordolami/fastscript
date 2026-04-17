@@ -1,4 +1,30 @@
 const POSTS = {
+  "fastscript-v4-1-security-first-platform-release": {
+    title: "FastScript v4.1: the security-first platform release",
+    date: "April 17, 2026",
+    lead: "FastScript v4.1 turns security into platform behavior. The release adds secure-by-default scaffolds, explicit permissions policy, validator-backed security readiness, and proof apps that visibly exercise the trust contract.",
+    body: `<h2>Security is now part of the product contract</h2>
+<p>FastScript already had security primitives. What v4.1 changes is the contract around them. Runtime boundaries, explicit permissions policy, CSRF/session protections, webhook verification, and deploy-ready security baseline are now public platform behavior instead of buried utilities.</p>
+<h2>Scaffolds now start from a secure posture</h2>
+<p>New apps emit <code>fastscript.permissions.json</code> with the secure preset, plus an explicit env schema for session, webhook, and request-boundary configuration. That means security starts as versioned code and validator input, not as a vague reminder left for later.</p>
+<h2>The validator now proves readiness</h2>
+<p>FastScript now ships a security-readiness pass that fails on missing policy, non-secure preset use, obvious secret exposure, missing env-schema keys, and missing deploy-header baseline. The platform is no longer just saying “please be careful.” It is checking.</p>
+<h2>Reference apps have to earn the claim</h2>
+<p>The Team Dashboard SaaS and Agency Ops proof apps now exercise authenticated flows, CSRF/session behavior, signed webhook verification, and secure deploy expectations. That matters because trust is stronger when it shows up in working product-shaped examples, not only in documentation.</p>`
+  },
+  "why-fastscript-chooses-validator-backed-trust": {
+    title: "Why FastScript chooses validator-backed trust over obscurity",
+    date: "April 17, 2026",
+    lead: "Security gets stronger when dangerous mistakes become visible early. FastScript chooses explicit runtime boundaries, permissions, and readiness checks instead of hoping obscurity will save the system.",
+    body: `<h2>Obscurity is not the strategy</h2>
+<p>It is tempting to imagine security as hidden conventions, bizarre code shapes, or platform complexity that attackers will not understand. That is not the FastScript position. Obscurity can slow somebody down a little, but it also slows your own team, weakens audits, and makes risk harder to reason about.</p>
+<h2>Validator-backed trust scales better</h2>
+<p>FastScript is betting on a different model: make the dangerous boundary visible, enforce it in tooling, and keep that check inside the same platform that builds and deploys the app. Runtime scopes, explicit permissions policy, CSRF/session protections, and secret-exposure diagnostics are all examples of that approach.</p>
+<h2>Secure-by-default beats secure-later</h2>
+<p>Many stacks effectively tell teams to get the app working first and harden it later. FastScript now moves security earlier. New scaffolds emit the secure preset, proof apps exercise the trust contract, and release gates fail when the baseline is missing.</p>
+<h2>The result is a calmer shipping story</h2>
+<p>FastScript is not claiming perfection. It is claiming something more useful: the platform is structurally harder to misuse, and it produces evidence when important security assumptions are missing. That is the kind of trust that compounds over time.</p>`
+  },
   "why-were-training-ai-on-a-structured-language": {
     title: "Why we're training AI on a structured language, not ecosystem chaos",
     date: "April 17, 2026",
@@ -11,19 +37,6 @@ const POSTS = {
 <p>Underneath that ordinary authoring model, FastScript still owns its language and runtime surface. That gives us a platform that is easier to validate, easier to diagnose, and easier to align around machine-readable behavior. We can evolve the substrate and the model together instead of depending on ecosystems we do not control.</p>
 <h2>This is the real training advantage</h2>
 <p>We are not claiming that public-code training stops mattering. It does. The advantage is that FastScript gives the model a cleaner system to think through once it is working inside our stack. That means fewer ambiguous runtime paths, tighter validator loops, and a better chance of turning model work into repeatable product behavior instead of one-off code generation.</p>`
-  },
-  "why-fastscript-studio-replaces-agency-sprawl": {
-    title: "Why FastScript Studio is pointed at agency replacement",
-    date: "April 17, 2026",
-    lead: "Agencies exist because software delivery is still fragmented: design, frontend, backend, QA, deploy, and maintenance all sit in different systems. The FastScript thesis is that one controlled stack can collapse that sprawl.",
-    body: `<h2>Why agencies still win today</h2>
-<p>Most founders and operators do not buy agencies because they love the process. They buy agencies because the stack is fragmented and somebody has to coordinate the mess. One team handles design, another handles frontend, another handles backend, and then everybody hopes deployment and maintenance still work when the project changes six weeks later.</p>
-<h2>Studio is not just a prompt box</h2>
-<p>The FastScript Studio direction is interesting because it is not meant to be another pretty generator sitting on top of ecosystem chaos. It is meant to operate on top of FastScript itself: one runtime, one framework boundary, one validator loop, one deploy path, and one product memory surface. That changes what an AI product can actually carry over time.</p>
-<h2>Why this threatens agency economics</h2>
-<p>If the software factory owns generation, validation, repair, and deploy continuity in one stack, then a large part of agency coordination overhead starts to disappear. The opportunity is not just to make websites faster. It is to reduce the amount of human orchestration required to move from idea to shipped product.</p>
-<h2>The wedge starts with controlled delivery</h2>
-<p>No serious company will replace agencies because a model produced one nice landing page. They will switch when the system repeatedly ships product work with lower coordination cost and higher confidence. That is why FastScript keeps investing in the stack, the validator, and the proof surfaces instead of stopping at demos.</p>`
   },
   "the-validator-ships-certainty": {
     title: "The validator: why FastScript ships certainty, not probability",
@@ -46,7 +59,7 @@ const POSTS = {
 <p>When we started building production apps at Lakesbim, we kept running into the same issues. Next.js was fast to get started with, but build times ballooned as the app grew, the client bundle was enormous, and deploying to anything other than Vercel meant fighting the framework. Remix was more explicit, but it still shipped a significant runtime and required careful coordination between framework-level abstractions and actual product logic.</p>
 <p>What we actually wanted was simple: keep normal application authoring, compile to JavaScript, and ship anywhere without the framework deciding our infrastructure.</p>
 <h2>The .fs idea</h2>
-<p>FastScript starts from a different premise. Instead of forcing developers into a separate authored-language identity, the current v4.0 line treats <code>.fs</code> as a universal JS/TS container for the FastScript runtime. You can write normal JavaScript, TypeScript, JSX, and TSX directly in <code>.fs</code>, then opt into forms like <code>fn</code>, <code>state</code>, and <code>~</code> only when they improve readability.</p>
+<p>FastScript starts from a different premise. Instead of forcing developers into a separate authored-language identity, the current v4.1 line treats <code>.fs</code> as a universal JS/TS container for the FastScript runtime. You can write normal JavaScript, TypeScript, JSX, and TSX directly in <code>.fs</code>, then opt into forms like <code>fn</code>, <code>state</code>, and <code>~</code> only when they improve readability.</p>
 <p>This keeps the compiler small, fast, and predictable. It does not need to reinterpret your whole app - it needs to preserve familiar authoring while normalizing to standard JavaScript and generating source maps. esbuild handles bundling. The result is a proof-backed fast toolchain without a forced rewrite of developer habits.</p>
 <h2>The runtime philosophy</h2>
 <p>The current public proof pack reports a 2.71KB first-load JS gzip footprint. That is not an accident. We made a deliberate decision to shift as much work as possible to compile time. The client router does not do hydration in the React sense - it manages navigation, SSR state handoff, and HMR. Page modules handle their own rendering. There is no virtual DOM, no reconciliation, no diffing. Just compiled output.</p>

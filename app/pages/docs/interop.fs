@@ -4,7 +4,7 @@ export default function DocsInterop() {
       <header class="sec-header">
         <p class="kicker">Interop</p>
         <h1 class="h1">JavaScript ecosystem compatibility in practice.</h1>
-        <p class="lead">FastScript v4.0 keeps <code class="ic">.fs</code> as the source of truth while still working with npm packages, mixed JS/FS modules, and incremental migration paths across frontend and backend code. The governed support matrix and interop proof suite make those claims visible instead of vague.</p>
+        <p class="lead">FastScript v4.1 keeps <code class="ic">.fs</code> as the source of truth while still working with npm packages, mixed JS/FS modules, and incremental migration paths across frontend and backend code. The governed support matrix, interop proof suite, and security-first release discipline make those claims visible instead of vague.</p>
       </header>
 
       <div class="docs-card-grid">

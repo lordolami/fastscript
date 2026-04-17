@@ -14,6 +14,7 @@ must(resolve("docs", "REFERENCE_APPS.md"));
 must(resolve("docs", "RUNTIME_PERMISSIONS.md"));
 must(resolve("docs", "SBOM.json"));
 must(resolve("fastscript.permissions.example.json"));
+must(resolve("fastscript.permissions.json"));
 
 const vercel = JSON.parse(readFileSync(resolve("vercel.json"), "utf8"));
 const headers = (vercel.headers || []).flatMap((h) => h.headers || []).map((h) => `${h.key}:${h.value}`.toLowerCase());
@@ -25,8 +26,14 @@ const wrangler = readFileSync(resolve("wrangler.toml"), "utf8").toLowerCase();
 if (!wrangler.includes("compatibility_flags = [\"nodejs_compat\"]")) throw new Error("wrangler missing nodejs_compat compatibility flag");
 if (!wrangler.includes("fastscript_deploy_target = \"cloudflare\"")) throw new Error("wrangler missing deploy target variable");
 
+const rootPolicy = JSON.parse(readFileSync(resolve("fastscript.permissions.json"), "utf8"));
+if (String(rootPolicy.preset || "").toLowerCase() !== "secure") throw new Error("root fastscript.permissions.json must use secure preset");
+
+const examplePolicy = JSON.parse(readFileSync(resolve("fastscript.permissions.example.json"), "utf8"));
+if (String(examplePolicy.preset || "").toLowerCase() !== "secure") throw new Error("fastscript.permissions.example.json must use secure preset");
+
 const envSchema = readFileSync(resolve("app", "env.schema.fs"), "utf8");
-for (const key of ["SESSION_SECRET", "DATABASE_URL", "MAX_BODY_BYTES", "REQUEST_TIMEOUT_MS"]) {
+for (const key of ["SESSION_SECRET", "DATABASE_URL", "WEBHOOK_SECRET", "MAX_BODY_BYTES", "REQUEST_TIMEOUT_MS"]) {
   if (!envSchema.includes(key)) throw new Error(`env schema missing: ${key}`);
 }
 

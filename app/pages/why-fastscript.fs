@@ -3,8 +3,8 @@ export default function WhyFastScriptPage() {
     <section class="docs-latest-page">
       <header class="sec-header">
         <p class="kicker">For developers</p>
-        <h1 class="h1">Why developers choose FastScript v4.0.</h1>
-        <p class="lead">FastScript v4.0 gives teams one runtime-native source surface for frontend, backend, middleware, jobs, data flows, and deploy output without asking them to abandon ordinary JavaScript or TypeScript habits.</p>
+        <h1 class="h1">Why developers choose FastScript v4.1.</h1>
+        <p class="lead">FastScript v4.1 gives teams one runtime-native source surface for frontend, backend, middleware, jobs, data flows, security readiness, and deploy output without asking them to abandon ordinary JavaScript or TypeScript habits.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -23,6 +23,10 @@ export default function WhyFastScriptPage() {
         <div class="docs-card">
           <p class="docs-card-title">Proof-backed release discipline</p>
           <p class="docs-card-copy">The public story stays tied to measured proof: interop coverage, support matrix generation, release gates, reference apps, and build artifacts.</p>
+        </div>
+        <div class="docs-card">
+          <p class="docs-card-title">Integrated trust model</p>
+          <p class="docs-card-copy">FastScript now makes runtime scopes, secure policy files, secret-exposure checks, and security-readiness reporting part of the platform itself instead of external cleanup work.</p>
         </div>
       </div>
 
@@ -76,6 +80,29 @@ export default function WhyFastScriptPage() {
           <div class="docs-card">
             <p class="docs-card-title">Validation is built in</p>
             <p class="docs-card-copy">The same structured surface that keeps the runtime coherent also helps diagnostics, release proof, and machine-readable repair workflows stay first-class.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="section-divider">
+
+      <section class="docs-syntax">
+        <header class="sec-header-sm">
+          <p class="kicker">Security dimension</p>
+          <h2 class="h2">FastScript is not a stack pile held together by hope.</h2>
+        </header>
+        <div class="story-grid">
+          <div class="story-cell">
+            <p class="story-cell-title">Stack-sprawl security is fragile</p>
+            <p class="story-cell-copy">When auth, deploy, middleware, webhook handling, and runtime boundaries all live in different systems, security becomes coordination debt instead of a platform property.</p>
+          </div>
+          <div class="story-cell">
+            <p class="story-cell-title">FastScript keeps the boundaries owned</p>
+            <p class="story-cell-copy">Runtime scopes, explicit permissions policy, CSRF/session protections, and security-readiness validation now live inside the same system that builds and deploys the app.</p>
+          </div>
+          <div class="story-cell">
+            <p class="story-cell-title">Validator-backed trust beats obscurity</p>
+            <p class="story-cell-copy">FastScript is safer because dangerous mistakes become visible earlier, not because the platform hopes attackers are confused by hidden conventions.</p>
           </div>
         </div>
       </section>

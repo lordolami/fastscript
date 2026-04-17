@@ -11,6 +11,7 @@ import { runPermissions } from "./permissions-cli.mjs";
 import { runBenchmarkDiscipline } from "./benchmark-discipline.mjs";
 import { runRegressionGuard } from "./regression-guard.mjs";
 import { runCompatibilityGovernanceCheck } from "./compatibility-governance.mjs";
+import { runSecurityReadiness } from "./security-readiness.mjs";
 
 export async function runValidate() {
   await runMigrate(["app", "--dry-run", "--fidelity-level", "full", "--fail-on-unproven-fidelity"]);
@@ -18,6 +19,7 @@ export async function runValidate() {
   await runCheck();
   await runLint(["--mode", "fail"]);
   await runTypeCheck(["--mode", "fail"]);
+  await runSecurityReadiness(["--mode", "fail"]);
   await runBuild();
   await runBench();
   await runBenchmarkDiscipline();
@@ -28,5 +30,5 @@ export async function runValidate() {
   await runDbSeed();
   await runExport(["--to", "js", "--out", "exported-js-app"]);
   await runExport(["--to", "ts", "--out", "exported-ts-app"]);
-  console.log("validate complete: check/lint/typecheck/build/bench/compat/db/export all passed");
+  console.log("validate complete: check/lint/typecheck/security/build/bench/compat/db/export all passed");
 }

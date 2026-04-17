@@ -7,32 +7,40 @@
   },
   "fileAccess": {
     "mode": "allow",
-    "allow": ["**"],
+    "allow": ["app/**", "dist/**", ".fastscript/**"],
     "deny": ["secrets/**"]
   },
   "envAccess": {
     "mode": "allow",
-    "allow": ["FASTSCRIPT_*", "NODE_ENV", "PORT"],
-    "deny": ["FASTSCRIPT_SECRET"]
+    "allow": [
+      "FASTSCRIPT_*",
+      "NODE_ENV",
+      "PORT",
+      "SESSION_SECRET",
+      "DATABASE_URL",
+      "MAX_BODY_BYTES",
+      "REQUEST_TIMEOUT_MS",
+      "WEBHOOK_SECRET",
+      "DB_DRIVER",
+      "AGENCY_OPS_*"
+    ],
+    "deny": ["*PRIVATE*", "*PASSWORD*"]
   },
   "networkAccess": {
     "mode": "deny",
-    "allowHosts": [],
-    "denyHosts": []
+    "allowHosts": []
   },
   "subprocessExecution": {
     "mode": "deny",
-    "allowPrefixes": [],
-    "denyPrefixes": []
+    "allowPrefixes": []
   },
   "dynamicImports": {
     "mode": "allow",
     "allowKinds": ["relative", "absolute", "fileUrl", "dataUrl"],
-    "denyKinds": ["httpUrl", "httpsUrl"]
+    "denyKinds": ["httpUrl", "httpsUrl", "package"]
   },
   "pluginAccess": {
     "mode": "deny",
-    "allow": [],
-    "deny": []
+    "allow": []
   }
 }

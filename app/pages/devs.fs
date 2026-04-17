@@ -1,7 +1,7 @@
 const TEAM = [{
   name: "Olamilekan Akinuli",
   role: "Founder - Product + Platform",
-  copy: "Leads language design, full-stack product strategy, ecosystem positioning, and shipping cadence. Owns the FastScript v4 contract, release governance, completeness direction, and platform-proof discipline."
+  copy: "Leads language design, full-stack product strategy, ecosystem positioning, and shipping cadence. Owns the FastScript v4.1 contract, release governance, completeness direction, and platform-proof discipline."
 }, {
   name: "Compiler lane",
   role: "Parser + Typecheck",
@@ -60,7 +60,7 @@ export default function DevsPage() {
         <div class="feature-cell">
           <div class="feature-icon">&#128274;</div>
           <p class="feature-title">Stability guarantees</p>
-          <p class="feature-copy">The current v4 line keeps parser spans, diagnostic codes, formatter output, and compatibility guarantees stable across patch releases. Breaking changes require a major version and migration docs.</p>
+          <p class="feature-copy">The current v4.1 line keeps parser spans, diagnostic codes, formatter output, compatibility guarantees, and security-readiness contract stable across patch releases. Breaking changes require a major version and migration docs.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">TM</div>
@@ -87,8 +87,8 @@ export default function DevsPage() {
           <p class="story-cell-copy">FastScript is source-available for trust, evaluation, and adoption, but the main language/runtime remains proprietary because it is part of the platform moat. That advantage should compound inside FastScript, not subsidize copycats.</p>
         </div>
         <div class="story-cell">
-          <p class="story-cell-title">What v4 means</p>
-          <p class="story-cell-copy">This line makes the public claim simpler and stronger: FastScript is the complete TypeScript platform, with proof apps, a governed support matrix, and release discipline that makes the platform inspectable instead of mysterious.</p>
+          <p class="story-cell-title">What v4.1 means</p>
+          <p class="story-cell-copy">This line makes the public claim simpler and stronger: FastScript is the complete TypeScript platform, with proof apps, a governed support matrix, and a security-first release discipline that makes the platform inspectable instead of mysterious.</p>
         </div>
       </div>
     </section>

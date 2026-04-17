@@ -4,7 +4,7 @@ export default function Showcase() {
       <header class="sec-header">
         <p class="kicker">Showcase</p>
         <h1 class="h1">Proof apps and production-shaped references.</h1>
-        <p class="lead">FastScript v4.0 shows its platform story through visible product shapes: a greenfield SaaS baseline, an operations proving ground, the public website itself, and smaller platform patterns that demonstrate the full-stack contract in practice.</p>
+        <p class="lead">FastScript v4.1 shows its platform story through visible product shapes: a greenfield SaaS baseline, an operations proving ground, the public website itself, and smaller platform patterns that demonstrate the full-stack and security-first contract in practice.</p>
       </header>
 
       <div class="docs-card-grid">

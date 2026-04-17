@@ -28,6 +28,13 @@
 4. Resolve API/page route and execute handler.
 5. Return SSR HTML or API response.
 
+## Security Pipeline
+1. Enforce runtime context boundaries (`FS4201`) before invalid browser/server access becomes ambiguous runtime behavior.
+2. Load explicit permissions policy from `fastscript.permissions.json`.
+3. Apply secure middleware defaults such as headers, CSRF, request quotas, rate limiting, and abuse guards.
+4. Run security-readiness validation for explicit policy, env schema, deploy-header baseline, webhook secret paths, and obvious secret exposure.
+5. Emit tooling-readable security evidence in `.fastscript/security-readiness-report.json`.
+
 ## Conformance + Regression
 - Language conformance fixtures: `spec/conformance/fixtures/*.fs`
 - Snapshot baseline: `spec/conformance/snapshots.json`

@@ -8,11 +8,13 @@ These are the two canonical product-shaped proof apps for the active FastScript 
 
 2. Greenfield SaaS reference (`npm run create:startup-mvp`)
 - Exercises public marketing pages, authenticated workspaces, billing, jobs, roles, admin and support flows, DB state, notifications, and Cloudflare-ready deployment.
+- Exercises security-readiness validation, explicit permissions policy, CSRF/session behavior, and signed webhook verification.
 - This is the canonical greenfield proof app.
 - Public guide: `/docs/team-dashboard-saas`
 
 3. Agency Ops proving-ground app (`examples/agency-ops`)
 - Exercises ordinary TypeScript inside `.fs`, authenticated dashboards, assignments, billing reminders, jobs, follow-up notifications, and runtime-safe deploy generation.
+- Exercises security-readiness validation, explicit permissions policy, CSRF/session behavior, and signed webhook verification.
 - This is the canonical ops and agency proof app.
 - Public guide: `/docs/agency-ops`
 
@@ -23,3 +25,4 @@ Validation evidence:
 - `npm run test:deploy-adapters`
 - `npm run test:startup-mvp-saas`
 - `npm run test:agency-ops`
+- `npm run security:report`

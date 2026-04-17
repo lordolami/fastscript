@@ -5,7 +5,7 @@ export default function Home() {
         <div class="hero-left">
           <div class="hero-badge">
             <span class="hero-badge-dot" aria-hidden="true"></span>
-            v4.0 - <a href="/changelog" class="hero-badge-link">complete TypeScript platform release</a>
+            v4.1 - <a href="/changelog" class="hero-badge-link">security-first platform release</a>
           </div>
 
           <h1 class="hero-title">
@@ -17,7 +17,7 @@ export default function Home() {
             Write ordinary <code class="ic">js</code>, <code class="ic">ts</code>, <code class="ic">jsx</code>, and <code class="ic">tsx</code> in <code class="ic">.fs</code>, then ship pages, APIs, middleware, jobs, migrations, and deploy adapters through one calm FastScript pipeline.
           </p>
           <p class="hero-desc">
-            FastScript also keeps its own structured language and runtime surface underneath that familiar authoring model, which is why the platform can stay simpler for machine reasoning, stronger in validation, and better aligned for future model-training workflows.
+            FastScript also keeps its own structured language and runtime surface underneath that familiar authoring model, which is why the platform can stay simpler for machine reasoning, stronger in validation, and safer to ship through secure-by-default scaffolds, runtime boundaries, and validator-backed readiness checks.
           </p>
 
           <div class="install-row">
@@ -71,8 +71,8 @@ export default function Home() {
                 <span class="t-prompt">$ </span><span class="t-cmd">fastscript create startup-mvp --template startup-mvp</span><br>
                 <span class="t-out">&nbsp; &#10003; greenfield SaaS proof app scaffolded</span><br>
                 <br>
-                <span class="t-prompt">$ </span><span class="t-cmd">npm run qa:all</span><br>
-                <span class="t-out">&nbsp; &#10003; format · lint · types · tests · proof</span><br>
+                <span class="t-prompt">$ </span><span class="t-cmd">npm run validate</span><br>
+                <span class="t-out">&nbsp; &#10003; scopes · policy · secrets · proof</span><br>
                 <br>
                 <span class="t-prompt">$ </span><span class="t-cmd">fastscript deploy --target cloudflare</span><br>
                 <span class="t-success">&nbsp; &#10003; complete platform output ready</span><br>
@@ -84,7 +84,7 @@ export default function Home() {
             <div class="hero-side-stack" data-depth="22">
               <div class="hero-stack-card hero-stack-card-primary">
                 <span class="hero-stack-label">Platform</span>
-                <strong class="hero-stack-title">Auth, data, jobs, deploy</strong>
+                <strong class="hero-stack-title">Auth, data, security, deploy</strong>
                 <span class="hero-stack-copy">One runtime. One product path.</span>
               </div>
               <div class="hero-stack-card hero-stack-card-secondary">
@@ -116,7 +116,7 @@ export default function Home() {
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128204;</span>
-            <span class="social-item-n">v4.0</span>
+            <span class="social-item-n">v4.1</span>
             <span>current stable line</span>
           </div>
           <div class="social-item">
@@ -151,17 +151,19 @@ export default function Home() {
 
     <div class="ticker-strip" aria-hidden="true">
       <div class="ticker-track">
-        <span class="ticker-item">FastScript v4</span>
+        <span class="ticker-item">FastScript v4.1</span>
         <span class="ticker-item">Complete TypeScript platform</span>
-        <span class="ticker-item">Auth · data · jobs · deploy</span>
+        <span class="ticker-item">Auth · data · security · deploy</span>
         <span class="ticker-item">Ordinary TS in .fs</span>
         <span class="ticker-item">Structured runtime for machine reasoning</span>
+        <span class="ticker-item">Validator-backed trust</span>
         <span class="ticker-item">/learn as proof surface</span>
-        <span class="ticker-item">FastScript v4</span>
+        <span class="ticker-item">FastScript v4.1</span>
         <span class="ticker-item">Complete TypeScript platform</span>
-        <span class="ticker-item">Auth · data · jobs · deploy</span>
+        <span class="ticker-item">Auth · data · security · deploy</span>
         <span class="ticker-item">Ordinary TS in .fs</span>
         <span class="ticker-item">Structured runtime for machine reasoning</span>
+        <span class="ticker-item">Validator-backed trust</span>
         <span class="ticker-item">/learn as proof surface</span>
       </div>
     </div>
@@ -181,7 +183,7 @@ export default function Home() {
         <div class="how-cell">
           <p class="how-num">02 - Verify</p>
           <p class="how-title">Run the proof loop</p>
-          <p class="how-copy"><code class="ic">npm run qa:all</code> combines format check, lint, typecheck, validation, tests, docs, proofs, smoke checks, and release-ready artifacts into one shipping gate.</p>
+          <p class="how-copy"><code class="ic">npm run validate</code> now includes runtime scopes, explicit permissions policy, secret-exposure checks, env-schema security readiness, and the wider proof loop before a release is treated as trustworthy.</p>
         </div>
         <div class="how-cell">
           <p class="how-num">03 - Ship</p>
@@ -226,6 +228,36 @@ export default function Home() {
           <div class="feature-icon" aria-hidden="true">&#128640;</div>
           <p class="feature-title">Deploy and observability</p>
           <p class="feature-copy">Build outputs, diagnostics, health-minded deploy adapters, tracing, and release-proof artifacts stay aligned from development to production.</p>
+        </div>
+        <div class="feature-cell">
+          <div class="feature-icon" aria-hidden="true">&#128737;</div>
+          <p class="feature-title">Security and trust</p>
+          <p class="feature-copy">Runtime scopes, explicit permissions policy, secret-exposure checks, webhook verification, CSRF/session protections, and security-readiness reporting are now part of the platform contract.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-story reveal">
+      <header class="sec-header">
+        <p class="kicker">Security-first v4.1</p>
+        <h2 class="h2">Harder to misuse by design.</h2>
+      </header>
+      <div class="story-grid">
+        <div class="story-cell">
+          <p class="story-cell-title">Runtime boundaries stay visible</p>
+          <p class="story-cell-copy">FastScript keeps browser, server, and edge context rules explicit so invalid cross-runtime access fails early instead of turning into production folklore.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">Secure policy is now the default</p>
+          <p class="story-cell-copy">New apps emit an explicit <code class="ic">fastscript.permissions.json</code> with the secure preset instead of waiting for teams to harden things after they already shipped.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">Secrets stay server-side</p>
+          <p class="story-cell-copy">The validator now flags obvious secret exposure in page code and public API response paths so teams catch the mistake before the deploy story begins.</p>
+        </div>
+        <div class="story-cell">
+          <p class="story-cell-title">Trust is generated as evidence</p>
+          <p class="story-cell-copy">Security readiness is emitted as tooling output, then exercised in the proof apps, docs, and release gates instead of living as a policy page nobody verifies.</p>
         </div>
       </div>
     </section>
@@ -282,7 +314,7 @@ export default function Home() {
         </div>
         <div class="story-cell">
           <p class="story-cell-title">What v4 ratifies</p>
-          <p class="story-cell-copy">This release treats FastScript as the complete TypeScript platform line: auth, roles, migrations, seeds, jobs, notifications, proof apps, docs, and deploy surfaces all align under one public contract.</p>
+          <p class="story-cell-copy">This release treats FastScript as the complete TypeScript platform line: auth, roles, migrations, seeds, jobs, security readiness, proof apps, docs, and deploy surfaces all align under one public contract.</p>
         </div>
       </div>
     </section>
@@ -356,7 +388,7 @@ export default function Home() {
     <section class="home-cta reveal">
       <div class="cta-block">
         <h2 class="cta-title">Build serious products with one TypeScript platform.</h2>
-        <p class="cta-copy">FastScript v4 turns the public contract into something simpler and stronger: ordinary TS in <code class="ic">.fs</code>, one runtime-native product pipeline, visible proof apps, and a structured platform that can keep getting better for both humans and machines.</p>
+        <p class="cta-copy">FastScript v4.1 turns the public contract into something simpler and stronger: ordinary TS in <code class="ic">.fs</code>, one runtime-native product pipeline, secure-by-default scaffolds, visible proof apps, and a structured platform that can keep getting better for both humans and machines.</p>
         <div class="cta-actions">
           <a class="btn btn-primary btn-lg" href="/learn">Open /learn</a>
           <a class="btn btn-secondary btn-lg" href="/docs">Browse docs</a>

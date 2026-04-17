@@ -1,13 +1,18 @@
 const POSTS = [{
+  slug: "fastscript-v4-1-security-first-platform-release",
+  title: "FastScript v4.1: the security-first platform release",
+  date: "April 17, 2026",
+  excerpt: "FastScript v4.1 turns security into platform behavior: secure-by-default scaffolds, validator-backed security readiness, runtime boundaries, and proof apps that visibly exercise the contract."
+}, {
+  slug: "why-fastscript-chooses-validator-backed-trust",
+  title: "Why FastScript chooses validator-backed trust over obscurity",
+  date: "April 17, 2026",
+  excerpt: "Security gets stronger when dangerous mistakes become visible early. FastScript chooses explicit runtime boundaries, permissions, and readiness checks instead of hoping obscurity will save the system."
+}, {
   slug: "why-were-training-ai-on-a-structured-language",
   title: "Why we're training AI on a structured language, not ecosystem chaos",
   date: "April 17, 2026",
   excerpt: "General coding models learn from messy public code. FastScript gives us a controlled language and runtime surface that stays simpler for machine reasoning, validation, and future training loops."
-}, {
-  slug: "why-fastscript-studio-replaces-agency-sprawl",
-  title: "Why FastScript Studio is pointed at agency replacement",
-  date: "April 17, 2026",
-  excerpt: "Most agencies stitch together people, frameworks, QA rituals, and deploy handoffs. The Studio thesis is that one controlled FastScript stack can collapse that service chain into a software factory."
 }, {
   slug: "the-validator-ships-certainty",
   title: "The validator: why FastScript ships certainty, not probability",

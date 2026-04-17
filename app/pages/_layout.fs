@@ -77,7 +77,7 @@ export default function Layout({content, pathname}) {
         <a class="brand" href="/" aria-label="FastScript home">
           <span class="brand-mark" aria-hidden="true">FS</span>
           <span class="brand-name">FastScript</span>
-          <span class="brand-ver">v4.0</span>
+          <span class="brand-ver">v4.1</span>
         </a>
 
         <nav class="nav-links" aria-label="Primary navigation">
@@ -115,8 +115,8 @@ export default function Layout({content, pathname}) {
               <span class="brand-mark footer-brand-mark" aria-hidden="true">FS</span>
               FastScript
             </div>
-            <p class="footer-brand-copy">FastScript is the complete TypeScript full-stack platform: ordinary TS and JS in <code class="ic">.fs</code>, one runtime for pages, APIs, middleware, jobs, and data flows, first-party validation and proof discipline, and deploy-ready output for serious product teams. This site is built and shipped with FastScript itself.</p>
-            <p class="footer-brand-copy">FastScript also keeps its own structured language and runtime surface so the platform can stay simpler for machine reasoning, stronger in validation, and better aligned for future model-training workflows without changing everyday TS authoring.</p>
+            <p class="footer-brand-copy">FastScript is the complete TypeScript full-stack platform: ordinary TS and JS in <code class="ic">.fs</code>, one runtime for pages, APIs, middleware, jobs, and data flows, secure-by-default policy files, validator-backed proof discipline, and deploy-ready output for serious product teams. This site is built and shipped with FastScript itself.</p>
+            <p class="footer-brand-copy">FastScript also keeps its own structured language and runtime surface so the platform can stay simpler for machine reasoning, stronger in validation, and structurally harder to misuse without changing everyday TS authoring.</p>
             <div class="footer-social">
               <a class="footer-social-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
               <a class="footer-social-link" href="https://discord.gg/fastscript" target="_blank" rel="noreferrer" aria-label="Discord">DC</a>
