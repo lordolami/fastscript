@@ -2,9 +2,9 @@ export default function AgencyOpsGuidePage() {
   return `
     <section class="docs-latest-page">
       <header class="sec-header">
-        <p class="kicker">Strict-TypeScript proving-ground app</p>
+        <p class="kicker">Ordinary-TypeScript proving-ground app</p>
         <h1 class="h1">Agency Ops SaaS</h1>
-        <p class="lead">Agency Ops is the public developer guide for the strict-TypeScript <code class="ic">.fs</code> app built from the stable <code class="ic">startup-mvp</code> baseline. It exists to prove that the only visible FastScript difference can be the filename while pages, APIs, jobs, middleware, and deployment still live in one runtime boundary.</p>
+        <p class="lead">Agency Ops is the public developer guide for the ordinary-TypeScript <code class="ic">.fs</code> app built from the stable <code class="ic">startup-mvp</code> baseline. It exists to prove that the only visible FastScript difference can be the filename while pages, APIs, jobs, middleware, and deployment still live in one runtime boundary.</p>
       </header>
 
       <div class="docs-card-grid">
@@ -14,7 +14,7 @@ export default function AgencyOpsGuidePage() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Why it exists</p>
-          <p class="docs-card-copy">To show developers a product-shaped FastScript app written in strict ordinary TypeScript inside <code class="ic">.fs</code> files, without FastScript-only syntax or UI primitives.</p>
+          <p class="docs-card-copy">To show developers a product-shaped FastScript app written in ordinary TypeScript inside <code class="ic">.fs</code> files, without FastScript-only syntax or UI primitives.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Who should use it</p>
@@ -22,7 +22,7 @@ export default function AgencyOpsGuidePage() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">When to choose it</p>
-          <p class="docs-card-copy">Choose this guide when you want a stricter TS-only proving-ground app. Choose <a href="/docs/team-dashboard-saas">Team Dashboard SaaS</a> when you want the official public starter baseline.</p>
+          <p class="docs-card-copy">Choose this guide when you want the clearest rename-only TS proving-ground app. Choose <a href="/docs/team-dashboard-saas">Team Dashboard SaaS</a> when you want the official public starter baseline.</p>
         </div>
       </div>
 
@@ -48,7 +48,7 @@ export default function AgencyOpsGuidePage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">4. Run the proof path</p>
-            <p class="docs-card-copy">Use <code class="ic">npm run test:agency-ops</code>, <code class="ic">npm run validate</code>, and then your full QA gate before shipping. That keeps the TS-only proving-ground story honest.</p>
+            <p class="docs-card-copy">Use <code class="ic">npm run test:agency-ops</code>, <code class="ic">npm run validate</code>, and then your full QA gate before shipping. That keeps the rename-only TS proving-ground story honest.</p>
           </div>
         </div>
       </section>
@@ -121,7 +121,7 @@ export default function AgencyOpsGuidePage() {
         <div class="docs-card-grid">
           <div class="docs-card">
             <p class="docs-card-title">Delivery queue</p>
-            <p class="docs-card-copy">Agency Ops now carries a real internal delivery-queue lane: work items, due labels, at-risk status, and ops handoff visibility in the same strict-TypeScript <code class="ic">.fs</code> app.</p>
+            <p class="docs-card-copy">Agency Ops now carries a real internal delivery-queue lane: work items, due labels, at-risk status, and ops handoff visibility in the same ordinary-TypeScript <code class="ic">.fs</code> app.</p>
           </div>
           <div class="docs-card">
             <p class="docs-card-title">Cloudflare env/bindings</p>
@@ -133,7 +133,7 @@ export default function AgencyOpsGuidePage() {
         </div>
           <div class="docs-card">
             <p class="docs-card-title">Governed proof lane</p>
-            <p class="docs-card-copy">The product-shaped strict-TypeScript app pattern and the custom Node/container deploy path now belong in the governed compatibility system instead of living only as loose docs claims.</p>
+            <p class="docs-card-copy">The product-shaped ordinary-TypeScript app pattern and the custom Node/container deploy path now belong in the governed compatibility system instead of living only as loose docs claims.</p>
           </div>
         </div>
       </section>
@@ -176,9 +176,9 @@ export default function AgencyOpsGuidePage() {
         </header>
         <div class="docs-card-grid">
           <div class="docs-card">
-            <p class="docs-card-title">Strict TS in .fs</p>
+            <p class="docs-card-title">Ordinary TS in .fs</p>
             <p class="docs-card-copy">Start with the school path that teaches ordinary TypeScript inside <code class="ic">.fs</code> and the app/runtime contract around it.</p>
-            <a class="docs-card-link" href="/learn/foundations/your-first-fs-file">Study strict TS in .fs &#8594;</a>
+            <a class="docs-card-link" href="/learn/foundations/your-first-fs-file">Study ordinary TS in .fs &#8594;</a>
             <a class="docs-card-link" href="/learn/professional/support-matrix-and-proof-lanes">Study support-lane judgment &#8594;</a>
             <a class="docs-card-link" href="/learn/migration/dry-run-convert-rollback">Study migration safety &#8594;</a>
             <a class="docs-card-link" href="/learn/mastery/delivery-checklist-and-release-readiness">Finish with release readiness &#8594;</a>

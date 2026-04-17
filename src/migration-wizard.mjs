@@ -10,7 +10,7 @@ export async function runMigrationWizard(args = []) {
   const prepared = createStrictConversionPlan([abs, "--dry-run"]);
   const { plan } = prepared;
 
-  console.log("=== strict conversion preview ===");
+  console.log("=== rename-only compatibility preview ===");
   console.log(`target: ${abs}`);
   console.log(`rename files: ${plan.renames.length}`);
   console.log(`rewrite files: ${plan.writes.filter((item) => item.kind === "rewrite").length}`);

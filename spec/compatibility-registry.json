@@ -362,13 +362,13 @@
     {
       "id": "strict-ts-product-apps",
       "category": "framework-patterns",
-      "feature": "Strict TypeScript product-shaped .fs apps",
+      "feature": "Ordinary TypeScript product-shaped .fs apps",
       "status": "proven",
       "contractNote": "A real product-shaped app written in ordinary TypeScript inside .fs should build, start, deploy, and exercise frontend, backend, jobs, and auth together.",
       "proofIds": [
         "script:test:agency-ops"
       ],
-      "docsNote": "Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, assignment workflow, billing, jobs, and Cloudflare-ready generation."
+      "docsNote": "Covers the Agency Ops proving-ground app: ordinary TypeScript authoring, dashboard routes, session bootstrap, work-item flow, assignment workflow, billing, jobs, and Cloudflare-ready generation."
     },
     {
       "id": "authenticated-dashboard-assignment-flows",
@@ -403,3 +403,4 @@
     }
   ]
 }
+

@@ -8,13 +8,11 @@
 - `FS1004`: Reserved legacy compatibility code for runtime/frontend type-surface conflicts. Current JS/TS-compatible `.fs` parsing should not emit this for ordinary `type`/`interface`/`enum` usage.
 - `FS1005`: Parse error.
 - `FS1006`: Invalid identifier.
-- `FS1007`: `TODO_ERROR` token warning.
 - `FS1010`: Unterminated token.
 - `FS1101`: Unsupported directive.
 
 ## Lint
 
-- `FS3001`: Blocking token (`TODO_ERROR`).
 - `FS3002`: `var` declaration warning.
 - `FS3003`: Inline script warning.
 - `FS3004`: Binding can be `const`.

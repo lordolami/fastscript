@@ -49,8 +49,8 @@ export default function DocsLatest() {
           <a class="docs-card-link" href="/docs/team-dashboard-saas">Open baseline guide &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">Agency Ops strict-TypeScript guide</p>
-          <p class="docs-card-copy">Use the public proving-ground app when you want the clearest "only the filename changes" demo: strict ordinary TypeScript inside <code class="ic">.fs</code> with pages, APIs, jobs, billing, and deploy flow already wired.</p>
+          <p class="docs-card-title">Agency Ops ordinary-TypeScript guide</p>
+          <p class="docs-card-copy">Use the public proving-ground app when you want the clearest "only the filename changes" demo: ordinary TypeScript inside <code class="ic">.fs</code> with pages, APIs, jobs, billing, and deploy flow already wired.</p>
           <a class="docs-card-link" href="/docs/agency-ops">Open Agency Ops guide &#8594;</a>
         </div>
         <div class="docs-card">
@@ -78,7 +78,7 @@ export default function DocsLatest() {
             <p class="docs-card-copy">FastScript now proves product-shaped full-stack apps, frontend pages, backend APIs, authenticated mutations, middleware, session flows, queue-backed jobs, billing workflows, deploy adapter generation, and custom-host runtime handoff.</p>
           </div>
           <div class="docs-card">
-            <p class="docs-card-title">Strict TS in <code class="ic">.fs</code></p>
+            <p class="docs-card-title">Ordinary TS in <code class="ic">.fs</code></p>
             <p class="docs-card-copy">Agency Ops proves that the only visible FastScript difference can be the <code class="ic">.fs</code> filename while the authored code stays ordinary TypeScript.</p>
           </div>
           <div class="docs-card">

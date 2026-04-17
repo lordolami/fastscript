@@ -9,7 +9,8 @@ const cliPath = resolve("src", "cli.mjs");
 const exampleRoot = resolve("examples", "agency-ops");
 const tempRoot = mkdtempSync(join(tmpdir(), "fastscript-agency-ops-"));
 const appRoot = join(tempRoot, "agency-ops");
-const baseUrl = "http://localhost:4173";
+const port = Number(process.env.TEST_AGENCY_OPS_PORT || 4196);
+const baseUrl = `http://localhost:${port}`;
 
 function runNode(args, cwd, extraEnv = {}) {
   return new Promise((resolveRun, rejectRun) => {
@@ -84,6 +85,7 @@ try {
     stdio: "ignore",
     env: {
       ...process.env,
+      PORT: String(port),
       NODE_ENV: "development",
       SESSION_SECRET: process.env.SESSION_SECRET || "agency-ops-dev-secret-0123456789abcdef"
     }
@@ -139,6 +141,7 @@ try {
     stdio: "ignore",
     env: {
       ...process.env,
+      PORT: String(port),
       NODE_ENV: "production",
       SESSION_SECRET: process.env.SESSION_SECRET || "agency-ops-start-secret-0123456789abcdef"
     }
@@ -151,7 +154,7 @@ try {
   const homeText = await home.text();
   assert.equal(home.status, 200);
   assert.match(homeText, /Agency Ops SaaS/);
-  assert.match(homeText, /Strict TypeScript in \.fs/i);
+  assert.match(homeText, /ordinary TypeScript in \.fs/i);
   assert.match(homeText, /Support contact/i);
 
   const signIn = await fetch(`${baseUrl}/sign-in`);

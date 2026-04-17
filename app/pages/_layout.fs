@@ -74,7 +74,7 @@ export default function Layout({content, pathname}) {
         <a class="brand" href="/" aria-label="FastScript home">
           <span class="brand-mark" aria-hidden="true">FS</span>
           <span class="brand-name">FastScript</span>
-          <span class="brand-ver">v3.0</span>
+          <span class="brand-ver">v3.1</span>
         </a>
 
         <nav class="nav-links" aria-label="Primary navigation">

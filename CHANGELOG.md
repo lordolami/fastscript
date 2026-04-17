@@ -87,3 +87,9 @@
 - release prep
 ## v3.0.8 - 2026-04-16
 - release prep
+## v3.1.0 - 2026-04-17
+- Make `.fs` a rename-only adoption path for ordinary JS/TS/JSX/TSX, with FastScript syntax remaining optional sugar
+- Switch the default compiler and loader posture to compatibility-first, remove default style and primitive enforcement gates, and keep migration/reporting rename-first with exact incompatibility output
+- Stabilize release proof by isolating smoke ports, aligning support/docs/example wording to ordinary TypeScript in `.fs`, and regenerating compatibility/search/API artifacts from the final contract
+
+

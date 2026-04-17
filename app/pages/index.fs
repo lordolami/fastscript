@@ -5,7 +5,7 @@ export default function Home() {
         <div class="hero-left">
           <div class="hero-badge">
             <span class="hero-badge-dot" aria-hidden="true"></span>
-            v3.0 &mdash; <a href="/changelog" class="hero-badge-link">See what&rsquo;s new</a>
+            v3.1 &mdash; <a href="/changelog" class="hero-badge-link">See what&rsquo;s new</a>
           </div>
 
           <h1 class="hero-title">
@@ -113,7 +113,7 @@ export default function Home() {
           </div>
           <div class="social-item">
             <span aria-hidden="true">&#128204;</span>
-            <span class="social-item-n">v3.0</span>
+            <span class="social-item-n">v3.1</span>
             <span>current public line</span>
           </div>
           <div class="social-item">
@@ -302,7 +302,7 @@ export default function Home() {
         </div>
         <div class="story-cell">
           <p class="story-cell-title">What is now proven</p>
-          <p class="story-cell-copy">FastScript now proves product-shaped full-stack apps, server-rendered pages, authenticated APIs, middleware and session flows, queue-backed jobs, billing workflows, deploy adapter generation, custom-host runtime handoff, and strict TypeScript authoring inside <code class="ic">.fs</code>.</p>
+          <p class="story-cell-copy">FastScript now proves product-shaped full-stack apps, server-rendered pages, authenticated APIs, middleware and session flows, queue-backed jobs, billing workflows, deploy adapter generation, custom-host runtime handoff, and ordinary TypeScript authoring inside <code class="ic">.fs</code> with rename-only adoption.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">The moat</p>

@@ -57,7 +57,7 @@ export default function Home(){ return "<h1>" + String(sum(1,2)) + "</h1>" }
   const validation = readJson(validationPath);
   const fidelity = readJson(fidelityPath);
 
-  assert.equal(manifest.mode, "strict");
+  assert.equal(manifest.mode, "rename-only");
   assert.equal(manifest.summary.renameCount, 3);
   assert.equal(manifest.summary.importRewriteCount >= 2, true);
   assert.equal(Array.isArray(manifest.convertedFiles), true);
@@ -91,7 +91,7 @@ export default function Home(){ return "<h1>" + String(sum(1,2)) + "</h1>" }
 
     await assert.rejects(
       () => runMigrate([rootBlocked, "--fidelity-level", "off", "--report-dir", reportsBlocked, "--config", configPath]),
-      /conversion blocked by protected\/blocked files/i,
+      /rename-only conversion blocked by protected\/blocked files/i,
     );
 
     write("pages/index.ts", `import { theme } from "./theme.js"
@@ -106,7 +106,7 @@ export default function Home(){ const layout = theme; return "<section id=\\"her
 
     await assert.rejects(
       () => runMigrate([rootScope, "--fidelity-level", "off", "--report-dir", reportsScope, "--config", scopeConfigPath]),
-      /conversion blocked by protected\/blocked files/i,
+      /rename-only conversion blocked by protected\/blocked files/i,
     );
 
     const blockedManifest = readJson(join(reportsScope, "latest", "conversion-manifest.json"));

@@ -45,7 +45,7 @@ The FastScript promise is:
 
 ## 4. Non-Negotiable Contract
 
-FastScript strict conversion must:
+FastScript rename-only compatibility conversion must:
 
 1. never redesign the application
 2. never rewrite copy or text content
@@ -105,7 +105,7 @@ FastScript should preserve:
 
 The primary conversion model is `rename-only`.
 
-Strict conversion must do only the following:
+rename-only compatibility conversion must do only the following:
 
 1. rename eligible source files to `.fs`
 2. rewrite import specifiers whose targets were renamed
@@ -113,7 +113,7 @@ Strict conversion must do only the following:
 4. emit a conversion manifest
 5. validate the result
 
-Strict conversion must not:
+rename-only compatibility conversion must not:
 
 1. rewrite CSS
 2. rewrite layout markup
@@ -128,7 +128,7 @@ Strict conversion must not:
 
 ## 8. Protected Files and Protected Zones
 
-Protected files and zones are immutable during strict conversion.
+Protected files and zones are immutable during rename-only compatibility conversion.
 
 Protected categories include:
 
@@ -142,7 +142,7 @@ Protected categories include:
 8. visual snapshots
 9. any file explicitly marked protected by config
 
-If a conversion requires touching a protected file, strict conversion must fail.
+If a conversion requires touching a protected file, rename-only compatibility conversion must fail.
 
 ## 9. Fidelity Rules
 
@@ -177,7 +177,7 @@ FastScript conversion must be idempotent.
 
 That means:
 
-1. running strict conversion twice should not continue changing files
+1. running rename-only compatibility conversion twice should not continue changing files
 2. a second conversion run on an already converted tree should produce no meaningful diff
 3. any repeated drift indicates a compiler or converter bug
 
@@ -247,7 +247,7 @@ Compatibility should be judged by whether a real project can preserve its identi
 
 Protection is not only file-based.
 
-FastScript strict conversion must support protected scopes including:
+FastScript rename-only compatibility conversion must support protected scopes including:
 
 1. protected files
 2. protected directories
@@ -257,7 +257,7 @@ FastScript strict conversion must support protected scopes including:
 6. protected asset groups
 7. protected design regions identified by configuration
 
-If any protected scope would be altered by strict conversion, the conversion must fail.
+If any protected scope would be altered by rename-only compatibility conversion, the conversion must fail.
 
 ## 15. Validation and Proof Discipline
 
@@ -392,7 +392,7 @@ FastScript should treat 2G and weak-device usability as a design standard, not a
 
 FastScript must have an explicit trust workflow.
 
-Strict conversion should support:
+rename-only compatibility conversion should support:
 
 1. dry run
 2. diff preview
@@ -407,9 +407,9 @@ The user must be able to inspect what FastScript intends to do before trusting i
 
 ## 22. Non-Creative Conversion Policy
 
-Strict conversion is not a creative rewrite system.
+rename-only compatibility conversion is not a creative rewrite system.
 
-Strict conversion must not:
+rename-only compatibility conversion must not:
 
 1. improve architecture by guessing
 2. modernize code style by guessing
@@ -418,11 +418,11 @@ Strict conversion must not:
 5. edit design by guessing
 6. edit copy by guessing
 
-Any such action belongs outside strict conversion and must be explicitly requested as a different operation class.
+Any such action belongs outside rename-only compatibility conversion and must be explicitly requested as a different operation class.
 
 ## 23. AI Boundary
 
-FastScript may use AI internally for assistance, but AI must not be part of strict conversion by default.
+FastScript may use AI internally for assistance, but AI must not be part of rename-only compatibility conversion by default.
 
 The AI boundary is:
 
@@ -665,7 +665,7 @@ FastScript should never rely on non-comparable marketing benchmarks.
 
 ## 37. Conversion Output Contract
 
-A successful strict conversion run must emit:
+A successful rename-only compatibility conversion run must emit:
 
 1. a conversion manifest
 2. a list of converted files
@@ -681,7 +681,7 @@ The user must always be able to see what changed.
 
 ## 38. Failure Policy
 
-FastScript strict conversion must fail when:
+FastScript rename-only compatibility conversion must fail when:
 
 1. a protected file would need to change
 2. a non-target file changed unexpectedly
@@ -728,12 +728,13 @@ The first proof of FastScript is that it can take a real project, preserve it, a
 Any coding agent working on FastScript must follow this rule:
 
 1. do not treat conversion as creative rewriting
-2. do not touch user design during strict conversion
-3. do not touch user copy during strict conversion
-4. do not touch user structure during strict conversion
-5. do not touch protected files during strict conversion
+2. do not touch user design during rename-only compatibility conversion
+3. do not touch user copy during rename-only compatibility conversion
+4. do not touch user structure during rename-only compatibility conversion
+5. do not touch protected files during rename-only compatibility conversion
 6. assume compatibility-first behavior unless explicitly told otherwise
 7. treat any fidelity drift as a bug, not as an acceptable tradeoff
 8. optimize the runtime and toolchain, not the user's identity
 
 This document is the canonical trust and product contract for compatibility-first FastScript work until superseded by a ratified revision.
+

@@ -16,7 +16,7 @@ export default function Home() {
       <div class="saas-chip">Internal product track · ${config.appName}</div>
       <div class="hero-grid">
         <section class="list-card">
-          <p class="detail-label">Strict TypeScript in .fs</p>
+          <p class="detail-label">Ordinary TypeScript in .fs</p>
           <h1>Run client operations, retainers, invoice reminders, and support follow-up in one runtime.</h1>
           <p>This app is authored in normal TypeScript inside <code>.fs</code> files so the product story is simple: the filename changes, not the language you write every day.</p>
           <p class="mini-note">Primary region: ${config.primaryRegion} · Support contact: ${config.supportEmail}</p>

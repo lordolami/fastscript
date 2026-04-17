@@ -7,7 +7,7 @@ export default function Roadmap() {
     </div>
 
     <section class="roadmap-section reveal">
-      <h2 class="h2 roadmap-phase">&#9679; In Progress &mdash; post-v3.0</h2>
+      <h2 class="h2 roadmap-phase">&#9679; In Progress &mdash; post-v3.1</h2>
       <div class="roadmap-list">
         <div class="roadmap-item">
           <div class="roadmap-status status-active">Active</div>

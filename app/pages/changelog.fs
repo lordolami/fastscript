@@ -1,4 +1,8 @@
 const RELEASES = [{
+  version: "v3.1.0",
+  date: "April 2026",
+  copy: "Rename-only compatibility release: ordinary JS/TS/JSX/TSX now adopts .fs by extension change alone, migration stays rename-first, smoke gates run on isolated ports, and the public support matrix/docs/npm line all reflect the new contract."
+}, {
   version: "v3.0.8",
   date: "April 2026",
   copy: "Release-line cache policy cleanup: SSR HTML now ships with no-store semantics so plain root requests stop lagging behind deploys, while the production shell and logical-manifest asset contract remain stable."

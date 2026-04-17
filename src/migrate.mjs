@@ -930,7 +930,7 @@ function summarizePlan(plan) {
 
 function ensureWithinTarget(pathAbs, targetRoot) {
   if (!pathStartsWith(pathAbs, targetRoot)) {
-    throw new Error(`migrate strict failure: attempted to modify non-target file (${pathAbs})`);
+    throw new Error(`migrate compatibility failure: attempted to modify non-target file (${pathAbs})`);
   }
 }
 
@@ -1077,7 +1077,7 @@ export async function runMigrate(input = []) {
 
   const manifest = {
     spec: "FASTSCRIPT_COMPATIBILITY_FIRST_RUNTIME_SPEC#1-#41",
-    mode: "strict",
+    mode: "rename-only",
     runId,
     generatedAt: new Date().toISOString(),
     dryRun: options.dryRun,
@@ -1130,7 +1130,7 @@ export async function runMigrate(input = []) {
     writeFileSync(join(latestDir, "conversion-manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
     writeFileSync(join(latestDir, "diff-preview.json"), `${JSON.stringify(diffPreview, null, 2)}\n`, "utf8");
     throw new Error(
-      `migrate strict failure: conversion blocked by protected/blocked files (${plan.blockedFiles.length}). See ${normalizeSlashes(relative(projectRoot, blockedManifestPath))}.`
+      `migrate compatibility failure: rename-only conversion blocked by protected/blocked files (${plan.blockedFiles.length}). See ${normalizeSlashes(relative(projectRoot, blockedManifestPath))}.`
     );
   }
 
@@ -1181,7 +1181,7 @@ export async function runMigrate(input = []) {
   const validation = {
     generatedAt: new Date().toISOString(),
     checks: [
-      { id: "rename-only-conversion", status: "pass", details: "Only extension renames and import specifier rewrites are emitted." },
+      { id: "rename-only-conversion", status: "pass", details: "Only extension renames and safe import specifier rewrites are emitted." },
       { id: "protected-file-hash-enforcement", status: protectedHashViolations.length ? "fail" : "pass", details: protectedHashViolations },
       { id: "dependency-graph-integrity", status: importGraphIntegrity ? "pass" : "fail", details: { beforeEdges: mappedBeforeGraph.length, afterEdges: afterGraph.length } },
       { id: "import-resolution", status: unresolvedImports.length ? "fail" : "pass", details: unresolvedImports },
@@ -1297,13 +1297,13 @@ export async function runMigrate(input = []) {
 
   const validationFailed = validation.checks.some((item) => item.status === "fail");
   if (validationFailed) {
-    throw new Error(`migrate strict failure: validation failed. See ${normalizeSlashes(relative(projectRoot, validationPath))}.`);
+    throw new Error(`migrate compatibility failure: validation failed. See ${normalizeSlashes(relative(projectRoot, validationPath))}.`);
   }
 
   if (fidelity.status === "fail") {
-    throw new Error(`migrate strict failure: fidelity checks failed. See ${normalizeSlashes(relative(projectRoot, fidelityPath))}.`);
+    throw new Error(`migrate compatibility failure: fidelity checks failed. See ${normalizeSlashes(relative(projectRoot, fidelityPath))}.`);
   }
 
-  console.log(`migrate strict complete: ${summary.renameCount} renamed, ${summary.rewriteCount} rewritten, ${summary.importRewriteCount} import rewrites`);
+  console.log(`migrate rename-only complete: ${summary.renameCount} renamed, ${summary.rewriteCount} rewritten, ${summary.importRewriteCount} import rewrites`);
   console.log(`migrate report: ${normalizeSlashes(relative(projectRoot, runDir))}`);
 }

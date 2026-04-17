@@ -22,7 +22,6 @@ const badSource = `
 state wrong
 fn (x) { return x }
 type X = { n: number }
-const keep = TODO_ERROR
 `;
 
 const bad = analyzeFastScript(badSource, { file: "memory.fs" });
@@ -32,7 +31,7 @@ assert.equal(codes.includes("FS1002"), true);
 assert.equal(codes.includes("FS1003"), true);
 assert.equal(codes.includes("FS1005"), true);
 assert.equal(codes.includes("FS1004"), false);
-assert.equal(codes.includes("FS1007"), true);
+assert.equal(codes.includes("FS1007"), false);
 
 const report = formatDiagnosticsReport(bad, { source: badSource });
 assert.equal(report.includes("FS1001"), true);

@@ -9,6 +9,8 @@ const cliPath = resolve("src", "cli.mjs");
 const exampleRoot = resolve("examples", "startup-mvp");
 const tempRoot = mkdtempSync(join(tmpdir(), "fastscript-startup-mvp-saas-"));
 const appRoot = join(tempRoot, "startup-mvp");
+const port = Number(process.env.TEST_STARTUP_MVP_SAAS_PORT || 4195);
+const baseUrl = `http://localhost:${port}`;
 
 function runNode(args, cwd, extraEnv = {}) {
   return new Promise((resolveRun, rejectRun) => {
@@ -83,12 +85,13 @@ try {
     stdio: "ignore",
     env: {
       ...process.env,
+      PORT: String(port),
       NODE_ENV: "development",
       SESSION_SECRET: process.env.SESSION_SECRET || "startup-mvp-saas-dev-secret-0123456789abcdef"
     }
   });
-  await waitFor("http://localhost:4173/");
-  const devHome = await fetch("http://localhost:4173/");
+  await waitFor(`${baseUrl}/`);
+  const devHome = await fetch(`${baseUrl}/`);
   assert.equal(devHome.status, 200);
   devProc.kill("SIGTERM");
   await sleep(500);
@@ -131,28 +134,29 @@ try {
     stdio: "ignore",
     env: {
       ...process.env,
+      PORT: String(port),
       NODE_ENV: "production",
       SESSION_SECRET: process.env.SESSION_SECRET || "startup-mvp-saas-start-secret-0123456789abcdef"
     }
   });
 
-  await waitFor("http://localhost:4173/");
+  await waitFor(`${baseUrl}/`);
 
-  const home = await fetch("http://localhost:4173/");
+  const home = await fetch(`${baseUrl}/`);
   updateCookies(home);
   const homeText = await home.text();
   assert.equal(home.status, 200);
   assert.match(homeText, /Team dashboard SaaS/);
 
-  const signIn = await fetch("http://localhost:4173/sign-in");
+  const signIn = await fetch(`${baseUrl}/sign-in`);
   updateCookies(signIn);
   assert.equal(signIn.status, 200);
 
-  const redirectedDashboard = await fetch("http://localhost:4173/dashboard", { redirect: "manual" });
+  const redirectedDashboard = await fetch(`${baseUrl}/dashboard`, { redirect: "manual" });
   assert.equal(String(redirectedDashboard.status).startsWith("3"), true);
   assert.match(redirectedDashboard.headers.get("location") || "", /\/sign-in$/);
 
-  const sessionResponse = await fetch("http://localhost:4173/api/session", {
+  const sessionResponse = await fetch(`${baseUrl}/api/session`, {
     method: "POST",
     headers: { ...csrfHeaders(), "content-type": "application/json" },
     body: JSON.stringify({
@@ -167,7 +171,7 @@ try {
   assert.equal(sessionJson.ok, true);
   assert.equal(Boolean(cookieJar.get("fs_session")), true, "missing auth cookie");
 
-  const authedDashboard = await fetch("http://localhost:4173/dashboard", {
+  const authedDashboard = await fetch(`${baseUrl}/dashboard`, {
     headers: { cookie: cookieHeader() }
   });
   updateCookies(authedDashboard);
@@ -175,7 +179,7 @@ try {
   assert.equal(authedDashboard.status, 200);
   assert.match(dashboardHtml, /Workspace overview/);
 
-  const projectResponse = await fetch("http://localhost:4173/api/projects", {
+  const projectResponse = await fetch(`${baseUrl}/api/projects`, {
     method: "POST",
     headers: {
       ...csrfHeaders(),
@@ -192,7 +196,7 @@ try {
   assert.equal(projectResponse.status, 200);
   assert.equal(projectJson.ok, true);
 
-  const memberResponse = await fetch("http://localhost:4173/api/members", {
+  const memberResponse = await fetch(`${baseUrl}/api/members`, {
     method: "POST",
     headers: {
       ...csrfHeaders(),
@@ -208,7 +212,7 @@ try {
   assert.equal(memberResponse.status, 200);
   assert.equal(memberJson.ok, true);
 
-  const billingResponse = await fetch("http://localhost:4173/api/billing/checkout", {
+  const billingResponse = await fetch(`${baseUrl}/api/billing/checkout`, {
     method: "POST",
     headers: {
       ...csrfHeaders(),
@@ -222,7 +226,7 @@ try {
   assert.equal(billingJson.ok, true);
   assert.equal(billingJson.plan.name, "Growth");
 
-  const settingsResponse = await fetch("http://localhost:4173/api/workspace-settings", {
+  const settingsResponse = await fetch(`${baseUrl}/api/workspace-settings`, {
     method: "POST",
     headers: {
       ...csrfHeaders(),
@@ -240,7 +244,7 @@ try {
   assert.equal(settingsResponse.status, 200);
   assert.equal(settingsJson.ok, true);
 
-  const notifyResponse = await fetch("http://localhost:4173/api/notifications/retry", {
+  const notifyResponse = await fetch(`${baseUrl}/api/notifications/retry`, {
     method: "POST",
     headers: {
       ...csrfHeaders(),
@@ -253,25 +257,25 @@ try {
   assert.equal(notifyResponse.status, 200);
   assert.equal(notifyJson.ok, true);
 
-  const projectsPage = await fetch("http://localhost:4173/dashboard/projects", { headers: { cookie: cookieHeader() } });
+  const projectsPage = await fetch(`${baseUrl}/dashboard/projects`, { headers: { cookie: cookieHeader() } });
   updateCookies(projectsPage);
   const projectsHtml = await projectsPage.text();
   assert.equal(projectsPage.status, 200);
   assert.match(projectsHtml, /Churn rescue automation/);
 
-  const teamPage = await fetch("http://localhost:4173/dashboard/team", { headers: { cookie: cookieHeader() } });
+  const teamPage = await fetch(`${baseUrl}/dashboard/team`, { headers: { cookie: cookieHeader() } });
   updateCookies(teamPage);
   const teamHtml = await teamPage.text();
   assert.equal(teamPage.status, 200);
   assert.match(teamHtml, /ops@northwindlabs\.dev/);
 
-  const billingPage = await fetch("http://localhost:4173/dashboard/billing", { headers: { cookie: cookieHeader() } });
+  const billingPage = await fetch(`${baseUrl}/dashboard/billing`, { headers: { cookie: cookieHeader() } });
   updateCookies(billingPage);
   const billingHtml = await billingPage.text();
   assert.equal(billingPage.status, 200);
   assert.match(billingHtml, /Growth/);
 
-  const adminPage = await fetch("http://localhost:4173/dashboard/admin", { headers: { cookie: cookieHeader() } });
+  const adminPage = await fetch(`${baseUrl}/dashboard/admin`, { headers: { cookie: cookieHeader() } });
   updateCookies(adminPage);
   const adminHtml = await adminPage.text();
   assert.equal(adminPage.status, 200);

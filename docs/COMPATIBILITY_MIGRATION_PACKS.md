@@ -6,7 +6,7 @@ FastScript ships migration packs for common adoption paths:
 - `packs/ts-to-fs/typed`: TypeScript to `.fs` conversion starter.
 - `packs/next-to-fastscript/core`: Routing/layout migration checklist.
 
-FastScript strict conversion is compatibility-first and rename-only by default:
+FastScript migration is compatibility-first and rename-only by default:
 
 1. rename eligible `js/jsx/ts/tsx` files to `.fs`
 2. rewrite only import specifiers that point to renamed files

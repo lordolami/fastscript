@@ -97,7 +97,7 @@ export default function LearnSchoolPage() {
               </div>
               <div class="docs-card">
                 <p class="docs-card-title">Reference products</p>
-                <p class="docs-card-copy"><code class="ic">startup-mvp</code> stays the stable greenfield baseline. <code class="ic">agency-ops</code> stays the strict TypeScript proving-ground app.</p>
+                <p class="docs-card-copy"><code class="ic">startup-mvp</code> stays the stable greenfield baseline. <code class="ic">agency-ops</code> stays the ordinary TypeScript proving-ground app.</p>
                 <a class="docs-card-link" href="/docs/team-dashboard-saas">Study startup-mvp &#8594;</a>
                 <a class="docs-card-link" href="/docs/agency-ops">Study agency-ops &#8594;</a>
               </div>

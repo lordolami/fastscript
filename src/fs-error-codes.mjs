@@ -29,11 +29,6 @@ export const FS_ERROR_CODES = Object.freeze({
     message: "Invalid identifier.",
     hint: "Identifiers must start with a letter, `_`, or `$`.",
   },
-  FS1007: {
-    severity: "warning",
-    message: "Suspicious `TODO_ERROR` token found.",
-    hint: "Remove placeholder tokens before shipping.",
-  },
   FS1010: {
     severity: "error",
     message: "Unterminated token.",
@@ -53,11 +48,6 @@ export const FS_ERROR_CODES = Object.freeze({
     severity: "warning",
     message: "Avoid inline `<script>` tags in templates.",
     hint: "Move script behavior into module functions or hydration handlers.",
-  },
-  FS3001: {
-    severity: "error",
-    message: "`TODO_ERROR` token is not allowed in committed code.",
-    hint: "Delete placeholder tokens before merging.",
   },
   FS3002: {
     severity: "warning",

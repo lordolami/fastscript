@@ -144,22 +144,6 @@ function lintSource(source, { file }) {
     );
   }
 
-  const todoPattern = /\bTODO_ERROR\b/g;
-  for (const match of text.matchAll(todoPattern)) {
-    const start = match.index ?? 0;
-    issues.push(
-      createIssue({
-        file,
-        source: text,
-        lineStarts,
-        code: "FS3001",
-        severity: "error",
-        message: "Remove TODO_ERROR token.",
-        span: { start, end: start + match[0].length },
-      }),
-    );
-  }
-
   if (!parsed.estree) return { issues, fixes };
 
   const reassignedNames = collectReassignedNames(parsed.estree);

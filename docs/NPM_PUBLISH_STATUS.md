@@ -2,9 +2,9 @@
 
 ## Current state
 
-FastScript `v3.0.2` is the current patch-release target in the public repo:
+FastScript `v3.1.0` is the current minor-release target in the public repo:
 
-- website/docs/changelog/support matrix match the `v3.0.x` public line
+- website/docs/changelog/support matrix match the `v3.1.x` public line
 - `npm run build` passes
 - `npm run validate` passes
 - `npm run pack:check` validates the generated public npm bundle
@@ -30,7 +30,7 @@ An attempted private npm publish path was tested on `2026-04-14` with a scoped p
 
 Because FastScript distribution is not the product moat, the package model was changed so npm installation stays easy while the business moat remains in the wider AI/model/platform layer.
 
-## v3.0.2 packaging checklist
+## v3.1.0 packaging checklist
 
 - bump `package.json` to `3.0.2`
 - prepare `.release/npm-public`
@@ -38,3 +38,4 @@ Because FastScript distribution is not the product moat, the package model was c
 - publish npm package from `.release/npm-public`
 - publish matching GitHub release/tag with the same v3 proof-pack summary
 - keep npm-facing copy aligned with the current support matrix, proof pack, website compatibility story, and Team Dashboard SaaS baseline
+

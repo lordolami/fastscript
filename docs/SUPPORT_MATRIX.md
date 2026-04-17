@@ -1,7 +1,7 @@
 # FastScript Compatibility Matrix
 
-- Generated: 2026-04-16T20:09:48.157Z
-- Current stable line: `3.0.x`
+- Generated: 2026-04-17T03:51:40.651Z
+- Current stable line: `3.1.x`
 - Governance track: FastScript `4.0` compatibility system
 - Product contract: If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.
 - Proven means: linked automated coverage and CI-enforced release discipline
@@ -73,7 +73,7 @@
 | Preact interop | proven | `interop:preact-core-fs` | Current proof covers core Preact render flow. |
 | SolidJS signal interop | proven | `interop:solid-core-fs` | Current proof covers createSignal/createMemo usage. |
 | Next-style layout and metadata exports | proven | `fs-parity:next-layout-metadata-style` | Covers metadata-like exports, generated metadata, and layout-style wrappers. |
-| Strict TypeScript product-shaped .fs apps | proven | `script:test:agency-ops` | Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, assignment workflow, billing, jobs, and Cloudflare-ready generation. |
+| Ordinary TypeScript product-shaped .fs apps | proven | `script:test:agency-ops` | Covers the Agency Ops proving-ground app: ordinary TypeScript authoring, dashboard routes, session bootstrap, work-item flow, assignment workflow, billing, jobs, and Cloudflare-ready generation. |
 | Authenticated dashboard assignment and workload flows | proven | `script:test:agency-ops` | Covers assignment-capable work-item APIs, seeded assignee state, workload views, and authenticated dashboard mutation flow in Agency Ops. |
 | Authenticated billing reminder and follow-up flows | proven | `script:test:agency-ops` | Covers invoice reminder queue/send actions, due and overdue invoice visibility, reminder history, and billing-to-ops follow-up flow in Agency Ops. |
 

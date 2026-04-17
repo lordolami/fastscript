@@ -33,7 +33,8 @@ function parseArgs(args) {
 }
 
 function fsLoaderPlugin() {
-  const compilerMode = (process.env.FASTSCRIPT_COMPILER_MODE || "strict").toLowerCase() === "lenient" ? "lenient" : "strict";
+  const rawCompilerMode = (process.env.FASTSCRIPT_COMPILER_MODE || "lenient").toLowerCase();
+  const compilerMode = rawCompilerMode === "strict" ? "strict" : "lenient";
   return {
     name: "fastscript-fs-loader",
     setup(build) {

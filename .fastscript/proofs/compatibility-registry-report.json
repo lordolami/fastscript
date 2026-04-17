@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-04-16T20:09:48.157Z",
+  "generatedAt": "2026-04-17T03:51:40.651Z",
   "governanceTrack": "4.0",
-  "stableLine": "3.0.x",
-  "packageVersion": "3.0.8",
+  "stableLine": "3.1.x",
+  "packageVersion": "3.1.0",
   "contract": "If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.",
   "summary": {
     "entries": 34,
@@ -827,13 +827,13 @@
     {
       "id": "strict-ts-product-apps",
       "category": "framework-patterns",
-      "feature": "Strict TypeScript product-shaped .fs apps",
+      "feature": "Ordinary TypeScript product-shaped .fs apps",
       "status": "proven",
       "contractNote": "A real product-shaped app written in ordinary TypeScript inside .fs should build, start, deploy, and exercise frontend, backend, jobs, and auth together.",
       "proofIds": [
         "script:test:agency-ops"
       ],
-      "docsNote": "Covers the Agency Ops proving-ground app: strict TypeScript authoring, dashboard routes, session bootstrap, work-item flow, assignment workflow, billing, jobs, and Cloudflare-ready generation.",
+      "docsNote": "Covers the Agency Ops proving-ground app: ordinary TypeScript authoring, dashboard routes, session bootstrap, work-item flow, assignment workflow, billing, jobs, and Cloudflare-ready generation.",
       "proofDetails": [
         {
           "id": "script:test:agency-ops",

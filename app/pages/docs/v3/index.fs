@@ -25,7 +25,7 @@ export default function DocsV3() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Governed compatibility matrix</p>
-          <p class="docs-card-copy">FastScript 4.0 starts a governed compatibility system where every <code class="ic">proven</code> claim must link to automated coverage, while the current 3.0.x line ships that governed matrix publicly.</p>
+          <p class="docs-card-copy">FastScript 4.0 starts a governed compatibility system where every <code class="ic">proven</code> claim must link to automated coverage, while the current 3.1.x line ships that governed matrix publicly.</p>
           <a class="docs-card-link" href="/docs/support">Open matrix &#8594;</a>
         </div>
         <div class="docs-card">

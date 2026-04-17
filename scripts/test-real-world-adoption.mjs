@@ -52,7 +52,7 @@ export default function Home(){ return "<h1>" + String(sum(1,2)) + "</h1>" }
   const diffPreview = JSON.parse(readFileSync(join(reportRoot, "latest", "diff-preview.json"), "utf8"));
   const validation = JSON.parse(readFileSync(join(reportRoot, "latest", "validation-report.json"), "utf8"));
 
-  assert.equal(manifest.mode, "strict");
+  assert.equal(manifest.mode, "rename-only");
   assert.equal(manifest.summary.renameCount, 0);
   assert.equal(manifest.summary.rewriteCount, 0);
   assert.equal(diffPreview.summary.renameOperationCount, 0);

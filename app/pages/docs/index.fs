@@ -80,7 +80,7 @@ const CARDS = [{
   href: "/docs/team-dashboard-saas",
   cta: "Open baseline guide"
 }, {
-  title: "Agency Ops strict-TypeScript guide",
+  title: "Agency Ops ordinary-TypeScript guide",
   copy: "A publicly documented proving-ground app that shows how to keep ordinary TypeScript inside .fs while shipping a client-ops product shape with pages, APIs, jobs, DB state, and deploy proof.",
   href: "/docs/agency-ops",
   cta: "Open Agency Ops"

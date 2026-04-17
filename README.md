@@ -34,7 +34,7 @@ What is now proven:
 - middleware and session flows
 - queue-backed jobs and billing workflows
 - deploy adapter generation and custom-host runtime handoff
-- strict TypeScript authoring inside `.fs`
+- ordinary TypeScript authoring inside `.fs` with only the filename changed
 
 Important caveat:
 
@@ -121,7 +121,7 @@ The first official greenfield product baseline lives at:
 
 - `/docs/team-dashboard-saas`
 
-The strict-TypeScript proving-ground guide for developers who want the cleanest "only the filename changes" demo lives at:
+The proving-ground guide for developers who want the cleanest "only the filename changes" demo lives at:
 
 - `/docs/agency-ops`
 
@@ -229,7 +229,7 @@ Use this rule before starting product work:
 3. Prefer the Team Dashboard SaaS baseline when you want the strongest product-shaped starting point:
    - `fastscript create startup-mvp --template startup-mvp`
    - reference guide at `/docs/team-dashboard-saas`
-4. Use Agency Ops when you want a public strict-TypeScript proving-ground app that shows pages, APIs, jobs, billing, and deploy flow without FastScript-only syntax:
+4. Use Agency Ops when you want a public ordinary-TypeScript proving-ground app that shows pages, APIs, jobs, billing, and deploy flow without FastScript-only syntax:
    - source: `examples/agency-ops`
    - guide: `/docs/agency-ops`
 5. Treat any valid JS/TS failure in `.fs` as a compatibility bug and report it through the public compatibility lane.
@@ -449,7 +449,7 @@ npm run format
 npm run format:check
 ```
 
-`migrate` now runs strict compatibility-first conversion (rename-only + import extension rewrites + manifest/validation/fidelity reports).  
+`migrate` now runs rename-only compatibility conversion (rename-only + import extension rewrites + manifest/validation/fidelity reports).  
 Example: `npm run migrate -- app --dry-run`  
 Full proof mode: `npm run migrate -- app --fidelity-level full --fail-on-unproven-fidelity`
 
@@ -630,7 +630,7 @@ A more startup-shaped example with:
 - migrations plus queue-backed receipt/notification jobs
 
 ### `examples/agency-ops`
-A strict-TypeScript proving-ground app with:
+An ordinary-TypeScript proving-ground app with:
 
 - public marketing page
 - authenticated agency dashboard

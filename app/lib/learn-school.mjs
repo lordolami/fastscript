@@ -474,7 +474,7 @@ const MODULES = [
         title: "Capstone architecture: choosing the right baseline and app shape",
         summary: "Learn how to move from lessons into a serious product-shaped build without guessing your starting point.",
         workedExample: { title: "Baseline choice", code: "const baseline = projectType === \"greenfield\"\n  ? \"startup-mvp\"\n  : \"agency-ops\";" },
-        exercise: { title: "Explain the choice", prompt: "Add one sentence that explains when startup-mvp is the right baseline and when agency-ops is the better reference.", starter: "const baseline = projectType === \"greenfield\"\n  ? \"startup-mvp\"\n  : \"agency-ops\";", reference: "const baseline = projectType === \"greenfield\"\n  ? \"startup-mvp\"\n  : \"agency-ops\";\n\n// startup-mvp is the stable greenfield baseline. agency-ops is the stricter TS-in-.fs product reference." },
+        exercise: { title: "Explain the choice", prompt: "Add one sentence that explains when startup-mvp is the right baseline and when agency-ops is the better reference.", starter: "const baseline = projectType === \"greenfield\"\n  ? \"startup-mvp\"\n  : \"agency-ops\";", reference: "const baseline = projectType === \"greenfield\"\n  ? \"startup-mvp\"\n  : \"agency-ops\";\n\n// startup-mvp is the stable greenfield baseline. agency-ops is the ordinary TypeScript-in-.fs product reference." },
         concepts: ["Mastery includes choosing a good starting point, not just writing route code.", "Reference apps shorten decision time when they are mapped honestly to product goals.", "Greenfield work and strict-TS proving work benefit from different examples.", "Good architecture decisions happen before the first feature branch."],
         checkpoints: ["I can explain when to start from startup-mvp versus agency-ops.", "I know how reference apps help me avoid inventing app structure from scratch.", "I understand that baseline choice changes migration and delivery speed."],
         mistakes: ["Choosing a baseline for aesthetics instead of workflow fit.", "Ignoring the support matrix while planning a capstone.", "Starting a serious app without deciding what proof app it maps to."],
@@ -617,8 +617,8 @@ const PRIMARY_ASSESSMENT_BANK = {
     ["nothing", "They change nothing if most files converted."],
     ["theme", "They only affect documentation styling."]
   ]),
-  "mastery/capstone-product-architecture": choiceAssessment("Quick check", "When is agency-ops usually the better reference than startup-mvp?", "strict", "Yes. Agency Ops is the stricter TS-in-.fs proving-ground app for product-shaped work.", "Choose the option about strict TypeScript product proving, not the general greenfield starter.", [
-    ["strict", "When you want the stricter TS-in-.fs proving-ground reference."],
+  "mastery/capstone-product-architecture": choiceAssessment("Quick check", "When is agency-ops usually the better reference than startup-mvp?", "compatibility-first", "Yes. Agency Ops is the ordinary TypeScript-in-.fs proving-ground app for product-shaped work.", "Choose the option about ordinary TypeScript product proving, not the general greenfield starter.", [
+    ["strict", "When you want the ordinary TypeScript-in-.fs proving-ground reference."],
     ["always", "Always, because startup-mvp should never be used."],
     ["never", "Never, because reference apps should not influence architecture."]
   ]),
@@ -1093,3 +1093,4 @@ export function getPrintableCapstonePlan(state) {
     resumeHref: summary.resumeHref || getResumeFallback()
   };
 }
+

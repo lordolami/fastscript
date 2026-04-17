@@ -6,4 +6,5 @@ The Team Dashboard SaaS is the first official FastScript greenfield product base
 - Public role: first real FastScript product-shaped reference app
 - Proves: marketing pages, authenticated workspace flows, projects, team invites, billing checkout, receipt and notification jobs, admin/support visibility, and Cloudflare-ready deployment
 
-Use this baseline when you want a real SaaS footprint without leaving the governed FastScript 3.0.x contract.
+Use this baseline when you want a real SaaS footprint without leaving the governed FastScript 3.1.x contract.
+

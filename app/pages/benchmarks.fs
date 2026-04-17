@@ -65,7 +65,7 @@ export default function Benchmarks() {
       <div class="docs-card-grid bench-method">
         <div class="docs-card">
           <p class="docs-card-title">Agency Ops app proof</p>
-          <p class="docs-card-copy">The strict-TypeScript proving-ground app is now measured explicitly: <code class="ic">895.79ms</code> cold build, <code class="ic">1065.45ms</code> warm-build p95 trimmed, <code class="ic">37.35ms</code> dashboard response, and <code class="ic">22.41ms</code> session bootstrap on the latest local proof run.</p>
+          <p class="docs-card-copy">The ordinary-TypeScript proving-ground app is now measured explicitly: <code class="ic">895.79ms</code> cold build, <code class="ic">1065.45ms</code> warm-build p95 trimmed, <code class="ic">37.35ms</code> dashboard response, and <code class="ic">22.41ms</code> session bootstrap on the latest local proof run.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">What is measured</p>

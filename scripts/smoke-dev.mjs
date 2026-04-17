@@ -1,5 +1,8 @@
-﻿import { spawn } from "node:child_process";
+import { spawn } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
+
+const port = Number(process.env.SMOKE_DEV_PORT || 4198);
+const baseUrl = `http://localhost:${port}`;
 
 async function waitFor(url, ms = 20000) {
   const start = Date.now();
@@ -19,7 +22,7 @@ async function waitFor(url, ms = 20000) {
 const proc = spawn(process.execPath, ["./src/cli.mjs", "dev"], {
   cwd: process.cwd(),
   stdio: ["ignore", "pipe", "pipe"],
-  env: { ...process.env },
+  env: { ...process.env, PORT: String(port) },
 });
 
 let output = "";
@@ -27,24 +30,24 @@ proc.stdout.on("data", (d) => (output += d.toString()));
 proc.stderr.on("data", (d) => (output += d.toString()));
 
 try {
-  await waitFor("http://localhost:4173/");
+  await waitFor(`${baseUrl}/`);
 
-  const home = await fetch("http://localhost:4173/");
+  const home = await fetch(`${baseUrl}/`);
   if (home.status !== 200) throw new Error(`Home status ${home.status}`);
   const html = await home.text();
   if (!html.includes("FastScript")) throw new Error("Home SSR did not include FastScript text");
 
-  const api = await fetch("http://localhost:4173/api/hello");
+  const api = await fetch(`${baseUrl}/api/hello`, { headers: { accept: "application/json" } });
   if (api.status !== 200) throw new Error(`API status ${api.status}`);
   const apiJson = await api.json();
   if (!apiJson.ok) throw new Error("API JSON did not return ok=true");
 
-  const privateRes = await fetch("http://localhost:4173/private", { redirect: "manual" });
+  const privateRes = await fetch(`${baseUrl}/private`, { redirect: "manual" });
   if (!(privateRes.status === 302 || privateRes.status === 307)) {
     throw new Error(`Expected redirect on /private, got ${privateRes.status}`);
   }
 
-  const login = await fetch("http://localhost:4173/api/auth", {
+  const login = await fetch(`${baseUrl}/api/auth`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({}),
@@ -54,21 +57,21 @@ try {
   const setCookie = login.headers.get("set-cookie");
   if (!setCookie || !setCookie.includes("fs_session=")) throw new Error("Missing fs_session cookie on login");
 
-  const bad = await fetch("http://localhost:4173/api/auth", {
+  const bad = await fetch(`${baseUrl}/api/auth`, {
     method: "POST",
     headers: { "content-type": "application/json", accept: "application/json" },
     body: "{bad",
   });
   if (bad.status !== 400) throw new Error(`Expected 400 on invalid JSON, got ${bad.status}`);
 
-  const upload = await fetch("http://localhost:4173/api/upload", {
+  const upload = await fetch(`${baseUrl}/api/upload`, {
     method: "POST",
     headers: { "content-type": "application/json", accept: "application/json" },
     body: JSON.stringify({ key: "smoke/one.txt", content: "hello" }),
   });
   if (upload.status !== 200) throw new Error(`Upload failed: ${upload.status}`);
   const up = await upload.json();
-  const blob = await fetch(`http://localhost:4173${up.url}`);
+  const blob = await fetch(`${baseUrl}${up.url}`);
   if (blob.status !== 200) throw new Error(`Uploaded blob fetch failed: ${blob.status}`);
 
   console.log("smoke-dev pass: SSR, API, middleware redirect, auth cookie, validation, upload");

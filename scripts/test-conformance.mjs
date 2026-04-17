@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { join, resolve } from "node:path";
 import { compileFastScript, parseFastScript } from "../src/fs-parser.mjs";
 import { formatFastScriptSource } from "../src/fs-formatter.mjs";
+import { stripTypeScriptHints } from "../src/fs-normalize.mjs";
 
 const ROOT = resolve("spec", "conformance");
 const FIXTURES_DIR = join(ROOT, "fixtures");
@@ -23,8 +24,9 @@ function fixtureNames() {
 function evaluateFixture(name) {
   const file = join(FIXTURES_DIR, name);
   const source = normalizeNewlines(readFileSync(file, "utf8"));
-  const parsed = parseFastScript(source, { file: name, mode: "lenient", recover: true });
-  const compiled = compileFastScript(source, { file: name, mode: "lenient", recover: true });
+  const prepared = stripTypeScriptHints(source);
+  const parsed = parseFastScript(prepared, { file: name, mode: "lenient", recover: true });
+  const compiled = compileFastScript(prepared, { file: name, mode: "lenient", recover: true });
   const reparsed = parseFastScript(compiled.code, { file: `${name}.normalized`, mode: "lenient", recover: true });
   const formatted = formatFastScriptSource(source, { file: name });
   const formattedTwice = formatFastScriptSource(formatted, { file: name });

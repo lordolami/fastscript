@@ -2,7 +2,7 @@
 
 `examples/agency-ops` is the first real internal product track built on top of the proven `startup-mvp` baseline.
 
-It is intentionally authored in strict ordinary TypeScript inside `.fs` files. The point is simple: the only obvious FastScript-specific difference should be the filename.
+It is intentionally authored in ordinary TypeScript inside `.fs` files. The point is simple: the only obvious FastScript-specific difference should be the filename.
 
 This app proves a small agency can run client operations inside one FastScript app boundary:
 
@@ -20,7 +20,7 @@ This app proves a small agency can run client operations inside one FastScript a
 ## What this app exercises
 
 - frontend + backend in `.fs`
-- strict TypeScript authoring without FastScript-only syntax
+- ordinary TypeScript authoring without FastScript-only syntax
 - auth/session gating
 - agency/client/team domain model
 - API routes and queue jobs

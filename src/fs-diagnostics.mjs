@@ -1,4 +1,5 @@
-import { formatDiagnostic, parseFastScript } from "./fs-parser.mjs";
+import { formatDiagnostic } from "./fs-parser.mjs";
+import { normalizeFastScriptWithMetadata } from "./fs-normalize.mjs";
 
 function displayPath(file) {
   return file || "<memory>";
@@ -49,11 +50,11 @@ export function formatDiagnosticsReport(diagnostics, { source = "" } = {}) {
 }
 
 export function analyzeFastScript(source, { file = "", mode = "lenient" } = {}) {
-  const ast = parseFastScript(source, { file, mode, recover: true });
-  return ast.diagnostics;
+  const result = normalizeFastScriptWithMetadata(source, { file, mode, recover: true });
+  return result.diagnostics;
 }
 
-export function assertFastScript(source, { file = "", mode = "strict" } = {}) {
+export function assertFastScript(source, { file = "", mode = "lenient" } = {}) {
   const diagnostics = analyzeFastScript(source, { file, mode: "lenient" });
   if (!diagnostics.length) return;
   const blocking = diagnostics.filter((diagnostic) => diagnostic.severity !== "warning");

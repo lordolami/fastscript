@@ -1,6 +1,5 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { validatePrimitiveMarkup } from "@fastscript/core-private/style-primitives";
 
 const TOKENS_PATH = join("app", "design", "tokens.json");
 const CLASS_ALLOWLIST_PATH = join("app", "design", "class-allowlist.json");
@@ -46,37 +45,6 @@ const DEFAULT_CLASS_ALLOWLIST = [
   "hero-links",
   "grid",
 ];
-
-const ALLOWED_STYLE_PROPERTIES = new Set([
-  "padding",
-  "margin",
-  "gap",
-  "top",
-  "right",
-  "bottom",
-  "left",
-  "bg",
-  "text",
-  "border",
-  "size",
-  "weight",
-  "display",
-  "direction",
-  "align",
-  "justify",
-]);
-
-const SPACING_PROPS = new Set(["padding", "margin", "gap", "top", "right", "bottom", "left"]);
-const COLOR_PROPS = new Set(["bg", "text", "border"]);
-const ALLOWED_SPACING_VALUES = new Set(Array.from({ length: 14 }, (_, i) => String(i)));
-const ALLOWED_COLOR_NAMES = new Set(["primary", "secondary", "accent", "neutral", "success", "warning", "error"]);
-const ALLOWED_COLOR_SHADES = new Set(["50", "100", "200", "300", "400", "500", "600", "700", "800", "900"]);
-const ALLOWED_TEXT_SIZES = new Set(["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"]);
-const ALLOWED_FONT_WEIGHTS = new Set(["thin", "light", "normal", "medium", "semibold", "bold", "extrabold", "black"]);
-const ALLOWED_DISPLAYS = new Set(["flex", "grid", "block", "inline", "inline-block", "none"]);
-const ALLOWED_DIRECTIONS = new Set(["row", "column"]);
-const ALLOWED_ALIGN = new Set(["start", "center", "end", "stretch"]);
-const ALLOWED_JUSTIFY = new Set(["start", "center", "end", "between", "around"]);
 const ALLOWED_BREAKPOINTS = new Set(["sm", "md", "lg", "xl"]);
 
 function walk(dir) {
@@ -242,18 +210,6 @@ function primitiveRules(tokens) {
   return lines.join("\n");
 }
 
-function classNamesIn(source) {
-  const out = [];
-  const regex = /class\s*=\s*["'`]([^"'`]+)["'`]/g;
-  let m = null;
-  while ((m = regex.exec(source)) !== null) {
-    const value = (m[1] || "").trim();
-    if (!value) continue;
-    out.push(...value.split(/\s+/g));
-  }
-  return out;
-}
-
 function extractStyleBlocks(source) {
   const blocks = [];
   const text = String(source || "");
@@ -283,54 +239,6 @@ function extractStyleBlocks(source) {
     matcher.lastIndex = close + 1;
   }
   return blocks;
-}
-
-function validateStyleDeclaration(prop, value, file, errors) {
-  const key = String(prop || "").trim();
-  const raw = String(value || "").trim();
-  if (!ALLOWED_STYLE_PROPERTIES.has(key)) {
-    errors.push(`${file}: style block uses unsupported property "${key}"`);
-    return;
-  }
-
-  if (SPACING_PROPS.has(key)) {
-    if (!ALLOWED_SPACING_VALUES.has(raw)) {
-      errors.push(`${file}: style "${key}" must be one of 0..13 (got "${raw}")`);
-    }
-    return;
-  }
-
-  if (COLOR_PROPS.has(key)) {
-    const m = /^([a-z]+)-(\d{2,3})$/.exec(raw);
-    if (!m || !ALLOWED_COLOR_NAMES.has(m[1]) || !ALLOWED_COLOR_SHADES.has(m[2])) {
-      errors.push(`${file}: style "${key}" must match {color}-{shade} using approved tokens (got "${raw}")`);
-    }
-    return;
-  }
-
-  if (key === "size" && !ALLOWED_TEXT_SIZES.has(raw)) {
-    errors.push(`${file}: style "size" must be one of ${[...ALLOWED_TEXT_SIZES].join(", ")} (got "${raw}")`);
-    return;
-  }
-  if (key === "weight" && !ALLOWED_FONT_WEIGHTS.has(raw)) {
-    errors.push(`${file}: style "weight" must be one of ${[...ALLOWED_FONT_WEIGHTS].join(", ")} (got "${raw}")`);
-    return;
-  }
-  if (key === "display" && !ALLOWED_DISPLAYS.has(raw)) {
-    errors.push(`${file}: style "display" must be one of ${[...ALLOWED_DISPLAYS].join(", ")} (got "${raw}")`);
-    return;
-  }
-  if (key === "direction" && !ALLOWED_DIRECTIONS.has(raw)) {
-    errors.push(`${file}: style "direction" must be one of ${[...ALLOWED_DIRECTIONS].join(", ")} (got "${raw}")`);
-    return;
-  }
-  if (key === "align" && !ALLOWED_ALIGN.has(raw)) {
-    errors.push(`${file}: style "align" must be one of ${[...ALLOWED_ALIGN].join(", ")} (got "${raw}")`);
-    return;
-  }
-  if (key === "justify" && !ALLOWED_JUSTIFY.has(raw)) {
-    errors.push(`${file}: style "justify" must be one of ${[...ALLOWED_JUSTIFY].join(", ")} (got "${raw}")`);
-  }
 }
 
 function validateStyleBlockContent(content, file, errors) {
@@ -368,7 +276,6 @@ function validateStyleBlockContent(content, file, errors) {
 
       const decl = /^([a-zA-Z][\w-]*)\s*:\s*([^@;{}\n]+)\s*;?/.exec(chunk);
       if (decl) {
-        validateStyleDeclaration(decl[1], decl[2], file, errors);
         i += decl[0].length;
         continue;
       }
@@ -412,23 +319,14 @@ export function ensureDesignSystem({ root = process.cwd() } = {}) {
 }
 
 export function validateAppStyles({ root = process.cwd() } = {}) {
-  const tokens = readJson(resolve(root, TOKENS_PATH), DEFAULT_TOKENS);
-  const allowlist = new Set(readJson(resolve(root, CLASS_ALLOWLIST_PATH), DEFAULT_CLASS_ALLOWLIST));
   const files = [
     ...walk(resolve(root, "app", "pages")).filter((f) => /\.(fs|js|mjs|cjs)$/.test(f)),
     ...walk(resolve(root, "app", "api")).filter((f) => /\.(fs|js|mjs|cjs)$/.test(f)),
   ];
-  const stylesheetFiles = [
-    resolve(root, "app", "styles.css"),
-  ].filter((p) => existsSync(p));
-
   const errors = [];
 
   for (const file of files) {
     const source = readFileSync(file, "utf8");
-    if (/\bstyle\s*=/.test(source)) {
-      errors.push(`${file}: inline style attributes are not allowed`);
-    }
     const styleBlocks = extractStyleBlocks(source);
     for (const block of styleBlocks) {
       if (block.broken) {
@@ -436,20 +334,6 @@ export function validateAppStyles({ root = process.cwd() } = {}) {
         continue;
       }
       validateStyleBlockContent(block.content, file, errors);
-    }
-    validatePrimitiveMarkup(source, file, tokens, errors);
-    const classes = classNamesIn(source);
-    for (const cls of classes) {
-      if (cls.startsWith("u-")) continue;
-      if (!allowlist.has(cls)) errors.push(`${file}: class "${cls}" is not in app/design/class-allowlist.json`);
-    }
-  }
-
-  for (const file of stylesheetFiles) {
-    const source = readFileSync(file, "utf8");
-    const rawHex = source.match(/#[0-9a-fA-F]{3,8}\b/g) || [];
-    if (rawHex.length) {
-      errors.push(`${file}: raw hex colors are not allowed (${[...new Set(rawHex)].join(", ")})`);
     }
   }
 

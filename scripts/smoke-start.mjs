@@ -1,5 +1,8 @@
-﻿import { spawn } from "node:child_process";
+import { spawn } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
+
+const port = Number(process.env.SMOKE_START_PORT || 4199);
+const baseUrl = `http://localhost:${port}`;
 
 async function waitFor(url, ms = 20000) {
   const start = Date.now();
@@ -21,17 +24,22 @@ await new Promise((resolve, reject) => {
 const proc = spawn(process.execPath, ["./src/cli.mjs", "start"], {
   cwd: process.cwd(),
   stdio: ["ignore", "pipe", "pipe"],
-  env: { ...process.env, PORT: "4173", NODE_ENV: "production", SESSION_SECRET: process.env.SESSION_SECRET || "smoke-secret-0123456789abcdef0123456789abcd" },
+  env: {
+    ...process.env,
+    PORT: String(port),
+    NODE_ENV: "production",
+    SESSION_SECRET: process.env.SESSION_SECRET || "smoke-secret-0123456789abcdef0123456789abcd"
+  },
 });
 
 try {
-  await waitFor("http://localhost:4173/");
-  const home = await fetch("http://localhost:4173/");
+  await waitFor(`${baseUrl}/`);
+  const home = await fetch(`${baseUrl}/`);
   if (home.status !== 200) throw new Error(`start home status ${home.status}`);
   const reqId = home.headers.get("x-request-id");
   if (!reqId) throw new Error("missing x-request-id header");
 
-  const api = await fetch("http://localhost:4173/api/hello", { headers: { accept: "application/json" } });
+  const api = await fetch(`${baseUrl}/api/hello`, { headers: { accept: "application/json" } });
   if (api.status !== 200) throw new Error(`start api status ${api.status}`);
 
   console.log("smoke-start pass: production adapter serving SSR/API with request IDs");

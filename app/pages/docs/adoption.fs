@@ -32,7 +32,7 @@ export default function DocsAdoptionPage() {
           <p class="docs-card-copy">FastScript now proves product-shaped full-stack apps, server-rendered routes, authenticated mutations, middleware and session flows, queue-backed jobs, billing workflows, deploy adapter generation, and custom-host runtime handoff.</p>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">Strict TypeScript proof</p>
+          <p class="docs-card-title">Ordinary TypeScript proof</p>
           <p class="docs-card-copy">Agency Ops proves that the only visible FastScript difference can be the <code class="ic">.fs</code> filename while the authored code stays ordinary TypeScript.</p>
         </div>
         <div class="docs-card">
@@ -55,7 +55,7 @@ export default function DocsAdoptionPage() {
             <a class="docs-card-link" href="/docs/team-dashboard-saas">Open baseline guide &#8594;</a>
           </div>
           <div class="docs-card">
-            <p class="docs-card-title">Strict TS proving-ground</p>
+          <p class="docs-card-title">Ordinary TS proving-ground</p>
             <p class="docs-card-copy">When you want the cleanest public demonstration that ordinary TypeScript can live in <code class="ic">.fs</code>, use the Agency Ops guide and proving-ground app alongside the baseline.</p>
             <a class="docs-card-link" href="/docs/agency-ops">Open Agency Ops guide &#8594;</a>
           </div>
@@ -147,7 +147,7 @@ export default function DocsAdoptionPage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">Agency Ops proving-ground</p>
-            <p class="docs-card-copy">Use the strict-TypeScript client-ops app when you want a public guide for copying, adapting, and measuring a real product-shaped app without changing the official starter contract.</p>
+            <p class="docs-card-copy">Use the ordinary-TypeScript client-ops app when you want a public guide for copying, adapting, and measuring a real product-shaped app without changing the official starter contract.</p>
             <a class="docs-card-link" href="/docs/agency-ops">Open Agency Ops guide &#8594;</a>
           </div>
           <div class="docs-card">

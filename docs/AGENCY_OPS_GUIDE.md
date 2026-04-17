@@ -1,6 +1,6 @@
 ﻿# Agency Ops SaaS Guide
 
-Agency Ops is the strict-TypeScript proving-ground app built from the public `startup-mvp` baseline.
+Agency Ops is the ordinary-TypeScript proving-ground app built from the public `startup-mvp` baseline.
 
 It exists to show developers something very specific: you can keep writing ordinary TypeScript inside `.fs`, keep pages, APIs, jobs, middleware, and state in one runtime boundary, and still ship a product-shaped app with governed compatibility proof.
 
@@ -13,7 +13,7 @@ Use it when you want:
 
 ## What it proves
 
-- strict ordinary TypeScript in `.fs`
+- ordinary TypeScript in `.fs` with only the filename changed
 - public marketing routes plus authenticated dashboard routes
 - session bootstrap and auth gating
 - client and engagement CRUD

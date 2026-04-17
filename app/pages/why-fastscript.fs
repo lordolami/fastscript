@@ -44,7 +44,7 @@ export default function WhyFastScriptPage() {
           </div>
           <div class="story-cell">
             <p class="story-cell-title">What is now proven</p>
-            <p class="story-cell-copy">FastScript now proves product-shaped full-stack apps, authenticated dashboard mutations, queue-backed jobs, billing workflows, deploy adapter generation, custom-host runtime handoff, and strict TypeScript authoring inside <code class="ic">.fs</code>.</p>
+            <p class="story-cell-copy">FastScript now proves product-shaped full-stack apps, authenticated dashboard mutations, queue-backed jobs, billing workflows, deploy adapter generation, custom-host runtime handoff, and ordinary TypeScript authoring inside <code class="ic">.fs</code> with rename-only adoption.</p>
           </div>
           <div class="story-cell">
             <p class="story-cell-title">Migration path</p>
