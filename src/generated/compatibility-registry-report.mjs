@@ -1,8 +1,8 @@
 export const COMPATIBILITY_REPORT = {
-  "generatedAt": "2026-04-17T03:51:40.651Z",
+  "generatedAt": "2026-04-17T04:41:22.883Z",
   "governanceTrack": "4.0",
   "stableLine": "3.1.x",
-  "packageVersion": "3.1.0",
+  "packageVersion": "3.1.1",
   "contract": "If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.",
   "summary": {
     "entries": 34,

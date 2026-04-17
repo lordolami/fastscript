@@ -2,7 +2,7 @@
 
 ## Current state
 
-FastScript `v3.1.0` is the current minor-release target in the public repo:
+FastScript `v3.1.1` is the current patch-release target in the public repo:
 
 - website/docs/changelog/support matrix match the `v3.1.x` public line
 - `npm run build` passes
@@ -30,7 +30,7 @@ An attempted private npm publish path was tested on `2026-04-14` with a scoped p
 
 Because FastScript distribution is not the product moat, the package model was changed so npm installation stays easy while the business moat remains in the wider AI/model/platform layer.
 
-## v3.1.0 packaging checklist
+## v3.1.1 packaging checklist
 
 - bump `package.json` to `3.0.2`
 - prepare `.release/npm-public`

@@ -14,6 +14,11 @@
   - `spec/V2_0_MIGRATION_PROOF_REPORT.md`
   - `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`
 
+## v3.1.1 - 2026-04-17
+- Fix the Cloudflare deploy runtime-update path so stale browser caches stop surfacing one-off FastScript runtime errors after a new worker ships
+- Make the browser service worker treat router and manifest assets as volatile control-plane files instead of cache-first forever assets
+- Teach the client router to refresh its manifest state and retry dynamic imports before falling back to a hard reload
+
 ## v3.0.8 - 2026-04-16
 - Stop caching SSR HTML at the runtime layer so plain root requests stop serving stale deploy shells while cache-busted requests are already fresh
 - Keep the `3.0.7` production-shell and logical-manifest fixes intact while applying the no-store policy across Cloudflare and Node HTML responses
@@ -93,3 +98,5 @@
 - Stabilize release proof by isolating smoke ports, aligning support/docs/example wording to ordinary TypeScript in `.fs`, and regenerating compatibility/search/API artifacts from the final contract
 
 
+## v3.1.1 - 2026-04-17
+- release prep

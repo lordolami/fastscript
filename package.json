@@ -1,6 +1,6 @@
 {
   "name": "fastscript",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "FastScript v3 full-stack runtime where ordinary JS/TS works in .fs with rename-only adoption.",
   "keywords": [
     "fastscript",

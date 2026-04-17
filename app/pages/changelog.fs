@@ -1,4 +1,8 @@
 const RELEASES = [{
+  version: "v3.1.1",
+  date: "April 2026",
+  copy: "Cloudflare runtime-recovery patch: router and manifest assets now refresh as volatile control-plane files, dynamic import failures retry against the latest manifest, and deployed users stop needing a manual refresh after a fresh worker rollout."
+}, {
   version: "v3.1.0",
   date: "April 2026",
   copy: "Rename-only compatibility release: ordinary JS/TS/JSX/TSX now adopts .fs by extension change alone, migration stays rename-first, smoke gates run on isolated ports, and the public support matrix/docs/npm line all reflect the new contract."
