@@ -45,7 +45,7 @@ export default function ExamplesPage() {
       <header class="sec-header">
         <p class="kicker">Example blueprints</p>
         <h1 class="h1">Battle-tested patterns built in .fs.</h1>
-        <p class="lead">These blueprints map directly to production concerns - auth, data integrity, observability, and shipping speed. Not toy samples.</p>
+        <p class="lead">These v4.0 blueprints map directly to production concerns - auth, data integrity, observability, and shipping speed. Not toy samples.</p>
       </header>
 
       <div class="cta-block">

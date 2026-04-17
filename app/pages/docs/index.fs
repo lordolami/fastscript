@@ -128,7 +128,7 @@ export default function DocsIndex({pathname}) {
         <header class="sec-header">
           <p class="kicker">Documentation</p>
           <h1 class="h1">FastScript docs.</h1>
-          <p class="lead">Everything you need to build, validate, and ship with FastScript v4: the complete TypeScript platform line, visible proof apps, governed compatibility evidence, and browser-first learning through <a href="/learn">/learn</a>.</p>
+          <p class="lead">Everything you need to build, validate, and ship with FastScript v4.0: the complete TypeScript platform line, visible proof apps, governed compatibility evidence, and browser-first learning through <a href="/learn">/learn</a>.</p>
         </header>
 
         <div class="docs-card-grid docs-entry-cards">${cards}</div>
@@ -138,7 +138,7 @@ export default function DocsIndex({pathname}) {
         <section class="docs-syntax">
           <header class="sec-header-sm">
             <p class="kicker">Platform baseline</p>
-            <h2 class="h2">FastScript v4 at a glance.</h2>
+            <h2 class="h2">FastScript v4.0 at a glance.</h2>
           </header>
           <div class="code-pair">
             <div class="code-block">

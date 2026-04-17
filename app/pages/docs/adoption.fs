@@ -157,7 +157,7 @@ export default function DocsAdoptionPage() {
           </div>
           <div class="docs-card">
             <p class="docs-card-title">Open interop + migration</p>
-            <p class="docs-card-copy">Use the compatibility-first migration path and keep npm ecosystem interoperability visible while you move into <code class="ic">.fs</code>.</p>
+            <p class="docs-card-copy">Use the rename-first migration path and keep npm ecosystem interoperability visible while you move into <code class="ic">.fs</code>.</p>
             <a class="docs-card-link" href="/docs/interop">Open interop guide &#8594;</a>
           </div>
           <div class="docs-card">

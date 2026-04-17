@@ -11,22 +11,22 @@ export default function DocsV2() {
         <div class="docs-card">
           <p class="docs-card-title">Formal spec</p>
           <p class="docs-card-copy">Canonical v2.0 scope, principles, execution plan, and exit criteria for the archived ratification line.</p>
-          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/main/spec/V2_0_FORMAL_SPEC_AND_EXECUTION_PLAN.md" target="_blank" rel="noreferrer">Open formal spec &#8594;</a>
+          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/master/spec/V2_0_FORMAL_SPEC_AND_EXECUTION_PLAN.md" target="_blank" rel="noreferrer">Open formal spec &#8594;</a>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Execution tracker</p>
           <p class="docs-card-copy">Phase-by-phase completion record for the v2.0 implementation spine.</p>
-          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/main/spec/V2_0_EXECUTION_TRACKER.md" target="_blank" rel="noreferrer">Open tracker &#8594;</a>
+          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/master/spec/V2_0_EXECUTION_TRACKER.md" target="_blank" rel="noreferrer">Open tracker &#8594;</a>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Ratification record</p>
           <p class="docs-card-copy">Proof that the v2.0 language/runtime surface was reviewed, frozen, and signed off.</p>
-          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/main/spec/V2_0_RATIFICATION_RECORD.md" target="_blank" rel="noreferrer">Open record &#8594;</a>
+          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/master/spec/V2_0_RATIFICATION_RECORD.md" target="_blank" rel="noreferrer">Open record &#8594;</a>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Migration proof</p>
           <p class="docs-card-copy">Evidence pack showing the migration proof gates used to validate the v2.0 line before the v3 public-surface rewrite.</p>
-          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/main/spec/V2_0_MIGRATION_PROOF_REPORT.md" target="_blank" rel="noreferrer">Open report &#8594;</a>
+          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/master/spec/V2_0_MIGRATION_PROOF_REPORT.md" target="_blank" rel="noreferrer">Open report &#8594;</a>
         </div>
       </div>
 

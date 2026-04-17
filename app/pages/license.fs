@@ -53,7 +53,7 @@ export default function License() {
         <h2 class="cta-title">Need commercial licensing or integration rights?</h2>
         <div class="cta-actions">
           <a class="btn btn-primary btn-lg" href="mailto:legal@fastscript.dev">Contact legal</a>
-          <a class="btn btn-secondary btn-lg" href="https://github.com/lordolami/fastscript/blob/main/LICENSE" target="_blank" rel="noreferrer">View LICENSE file</a>
+          <a class="btn btn-secondary btn-lg" href="https://github.com/lordolami/fastscript/blob/master/LICENSE" target="_blank" rel="noreferrer">View LICENSE file</a>
         </div>
       </div>
     </div>

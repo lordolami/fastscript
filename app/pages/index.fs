@@ -5,7 +5,7 @@ export default function Home() {
         <div class="hero-left">
           <div class="hero-badge">
             <span class="hero-badge-dot" aria-hidden="true"></span>
-            v4.0.1 - <a href="/changelog" class="hero-badge-link">complete TypeScript platform release</a>
+            v4.0 - <a href="/changelog" class="hero-badge-link">complete TypeScript platform release</a>
           </div>
 
           <h1 class="hero-title">
@@ -15,6 +15,9 @@ export default function Home() {
 
           <p class="hero-desc">
             Write ordinary <code class="ic">js</code>, <code class="ic">ts</code>, <code class="ic">jsx</code>, and <code class="ic">tsx</code> in <code class="ic">.fs</code>, then ship pages, APIs, middleware, jobs, migrations, and deploy adapters through one calm FastScript pipeline.
+          </p>
+          <p class="hero-desc">
+            FastScript also keeps its own structured language and runtime surface underneath that familiar authoring model, which is why the platform can stay simpler for machine reasoning, stronger in validation, and better aligned for future model-training workflows.
           </p>
 
           <div class="install-row">

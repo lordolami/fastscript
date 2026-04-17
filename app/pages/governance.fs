@@ -95,7 +95,7 @@ export default function Governance() {
         <p class="cta-copy">Read the full RFC process in <code class="ic">docs/GOVERNANCE_VERSIONING_POLICY.md</code> then open a Discussion to start the conversation.</p>
         <div class="cta-actions">
           <a class="btn btn-primary btn-lg" href="https://github.com/lordolami/fastscript/discussions" target="_blank" rel="noreferrer">Start a discussion</a>
-          <a class="btn btn-secondary btn-lg" href="https://github.com/lordolami/fastscript/blob/main/docs/GOVERNANCE_VERSIONING_POLICY.md" target="_blank" rel="noreferrer">Read governance doc</a>
+          <a class="btn btn-secondary btn-lg" href="https://github.com/lordolami/fastscript/blob/master/docs/GOVERNANCE_VERSIONING_POLICY.md" target="_blank" rel="noreferrer">Read governance doc</a>
         </div>
       </div>
     </section>

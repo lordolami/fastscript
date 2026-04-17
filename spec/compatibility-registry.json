@@ -20,7 +20,7 @@
       "category": "modules-interop",
       "feature": "Dynamic import and require in .fs",
       "status": "proven",
-      "contractNote": "Dynamic import and CommonJS-style require should remain usable in compatibility-first .fs code.",
+      "contractNote": "Dynamic import and CommonJS-style require should remain usable in rename-first .fs code.",
       "proofIds": [
         "artifact:js-ts-syntax-proof:js-dynamic-and-require",
         "artifact:fs-parity:module-interop-patterns",
@@ -71,7 +71,7 @@
       "category": "modules-interop",
       "feature": "Import assertion and multiline import shapes",
       "status": "proven",
-      "contractNote": "Supported import assertion shapes should survive compatibility-first conversion into .fs.",
+      "contractNote": "Supported import assertion shapes should survive rename-first conversion into .fs.",
       "proofIds": [
         "artifact:js-ts-syntax-proof:multiline-import-assertion-shape"
       ],

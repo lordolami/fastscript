@@ -11,12 +11,12 @@ export default function DocsV3() {
         <div class="docs-card">
           <p class="docs-card-title">Public compatibility contract</p>
           <p class="docs-card-copy">Write normal JS, TS, JSX, and TSX in <code class="ic">.fs</code>. If valid JS/TS fails in <code class="ic">.fs</code>, that is a FastScript compatibility bug.</p>
-          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/main/spec/FASTSCRIPT_COMPATIBILITY_FIRST_RUNTIME_SPEC.md" target="_blank" rel="noreferrer">Open compatibility spec &#8594;</a>
+          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/master/spec/FASTSCRIPT_COMPATIBILITY_FIRST_RUNTIME_SPEC.md" target="_blank" rel="noreferrer">Open compatibility spec &#8594;</a>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Language baseline</p>
           <p class="docs-card-copy">The stable language spec now describes <code class="ic">.fs</code> as a JS/TS-first source container with optional <code class="ic">fn</code>, <code class="ic">state</code>, and <code class="ic">~</code> sugar.</p>
-          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/main/spec/LANGUAGE_V1_SPEC.md" target="_blank" rel="noreferrer">Open language spec &#8594;</a>
+          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/master/spec/LANGUAGE_V1_SPEC.md" target="_blank" rel="noreferrer">Open language spec &#8594;</a>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Proof-backed speed</p>
@@ -31,7 +31,7 @@ export default function DocsV3() {
         <div class="docs-card">
           <p class="docs-card-title">Parity artifacts</p>
           <p class="docs-card-copy">Release proof now includes JS/TS syntax proof and <code class="ic">.fs</code> parity matrices so the public website and release process tell the same story.</p>
-          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/main/benchmarks/latest-proof-pack.md" target="_blank" rel="noreferrer">Open proof pack &#8594;</a>
+          <a class="docs-card-link" href="https://github.com/lordolami/fastscript/blob/master/benchmarks/latest-proof-pack.md" target="_blank" rel="noreferrer">Open proof pack &#8594;</a>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Developer adoption guide</p>

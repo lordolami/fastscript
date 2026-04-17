@@ -3,8 +3,8 @@ export default function WhyFastScriptPage() {
     <section class="docs-latest-page">
       <header class="sec-header">
         <p class="kicker">For developers</p>
-        <h1 class="h1">Why developers choose FastScript.</h1>
-        <p class="lead">FastScript gives teams one runtime-native source surface for frontend, backend, middleware, jobs, data flows, and deploy output without asking them to abandon ordinary JavaScript or TypeScript habits.</p>
+        <h1 class="h1">Why developers choose FastScript v4.0.</h1>
+        <p class="lead">FastScript v4.0 gives teams one runtime-native source surface for frontend, backend, middleware, jobs, data flows, and deploy output without asking them to abandon ordinary JavaScript or TypeScript habits.</p>
       </header>
 
       <div class="docs-card-grid">

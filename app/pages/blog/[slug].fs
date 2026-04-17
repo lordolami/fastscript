@@ -1,4 +1,43 @@
 const POSTS = {
+  "why-were-training-ai-on-a-structured-language": {
+    title: "Why we're training AI on a structured language, not ecosystem chaos",
+    date: "April 17, 2026",
+    lead: "General coding models are trained across the entire public software mess. FastScript gives us a tighter surface: ordinary TypeScript authoring for humans, and a controlled runtime and language boundary for machines.",
+    body: `<h2>The internet teaches chaos</h2>
+<p>General coding systems are trained on billions of lines of code written by humans across every possible style, framework habit, and architectural contradiction. That breadth is useful, but it also bakes ecosystem chaos into the model's instincts. The model learns how to survive disorder, not how to operate inside a clean software substrate.</p>
+<h2>FastScript keeps the human contract familiar</h2>
+<p>The point of FastScript is not to force developers into a weird authored language. The human-facing contract is still ordinary JavaScript and TypeScript inside <code>.fs</code>. That means teams keep their normal coding habits while the platform owns the surrounding runtime, validation, deploy, and proof boundaries.</p>
+<h2>Why the owned layer matters</h2>
+<p>Underneath that ordinary authoring model, FastScript still owns its language and runtime surface. That gives us a platform that is easier to validate, easier to diagnose, and easier to align around machine-readable behavior. We can evolve the substrate and the model together instead of depending on ecosystems we do not control.</p>
+<h2>This is the real training advantage</h2>
+<p>We are not claiming that public-code training stops mattering. It does. The advantage is that FastScript gives the model a cleaner system to think through once it is working inside our stack. That means fewer ambiguous runtime paths, tighter validator loops, and a better chance of turning model work into repeatable product behavior instead of one-off code generation.</p>`
+  },
+  "why-fastscript-studio-replaces-agency-sprawl": {
+    title: "Why FastScript Studio is pointed at agency replacement",
+    date: "April 17, 2026",
+    lead: "Agencies exist because software delivery is still fragmented: design, frontend, backend, QA, deploy, and maintenance all sit in different systems. The FastScript thesis is that one controlled stack can collapse that sprawl.",
+    body: `<h2>Why agencies still win today</h2>
+<p>Most founders and operators do not buy agencies because they love the process. They buy agencies because the stack is fragmented and somebody has to coordinate the mess. One team handles design, another handles frontend, another handles backend, and then everybody hopes deployment and maintenance still work when the project changes six weeks later.</p>
+<h2>Studio is not just a prompt box</h2>
+<p>The FastScript Studio direction is interesting because it is not meant to be another pretty generator sitting on top of ecosystem chaos. It is meant to operate on top of FastScript itself: one runtime, one framework boundary, one validator loop, one deploy path, and one product memory surface. That changes what an AI product can actually carry over time.</p>
+<h2>Why this threatens agency economics</h2>
+<p>If the software factory owns generation, validation, repair, and deploy continuity in one stack, then a large part of agency coordination overhead starts to disappear. The opportunity is not just to make websites faster. It is to reduce the amount of human orchestration required to move from idea to shipped product.</p>
+<h2>The wedge starts with controlled delivery</h2>
+<p>No serious company will replace agencies because a model produced one nice landing page. They will switch when the system repeatedly ships product work with lower coordination cost and higher confidence. That is why FastScript keeps investing in the stack, the validator, and the proof surfaces instead of stopping at demos.</p>`
+  },
+  "the-validator-ships-certainty": {
+    title: "The validator: why FastScript ships certainty, not probability",
+    date: "April 17, 2026",
+    lead: "Model output is probabilistic. Product delivery cannot be. FastScript is built so generation feeds into validation, repair, proof, and release discipline before it is allowed to become public truth.",
+    body: `<h2>Generation is not the product</h2>
+<p>Most AI coding stories still stop at generation. The model emits code, everybody feels excited for a minute, and then humans spend the next stretch figuring out whether the result actually works. That is fine for demos, but it is not enough for a serious platform.</p>
+<h2>Validation is a first-class system boundary</h2>
+<p>FastScript keeps <code>validate</code>, compatibility governance, proof generation, smoke testing, and release gates as first-class surfaces. That means the platform can treat problems as structured failures instead of shrugging and hoping the output was good enough. It also means a future AI layer has a real repair loop to work with.</p>
+<h2>Why investors and teams should care</h2>
+<p>The difference between probability and certainty is what separates a clever demo from a company. Teams need to know whether a release is coherent, whether the support matrix is current, whether the deploy artifact matches the docs, and whether the product contract is still true after a patch. FastScript is opinionated about those checks because software factories without validation just move risk around.</p>
+<h2>The long-term compounding effect</h2>
+<p>Once validation and proof are part of the stack itself, every future model and workflow benefits. The platform does not need to start from raw code generation each time. It can generate, inspect, repair, and ship against known constraints. That is how you turn AI from a novelty into an operating advantage.</p>`
+  },
   "why-we-built-fastscript": {
     title: "Why we built FastScript instead of using an existing framework",
     date: "April 14, 2026",
@@ -7,7 +46,7 @@ const POSTS = {
 <p>When we started building production apps at Lakesbim, we kept running into the same issues. Next.js was fast to get started with, but build times ballooned as the app grew, the client bundle was enormous, and deploying to anything other than Vercel meant fighting the framework. Remix was more explicit, but it still shipped a significant runtime and required careful coordination between framework-level abstractions and actual product logic.</p>
 <p>What we actually wanted was simple: keep normal application authoring, compile to JavaScript, and ship anywhere without the framework deciding our infrastructure.</p>
 <h2>The .fs idea</h2>
-<p>FastScript starts from a different premise. Instead of forcing developers into a separate authored-language identity, v3 treats <code>.fs</code> as a universal JS/TS container for the FastScript runtime. You can write normal JavaScript, TypeScript, JSX, and TSX directly in <code>.fs</code>, then opt into forms like <code>fn</code>, <code>state</code>, and <code>~</code> only when they improve readability.</p>
+<p>FastScript starts from a different premise. Instead of forcing developers into a separate authored-language identity, the current v4.0 line treats <code>.fs</code> as a universal JS/TS container for the FastScript runtime. You can write normal JavaScript, TypeScript, JSX, and TSX directly in <code>.fs</code>, then opt into forms like <code>fn</code>, <code>state</code>, and <code>~</code> only when they improve readability.</p>
 <p>This keeps the compiler small, fast, and predictable. It does not need to reinterpret your whole app - it needs to preserve familiar authoring while normalizing to standard JavaScript and generating source maps. esbuild handles bundling. The result is a proof-backed fast toolchain without a forced rewrite of developer habits.</p>
 <h2>The runtime philosophy</h2>
 <p>The current public proof pack reports a 2.71KB first-load JS gzip footprint. That is not an accident. We made a deliberate decision to shift as much work as possible to compile time. The client router does not do hydration in the React sense - it manages navigation, SSR state handoff, and HMR. Page modules handle their own rendering. There is no virtual DOM, no reconciliation, no diffing. Just compiled output.</p>

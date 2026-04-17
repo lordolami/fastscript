@@ -3,6 +3,11 @@
 ## Unreleased
 - Release branch work for the next public line.
 
+## v4.0.2 - 2026-04-17
+- Fix the template-literal normalization path so built docs and public pages stop dropping characters like `<` from closing tags or deleting copy inside emitted HTML
+- Align the active public release surfaces to the `4.0.2` hotfix line while keeping the FastScript-only platform IA intact
+- Fix GitHub license/archive links, strengthen the public blog story, and regenerate search, support, compatibility, and package artifacts from the repaired source state
+
 ## v4.0.1 - 2026-04-17
 - Fix the generated Cloudflare worker SSR shell so deployed FastScript pages carry the v4 title and runtime description instead of the stale generic FastScript metadata
 - Apply the public metadata rewrite consistently across both build outputs and deploy-adapter outputs so npm, GitHub source, and the live site ship the same v4 shell contract

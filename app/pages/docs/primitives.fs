@@ -4,7 +4,7 @@ export default function DocsPrimitives() {
       <header class="sec-header">
         <p class="kicker">Styling primitives</p>
         <h1 class="h1">Primitive-first UI authoring in FastScript.</h1>
-        <p class="lead">Build interfaces with Box, Stack, Row, Text, Heading, Button, semantic props, and token-backed variants instead of raw CSS trivia.</p>
+        <p class="lead">Build interfaces with Box, Stack, Row, Text, Heading, Button, semantic props, and token-backed variants inside the FastScript v4.0 platform instead of raw CSS trivia.</p>
       </header>
 
       <div class="docs-card-grid">

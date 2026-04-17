@@ -1,4 +1,8 @@
 const RELEASES = [{
+  version: "v4.0.2",
+  date: "April 2026",
+  copy: "Post-v4 cleanup hotfix: FastScript repairs template-literal build corruption at the compiler layer, aligns the public version/copy surfaces, fixes GitHub license links, and republishes regenerated docs, compatibility, and proof artifacts from one clean state."
+}, {
   version: "v4.0.1",
   date: "April 2026",
   copy: "Platform-only completeness release plus metadata-shell patch: FastScript now publicly ratifies itself as the complete TypeScript full-stack platform, elevates /learn as a major proof surface, formalizes the Team Dashboard SaaS and Agency Ops apps as canonical references, and keeps the shipped SSR shell aligned across npm, GitHub, docs, and the live root site."

@@ -3,7 +3,7 @@ import { dirname, join, resolve } from "node:path";
 import { execSync } from "node:child_process";
 
 const ROOT = resolve(".");
-const PRIVATE_ROOT = resolve("..", "fastscript-core-private");
+const PRIVATE_ROOT = resolve(process.env.FASTSCRIPT_PRIVATE_ROOT || resolve("..", "fastscript-core-private"));
 const OUT = resolve(".release", "npm-public");
 const VENDORED_CORE = join(OUT, "node_modules", "@fastscript", "core-private");
 const MODE = process.argv[2] || "";

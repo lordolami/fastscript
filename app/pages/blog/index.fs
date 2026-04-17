@@ -1,4 +1,19 @@
 const POSTS = [{
+  slug: "why-were-training-ai-on-a-structured-language",
+  title: "Why we're training AI on a structured language, not ecosystem chaos",
+  date: "April 17, 2026",
+  excerpt: "General coding models learn from messy public code. FastScript gives us a controlled language and runtime surface that stays simpler for machine reasoning, validation, and future training loops."
+}, {
+  slug: "why-fastscript-studio-replaces-agency-sprawl",
+  title: "Why FastScript Studio is pointed at agency replacement",
+  date: "April 17, 2026",
+  excerpt: "Most agencies stitch together people, frameworks, QA rituals, and deploy handoffs. The Studio thesis is that one controlled FastScript stack can collapse that service chain into a software factory."
+}, {
+  slug: "the-validator-ships-certainty",
+  title: "The validator: why FastScript ships certainty, not probability",
+  date: "April 17, 2026",
+  excerpt: "Generation alone is not enough. FastScript is built around validate, inspect, repair, and prove, so the public release story stays tied to artifacts instead of wishful output."
+}, {
   slug: "why-we-built-fastscript",
   title: "Why we built FastScript instead of using an existing framework",
   date: "April 14, 2026",
@@ -32,7 +47,7 @@ export default function BlogIndex() {
       <header class="sec-header">
         <p class="kicker">Blog</p>
         <h1 class="h1">From the FastScript team.</h1>
-        <p class="lead">Technical deep-dives on language design, runtime architecture, performance, and the thinking behind every major decision.</p>
+        <p class="lead">Founding notes, runtime architecture, validator discipline, AI-training strategy, and the product decisions shaping FastScript into a real platform company.</p>
       </header>
 
       <div class="blog-grid">${cards}</div>

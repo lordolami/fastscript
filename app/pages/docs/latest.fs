@@ -3,8 +3,8 @@ export default function DocsLatest() {
     <section class="docs-latest-page">
       <header class="sec-header">
         <p class="kicker">Docs latest</p>
-        <h1 class="h1">Current docs track: FastScript v4</h1>
-        <p class="lead">This is the canonical entrypoint for the v4 platform contract: FastScript as the complete TypeScript full-stack platform, with ordinary TS in <code class="ic">.fs</code>, first-party validation, visible proof apps, governed support evidence, and a structured language/runtime layer that stays better aligned for machine reasoning and model-training workflows.</p>
+        <h1 class="h1">Current docs track: FastScript v4.0</h1>
+        <p class="lead">This is the canonical entrypoint for the v4.0 platform contract: FastScript as the complete TypeScript full-stack platform, with ordinary TS in <code class="ic">.fs</code>, first-party validation, visible proof apps, governed support evidence, and a structured language/runtime layer that stays better aligned for machine reasoning and model-training workflows.</p>
       </header>
 
       <div class="docs-card-grid">

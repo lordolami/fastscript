@@ -26,10 +26,12 @@ export function stripTypeScriptHints(source) {
   const out = [];
   let skippingBlock = false;
   let blockDepth = 0;
+  let inTemplateLiteral = false;
 
   for (let i = 0; i < lines.length; i += 1) {
     const line = lines[i];
     let next = line;
+    const lineStartsInTemplateLiteral = inTemplateLiteral;
 
     if (skippingBlock) {
       const opens = (next.match(/{/g) || []).length;
@@ -78,6 +80,12 @@ export function stripTypeScriptHints(source) {
       continue;
     }
 
+    if (lineStartsInTemplateLiteral) {
+      out.push(next);
+      inTemplateLiteral = updateTemplateLiteralState(line, inTemplateLiteral);
+      continue;
+    }
+
     next = next.replace(/\bimport\s+type\b/g, "import");
     next = next.replace(/\bexport\s+type\b/g, "export");
     next = next.replace(/\btype\s+([A-Za-z_$][\w$]*)\s+as\s+/g, "$1 as ");
@@ -117,7 +125,60 @@ export function stripTypeScriptHints(source) {
     next = next.replace(/\sas\s+const\b/g, "");
     next = next.replace(/\s+satisfies\s+[A-Za-z_$][\w$<>\[\]\|&, ?.]*/g, "");
     out.push(next);
+    inTemplateLiteral = updateTemplateLiteralState(line, inTemplateLiteral);
   }
 
   return out.join("\n");
+}
+
+function updateTemplateLiteralState(line, inTemplateLiteral) {
+  let escaped = false;
+  let inSingleQuote = false;
+  let inDoubleQuote = false;
+  let inLineComment = false;
+  let state = inTemplateLiteral;
+
+  for (let i = 0; i < line.length; i += 1) {
+    const char = line[i];
+    const next = line[i + 1];
+
+    if (inLineComment) {
+      break;
+    }
+
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+
+    if (char === "\\") {
+      escaped = true;
+      continue;
+    }
+
+    if (!state && !inSingleQuote && !inDoubleQuote && char === "/" && next === "/") {
+      inLineComment = true;
+      continue;
+    }
+
+    if (!state && !inDoubleQuote && char === "'") {
+      inSingleQuote = !inSingleQuote;
+      continue;
+    }
+
+    if (!state && !inSingleQuote && char === "\"") {
+      inDoubleQuote = !inDoubleQuote;
+      continue;
+    }
+
+    if (inSingleQuote || inDoubleQuote) {
+      continue;
+    }
+
+    if (char === "`") {
+      state = !state;
+    }
+  }
+
+  return state;
 }
