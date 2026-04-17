@@ -1,7 +1,7 @@
 const RELEASES = [{
-  version: "v4.0.0",
+  version: "v4.0.1",
   date: "April 2026",
-  copy: "Platform-only completeness release: FastScript now publicly ratifies itself as the complete TypeScript full-stack platform, elevates /learn as a major proof surface, formalizes the Team Dashboard SaaS and Agency Ops apps as canonical references, and aligns npm, GitHub, docs, and the root site to one v4 contract."
+  copy: "Platform-only completeness release plus metadata-shell patch: FastScript now publicly ratifies itself as the complete TypeScript full-stack platform, elevates /learn as a major proof surface, formalizes the Team Dashboard SaaS and Agency Ops apps as canonical references, and keeps the shipped SSR shell aligned across npm, GitHub, docs, and the live root site."
 }, {
   version: "v3.1.1",
   date: "April 2026",

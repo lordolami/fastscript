@@ -99,6 +99,10 @@ Auto-generated from `src/*.mjs`.
 
 - `createFileDatabase`
 
+## deploy.mjs
+
+- `runDeploy`
+
 ## dev.mjs
 
 - `runDev`
@@ -225,6 +229,15 @@ Auto-generated from `src/*.mjs`.
 ## profile.mjs
 
 - `runProfile`
+
+## public-meta.mjs
+
+- `PUBLIC_DESCRIPTION`
+- `PUBLIC_OG_DESCRIPTION`
+- `PUBLIC_SSR_SHELL_DESCRIPTION`
+- `PUBLIC_TITLE`
+- `PUBLIC_TWITTER_DESCRIPTION`
+- `rewritePublicMetaShell`
 
 ## regression-guard.mjs
 

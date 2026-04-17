@@ -1,6 +1,6 @@
 # FastScript Proof Pack
 
-- Generated: 2026-04-17T15:14:03.853Z
+- Generated: 2026-04-17T15:33:29.353Z
 
 ## Summary
 - Routes: n/a
@@ -19,8 +19,8 @@
 - Compatibility registry entries: 34
 - Compatibility proven entries: 32
 - Framework proof rows: 15
-- Agency Ops warm build p95 trimmed: 2172.6728000000003ms
-- Agency Ops cold build: 2098.4901ms
+- Agency Ops warm build p95 trimmed: 2251.8532ms
+- Agency Ops cold build: 2073.7201999999997ms
 - Agency Ops runtime /dashboard: 37.35ms
 - Launch line: FastScript v4
 - Product contract: FastScript is the complete TypeScript platform, with ordinary JS/TS in `.fs` and valid JS/TS failures in `.fs` treated as FastScript compatibility bugs
@@ -30,7 +30,7 @@
 
 # FastScript Benchmark Report
 
-- Build time: 1500.14ms
+- Build time: 1525.34ms
 - Routes: 39
 - API routes: 5
 - JS first-load gzip: 11.91KB
@@ -56,8 +56,8 @@ See full matrix: `docs/INTEROP_MATRIX.md`
 
 ## Agency Ops Speed Proof
 - Benchmark corpus id: `example-agency-ops`
-- Warm build p95 trimmed: 2172.6728000000003ms
-- Cold build: 2098.4901ms
+- Warm build p95 trimmed: 2251.8532ms
+- Cold build: 2073.7201999999997ms
 - Runtime /: 6.43ms
 - Runtime /dashboard: 37.35ms
 - Runtime /dashboard/clients: 10.52ms

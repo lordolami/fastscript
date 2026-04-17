@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-04-17T15:14:03.255Z",
+  "generatedAt": "2026-04-17T15:33:28.754Z",
   "tool": "npm ls --all --json",
   "name": "fastscript",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "dependencies": {
     "@fastscript/core-private": {
       "version": "2.0.0",

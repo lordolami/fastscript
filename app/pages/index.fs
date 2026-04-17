@@ -5,7 +5,7 @@ export default function Home() {
         <div class="hero-left">
           <div class="hero-badge">
             <span class="hero-badge-dot" aria-hidden="true"></span>
-            v4.0.0 - <a href="/changelog" class="hero-badge-link">complete TypeScript platform release</a>
+            v4.0.1 - <a href="/changelog" class="hero-badge-link">complete TypeScript platform release</a>
           </div>
 
           <h1 class="hero-title">

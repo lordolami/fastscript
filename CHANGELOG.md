@@ -3,6 +3,10 @@
 ## Unreleased
 - Release branch work for the next public line.
 
+## v4.0.1 - 2026-04-17
+- Fix the generated Cloudflare worker SSR shell so deployed FastScript pages carry the v4 title and runtime description instead of the stale generic FastScript metadata
+- Apply the public metadata rewrite consistently across both build outputs and deploy-adapter outputs so npm, GitHub source, and the live site ship the same v4 shell contract
+
 ## v4.0.0 - 2026-04-17
 - Ratify FastScript as the complete TypeScript full-stack platform instead of a compatibility-only line
 - Align the public website, docs, changelog, README, and package metadata to the v4 platform-only contract

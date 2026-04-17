@@ -1,6 +1,6 @@
 {
   "name": "fastscript",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "FastScript v4 complete TypeScript full-stack platform with ordinary TS/JS in .fs and one proof-backed runtime pipeline.",
   "keywords": [
     "fastscript",
