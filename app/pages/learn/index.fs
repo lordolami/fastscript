@@ -35,7 +35,7 @@ export default function LearnSchoolPage() {
       <header class="sec-header learn-hero">
         <p class="kicker">FastScript school</p>
         <h1 class="h1">From zero knowledge to FastScript mastery.</h1>
-        <p class="lead">Learn FastScript from zero to full-stack mastery with browser-only lessons, labs, and capstones.</p>
+        <p class="lead">Learn FastScript from zero to full-stack mastery with browser-only lessons, labs, and capstones. In v4, /learn is also a proof surface showing the platform is teachable, structured, and ready for real product work.</p>
       </header>
 
       <div class="docs-card-grid">${stats}</div>

@@ -1,18 +1,14 @@
 # Changelog
 
 ## Unreleased
-- FastScript Language v1 hardening baseline:
-  - full parser pipeline with CST, diagnostics, and source maps
-  - semantic type checker with scopes/symbol tables/basic inference
-  - AST-based formatter and linter with idempotence and safe autofixes
-  - formal language spec and governance/versioning policy
-  - conformance fixtures + snapshot regression harness + CI language gates
-- FastScript Language v2.0 ratification artifacts published:
-  - `spec/LANGUAGE_V2_SPEC.md` (status: `ratified`, version: `2.0.0`)
-  - `spec/V2_0_RATIFICATION_RECORD.md`
-  - `spec/V2_0_EXECUTION_TRACKER.md`
-  - `spec/V2_0_MIGRATION_PROOF_REPORT.md`
-  - `spec/V2_0_PERFORMANCE_PROTOCOL_REPORT.md`
+- Release branch work for the next public line.
+
+## v4.0.0 - 2026-04-17
+- Ratify FastScript as the complete TypeScript full-stack platform instead of a compatibility-only line
+- Align the public website, docs, changelog, README, and package metadata to the v4 platform-only contract
+- Elevate `/learn` into a first-class proof surface and formalize Team Dashboard SaaS plus Agency Ops as the two canonical proof apps
+- Keep FastScript-only public IA while moving Studio and Agent references to footer-only external coming-soon links
+- Refresh proof-pack, support-matrix, and docs-search generation inputs for the v4 release story
 
 ## v3.1.1 - 2026-04-17
 - Fix the Cloudflare deploy runtime-update path so stale browser caches stop surfacing one-off FastScript runtime errors after a new worker ships

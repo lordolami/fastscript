@@ -1,7 +1,7 @@
 const TEAM = [{
   name: "Olamilekan Akinuli",
-  role: "Founder &mdash; Product + Platform",
-  copy: "Leads language design, full-stack product strategy, ecosystem positioning, and shipping cadence. Owns the FastScript v3 contract, release governance, compatibility-first direction, and the next FastScript AI assistant line."
+  role: "Founder - Product + Platform",
+  copy: "Leads language design, full-stack product strategy, ecosystem positioning, and shipping cadence. Owns the FastScript v4 contract, release governance, completeness direction, and platform-proof discipline."
 }, {
   name: "Compiler lane",
   role: "Parser + Typecheck",
@@ -13,14 +13,14 @@ const TEAM = [{
 }, {
   name: "DX lane",
   role: "Editor + Docs",
-  copy: "Owns the VS Code extension, LSP server, docs quality, and adoption loops for developers and AI systems consuming FastScript context packs."
+  copy: "Owns the VS Code extension, LSP server, docs quality, learning surfaces, and adoption loops for developers working inside the FastScript platform."
 }];
 export default function DevsPage() {
-  const cells = TEAM.map(m => `
+  const cells = TEAM.map(member => `
     <div class="team-cell">
-      <p class="team-name">${m.name}</p>
-      <p class="team-role">${m.role}</p>
-      <p class="team-copy">${m.copy}</p>
+      <p class="team-name">${member.name}</p>
+      <p class="team-role">${member.role}</p>
+      <p class="team-copy">${member.copy}</p>
     </div>
   `).join("");
   return `
@@ -28,7 +28,7 @@ export default function DevsPage() {
       <header class="sec-header">
         <p class="kicker">About the builders</p>
         <h1 class="h1">Team architecture behind FastScript.</h1>
-        <p class="lead">FastScript is built as a product system, not just a compiler experiment. Each lane ships against measurable output: proof-backed speed, governed compatibility evidence, deploy reliability, and protection of the language core as part of the wider FastScript AI platform.</p>
+        <p class="lead">FastScript is built as a product system, not just a compiler experiment. Each lane ships against measurable output: proof-backed speed, governed compatibility evidence, deploy reliability, and a platform boundary strong enough to keep the language core compounding in one direction.</p>
       </header>
 
       <div class="team-grid">${cells}</div>
@@ -55,12 +55,12 @@ export default function DevsPage() {
         <div class="feature-cell">
           <div class="feature-icon">&#129514;</div>
           <p class="feature-title">Evidence over intuition</p>
-          <p class="feature-copy">Benchmarks, smoke tests, interop matrices, support-matrix generation, and proof packs are produced for every release &mdash; not just when something breaks.</p>
+          <p class="feature-copy">Benchmarks, smoke tests, interop matrices, support-matrix generation, and proof packs are produced for every release, not just when something breaks.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">&#128274;</div>
           <p class="feature-title">Stability guarantees</p>
-          <p class="feature-copy">The current v3 line keeps parser spans, diagnostic codes, formatter output, and compatibility guarantees stable across patch releases. Breaking changes require a major version and migration docs.</p>
+          <p class="feature-copy">The current v4 line keeps parser spans, diagnostic codes, formatter output, and compatibility guarantees stable across patch releases. Breaking changes require a major version and migration docs.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon">TM</div>
@@ -80,15 +80,15 @@ export default function DevsPage() {
       <div class="story-grid">
         <div class="story-cell">
           <p class="story-cell-title">The mission</p>
-          <p class="story-cell-copy">The goal is to collapse stack sprawl without asking developers to abandon JavaScript or TypeScript. v3 turns <code class="ic">.fs</code> into the runtime-native container so teams keep familiar syntax, keep package compatibility, and gain a faster full-stack pipeline.</p>
+          <p class="story-cell-copy">The goal is to collapse stack sprawl without asking developers to abandon JavaScript or TypeScript. FastScript turns <code class="ic">.fs</code> into the runtime-native container so teams keep familiar syntax, keep package compatibility, and gain a calmer full-stack pipeline.</p>
         </div>
         <div class="story-cell">
           <p class="story-cell-title">Why proprietary</p>
-          <p class="story-cell-copy">FastScript is source-available for trust, evaluation, and adoption, but the main language/runtime remains proprietary because it is also the foundation for future FastScript AI tooling. That moat is deliberate: the platform advantage should compound inside FastScript, not subsidize copycats.</p>
+          <p class="story-cell-copy">FastScript is source-available for trust, evaluation, and adoption, but the main language/runtime remains proprietary because it is part of the platform moat. That advantage should compound inside FastScript, not subsidize copycats.</p>
         </div>
         <div class="story-cell">
-          <p class="story-cell-title">What comes next</p>
-          <p class="story-cell-copy">The next wave is an AI coding assistant built on the main FastScript language/runtime, designed for stronger accuracy, faster deciphering of messy codebases, and better full-stack execution discipline than generic assistants. The long game is one platform where the language, runtime, tooling, and assistant reinforce each other.</p>
+          <p class="story-cell-title">What v4 means</p>
+          <p class="story-cell-copy">This line makes the public claim simpler and stronger: FastScript is the complete TypeScript platform, with proof apps, a governed support matrix, and release discipline that makes the platform inspectable instead of mysterious.</p>
         </div>
       </div>
     </section>

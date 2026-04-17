@@ -2,18 +2,19 @@
 
 ## Current state
 
-FastScript `v3.1.1` is the current patch-release target in the public repo:
+FastScript `v4.0.0` is the current major-release target in the public repo:
 
-- website/docs/changelog/support matrix match the `v3.1.x` public line
-- `npm run build` passes
-- `npm run validate` passes
+- website, docs, changelog, and support surfaces align to the v4 platform line
+- `/learn` is treated as a first-class proof surface
+- `npm run build` must pass
+- `npm run validate` must pass
 - `npm run pack:check` validates the generated public npm bundle
-- the release bundle is prepared from the v3 public surface, not the repo root
-- npm-facing README and package metadata now point at the governed compatibility matrix, broader ecosystem proof posture, and the Team Dashboard SaaS baseline
+- the release bundle is prepared from the public release surface, not packed directly from the repo root
+- npm-facing README and package metadata now point at the complete TypeScript platform contract, the canonical proof apps, and the governed support matrix
 
 ## Packaging model
 
-FastScript now uses a self-contained public npm packaging model:
+FastScript uses a self-contained public npm packaging model:
 
 - source development still uses the public/private repo split
 - the public npm release is generated in `.release/npm-public`
@@ -21,21 +22,11 @@ FastScript now uses a self-contained public npm packaging model:
 - npm users do not need access to a second private registry package
 - `npm run pack:check` validates the generated public release instead of packing the repo root directly
 
-## Why this replaced the old plan
+## v4.0.0 packaging checklist
 
-An attempted private npm publish path was tested on `2026-04-14` with a scoped package model and failed with:
-
-- `E402 Payment Required`
-- npm response: `You must sign up for private packages`
-
-Because FastScript distribution is not the product moat, the package model was changed so npm installation stays easy while the business moat remains in the wider AI/model/platform layer.
-
-## v3.1.1 packaging checklist
-
-- bump `package.json` to `3.0.2`
+- bump `package.json` and `package-lock.json` to `4.0.0`
 - prepare `.release/npm-public`
 - run `npm run pack:check`
-- publish npm package from `.release/npm-public`
-- publish matching GitHub release/tag with the same v3 proof-pack summary
-- keep npm-facing copy aligned with the current support matrix, proof pack, website compatibility story, and Team Dashboard SaaS baseline
-
+- publish the npm package from `.release/npm-public`
+- publish the matching GitHub release and tag with the same v4 proof summary
+- keep npm-facing copy aligned with the current support matrix, proof pack, website platform story, and canonical reference apps

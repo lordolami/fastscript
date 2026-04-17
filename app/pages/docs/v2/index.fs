@@ -4,7 +4,7 @@ export default function DocsV2() {
       <header class="sec-header">
         <p class="kicker">Historical line v2.0</p>
         <h1 class="h1">FastScript v2.0 archive</h1>
-        <p class="lead">This page preserves the ratified v2.0 line as historical context. The current public line is v3, while v2 remains available for ratification history, migration proof, and earlier release context.</p>
+        <p class="lead">This page preserves the ratified v2.0 line as historical context. The current public line is v4, while v2 remains available for ratification history, migration proof, and earlier release context.</p>
       </header>
 
       <div class="docs-card-grid">

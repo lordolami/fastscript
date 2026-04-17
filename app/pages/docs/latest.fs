@@ -3,65 +3,40 @@ export default function DocsLatest() {
     <section class="docs-latest-page">
       <header class="sec-header">
         <p class="kicker">Docs latest</p>
-        <h1 class="h1">Current docs track: FastScript v3</h1>
-        <p class="lead">This alias is the canonical entrypoint for the current v3 product contract: FastScript has now proven real full-stack app capability through universal JS/TS in <code class="ic">.fs</code>, optional FastScript sugar, proof-backed speed, governed compatibility evidence, and a protected core that compounds into future FastScript AI tooling.</p>
+        <h1 class="h1">Current docs track: FastScript v4</h1>
+        <p class="lead">This is the canonical entrypoint for the v4 platform contract: FastScript as the complete TypeScript full-stack platform, with ordinary TS in <code class="ic">.fs</code>, first-party validation, visible proof apps, governed support evidence, and a structured language/runtime layer that stays better aligned for machine reasoning and model-training workflows.</p>
       </header>
 
       <div class="docs-card-grid">
         <div class="docs-card">
           <p class="docs-card-title">FastScript school</p>
-          <p class="docs-card-copy">The current learning path is school-first: start from zero or jump into professional migration and production adoption through interactive lessons on /learn.</p>
-          <a class="docs-card-link" href="/learn">Open school &#8594;</a>
+          <p class="docs-card-copy">/learn is now a major proof surface: start from zero or jump into product migration and full-stack adoption through browser-first lessons.</p>
+          <a class="docs-card-link" href="/learn">Open /learn &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">v3 overview</p>
-          <p class="docs-card-copy">Current public line: <code class="ic">.fs</code> as a universal JS/TS container, optional sugar, parity proof, benchmark discipline, and a governed compatibility matrix tied to release evidence for real full-stack app work.</p>
-          <a class="docs-card-link" href="/docs/v3">Open v3 &#8594;</a>
+          <p class="docs-card-title">Platform overview</p>
+          <p class="docs-card-copy">Read the v4 line as a full platform contract: pages, APIs, auth, data, jobs, proof discipline, and deploy outputs aligned under one FastScript runtime.</p>
+          <a class="docs-card-link" href="/docs">Open docs overview &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">Interop guide</p>
-          <p class="docs-card-copy">Use npm packages, mixed JS/FS modules, and incremental migration patterns without leaving the FastScript app boundary.</p>
-          <a class="docs-card-link" href="/docs/interop">Open interop guide &#8594;</a>
+          <p class="docs-card-title">Greenfield SaaS proof</p>
+          <p class="docs-card-copy">The Team Dashboard SaaS reference app proves auth, teams, billing, notifications, admin, tests, and deployment in one greenfield product shape.</p>
+          <a class="docs-card-link" href="/docs/team-dashboard-saas">Open SaaS proof &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">Styling primitives</p>
-          <p class="docs-card-copy">Box, Stack, Row, Text, Heading, Button, semantic spacing, tones, surfaces, and generated primitive CSS now form the permanent styling direction.</p>
-          <a class="docs-card-link" href="/docs/primitives">Read primitive guide &#8594;</a>
+          <p class="docs-card-title">Agency Ops proof</p>
+          <p class="docs-card-copy">The operations reference app proves ordinary TypeScript in .fs while shipping authenticated dashboards, billing reminders, jobs, and runtime-safe deploy flow.</p>
+          <a class="docs-card-link" href="/docs/agency-ops">Open ops proof &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">API reference</p>
-          <p class="docs-card-copy">Generated API docs are available in repo docs and searchable through the docs index API.</p>
-          <a class="docs-card-link" href="/docs/search">Search reference &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Compatibility matrix</p>
-          <p class="docs-card-copy">Open the governed compatibility registry surface for proven JS/TS, framework, runtime, tooling, and npm ecosystem claims.</p>
+          <p class="docs-card-title">Support matrix</p>
+          <p class="docs-card-copy">Open the governed registry for proven, partial, planned, and blocked coverage across ecosystem, runtime, and tooling surfaces.</p>
           <a class="docs-card-link" href="/docs/support">Open support matrix &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">Real-world adoption</p>
-          <p class="docs-card-copy">Use one canonical flow for greenfield <code class="ic">.fs</code> apps and incremental migration from existing TS/JS codebases, with the governed matrix as the contract before you ship.</p>
-          <a class="docs-card-link" href="/docs/adoption">Open adoption flow &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Team Dashboard SaaS baseline</p>
-          <p class="docs-card-copy">The stable <code class="ic">startup-mvp</code> template is now the first official FastScript greenfield product baseline and reference app for real full-stack work.</p>
-          <a class="docs-card-link" href="/docs/team-dashboard-saas">Open baseline guide &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Agency Ops ordinary-TypeScript guide</p>
-          <p class="docs-card-copy">Use the public proving-ground app when you want the clearest "only the filename changes" demo: ordinary TypeScript inside <code class="ic">.fs</code> with pages, APIs, jobs, billing, and deploy flow already wired.</p>
-          <a class="docs-card-link" href="/docs/agency-ops">Open Agency Ops guide &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Legacy docs</p>
-          <p class="docs-card-copy">Older v1, v1.1, and v2 docs remain available for historical upgrade notes and earlier language baselines.</p>
-          <a class="docs-card-link" href="/docs/v1">Open legacy docs &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Release notes</p>
-          <p class="docs-card-copy">Launch-facing v3 release notes summarize parity, performance proof, packaging, and licensing boundaries for npm and GitHub surfaces.</p>
-          <a class="docs-card-link" href="/changelog">Open release notes &#8594;</a>
+          <p class="docs-card-title">Docs search</p>
+          <p class="docs-card-copy">Search generated references, proof artifacts, support notes, release surfaces, and API documentation from one FastScript-native endpoint.</p>
+          <a class="docs-card-link" href="/docs/search">Search docs &#8594;</a>
         </div>
       </div>
 
@@ -69,21 +44,21 @@ export default function DocsLatest() {
 
       <section class="docs-syntax">
         <header class="sec-header-sm">
-          <p class="kicker">What is now proven</p>
-          <h2 class="h2">FastScript is now beyond the promising stage.</h2>
+          <p class="kicker">What v4 proves</p>
+          <h2 class="h2">FastScript is now presented as a complete platform.</h2>
         </header>
         <div class="docs-card-grid">
           <div class="docs-card">
-            <p class="docs-card-title">Full-stack capability</p>
-            <p class="docs-card-copy">FastScript now proves product-shaped full-stack apps, frontend pages, backend APIs, authenticated mutations, middleware, session flows, queue-backed jobs, billing workflows, deploy adapter generation, and custom-host runtime handoff.</p>
-          </div>
-          <div class="docs-card">
             <p class="docs-card-title">Ordinary TS in <code class="ic">.fs</code></p>
-            <p class="docs-card-copy">Agency Ops proves that the only visible FastScript difference can be the <code class="ic">.fs</code> filename while the authored code stays ordinary TypeScript.</p>
+            <p class="docs-card-copy">Authored TS and JS stay familiar. The platform value comes from the runtime, validation, deploy, and product scaffolding around that code, not from forcing a different coding identity.</p>
           </div>
           <div class="docs-card">
-            <p class="docs-card-title">Honest caveat</p>
-            <p class="docs-card-copy">Infrastructure choices like databases and hosts still need real reachable services in the target environment. FastScript's full-stack app and runtime path are ready, while lane-specific support remains governed by <a href="/docs/support">/docs/support</a>.</p>
+            <p class="docs-card-title">Proof-backed platform pillars</p>
+            <p class="docs-card-copy">Auth, roles, migrations, seeds, jobs, notifications, admin patterns, tests, observability, and deploy flow are all exercised through FastScript's docs, proof apps, and release gates.</p>
+          </div>
+          <div class="docs-card">
+            <p class="docs-card-title">Structured runtime moat</p>
+            <p class="docs-card-copy">FastScript still owns its own language and runtime surface, which is part of why the platform can be more controlled for validation, machine reasoning, and future model-training workflows than a generic ecosystem-only stack.</p>
           </div>
         </div>
       </section>

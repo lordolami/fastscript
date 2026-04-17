@@ -77,7 +77,7 @@ export default function Benchmarks() {
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Current proof points</p>
-          <p class="docs-card-copy">Current public proof pack: 702.98 ms build, 2.71 KB first-load JS gzip, 17/17 interop passing, plus JS/TS syntax proof, governed support-matrix coverage, and <code class="ic">.fs</code> parity proof artifacts. That is the public performance contract for v3.</p>
+          <p class="docs-card-copy">Current public proof pack: 702.98 ms build, 2.71 KB first-load JS gzip, 17/17 interop passing, plus JS/TS syntax proof, governed support-matrix coverage, and <code class="ic">.fs</code> parity proof artifacts. That is the public performance contract for the active v4 line.</p>
         </div>
       </div>
     </section>

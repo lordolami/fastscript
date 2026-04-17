@@ -4,14 +4,14 @@ const SECTIONS = [{
     label: "Introduction",
     href: "/docs"
   }, {
-    label: "Current line v3",
+    label: "Current line v4",
+    href: "/docs/latest"
+  }, {
+    label: "Legacy v3 release line",
     href: "/docs/v3"
   }, {
     label: "Language spec v1",
     href: "/docs/v1"
-  }, {
-    label: "Legacy v1.1 additions",
-    href: "/docs/v1.1"
   }]
 }, {
   label: "Guides",
@@ -25,23 +25,20 @@ const SECTIONS = [{
     label: "Real-world adoption",
     href: "/docs/adoption"
   }, {
-    label: "Team Dashboard SaaS",
+    label: "Greenfield SaaS proof",
     href: "/docs/team-dashboard-saas"
   }, {
-    label: "Agency Ops guide",
+    label: "Agency Ops proof",
     href: "/docs/agency-ops"
-  }, {
-    label: "Styling primitives",
-    href: "/docs/primitives"
   }, {
     label: "Deploy guide",
     href: "/docs/latest"
   }, {
-    label: "Migration",
-    href: "/docs/v1.1"
-  }, {
     label: "Interop",
     href: "/docs/interop"
+  }, {
+    label: "Support matrix",
+    href: "/docs/support"
   }]
 }, {
   label: "Reference",
@@ -49,96 +46,78 @@ const SECTIONS = [{
     label: "CLI commands",
     href: "/docs/latest"
   }, {
-    label: "Error codes",
-    href: "/docs/v1"
-  }, {
-    label: "Plugin API",
-    href: "/docs/latest"
+    label: "API search",
+    href: "/docs/search"
   }, {
     label: "Playground",
     href: "/docs/playground"
+  }, {
+    label: "Changelog",
+    href: "/changelog"
   }]
 }];
 const CARDS = [{
-  title: "Language v3 overview",
-  copy: "Current public line: universal JS/TS in .fs, optional FastScript sugar, parity proof, and speed discipline.",
-  href: "/docs/v3",
-  cta: "Read v3"
+  title: "Current platform line",
+  copy: "FastScript v4 is the complete TypeScript platform release: ordinary TS in .fs, one runtime for product work, proof-backed validation, and deploy-ready outputs.",
+  href: "/docs/latest",
+  cta: "Read v4"
+}, {
+  title: "FastScript school",
+  copy: "Use /learn as the first proof surface: browser-first lessons, capstones, and guided paths from zero to full-stack FastScript fluency.",
+  href: "/learn",
+  cta: "Open /learn"
 }, {
   title: "Why developers choose FastScript",
-  copy: "The full developer story: why FastScript is better, how frontend and backend live in one runtime, how migration works, and how to request edge cases.",
+  copy: "The platform story for teams that want one TypeScript system for frontend, backend, jobs, deploy, and validation instead of stack sprawl.",
   href: "/why-fastscript",
   cta: "Read guide"
 }, {
-  title: "Real-world adoption",
-  copy: "One canonical path for starting a new .fs app or migrating an existing TS/JS codebase, with the governed support matrix as the contract before you promise a pattern.",
+  title: "Greenfield SaaS reference",
+  copy: "The Team Dashboard SaaS baseline proves auth, teams, billing, notifications, admin, tests, and deploy flow in one product-shaped app.",
+  href: "/docs/team-dashboard-saas",
+  cta: "Open SaaS proof"
+}, {
+  title: "Agency Ops proof app",
+  copy: "The operational proving ground shows ordinary TypeScript inside .fs while shipping authenticated dashboards, billing reminders, jobs, and Cloudflare-ready deploy flow.",
+  href: "/docs/agency-ops",
+  cta: "Open ops proof"
+}, {
+  title: "Adoption and migration",
+  copy: "Start greenfield or move existing TS and JS route by route with diff previews, manifests, rollback support, and governed compatibility evidence.",
   href: "/docs/adoption",
   cta: "Open adoption guide"
 }, {
-  title: "Team Dashboard SaaS baseline",
-  copy: "The first official FastScript greenfield product baseline: public pages, authenticated workspace flows, billing, jobs, DB state, and Cloudflare-ready deployment in one reference app.",
-  href: "/docs/team-dashboard-saas",
-  cta: "Open baseline guide"
-}, {
-  title: "Agency Ops ordinary-TypeScript guide",
-  copy: "A publicly documented proving-ground app that shows how to keep ordinary TypeScript inside .fs while shipping a client-ops product shape with pages, APIs, jobs, DB state, and deploy proof.",
-  href: "/docs/agency-ops",
-  cta: "Open Agency Ops"
-}, {
-  title: "FastScript school",
-  copy: "Start the interactive no-signup learning path that takes beginners from zero to full-stack FastScript mastery and gives professionals a safe migration path into .fs.",
-  href: "/learn",
-  cta: "Open school"
-}, {
-  title: "Styling primitives",
-  copy: "Primitive-first UI authoring with Box, Stack, Row, Text, Heading, Button, semantic props, and token-backed variants.",
-  href: "/docs/primitives",
-  cta: "Learn primitives"
-}, {
-  title: "Playground",
-  copy: "Try FastScript syntax, see compiled output, and explore diagnostic messages in the browser.",
-  href: "/docs/playground",
-  cta: "Open playground"
-}, {
-  title: "CLI reference",
-  copy: "All commands: create, dev, build, deploy, migrate, export, validate, qa:all.",
-  href: "/docs/latest",
-  cta: "View reference"
-}, {
-  title: "Interop + migration",
-  copy: "Use npm packages in .fs files and migrate existing TS/JS codebases module by module, with dry runs, diff previews, rollback, compatibility reporting, and governed proof coverage built in.",
-  href: "/docs/interop",
-  cta: "Learn interop"
-}, {
-  title: "Compatibility matrix",
-  copy: "Generated source-of-truth support matrix with proven, partial, planned, and blocked compatibility lanes across JS/TS, frameworks, runtime targets, tooling, and npm interop.",
+  title: "Support matrix",
+  copy: "Generated source-of-truth compatibility coverage for proven, partial, planned, and blocked lanes across ecosystem, runtime, and tooling surfaces.",
   href: "/docs/support",
   cta: "Open matrix"
 }, {
-  title: "Plugin API",
-  copy: "Hook into build and request lifecycle with typed plugin contracts and middleware.",
-  href: "/docs/latest",
-  cta: "Plugin docs"
+  title: "Docs search",
+  copy: "Search the generated docs index, API references, support surfaces, and release notes from one FastScript-native endpoint.",
+  href: "/docs/search",
+  cta: "Search docs"
+}, {
+  title: "Benchmarks and proof pack",
+  copy: "Measured build, bundle, interop, and product-proof artifacts that keep the public story tied to evidence instead of marketing.",
+  href: "/benchmarks",
+  cta: "Inspect proof"
 }];
-function navLinkActive(href, pathname) {
-  return `<a class="docs-nav-link is-active" href="${href}">${href}</a>`;
+function navLinkActive(href, label) {
+  return `<a class="docs-nav-link is-active" href="${href}">${label}</a>`;
 }
 function navLinkInactive(href, label) {
   return `<a class="docs-nav-link" href="${href}">${label}</a>`;
 }
 export default function DocsIndex({pathname}) {
-  const sidebar = SECTIONS.map(s => {
-    const links = s.links.map(l => {
-      if (l.href === pathname) return navLinkActive(l.href, l.label);
-      return navLinkInactive(l.href, l.label);
-    }).join("");
-    return `<div class="docs-nav-section"><p class="docs-nav-label">${s.label}</p>${links}</div>`;
+  const sidebar = SECTIONS.map(section => {
+    const links = section.links.map(link => link.href === pathname ? navLinkActive(link.href, link.label) : navLinkInactive(link.href, link.label)).join("");
+    return `<div class="docs-nav-section"><p class="docs-nav-label">${section.label}</p>${links}</div>`;
   }).join("");
-  const cards = CARDS.map(c => `
+  const cards = CARDS.map(card => `
     <div class="docs-card">
-      <p class="docs-card-title">${c.title}</p>
-      <p class="docs-card-copy">${c.copy}</p>
-      <a class="docs-card-link" href="${c.href}">${c.cta} &#8594;</a>
+      <p class="docs-card-title">${card.title}</p>
+      <p class="docs-card-copy">${card.copy}</p>
+      <a class="docs-card-link" href="${card.href}">${card.cta} &#8594;</a>
     </div>
   `).join("");
   return `
@@ -149,7 +128,7 @@ export default function DocsIndex({pathname}) {
         <header class="sec-header">
           <p class="kicker">Documentation</p>
           <h1 class="h1">FastScript docs.</h1>
-          <p class="lead">Everything you need to build, validate, and ship full-stack FastScript applications on the current v3 line, with the governed support matrix as the source of truth for compatibility claims.</p>
+          <p class="lead">Everything you need to build, validate, and ship with FastScript v4: the complete TypeScript platform line, visible proof apps, governed compatibility evidence, and browser-first learning through <a href="/learn">/learn</a>.</p>
         </header>
 
         <div class="docs-card-grid docs-entry-cards">${cards}</div>
@@ -158,31 +137,35 @@ export default function DocsIndex({pathname}) {
 
         <section class="docs-syntax">
           <header class="sec-header-sm">
-            <p class="kicker">Language baseline</p>
-            <h2 class="h2">FastScript v3 at a glance.</h2>
+            <p class="kicker">Platform baseline</p>
+            <h2 class="h2">FastScript v4 at a glance.</h2>
           </header>
           <div class="code-pair">
             <div class="code-block">
               <div class="code-block-head">
-                <span class="code-block-file">declarations.fs</span>
+                <span class="code-block-file">app/pages/project/[id].fs</span>
                 <span class="code-block-lang">.fs</span>
               </div>
-              <div class="code-block-body"><span class="code-cmt">// Normal TS in .fs</span>
-<span class="code-kw">type</span> User = { name: <span class="code-kw">string</span> }
+              <div class="code-block-body"><span class="code-cmt">// Ordinary TS in .fs</span>
+<span class="code-kw">type</span> Project = { name: <span class="code-kw">string</span> }
 
-<span class="code-kw">export</span> <span class="code-kw">default</span> <span class="code-kw">function</span> <span class="code-fn">Page</span>({ user }: { user: User }) {
-  <span class="code-kw">return</span> <span class="code-str">\`&lt;h1&gt;\${user.name}&lt;/h1&gt;\`</span>
+<span class="code-kw">export</span> <span class="code-kw">async</span> <span class="code-kw">function</span> <span class="code-fn">load</span>(ctx): <span class="code-kw">Promise</span>&lt;{ project: Project }&gt; {
+  <span class="code-kw">const</span> project = <span class="code-kw">await</span> ctx.db.get(<span class="code-str">"projects"</span>, ctx.params.id)
+  <span class="code-kw">return</span> { project }
 }</div>
             </div>
             <div class="code-block">
               <div class="code-block-head">
-                <span class="code-block-file">compiled output</span>
-                <span class="code-block-lang">.js</span>
+                <span class="code-block-file">platform contract</span>
+                <span class="code-block-lang">v4</span>
               </div>
-              <div class="code-block-body"><span class="code-cmt">// FastScript normalizes to standard JS</span>
-<span class="code-kw">export</span> <span class="code-kw">default</span> <span class="code-kw">function</span> <span class="code-fn">Page</span>({ user }) {
-  <span class="code-kw">return</span> <span class="code-str">\`&lt;h1&gt;\${user.name}&lt;/h1&gt;\`</span>
-}</div>
+              <div class="code-block-body"><span class="code-cmt">// FastScript owns the pipeline around that code</span>
+<span class="code-kw">const</span> pillars = [
+  <span class="code-str">"auth"</span>, <span class="code-str">"migrations"</span>, <span class="code-str">"jobs"</span>, <span class="code-str">"notifications"</span>,
+  <span class="code-str">"validation"</span>, <span class="code-str">"proof apps"</span>, <span class="code-str">"deploy adapters"</span>
+]
+
+<span class="code-kw">export</span> <span class="code-kw">default</span> pillars</div>
             </div>
           </div>
         </section>

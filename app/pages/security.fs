@@ -15,7 +15,7 @@ export default function Security() {
           <div class="compare-col-head">Status</div>
         </div>
         <div class="compare-row">
-          <div class="compare-cell is-label">v3.x (current stable)</div>
+          <div class="compare-cell is-label">v4.x (current stable)</div>
           <div class="compare-cell is-ours"><span class="check">&#10003;</span> Yes</div>
           <div class="compare-cell">Active</div>
         </div>

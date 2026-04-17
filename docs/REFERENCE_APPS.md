@@ -1,21 +1,20 @@
 # FastScript Reference Apps
 
-These are first-party product and infrastructure references used to validate the active FastScript 3.1.x contract in real app shapes.
+These are the two canonical product-shaped proof apps for the active FastScript v4 contract, plus the website surface that documents them.
 
 1. Language website (`app/pages/*`)
-- Exercises routing, docs search API, blog dynamic route, SSR hydration, compatibility storytelling, and deploy adapters.
+- Exercises routing, docs search API, blog dynamic route, SSR hydration, release storytelling, `/learn`, and deploy adapters.
+- Serves as the public proof surface for the FastScript platform itself.
 
-2. Fullstack template (`npm run create:fullstack`)
-- Exercises auth, middleware, API routes, DB/storage helpers, queue/webhook primitives, and incremental app bootstrap.
+2. Greenfield SaaS reference (`npm run create:startup-mvp`)
+- Exercises public marketing pages, authenticated workspaces, billing, jobs, roles, admin and support flows, DB state, notifications, and Cloudflare-ready deployment.
+- This is the canonical greenfield proof app.
+- Public guide: `/docs/team-dashboard-saas`
 
-3. Team dashboard SaaS reference (`npm run create:startup-mvp`)
-- Exercises public marketing pages, authenticated workspaces, projects, team invites, billing upgrades, background jobs, admin/support flows, Cloudflare-ready deployment, and governed compatibility in a real SaaS shape.
-- This is the first official FastScript greenfield product baseline. Public guide: `/docs/team-dashboard-saas`
-
-4. Agency Ops proving-ground app (`examples/agency-ops`)
-- Exercises ordinary TypeScript inside `.fs` with rename-only adoption, client-ops routes, billing, follow-up jobs, Cloudflare-ready deploy generation, and app-specific build/runtime speed proof.
+3. Agency Ops proving-ground app (`examples/agency-ops`)
+- Exercises ordinary TypeScript inside `.fs`, authenticated dashboards, assignments, billing reminders, jobs, follow-up notifications, and runtime-safe deploy generation.
+- This is the canonical ops and agency proof app.
 - Public guide: `/docs/agency-ops`
-- Latest measured proof: 895.79ms cold build, 1065.45ms warm-build p95 trimmed, 37.35ms dashboard response, 22.41ms session bootstrap
 
 Validation evidence:
 - `npm run smoke:dev`
@@ -24,4 +23,3 @@ Validation evidence:
 - `npm run test:deploy-adapters`
 - `npm run test:startup-mvp-saas`
 - `npm run test:agency-ops`
-

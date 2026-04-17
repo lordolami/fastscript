@@ -23,18 +23,21 @@ const NAV = [{
   href: "/changelog",
   label: "Changelog"
 }, {
-  href: "/devs",
-  label: "About"
+  href: "/roadmap",
+  label: "Roadmap"
 }];
 const FOOTER_COLS = [{
-  title: "Product",
-  links: [["Overview", "/"], ["Why FastScript", "/why-fastscript"], ["Learn", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"], ["Playground", "/docs/playground"]]
+  title: "Platform",
+  links: [["Overview", "/"], ["Why FastScript", "/why-fastscript"], ["Learn", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"]]
 }, {
-  title: "Language",
-  links: [["Docs", "/docs"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"], ["Interop", "/docs/interop"], ["Spec", "/docs/v3"]]
+  title: "Docs",
+  links: [["Documentation", "/docs"], ["Current line", "/docs/latest"], ["Support matrix", "/docs/support"], ["Interop", "/docs/interop"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"]]
 }, {
   title: "Community",
-  links: [["Blog", "/blog"], ["About", "/devs"], ["Contribute", "/contribute"], ["GitHub", "https://github.com/lordolami/fastscript"], ["Discord", "https://discord.gg/fastscript"]]
+  links: [["Blog", "/blog"], ["Contact", "/contact"], ["Contribute", "/contribute"], ["GitHub", "https://github.com/lordolami/fastscript"], ["Discord", "https://discord.gg/fastscript"]]
+}, {
+  title: "Built on FastScript",
+  links: [["Studio (coming soon)", "https://studio.fastscript.dev"], ["Agent (coming soon)", "https://agent.fastscript.dev"]]
 }, {
   title: "Legal",
   links: [["License", "/license"], ["Privacy", "/privacy"], ["Terms", "/terms"], ["Security", "/security"]]
@@ -74,7 +77,7 @@ export default function Layout({content, pathname}) {
         <a class="brand" href="/" aria-label="FastScript home">
           <span class="brand-mark" aria-hidden="true">FS</span>
           <span class="brand-name">FastScript</span>
-          <span class="brand-ver">v3.1</span>
+          <span class="brand-ver">v4.0</span>
         </a>
 
         <nav class="nav-links" aria-label="Primary navigation">
@@ -112,7 +115,8 @@ export default function Layout({content, pathname}) {
               <span class="brand-mark footer-brand-mark" aria-hidden="true">FS</span>
               FastScript
             </div>
-            <p class="footer-brand-copy">Full-stack language runtime with <code class="ic">.fs</code> as a universal JS/TS container, proof-backed speed claims, a governed support matrix, and full <code class="ic">.js</code> ecosystem compatibility. This website is built and shipped with FastScript itself. Core platform rights are protected and commercially licensed by Lakesbim Infotechnology.</p>
+            <p class="footer-brand-copy">FastScript is the complete TypeScript full-stack platform: ordinary TS and JS in <code class="ic">.fs</code>, one runtime for pages, APIs, middleware, jobs, and data flows, first-party validation and proof discipline, and deploy-ready output for serious product teams. This site is built and shipped with FastScript itself.</p>
+            <p class="footer-brand-copy">FastScript also keeps its own structured language and runtime surface so the platform can stay simpler for machine reasoning, stronger in validation, and better aligned for future model-training workflows without changing everyday TS authoring.</p>
             <div class="footer-social">
               <a class="footer-social-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
               <a class="footer-social-link" href="https://discord.gg/fastscript" target="_blank" rel="noreferrer" aria-label="Discord">DC</a>
@@ -123,9 +127,10 @@ export default function Layout({content, pathname}) {
           </div>
         </div>
         <div class="footer-bottom">
-          <p class="footer-copyright">&#169; 2026 Lakesbim Infotechnology &mdash; <a class="footer-bottom-link" href="/license">Source-Available License</a></p>
+          <p class="footer-copyright">&#169; 2026 Lakesbim Infotechnology - <a class="footer-bottom-link" href="/license">Source-Available License</a></p>
           <div class="footer-bottom-links">
             <a class="footer-bottom-link" href="/docs">Docs</a>
+            <a class="footer-bottom-link" href="/learn">Learn</a>
             <a class="footer-bottom-link" href="/changelog">Changelog</a>
             <a class="footer-bottom-link" href="/security">Security</a>
             <a class="footer-bottom-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub</a>

@@ -1,30 +1,25 @@
-const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/adoption", "/docs/team-dashboard-saas", "/docs/agency-ops", "/docs/interop", "/docs/playground", "/docs/search", "/docs/support", "/docs/v3", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks", "/why-fastscript"];
+const DOC_ROUTE_FALLBACKS = ["/docs", "/docs/latest", "/docs/v4", "/docs/adoption", "/docs/team-dashboard-saas", "/docs/agency-ops", "/docs/interop", "/docs/playground", "/docs/search", "/docs/support", "/docs/v3", "/docs/v2", "/docs/v1", "/docs/v1.1", "/learn", "/benchmarks", "/why-fastscript"];
 function resolveDocRoute(item) {
   const direct = String(item?.path || "").trim();
   if (DOC_ROUTE_FALLBACKS.includes(direct)) return direct;
   const haystack = `${item?.title || ""} ${item?.summary || ""} ${direct}`.toLowerCase();
-  if (haystack.includes("agency ops") || haystack.includes("client ops") || haystack.includes("strict type") || haystack.includes("strict typescript") || haystack.includes("service delivery") || haystack.includes("retainer")) return "/docs/agency-ops";
-  if (haystack.includes("team dashboard") || haystack.includes("startup mvp") || haystack.includes("startup-mvp") || haystack.includes("reference app baseline") || haystack.includes("greenfield baseline")) return "/docs/team-dashboard-saas";
+  if (haystack.includes("agency ops") || haystack.includes("client ops") || haystack.includes("service delivery") || haystack.includes("retainer")) return "/docs/agency-ops";
+  if (haystack.includes("team dashboard") || haystack.includes("startup mvp") || haystack.includes("startup-mvp") || haystack.includes("greenfield baseline")) return "/docs/team-dashboard-saas";
   if (haystack.includes("real world") || haystack.includes("real-world") || haystack.includes("adoption") || haystack.includes("greenfield") || haystack.includes("first project")) return "/docs/adoption";
-  if (haystack.includes("support matrix") || haystack.includes("compatibility matrix")) return "/docs/support";
-  if (haystack.includes("proven") || haystack.includes("blocked") || haystack.includes("supported") || haystack.includes("planned")) return "/docs/support";
-  if (haystack.includes("next") || haystack.includes("react") || haystack.includes("vue") || haystack.includes("node") || haystack.includes("npm")) return "/docs/support";
+  if (haystack.includes("support matrix") || haystack.includes("compatibility matrix") || haystack.includes("proven") || haystack.includes("blocked") || haystack.includes("supported") || haystack.includes("planned")) return "/docs/support";
   if (haystack.includes("playground")) return "/docs/playground";
-  if (haystack.includes("why fastscript") || haystack.includes("why developers") || haystack.includes("frontend and backend") || haystack.includes("full-stack")) return "/why-fastscript";
-  if (haystack.includes("v3") || haystack.includes("latest") || haystack.includes("parity") || haystack.includes("stdlib") || haystack.includes("runtime")) return "/docs/v3";
+  if (haystack.includes("why fastscript") || haystack.includes("full-stack") || haystack.includes("complete typescript platform")) return "/why-fastscript";
+  if (haystack.includes("v4") || haystack.includes("latest") || haystack.includes("platform") || haystack.includes("runtime") || haystack.includes("proof app")) return "/docs/latest";
   if (haystack.includes("compatibility")) return "/docs/support";
   if (haystack.includes("v2") || haystack.includes("ratified")) return "/docs/v2";
-  if (haystack.includes("interop")) return "/docs/interop";
-  if (haystack.includes("migration") || haystack.includes("convert") || haystack.includes("rollback") || haystack.includes("edge case")) return "/docs/interop";
+  if (haystack.includes("interop") || haystack.includes("migration") || haystack.includes("convert") || haystack.includes("rollback") || haystack.includes("edge case")) return "/docs/interop";
   if (haystack.includes("spec") || haystack.includes("error code")) return "/docs/v1";
-  if (haystack.includes("deploy") || haystack.includes("release") || haystack.includes("rollout") || haystack.includes("api reference") || haystack.includes("plugin") || haystack.includes("cli")) {
-    return "/docs/latest";
-  }
+  if (haystack.includes("deploy") || haystack.includes("release") || haystack.includes("api reference") || haystack.includes("plugin") || haystack.includes("cli")) return "/docs/latest";
   return "/docs/latest";
 }
 function renderResults(root, items) {
   if (!items.length) {
-    root.innerHTML = `<div class="docs-card"><p class="docs-card-title">No results found</p><p class="docs-card-copy">Try a broader query such as routing, deploy, interop, or typecheck.</p></div>`;
+    root.innerHTML = `<div class="docs-card"><p class="docs-card-title">No results found</p><p class="docs-card-copy">Try a broader query such as auth, deploy, jobs, proof, or migration.</p></div>`;
     return;
   }
   root.innerHTML = items.map(item => `
@@ -40,7 +35,7 @@ export default function DocsSearchPage() {
     <section class="docs-search-page">
       <header class="sec-header">
         <p class="kicker">Docs search</p>
-        <h1 class="h1">Search guides, APIs, and release references.</h1>
+        <h1 class="h1">Search guides, APIs, and proof references.</h1>
         <p class="lead">Results are powered by the generated docs index and ranked by term match quality.</p>
       </header>
 

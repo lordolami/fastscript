@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-04-17T04:41:22.883Z",
+  "generatedAt": "2026-04-17T15:14:03.847Z",
   "governanceTrack": "4.0",
-  "stableLine": "3.1.x",
-  "packageVersion": "3.1.1",
+  "stableLine": "4.0.x",
+  "packageVersion": "4.0.0",
   "contract": "If a feature or ecosystem pattern is marked proven, it must have automated coverage and release gates must fail when that proof regresses.",
   "summary": {
     "entries": 34,

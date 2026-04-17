@@ -76,8 +76,8 @@ const markdown = `# FastScript Proof Pack
 - Agency Ops warm build p95 trimmed: ${agencyCorpus?.timingsMs?.buildWarm?.p95Trimmed ?? "n/a"}ms
 - Agency Ops cold build: ${agencyCorpus?.timingsMs?.buildCold?.ms ?? "n/a"}ms
 - Agency Ops runtime /dashboard: ${agencyRuntime?.timingsMs?.dashboard ?? "n/a"}ms
-- Launch line: FastScript v3
-- Product contract: \`.fs\` is a universal JS/TS container and valid JS/TS failures in \`.fs\` are treated as FastScript compatibility bugs
+- Launch line: FastScript v4
+- Product contract: FastScript is the complete TypeScript platform, with ordinary JS/TS in \`.fs\` and valid JS/TS failures in \`.fs\` treated as FastScript compatibility bugs
 - Release posture: source-available public repo, proprietary core, no AI-training use without permission
 
 ## Benchmark Report

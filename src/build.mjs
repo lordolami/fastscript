@@ -3,10 +3,10 @@ import { resolve } from "node:path";
 import { runBuild as runPrivateBuild } from "@fastscript/core-private/build";
 
 const DIST_INDEX_PATH = resolve("dist", "index.html");
-const PUBLIC_TITLE = "FastScript v3.1.1 - Rename-only .fs for full-stack TS/JS apps";
-const PUBLIC_DESCRIPTION = "Keep your TS/JS code, change the extension to .fs, and get FastScript full-stack runtime, validation, and deploy benefits.";
-const PUBLIC_OG_DESCRIPTION = "Write ordinary JS/TS in .fs, keep your code unchanged, and ship full-stack apps with FastScript runtime and proof-backed compatibility.";
-const PUBLIC_TWITTER_DESCRIPTION = "FastScript 3.1.1 keeps .fs as a rename-only TS/JS container for full-stack apps, now with safer Cloudflare runtime updates after deploys.";
+const PUBLIC_TITLE = "FastScript v4.0.0 - Complete TypeScript full-stack platform";
+const PUBLIC_DESCRIPTION = "Write ordinary TS and JS in .fs, then ship pages, APIs, jobs, auth, data flows, and deploy-ready builds through one FastScript platform.";
+const PUBLIC_OG_DESCRIPTION = "FastScript v4 turns .fs into the calm full-stack TypeScript platform surface: familiar authoring, first-party validation, deploy discipline, and a structured runtime for machine reasoning.";
+const PUBLIC_TWITTER_DESCRIPTION = "FastScript 4.0.0 is the complete TypeScript platform release: ordinary TS in .fs, proof-backed validation, reference apps, and deploy-ready outputs from one runtime.";
 
 function rewriteTag(html, pattern, replacement) {
   return html.replace(pattern, replacement);
@@ -29,4 +29,3 @@ export async function runBuild(options = {}) {
 }
 
 export * from "@fastscript/core-private/build";
-

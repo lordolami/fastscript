@@ -23,7 +23,7 @@ export default function DocsSupportPage() {
       byStatus: {}
     },
     entries: [],
-    stableLine: "3.1.x",
+    stableLine: "4.0.x",
     governanceTrack: "4.0",
     contract: ""
   });
@@ -32,13 +32,13 @@ export default function DocsSupportPage() {
       <header class="sec-header">
         <p class="kicker">Compatibility matrix</p>
         <h1 class="h1">One governed source of truth for what FastScript proves.</h1>
-        <p class="lead">FastScript ${report.governanceTrack} treats <code class="ic">proven</code> as a release-blocking claim. This page is generated from the compatibility registry and linked proof artifacts, and the current 3.1.x line ships that governed matrix publicly.</p>
+        <p class="lead">FastScript ${report.governanceTrack} treats <code class="ic">proven</code> as a release-blocking claim. This page is generated from the compatibility registry and linked proof artifacts, and the current 4.0.x line ships that governed matrix publicly.</p>
       </header>
 
       <div class="docs-card-grid">
         <div class="docs-card">
           <p class="docs-card-title">Current stable line</p>
-          <p class="docs-card-copy"><code class="ic">${report.stableLine}</code> remains the active public stable line while the 4.0 compatibility system is being built.</p>
+          <p class="docs-card-copy"><code class="ic">${report.stableLine}</code> remains the active public stable line, and the compatibility system is now part of the current platform contract instead of a future promise.</p>
         </div>
         <div class="docs-card">
           <p class="docs-card-title">Registry scale</p>
