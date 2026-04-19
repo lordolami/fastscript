@@ -3,6 +3,11 @@
 ## Unreleased
 - Release branch work for the next public line.
 
+## v5.0.2 - 2026-04-19
+- Restore the public nav and footer to the cleaner FastScript structure after the overly aggressive sellable-launch pass
+- Fix the `/buy` client checkout flow so it carries the CSRF boundary correctly and activates paid access instead of stalling in browser use
+- Stabilize the platform billing smoke coverage by using unique test identities and re-verify the release line from the repaired source state
+
 ## v5.0.1 - 2026-04-19
 - Convert FastScript from a trial-first launch into a paid product with a public interactive workflow demo and a gated operator console
 - Tighten the public website, nav, footer, padding, mobile behavior, and platform demo flow so the product reads cleanly for buyers and YC

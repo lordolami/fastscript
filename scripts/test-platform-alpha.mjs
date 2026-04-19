@@ -8,6 +8,7 @@ const cliPath = resolve("src", "cli.mjs");
 const distRoot = resolve("dist");
 const port = Number(process.env.TEST_PLATFORM_ALPHA_PORT || 4194);
 const baseUrl = `http://127.0.0.1:${port}`;
+const uniqueTestEmail = `founder+${Date.now()}@test-startup.ai`;
 let proc = null;
 const cookieJar = new Map();
 
@@ -165,7 +166,7 @@ try {
   const authRes = await fetch(`${baseUrl}/api/auth`, {
     method: "POST",
     headers: { ...csrfHeaders(), "content-type": "application/json" },
-    body: JSON.stringify({ name: "Founder", email: "founder@test-startup.ai" }),
+    body: JSON.stringify({ name: "Founder", email: uniqueTestEmail }),
   });
   assert.equal(authRes.status, 200);
   updateCookies(authRes);

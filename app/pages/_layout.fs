@@ -5,21 +5,21 @@ const NAV = [{
   href: "/pricing",
   label: "Pricing"
 }, {
+  href: "/why-fastscript",
+  label: "Why FastScript"
+}, {
   href: "/docs",
   label: "Docs"
 }, {
   href: "/learn",
   label: "Learn"
 }, {
-  href: "/ceo",
-  label: "CEO"
-}, {
   href: "/contact",
   label: "Contact"
 }];
 const FOOTER_COLS = [{
   title: "Product",
-  links: [["Overview", "/"], ["Platform demo", "/platform"], ["Pricing", "/pricing"], ["Buy FastScript", "/buy"]]
+  links: [["Overview", "/"], ["Platform", "/platform"], ["Pricing", "/pricing"], ["Buy FastScript", "/buy"]]
 }, {
   title: "Docs",
   links: [["Docs", "/docs"], ["Current line", "/docs/latest"], ["Builders course", "/learn"], ["Support matrix", "/docs/support"]]
@@ -57,7 +57,7 @@ export default function Layout({content, pathname}) {
         <a class="brand" href="/" aria-label="FastScript home">
           <span class="brand-mark" aria-hidden="true">FS</span>
           <span class="brand-name">FastScript</span>
-          <span class="brand-ver">5.0.1</span>
+          <span class="brand-ver">5.0.2</span>
         </a>
 
         <nav class="nav-links" aria-label="Primary navigation">
@@ -96,8 +96,8 @@ export default function Layout({content, pathname}) {
               <span class="brand-mark footer-brand-mark" aria-hidden="true">FS</span>
               FastScript
             </div>
-            <p class="footer-brand-copy">FastScript is the structured substrate for AI-system workflows: public demo on the website, paid operator console underneath, and one runtime contract from dataset to deployment.</p>
-            <p class="footer-brand-copy">The full-stack TypeScript platform is the proof that the thesis is real now, not a slide claim waiting for the product to catch up.</p>
+            <p class="footer-brand-copy">FastScript is the structured substrate for AI-system workflows. It is being built to keep experiments, evaluation, proof, validation, product delivery, and future training infrastructure inside one owned runtime contract.</p>
+            <p class="footer-brand-copy">The full-stack TypeScript platform is the proof that this thesis is real now: FastScript already owns compilation, routing, APIs, jobs, data flows, security posture, and deploy discipline instead of outsourcing the hard parts to a stack pile.</p>
             <div class="footer-social">
               <a class="footer-social-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
               <a class="footer-social-link" href="https://discord.gg/fastscript" target="_blank" rel="noreferrer" aria-label="Discord">DC</a>

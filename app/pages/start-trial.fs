@@ -92,6 +92,19 @@ export function hydrate({root}) {
   const startButton = root.querySelector("[data-start-buy]");
   const planLabel = root.querySelector("[data-buy-plan-label]");
   const planCopy = root.querySelector("[data-buy-plan-copy]");
+  const readCookie = name => {
+    const row = document.cookie.split("; ").find(entry => entry.startsWith(`${name}=`));
+    return row ? decodeURIComponent(row.split("=").slice(1).join("=")) : "";
+  };
+  const getCsrfToken = async () => {
+    const token = readCookie("fs_csrf");
+    if (token) return token;
+    await fetch("/api/billing/entitlement", {
+      method: "GET",
+      credentials: "same-origin"
+    });
+    return readCookie("fs_csrf");
+  };
   let selectedPlan = "team";
   const planMap = {
     team: {
@@ -116,11 +129,15 @@ export function hydrate({root}) {
     const email = emailInput?.value?.trim() || "founder@startup.ai";
     if (note) note.textContent = "Creating session and attaching paid access...";
     try {
+      const csrfToken = await getCsrfToken();
+      const headers = {
+        "content-type": "application/json"
+      };
+      if (csrfToken) headers["x-csrf-token"] = csrfToken;
       const authRes = await fetch("/api/auth", {
         method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
+        credentials: "same-origin",
+        headers,
         body: JSON.stringify({
           name,
           email
@@ -129,9 +146,8 @@ export function hydrate({root}) {
       if (!authRes.ok) throw new Error("auth");
       const checkoutRes = await fetch("/api/billing/checkout", {
         method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
+        credentials: "same-origin",
+        headers,
         body: JSON.stringify({
           planId: selectedPlan,
           mode: "paid",
