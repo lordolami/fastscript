@@ -27,9 +27,9 @@ Expected outcome:
 
 ## 2. Review the dirty worktree carefully
 
-The current worktree contains both release files and unrelated pre-existing spec files under `spec/FASTCODE_*` and `spec/STUDIO_*`.
+The current worktree may contain unrelated private planning files under ignored `spec/FASTCODE_*`, `spec/STUDIO_*`, and `spec/FASTSCRIPT_AGENT_*` patterns.
 
-Do not include those unrelated spec files in the release commit unless you explicitly want them in `5.0.0`.
+Do not include those unrelated private planning files in a public release commit.
 
 Check:
 
@@ -39,7 +39,7 @@ git status --short
 
 ## 3. Stage only the release set
 
-Stage the tracked and newly added FastScript release files, but leave unrelated `spec/FASTCODE_*` and `spec/STUDIO_*` files unstaged.
+Stage the tracked and newly added FastScript release files, but leave unrelated ignored planning files unstaged.
 
 Recommended staging flow:
 

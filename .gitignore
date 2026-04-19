@@ -20,3 +20,8 @@ yomiru/.fastscript/
 yomiru/dist/
 
 .private-docs/
+spec/FASTCODE_*.md
+spec/STUDIO_*.md
+spec/FASTSCRIPT_AGENT_*.md
+spec/FASTSCRIPT_1000_BUILD_LIST.md
+spec/MASTER_TODO.md
