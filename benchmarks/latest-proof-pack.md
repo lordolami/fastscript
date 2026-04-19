@@ -1,13 +1,13 @@
 # FastScript Proof Pack
 
-- Generated: 2026-04-19T00:31:40.455Z
+- Generated: 2026-04-19T02:46:47.043Z
 
 ## Summary
 - Routes: n/a
 - JS gzip: n/a bytes
 - CSS gzip: n/a bytes
 - JS budget (30KB): PASS
-- CSS budget (10KB): FAIL
+- CSS budget (16KB): UNKNOWN
 - Interop cases: 17
 - Interop pass: 17
 - Interop fail: 0

@@ -9,6 +9,7 @@ const distRoot = resolve("dist");
 const port = Number(process.env.TEST_PLATFORM_ALPHA_PORT || 4194);
 const baseUrl = `http://127.0.0.1:${port}`;
 let proc = null;
+const cookieJar = new Map();
 
 function runNode(args) {
   return new Promise((resolveRun, rejectRun) => {
@@ -37,6 +38,37 @@ async function waitFor(url, ms = 20000) {
   throw new Error(`Timeout waiting for ${url}`);
 }
 
+function responseCookies(response) {
+  if (typeof response.headers.getSetCookie === "function") return response.headers.getSetCookie();
+  const single = response.headers.get("set-cookie");
+  return single ? [single] : [];
+}
+
+function updateCookies(response) {
+  for (const value of responseCookies(response)) {
+    const pair = value.split(";")[0];
+    const index = pair.indexOf("=");
+    if (index === -1) continue;
+    const name = pair.slice(0, index).trim();
+    const cookieValue = pair.slice(index + 1).trim();
+    cookieJar.set(name, cookieValue);
+  }
+}
+
+function cookieHeader() {
+  return [...cookieJar.entries()].map(([name, value]) => `${name}=${value}`).join("; ");
+}
+
+function csrfHeaders() {
+  const headers = {
+    cookie: cookieHeader(),
+    accept: "application/json",
+  };
+  const token = cookieJar.get("fs_csrf");
+  if (token) headers["x-csrf-token"] = token;
+  return headers;
+}
+
 try {
   rmSync(distRoot, { recursive: true, force: true });
   await runNode([cliPath, "build"]);
@@ -44,6 +76,12 @@ try {
 
   const manifest = JSON.parse(readFileSync(join(distRoot, "fastscript-manifest.json"), "utf8"));
   for (const route of [
+    "/buy",
+    "/pricing",
+    "/start-trial",
+    "/account/billing",
+    "/enterprise",
+    "/ceo",
     "/platform",
     "/platform/datasets",
     "/platform/experiments",
@@ -62,11 +100,15 @@ try {
     "/platform/incidents",
     "/platform/costs",
     "/platform/commands",
-    "/platform/proof/:subjectType/:subjectId"
+    "/platform/proof/:subjectType/:subjectId",
   ]) {
     assert.equal(manifest.routes.some((entry) => entry.path === route), true, `missing route ${route}`);
   }
   for (const api of [
+    "/api/billing/checkout",
+    "/api/billing/portal",
+    "/api/billing/entitlement",
+    "/api/billing/webhook",
     "/api/platform/datasets",
     "/api/platform/experiments",
     "/api/platform/runs",
@@ -76,7 +118,7 @@ try {
     "/api/platform/evals/runs",
     "/api/platform/models",
     "/api/platform/workspaces",
-    "/api/platform/commands"
+    "/api/platform/commands",
   ]) {
     assert.equal(manifest.apiRoutes.some((entry) => entry.path === api), true, `missing api ${api}`);
   }
@@ -92,109 +134,110 @@ try {
     },
   });
 
-  await waitFor(`${baseUrl}/platform`);
+  await waitFor(`${baseUrl}/pricing`);
+
+  const pricingRes = await fetch(`${baseUrl}/pricing`);
+  const pricingHtml = await pricingRes.text();
+  assert.equal(pricingRes.status, 200);
+  assert.match(pricingHtml, /Built for startups shipping model-backed products/i);
+
+  const buyRes = await fetch(`${baseUrl}/buy`);
+  const buyHtml = await buyRes.text();
+  assert.equal(buyRes.status, 200);
+  assert.match(buyHtml, /Unlock the paid operator console/i);
+
+  const ceoRes = await fetch(`${baseUrl}/ceo`);
+  assert.equal(ceoRes.status, 200);
+  assert.match(await ceoRes.text(), /Why I built FastScript under constraint/i);
 
   const platformRes = await fetch(`${baseUrl}/platform`);
   const platformHtml = await platformRes.text();
   assert.equal(platformRes.status, 200);
-  assert.match(platformHtml, /FastScript platform/i);
-  assert.match(platformHtml, /Full universe console/i);
+  assert.match(platformHtml, /guided buyer demo/i);
 
-  const datasetsRes = await fetch(`${baseUrl}/api/platform/datasets`);
-  const datasetsJson = await datasetsRes.json();
-  assert.equal(datasetsRes.status, 200);
-  assert.equal(datasetsJson.ok, true);
-  assert.ok(Array.isArray(datasetsJson.items));
-  assert.ok(datasetsJson.items.length >= 2);
+  const gatedPageRes = await fetch(`${baseUrl}/platform/models`, { redirect: "manual" });
+  assert.equal(gatedPageRes.status, 302);
+  assert.match(gatedPageRes.headers.get("location") || "", /\/buy/);
 
-  const datasetId = datasetsJson.items[0].id;
-  const datasetDetailRes = await fetch(`${baseUrl}/api/platform/datasets/${datasetId}`);
-  const datasetDetailJson = await datasetDetailRes.json();
-  assert.equal(datasetDetailRes.status, 200);
-  assert.equal(datasetDetailJson.ok, true);
-  assert.ok(datasetDetailJson.lineage.dataset);
+  const anonPlatformApiRes = await fetch(`${baseUrl}/api/platform/models`);
+  assert.equal(anonPlatformApiRes.status, 402);
 
-  const experimentsRes = await fetch(`${baseUrl}/api/platform/experiments`);
-  const experimentsJson = await experimentsRes.json();
-  assert.equal(experimentsRes.status, 200);
-  assert.equal(experimentsJson.ok, true);
-  assert.ok(Array.isArray(experimentsJson.items));
-  assert.ok(experimentsJson.items.length >= 2);
-
-  const experimentId = experimentsJson.items[0].id;
-  const detailRes = await fetch(`${baseUrl}/api/platform/experiments/${experimentId}`);
-  const detailJson = await detailRes.json();
-  assert.equal(detailRes.status, 200);
-  assert.equal(detailJson.ok, true);
-  assert.ok(Array.isArray(detailJson.runs));
-
-  const compareRes = await fetch(`${baseUrl}/api/platform/runs/compare`);
-  const compareJson = await compareRes.json();
-  assert.equal(compareRes.status, 200);
-  assert.equal(compareJson.ok, true);
-  assert.ok(Array.isArray(compareJson.comparison.metrics));
-
-  const trainingRes = await fetch(`${baseUrl}/api/platform/training/jobs`);
-  const trainingJson = await trainingRes.json();
-  assert.equal(trainingRes.status, 200);
-  assert.equal(trainingJson.ok, true);
-  assert.ok(Array.isArray(trainingJson.items));
-  assert.ok(trainingJson.items.length >= 1);
-
-  const suitesRes = await fetch(`${baseUrl}/api/platform/evals/suites`);
-  const suitesJson = await suitesRes.json();
-  assert.equal(suitesRes.status, 200);
-  assert.equal(suitesJson.ok, true);
-  assert.ok(Array.isArray(suitesJson.items));
-
-  const suiteId = suitesJson.items[0].id;
-  const suiteDetailRes = await fetch(`${baseUrl}/api/platform/evals/suites/${suiteId}`);
-  const suiteDetailJson = await suiteDetailRes.json();
-  assert.equal(suiteDetailRes.status, 200);
-  assert.equal(suiteDetailJson.ok, true);
-
-  const createdEvalRes = await fetch(`${baseUrl}/api/platform/evals/runs`, {
+  const authRes = await fetch(`${baseUrl}/api/auth`, {
     method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ suiteId, runId: "run_repo_repair_v2" }),
+    headers: { ...csrfHeaders(), "content-type": "application/json" },
+    body: JSON.stringify({ name: "Founder", email: "founder@test-startup.ai" }),
   });
-  const createdEvalJson = await createdEvalRes.json();
-  assert.equal(createdEvalRes.status, 200);
-  assert.equal(createdEvalJson.ok, true);
+  assert.equal(authRes.status, 200);
+  updateCookies(authRes);
+  assert.ok(cookieHeader());
 
-  const evalRunRes = await fetch(`${baseUrl}/api/platform/evals/runs/${createdEvalJson.evalRun.id}`);
-  const evalRunJson = await evalRunRes.json();
-  assert.equal(evalRunRes.status, 200);
-  assert.equal(evalRunJson.ok, true);
-  assert.ok(Array.isArray(evalRunJson.results));
+  const trialPageRes = await fetch(`${baseUrl}/start-trial`, {
+    headers: { cookie: cookieHeader() },
+  });
+  assert.equal(trialPageRes.status, 200);
+  updateCookies(trialPageRes);
 
-  const proofRes = await fetch(`${baseUrl}/api/platform/proof/experiment/${experimentId}`);
-  const proofJson = await proofRes.json();
-  assert.equal(proofRes.status, 200);
-  assert.equal(proofJson.ok, true);
-  assert.ok(Array.isArray(proofJson.proof.sections));
+  const preTrialEntitlementRes = await fetch(`${baseUrl}/api/billing/entitlement`, {
+    headers: { ...csrfHeaders() },
+  });
+  const preTrialEntitlement = await preTrialEntitlementRes.json();
+  assert.equal(preTrialEntitlementRes.status, 200);
+  assert.equal(preTrialEntitlement.entitlement.state, "no-plan");
 
-  const modelsRes = await fetch(`${baseUrl}/api/platform/models`);
+  const checkoutRes = await fetch(`${baseUrl}/api/billing/checkout`, {
+    method: "POST",
+    headers: { ...csrfHeaders(), "content-type": "application/json" },
+    body: JSON.stringify({ planId: "team", mode: "paid", nextPath: "/platform/models" }),
+  });
+  const checkoutJson = await checkoutRes.json();
+  assert.equal(checkoutRes.status, 200);
+  assert.equal(checkoutJson.ok, true);
+  assert.equal(checkoutJson.account.state, "active");
+
+  const postTrialEntitlementRes = await fetch(`${baseUrl}/api/billing/entitlement`, {
+    headers: { ...csrfHeaders() },
+  });
+  const postTrialEntitlement = await postTrialEntitlementRes.json();
+  assert.equal(postTrialEntitlement.entitlement.state, "active");
+
+  const gatedWithTrialRes = await fetch(`${baseUrl}/platform/models`, {
+    headers: { cookie: cookieHeader() },
+  });
+  assert.equal(gatedWithTrialRes.status, 200);
+  assert.match(await gatedWithTrialRes.text(), /Model registry/i);
+
+  const modelsRes = await fetch(`${baseUrl}/api/platform/models`, {
+    headers: { ...csrfHeaders() },
+  });
   const modelsJson = await modelsRes.json();
   assert.equal(modelsRes.status, 200);
   assert.equal(modelsJson.ok, true);
-  assert.ok(Array.isArray(modelsJson.items));
 
-  const workspaceRes = await fetch(`${baseUrl}/api/platform/workspaces`);
-  const workspaceJson = await workspaceRes.json();
-  assert.equal(workspaceRes.status, 200);
-  assert.equal(workspaceJson.ok, true);
-  assert.ok(Array.isArray(workspaceJson.items));
-
-  const commandRes = await fetch(`${baseUrl}/api/platform/commands`, {
+  const commandsRes = await fetch(`${baseUrl}/api/platform/commands`, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { ...csrfHeaders(), "content-type": "application/json" },
     body: JSON.stringify({ query: "show quality issues" }),
   });
-  const commandJson = await commandRes.json();
-  assert.equal(commandRes.status, 200);
-  assert.equal(commandJson.ok, true);
-  assert.ok(commandJson.response.headline);
+  const commandsJson = await commandsRes.json();
+  assert.equal(commandsRes.status, 200);
+  assert.equal(commandsJson.ok, true);
+
+  const cancelRes = await fetch(`${baseUrl}/api/billing/portal`, {
+    method: "POST",
+    headers: { ...csrfHeaders(), "content-type": "application/json" },
+    body: JSON.stringify({ action: "cancel" }),
+  });
+  const cancelJson = await cancelRes.json();
+  assert.equal(cancelRes.status, 200);
+  assert.equal(cancelJson.ok, true);
+  assert.equal(cancelJson.account.state, "expired");
+
+  const blockedAfterCancel = await fetch(`${baseUrl}/api/platform/commands`, {
+    method: "POST",
+    headers: { ...csrfHeaders(), "content-type": "application/json" },
+    body: JSON.stringify({ query: "show quality issues" }),
+  });
+  assert.equal(blockedAfterCancel.status, 402);
 
   console.log("test-platform-alpha pass");
 } finally {

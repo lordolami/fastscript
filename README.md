@@ -4,6 +4,13 @@ FastScript is the structured substrate for AI-system workflows.
 
 It already owns a complete full-stack TypeScript platform underneath that thesis: `.fs` as the runtime-native source surface, one compiler and runtime contract, pages, APIs, jobs, validation, security posture, and deploy-ready output in the same system.
 
+Commercial launch shape:
+
+- `Team`: $299/mo
+- `Growth`: $999/mo
+- `Enterprise`: contact sales
+- public workflow demo + paid operator product
+
 ## Current contract
 
 - Write ordinary JS, TS, JSX, and TSX in `.fs`
@@ -14,6 +21,8 @@ It already owns a complete full-stack TypeScript platform underneath that thesis
 - Deploy the same app to Node, Vercel, or Cloudflare
 - Inspect the permanent platform console under `/platform` for datasets, training, experiments, runs, evals, readiness, proof packs, models, deployments, workspaces, and grounded commands
 - Learn the platform through a builders course at `/learn`
+- Buy paid operator access at `/buy`
+- Review launch pricing at `/pricing`
 - Benefit from a structured FastScript language/runtime layer that stays better aligned for machine reasoning, validation, and future model-training workflows without forcing a new day-to-day coding style
 
 ## Why this positioning changed
@@ -50,6 +59,8 @@ FastScript now exposes its public platform universe at `/platform`:
 - specialization, adapters, and synthetic data
 - models and deployments
 - workspaces, audit, incidents, costs, and grounded commands
+
+The public `/platform` route is the guided product overview and demo path. The real operator console behind `/platform/...` is gated by auth + entitlement.
 
 ## Reference proof apps
 

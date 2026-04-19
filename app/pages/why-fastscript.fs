@@ -19,8 +19,8 @@ export default function WhyFastScriptPage() {
         <div class="story-grid">
           <div class="story-cell"><p class="story-cell-title">What we lead with</p><p class="story-cell-copy">FastScript is the structured substrate for AI-system workflows.</p></div>
           <div class="story-cell"><p class="story-cell-title">What proves it</p><p class="story-cell-copy">The platform already compiles and ships real pages, APIs, auth, jobs, data flows, and deploy outputs through one runtime contract.</p></div>
-          <div class="story-cell"><p class="story-cell-title">What ships now</p><p class="story-cell-copy">Datasets, training, experiments, eval suites, readiness assessments, proof packs, models, deployments, and operations in one platform console.</p></div>
-          <div class="story-cell"><p class="story-cell-title">What connects next</p><p class="story-cell-copy">Datasets, orchestration, specialization, model registry, governance, and operations all grow from the same substrate.</p></div>
+          <div class="story-cell"><p class="story-cell-title">What ships now</p><p class="story-cell-copy">A public proof site, a builders course, a pricing path, and a gated operator console covering datasets, training, experiments, eval suites, proof packs, models, deployments, and operations.</p></div>
+          <div class="story-cell"><p class="story-cell-title">Why this is defensible</p><p class="story-cell-copy">Runtime ownership, workflow memory, readiness gates, and deployment history turn FastScript into system-of-record infrastructure instead of another thin tool.</p></div>
         </div>
       </section>
     </section>

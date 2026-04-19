@@ -967,7 +967,7 @@ export function createRun(db, input) {
     startedAt: now,
     endedAt: "",
     seed: input.seed || "seed-local",
-    runtimeVersion: input.runtimeVersion || "fastscript@5.0.0",
+    runtimeVersion: input.runtimeVersion || "fastscript@5.0.1",
     codeVersion: input.codeVersion || "workspace",
     environmentSnapshot: input.environmentSnapshot || "local-dev",
     hardwareProfile: input.hardwareProfile || "local-cpu-proof",

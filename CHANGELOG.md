@@ -3,6 +3,11 @@
 ## Unreleased
 - Release branch work for the next public line.
 
+## v5.0.1 - 2026-04-19
+- Convert FastScript from a trial-first launch into a paid product with a public interactive workflow demo and a gated operator console
+- Tighten the public website, nav, footer, padding, mobile behavior, and platform demo flow so the product reads cleanly for buyers and YC
+- Fix billing/session continuity for paid access, rerun the full quality gate, and cut the patch line required for a fresh npm release
+
 ## v5.0.0 - 2026-04-19
 - Expand FastScript from the initial experiments-and-evals center into a permanent platform console with datasets, training jobs, checkpoints, specialization, models, deployments, workspaces, audit, incidents, costs, and grounded commands
 - Shorten and sharpen the public launch story so FastScript leads as the structured substrate for AI-system workflows while the full-stack TypeScript platform remains the proof

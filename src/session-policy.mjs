@@ -12,7 +12,7 @@ export function resolveSessionPolicy({ env = process.env, mode = env.NODE_ENV ||
   const secure = parseBool(env.SESSION_COOKIE_SECURE, production);
   const sameSite = String(env.SESSION_COOKIE_SAMESITE || "Lax");
   const maxAgeSec = Number(env.SESSION_MAX_AGE_SEC || 60 * 60 * 24 * 7);
-  const rotateOnRead = parseBool(env.SESSION_ROTATE_ON_READ, production);
+  const rotateOnRead = parseBool(env.SESSION_ROTATE_ON_READ, false);
 
   if (production) {
     if (!secret) throw new Error("SESSION_SECRET is required in production.");

@@ -8,8 +8,8 @@ export default function PlatformLayout({content, pathname}) {
       <div class="platform-layout">
         <aside class="platform-sidebar">
           <p class="kicker">Platform</p>
-          <h1 class="h3">Full universe console</h1>
-          <p class="platform-sidebar-copy">FastScript now keeps datasets, training, evals, proof, specialization, models, deployments, workspaces, and grounded commands inside one structured platform surface.</p>
+          <h1 class="h3">Operator console</h1>
+          <p class="platform-sidebar-copy">FastScript keeps datasets, training, evals, proof, specialization, models, deployments, workspaces, and grounded commands inside one structured operator surface.</p>
           <nav class="platform-nav">
             ${navLink(pathname, "/platform", "Overview")}
             ${navLink(pathname, "/platform/datasets", "Datasets")}

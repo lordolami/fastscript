@@ -5,28 +5,23 @@ export default function Home() {
         <div class="hero-left">
           <div class="hero-badge">
             <span class="hero-badge-dot" aria-hidden="true"></span>
-            stable platform - <a href="/platform" class="hero-badge-link">full universe console</a>
+            public demo, paid product - <a href="/platform" class="hero-badge-link">see the workflow</a>
           </div>
 
           <h1 class="hero-title">
-            Structured substrate for<br>
-            <span class="hero-title-muted">AI-system workflows.</span>
+            The operator system for<br>
+            <span class="hero-title-muted">AI startups shipping models.</span>
           </h1>
 
           <p class="hero-desc">
-            FastScript is the structured substrate for AI-system workflows, with datasets, training, evals, proof, deployments, and product delivery living in one runtime-owned platform.
+            FastScript gives startups one system for datasets, training jobs, experiments, evals, proof, model promotion, and deployments instead of a pile of scripts, dashboards, and internal glue.
           </p>
 
-          <div class="install-row">
-            <span class="install-row-prefix">$</span>
-            <span class="install-row-cmd" id="install-cmd">npm install -g fastscript</span>
-            <button class="copy-btn" data-copy="npm install -g fastscript" aria-label="Copy install command">&#9112; Copy</button>
-          </div>
-
           <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="/platform">Open the platform</a>
-            <a class="btn btn-secondary btn-lg" href="/learn">Start the builders course</a>
+            <a class="btn btn-primary btn-lg" href="/buy">Buy FastScript</a>
+            <a class="btn btn-secondary btn-lg" href="/platform">See live demo</a>
           </div>
+          <p class="learn-path-note">Team $299/mo. Growth $999/mo. Enterprise by contact.</p>
         </div>
 
         <div class="hero-right" aria-hidden="true">
@@ -37,15 +32,15 @@ export default function Home() {
                 <span class="terminal-dot-r"></span>
                 <span class="terminal-dot-y"></span>
                 <span class="terminal-dot-g"></span>
-                <span class="terminal-title">fastscript platform</span>
+                <span class="terminal-title">fastscript operator flow</span>
               </div>
               <div class="terminal-body">
-                <span class="t-prompt">$ </span><span class="t-cmd">fastscript build</span><br>
-                <span class="t-out">&nbsp; &#10003; pages, APIs, jobs, and proof surfaces compiled</span><br><br>
-                <span class="t-prompt">$ </span><span class="t-cmd">open /platform</span><br>
-                <span class="t-out">&nbsp; &#10003; datasets, training, evals, models, and proof visible</span><br><br>
-                <span class="t-prompt">$ </span><span class="t-cmd">open /learn</span><br>
-                <span class="t-success">&nbsp; &#10003; builder-grade curriculum aligned to repo truth</span><br><br>
+                <span class="t-prompt">$ </span><span class="t-cmd">dataset -&gt; training -&gt; run</span><br>
+                <span class="t-out">&nbsp; &#10003; lineage and provenance stay visible</span><br><br>
+                <span class="t-prompt">$ </span><span class="t-cmd">run -&gt; eval -&gt; proof</span><br>
+                <span class="t-out">&nbsp; &#10003; promotion is grounded in readiness</span><br><br>
+                <span class="t-prompt">$ </span><span class="t-cmd">model -&gt; deployment</span><br>
+                <span class="t-success">&nbsp; &#10003; one workflow instead of stack sprawl</span><br><br>
                 <span class="t-prompt">$ </span><span class="t-cursor"></span>
               </div>
             </div>
@@ -55,10 +50,10 @@ export default function Home() {
 
       <div class="shell">
         <div class="hero-stats" role="list">
-          <div class="hero-stat" role="listitem"><span class="hero-stat-n">1</span><span class="hero-stat-l">Permanent platform console</span></div>
-          <div class="hero-stat" role="listitem"><span class="hero-stat-n">2</span><span class="hero-stat-l">Seeded datasets with lineage</span></div>
-          <div class="hero-stat" role="listitem"><span class="hero-stat-n">10</span><span class="hero-stat-l">Universe layers implemented</span></div>
-          <div class="hero-stat" role="listitem"><span class="hero-stat-n">1</span><span class="hero-stat-l">Runtime contract underneath everything</span></div>
+          <div class="hero-stat" role="listitem"><span class="hero-stat-n">$299</span><span class="hero-stat-l">Team plan</span></div>
+          <div class="hero-stat" role="listitem"><span class="hero-stat-n">Live</span><span class="hero-stat-l">Public workflow demo</span></div>
+          <div class="hero-stat" role="listitem"><span class="hero-stat-n">1</span><span class="hero-stat-l">Public demo, paid console</span></div>
+          <div class="hero-stat" role="listitem"><span class="hero-stat-n">7</span><span class="hero-stat-l">Workflow steps from data to deploy</span></div>
         </div>
       </div>
     </section>
@@ -78,25 +73,38 @@ export default function Home() {
 
     <section class="docs-syntax">
       <header class="sec-header-sm">
-        <p class="kicker">What ships now</p>
-        <h2 class="h2">A complete platform, not a vague future story.</h2>
+        <p class="kicker">Why teams buy it</p>
+        <h2 class="h2">This is what FastScript replaces.</h2>
       </header>
       <div class="docs-card-grid reveal-children">
-        <div class="docs-card"><p class="docs-card-title">Platform console</p><p class="docs-card-copy">Datasets, runs, training jobs, eval suites, proof packs, models, deployments, workspaces, and grounded commands live under <code class="ic">/platform</code>.</p><a class="docs-card-link" href="/platform">Open platform &#8594;</a></div>
-        <div class="docs-card"><p class="docs-card-title">Builders course</p><p class="docs-card-copy">The course now follows the full platform: data, training, proof, deployments, governance, and grounded command workflows.</p><a class="docs-card-link" href="/learn">Open builders course &#8594;</a></div>
-        <div class="docs-card"><p class="docs-card-title">Reference apps</p><p class="docs-card-copy">The public SaaS and ops applications stay as reference proof surfaces showing FastScript already owns product delivery end to end.</p><a class="docs-card-link" href="/showcase">See proof surfaces &#8594;</a></div>
-        <div class="docs-card"><p class="docs-card-title">Docs and benchmarks</p><p class="docs-card-copy">The docs, support matrix, and proof pack now back the same launch story instead of presenting parallel product identities.</p><a class="docs-card-link" href="/benchmarks">Read the proof story &#8594;</a></div>
+        <div class="docs-card"><p class="docs-card-title">Engineering time</p><p class="docs-card-copy">Stop stitching datasets, training jobs, evals, proof, deployments, and team memory together from separate tools.</p></div>
+        <div class="docs-card"><p class="docs-card-title">Fewer mistakes</p><p class="docs-card-copy">Readiness gates, lineage, and proof packs reduce bad promotions, missing provenance, and ungrounded deployment calls.</p></div>
+        <div class="docs-card"><p class="docs-card-title">Faster releases</p><p class="docs-card-copy">Move from data to deployment in one operator system instead of rebuilding your internal platform while trying to ship a product.</p></div>
+        <div class="docs-card"><p class="docs-card-title">Real buyer path</p><p class="docs-card-copy">Public thesis, public proof, and a paid product boundary that turns serious teams into real customers instead of tourists.</p><a class="docs-card-link" href="/pricing">Open pricing &#8594;</a></div>
+      </div>
+    </section>
+
+    <section class="docs-syntax">
+      <header class="sec-header-sm">
+        <p class="kicker">Who it is for</p>
+        <h2 class="h2">Built for model-backed startups, not tourists.</h2>
+      </header>
+      <div class="story-grid">
+        <div class="story-cell"><p class="story-cell-title">Video model startup</p><p class="story-cell-copy">Track datasets, training jobs, eval regressions, proof, and deployment readiness in one system.</p></div>
+        <div class="story-cell"><p class="story-cell-title">Coding agent startup</p><p class="story-cell-copy">Keep repo-task datasets, runs, evals, and deployment gates grounded in workflow memory.</p></div>
+        <div class="story-cell"><p class="story-cell-title">Voice model startup</p><p class="story-cell-copy">Tie checkpoints, quality loops, proof, and release decisions into one operator surface.</p></div>
+        <div class="story-cell"><p class="story-cell-title">YC demo path</p><p class="story-cell-copy">Open the public platform overview, follow the workflow chain, and see exactly where the paid operator console takes over.</p></div>
       </div>
     </section>
 
     <section class="cta-band">
       <div class="cta-shell">
         <p class="kicker">FastScript</p>
-        <h2 class="cta-title">Build on the substrate, not on a pile of disconnected tools.</h2>
-        <p class="cta-copy">Build on the full platform now: inspect the console, follow the builders course, and ship on the same runtime that carries proof and deployment discipline.</p>
+        <h2 class="cta-title">Start with the thesis. Buy the operator system when you are ready to run it.</h2>
+        <p class="cta-copy">Inspect the public workflow demo, understand the proof, then buy the real console when your team needs the full operator surface.</p>
         <div class="cta-actions">
-          <a class="btn btn-primary btn-lg" href="/platform">Inspect the platform</a>
-          <a class="btn btn-secondary btn-lg" href="/docs/latest">Read the current contract</a>
+          <a class="btn btn-primary btn-lg" href="/buy">Buy FastScript</a>
+          <a class="btn btn-secondary btn-lg" href="/platform">Inspect the platform</a>
         </div>
       </div>
     </section>

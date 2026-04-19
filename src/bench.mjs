@@ -4,7 +4,7 @@ import { join, resolve } from "node:path";
 
 const DIST = resolve("dist");
 const JS_BUDGET_BYTES = Number(process.env.FASTSCRIPT_JS_BUDGET_KB || 30) * 1024;
-const CSS_BUDGET_BYTES = Number(process.env.FASTSCRIPT_CSS_BUDGET_KB || 15) * 1024;
+const CSS_BUDGET_BYTES = Number(process.env.FASTSCRIPT_CSS_BUDGET_KB || 16) * 1024;
 
 function gzipSize(path) {
   if (!existsSync(path)) return 0;

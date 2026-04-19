@@ -5,10 +5,10 @@ const DIST_INDEX_PATH = resolve("dist", "index.html");
 const DIST_WORKER_PATH = resolve("dist", "worker.js");
 
 export const PUBLIC_TITLE = "FastScript - Structured substrate for AI-system workflows";
-export const PUBLIC_DESCRIPTION = "FastScript is the structured substrate for AI-system workflows: experiments, evaluation, proof, deploy-ready product surfaces, and a complete full-stack TypeScript platform underneath.";
-export const PUBLIC_OG_DESCRIPTION = "Build AI-native systems on a runtime that already owns compilation, validation, routing, APIs, jobs, security, proof, and deploy discipline.";
-export const PUBLIC_TWITTER_DESCRIPTION = "FastScript launches as AI-system workflow infrastructure first: a structured substrate for experiments, evals, proof, and product delivery.";
-export const PUBLIC_SSR_SHELL_DESCRIPTION = "FastScript is an AI-system workflow substrate backed by a complete full-stack TypeScript platform and a proof-driven runtime contract.";
+export const PUBLIC_DESCRIPTION = "FastScript is the structured substrate for AI-system workflows: a public workflow demo on the site, and a paid operator console for datasets, training, evals, proof, models, and deployments.";
+export const PUBLIC_OG_DESCRIPTION = "Build AI-native systems on a runtime that already owns compilation, validation, routing, APIs, jobs, security, proof, and deployment discipline.";
+export const PUBLIC_TWITTER_DESCRIPTION = "FastScript is AI-system workflow infrastructure: public proof on the website, paid operator workflows inside the product.";
+export const PUBLIC_SSR_SHELL_DESCRIPTION = "FastScript is an AI-system workflow substrate backed by a complete full-stack TypeScript platform, a public product demo, and a paid operator console.";
 
 function rewriteTag(html, pattern, replacement) {
   return html.replace(pattern, replacement);

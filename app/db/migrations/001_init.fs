@@ -3,9 +3,12 @@ export async function up(db) {
   if (!users.get("u_1")) {
     users.set("u_1", {
       id: "u_1",
-      name: "Dev"
+      name: "Dev",
+      email: "founder@fastscript.dev"
     });
   }
+  db.collection("billing_accounts");
+  db.collection("checkout_sessions");
   db.collection("datasets");
   db.collection("dataset_versions");
   db.collection("dataset_sources");

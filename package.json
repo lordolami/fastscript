@@ -1,6 +1,6 @@
 {
   "name": "fastscript",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "FastScript is the structured substrate for AI-system workflows, backed by a complete full-stack TypeScript platform and a proof-driven runtime.",
   "keywords": [
     "fastscript",

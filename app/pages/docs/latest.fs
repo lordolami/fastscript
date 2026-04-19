@@ -10,8 +10,9 @@ export default function DocsLatestPage() {
       <div class="docs-card-grid">
         <div class="docs-card"><p class="docs-card-title">Primary story</p><p class="docs-card-copy">FastScript is the substrate for experiments, evaluation, proof, validation, and future training-adjacent workflows.</p></div>
         <div class="docs-card"><p class="docs-card-title">Secondary proof</p><p class="docs-card-copy">Pages, APIs, jobs, data flows, auth, security posture, and deploy outputs already compile and ship through one runtime.</p></div>
-        <div class="docs-card"><p class="docs-card-title">Platform surface</p><p class="docs-card-copy">Datasets, training, evals, proof, models, deployments, workspaces, and commands now live under <code class="ic">/platform</code>.</p><a class="docs-card-link" href="/platform">Inspect the platform &#8594;</a></div>
+        <div class="docs-card"><p class="docs-card-title">Platform surface</p><p class="docs-card-copy">Datasets, training, evals, proof, models, deployments, workspaces, and commands now live under <code class="ic">/platform</code>. The overview is public; the operator console is gated.</p><a class="docs-card-link" href="/platform">Inspect the platform &#8594;</a></div>
         <div class="docs-card"><p class="docs-card-title">Builders course</p><p class="docs-card-copy">/learn now teaches builders and operators across the full platform, not just syntax or the first wedge.</p><a class="docs-card-link" href="/learn">Open /learn &#8594;</a></div>
+        <div class="docs-card"><p class="docs-card-title">Commercial model</p><p class="docs-card-copy">FastScript sells as team infrastructure: Team, Growth, and Enterprise tiers with a public workflow demo and a paid console for serious startups.</p><a class="docs-card-link" href="/pricing">Open pricing &#8594;</a></div>
       </div>
     </section>
   `;

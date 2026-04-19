@@ -47,6 +47,12 @@ if (manifest.middleware && !assetManifest.mapping?.[logicalKey(manifest.middlewa
 
 const requiredRoutes = [
   "/",
+  "/buy",
+  "/pricing",
+  "/start-trial",
+  "/account/billing",
+  "/enterprise",
+  "/ceo",
   "/docs",
   "/learn",
   "/benchmarks",
@@ -73,6 +79,10 @@ const requiredApis = [
   "/api/webhook",
   "/api/docs-search",
   "/api/auth",
+  "/api/billing/checkout",
+  "/api/billing/portal",
+  "/api/billing/entitlement",
+  "/api/billing/webhook",
   "/api/platform/datasets",
   "/api/platform/training/jobs",
   "/api/platform/models",

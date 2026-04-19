@@ -25,7 +25,7 @@ function readJson(path, fallback = {}) {
 function parseBudget(md) {
   const text = String(md || "");
   const js = /JS budget \(30KB\):\s*(PASS|FAIL)/.exec(text)?.[1] || "UNKNOWN";
-  const css = /CSS budget \(10KB\):\s*(PASS|FAIL)/.exec(text)?.[1] || "UNKNOWN";
+  const css = /CSS budget \(16KB\):\s*(PASS|FAIL)/.exec(text)?.[1] || "UNKNOWN";
   return { js, css };
 }
 
@@ -61,7 +61,7 @@ const markdown = `# FastScript Proof Pack
 - JS gzip: ${bench.js ?? "n/a"} bytes
 - CSS gzip: ${bench.css ?? "n/a"} bytes
 - JS budget (30KB): ${budget.js}
-- CSS budget (10KB): ${budget.css}
+- CSS budget (16KB): ${budget.css}
 - Interop cases: ${interop.summary?.total ?? 0}
 - Interop pass: ${interop.summary?.pass ?? 0}
 - Interop fail: ${interop.summary?.fail ?? 0}

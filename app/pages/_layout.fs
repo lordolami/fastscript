@@ -2,39 +2,33 @@ const NAV = [{
   href: "/platform",
   label: "Platform"
 }, {
+  href: "/pricing",
+  label: "Pricing"
+}, {
   href: "/docs",
   label: "Docs"
 }, {
   href: "/learn",
   label: "Learn"
 }, {
-  href: "/why-fastscript",
-  label: "Why FastScript"
-}, {
-  href: "/benchmarks",
-  label: "Proof"
-}, {
-  href: "/examples",
-  label: "Examples"
-}, {
-  href: "/roadmap",
-  label: "Roadmap"
+  href: "/ceo",
+  label: "CEO"
 }, {
   href: "/contact",
   label: "Contact"
 }];
 const FOOTER_COLS = [{
   title: "Product",
-  links: [["Overview", "/"], ["Platform", "/platform"], ["Why FastScript", "/why-fastscript"], ["Builders course", "/learn"]]
+  links: [["Overview", "/"], ["Platform demo", "/platform"], ["Pricing", "/pricing"], ["Buy FastScript", "/buy"]]
 }, {
-  title: "Reference",
-  links: [["Docs", "/docs"], ["Current line", "/docs/latest"], ["Benchmarks and proof", "/benchmarks"], ["Showcase", "/showcase"]]
+  title: "Docs",
+  links: [["Docs", "/docs"], ["Current line", "/docs/latest"], ["Builders course", "/learn"], ["Support matrix", "/docs/support"]]
 }, {
-  title: "Adoption",
-  links: [["Examples", "/examples"], ["Adoption guide", "/docs/adoption"], ["Support matrix", "/docs/support"], ["Interop", "/docs/interop"]]
+  title: "Proof",
+  links: [["Benchmarks", "/benchmarks"], ["Showcase", "/showcase"], ["Examples", "/examples"], ["Why FastScript", "/why-fastscript"]]
 }, {
   title: "Company",
-  links: [["Roadmap", "/roadmap"], ["Contact", "/contact"], ["GitHub", "https://github.com/lordolami/fastscript"], ["Discord", "https://discord.gg/fastscript"]]
+  links: [["CEO", "/ceo"], ["Enterprise", "/enterprise"], ["Roadmap", "/roadmap"], ["Contact", "/contact"]]
 }, {
   title: "Legal",
   links: [["License", "/license"], ["Privacy", "/privacy"], ["Terms", "/terms"], ["Security", "/security"]]
@@ -63,7 +57,7 @@ export default function Layout({content, pathname}) {
         <a class="brand" href="/" aria-label="FastScript home">
           <span class="brand-mark" aria-hidden="true">FS</span>
           <span class="brand-name">FastScript</span>
-          <span class="brand-ver">5.0.0</span>
+          <span class="brand-ver">5.0.1</span>
         </a>
 
         <nav class="nav-links" aria-label="Primary navigation">
@@ -75,8 +69,8 @@ export default function Layout({content, pathname}) {
             <span class="theme-icon" aria-hidden="true">&#9790;</span>
           </button>
           <a class="btn btn-ghost btn-sm" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="btn btn-secondary btn-sm" href="/platform">Open platform</a>
-          <a class="btn btn-primary btn-sm" href="/learn">Start the builders course</a>
+          <a class="btn btn-secondary btn-sm" href="/platform">See demo</a>
+          <a class="btn btn-primary btn-sm" href="/buy">Buy FastScript</a>
           <button type="button" class="menu-toggle" id="menu-toggle" data-nav-toggle aria-expanded="false" aria-label="Open menu" aria-controls="mobile-panel">&#9776;</button>
         </div>
       </div>
@@ -102,8 +96,8 @@ export default function Layout({content, pathname}) {
               <span class="brand-mark footer-brand-mark" aria-hidden="true">FS</span>
               FastScript
             </div>
-            <p class="footer-brand-copy">FastScript is the structured substrate for AI-system workflows. It is being built to keep experiments, evaluation, proof, validation, product delivery, and future training infrastructure inside one owned runtime contract.</p>
-            <p class="footer-brand-copy">The full-stack TypeScript platform is the proof that this thesis is real now: FastScript already owns compilation, routing, APIs, jobs, data flows, security posture, and deploy discipline instead of outsourcing the hard parts to a stack pile.</p>
+            <p class="footer-brand-copy">FastScript is the structured substrate for AI-system workflows: public demo on the website, paid operator console underneath, and one runtime contract from dataset to deployment.</p>
+            <p class="footer-brand-copy">The full-stack TypeScript platform is the proof that the thesis is real now, not a slide claim waiting for the product to catch up.</p>
             <div class="footer-social">
               <a class="footer-social-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
               <a class="footer-social-link" href="https://discord.gg/fastscript" target="_blank" rel="noreferrer" aria-label="Discord">DC</a>
@@ -115,9 +109,10 @@ export default function Layout({content, pathname}) {
           <p class="footer-copyright">&#169; 2026 Lakesbim Infotechnology - <a class="footer-bottom-link" href="/license">Source-Available License</a></p>
           <div class="footer-bottom-links">
             <a class="footer-bottom-link" href="/platform">Platform</a>
+            <a class="footer-bottom-link" href="/pricing">Pricing</a>
             <a class="footer-bottom-link" href="/docs">Docs</a>
             <a class="footer-bottom-link" href="/learn">Learn</a>
-            <a class="footer-bottom-link" href="/benchmarks">Proof</a>
+            <a class="footer-bottom-link" href="/ceo">CEO</a>
             <a class="footer-bottom-link" href="/security">Security</a>
           </div>
         </div>

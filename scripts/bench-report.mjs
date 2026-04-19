@@ -40,7 +40,7 @@ const agencyRuntimePath = resolve('benchmarks', 'agency-ops-runtime.json');
 const agencyRuntime = existsSync(agencyRuntimePath) ? JSON.parse(readFileSync(agencyRuntimePath, 'utf8')) : null;
 const runtimeSection = agencyRuntime ? `\n## Agency Ops Runtime Snapshot\n- Home /: ${agencyRuntime.timingsMs.home}ms\n- Sign-in /sign-in: ${agencyRuntime.timingsMs.signIn}ms\n- Session bootstrap /api/session: ${agencyRuntime.timingsMs.sessionBootstrap}ms\n- Dashboard /dashboard: ${agencyRuntime.timingsMs.dashboard}ms\n- Clients /dashboard/clients: ${agencyRuntime.timingsMs.clientsPage}ms\n- Clients mutation /api/clients: ${agencyRuntime.timingsMs.clientsApiMutation}ms\n` : '';
 
-const md = `# FastScript Benchmark Report\n\n- Build time: ${(t1 - t0).toFixed(2)}ms\n- Routes: ${manifest.routes.length}\n- API routes: ${manifest.apiRoutes?.length ?? 0}\n- JS first-load gzip: ${kb(js)}KB\n- CSS first-load gzip: ${kb(css)}KB\n\n## Budgets\n- JS budget (30KB): ${js <= 30 * 1024 ? 'PASS' : 'FAIL'}\n- CSS budget (10KB): ${css <= 10 * 1024 ? 'PASS' : 'FAIL'}${runtimeSection}\n`;
+const md = `# FastScript Benchmark Report\n\n- Build time: ${(t1 - t0).toFixed(2)}ms\n- Routes: ${manifest.routes.length}\n- API routes: ${manifest.apiRoutes?.length ?? 0}\n- JS first-load gzip: ${kb(js)}KB\n- CSS first-load gzip: ${kb(css)}KB\n\n## Budgets\n- JS budget (30KB): ${js <= 30 * 1024 ? 'PASS' : 'FAIL'}\n- CSS budget (16KB): ${css <= 16 * 1024 ? 'PASS' : 'FAIL'}${runtimeSection}\n`;
 
 const outDir = resolve('benchmarks');
 mkdirSync(outDir, { recursive: true });

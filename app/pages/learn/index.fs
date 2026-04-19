@@ -33,7 +33,7 @@ export default function LearnSchoolPage() {
       <header class="sec-header learn-hero">
         <p class="kicker">Builders course</p>
         <h1 class="h1">Learn FastScript as an AI-system workflow substrate.</h1>
-        <p class="lead">This is not a zero-to-code school anymore. /learn now teaches builders, operators, and founders how FastScript owns full-stack delivery today and how datasets, training, proof, deployments, and operations fit inside one platform universe.</p>
+        <p class="lead">This is not a zero-to-code school anymore. /learn now teaches builders, operators, and founders how FastScript owns full-stack delivery today and how datasets, training, proof, deployments, and operations fit inside one sellable platform.</p>
       </header>
 
       <div class="docs-card-grid">${stats}</div>
@@ -51,6 +51,7 @@ export default function LearnSchoolPage() {
             <div class="cta-actions">
               <a class="btn btn-primary btn-lg" href="${getResumeFallback()}" data-school-continue>Resume the course</a>
               <a class="btn btn-secondary btn-lg" href="/platform">Inspect the platform</a>
+              <a class="btn btn-ghost btn-lg" href="/buy">Buy FastScript</a>
               <a class="btn btn-ghost btn-lg" href="/learn/capstone">Capstone and proof hub</a>
               <a class="btn btn-ghost btn-lg" href="/learn/mastery-summary">Mastery summary</a>
               <button type="button" class="btn btn-ghost btn-lg" data-school-export>Export progress</button>
@@ -66,7 +67,7 @@ export default function LearnSchoolPage() {
           <section class="learn-next">
             <header class="sec-header-sm">
               <p class="kicker">Two entry tracks</p>
-              <h2 class="h2">Start with foundations or jump into proof and operations.</h2>
+              <h2 class="h2">Start with foundations or jump into proof and operations, then unlock the real console.</h2>
             </header>
             <div class="docs-card-grid">${tracks}</div>
           </section>
