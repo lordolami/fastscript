@@ -1,3 +1,4 @@
+import {seedPlatformCollections} from "../lib/platform-alpha.mjs";
 export async function seed(db) {
   db.transaction(tx => {
     tx.collection("posts").set("hello", {
@@ -5,5 +6,6 @@ export async function seed(db) {
       title: "First Post",
       published: true
     });
+    seedPlatformCollections(tx);
   });
 }

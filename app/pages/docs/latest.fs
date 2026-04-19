@@ -1,71 +1,18 @@
-export default function DocsLatest() {
+export default function DocsLatestPage() {
   return `
     <section class="docs-latest-page">
       <header class="sec-header">
-        <p class="kicker">Docs latest</p>
-        <h1 class="h1">Current docs track: FastScript v4.1</h1>
-        <p class="lead">This is the canonical entrypoint for the v4.1 platform contract: FastScript as the complete TypeScript full-stack platform, with ordinary TS in <code class="ic">.fs</code>, first-party validation, secure-by-default scaffolds, visible proof apps, governed support evidence, and a structured language/runtime layer that stays better aligned for machine reasoning and model-training workflows.</p>
+        <p class="kicker">Current line</p>
+        <h1 class="h1">FastScript is launching as AI-system workflow infrastructure.</h1>
+        <p class="lead">The current public contract is simple: FastScript is the structured substrate for AI-system workflows, and the complete full-stack TypeScript platform proves that the runtime already owns real delivery surfaces instead of outsourcing them to a stack pile.</p>
       </header>
 
       <div class="docs-card-grid">
-        <div class="docs-card">
-          <p class="docs-card-title">FastScript school</p>
-          <p class="docs-card-copy">/learn is now a major proof surface: start from zero or jump into product migration and full-stack adoption through browser-first lessons.</p>
-          <a class="docs-card-link" href="/learn">Open /learn &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Platform overview</p>
-          <p class="docs-card-copy">Read the v4.1 line as a full platform contract: pages, APIs, auth, data, jobs, security readiness, proof discipline, and deploy outputs aligned under one FastScript runtime.</p>
-          <a class="docs-card-link" href="/docs">Open docs overview &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Greenfield SaaS proof</p>
-          <p class="docs-card-copy">The Team Dashboard SaaS reference app proves auth, teams, billing, notifications, admin, tests, and deployment in one greenfield product shape.</p>
-          <a class="docs-card-link" href="/docs/team-dashboard-saas">Open SaaS proof &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Agency Ops proof</p>
-          <p class="docs-card-copy">The operations reference app proves ordinary TypeScript in .fs while shipping authenticated dashboards, billing reminders, jobs, and runtime-safe deploy flow.</p>
-          <a class="docs-card-link" href="/docs/agency-ops">Open ops proof &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Support matrix</p>
-          <p class="docs-card-copy">Open the governed registry for proven, partial, planned, and blocked coverage across ecosystem, runtime, and tooling surfaces.</p>
-          <a class="docs-card-link" href="/docs/support">Open support matrix &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Docs search</p>
-          <p class="docs-card-copy">Search generated references, proof artifacts, support notes, release surfaces, and API documentation from one FastScript-native endpoint.</p>
-          <a class="docs-card-link" href="/docs/search">Search docs &#8594;</a>
-        </div>
+        <div class="docs-card"><p class="docs-card-title">Primary story</p><p class="docs-card-copy">FastScript is the substrate for experiments, evaluation, proof, validation, and future training-adjacent workflows.</p></div>
+        <div class="docs-card"><p class="docs-card-title">Secondary proof</p><p class="docs-card-copy">Pages, APIs, jobs, data flows, auth, security posture, and deploy outputs already compile and ship through one runtime.</p></div>
+        <div class="docs-card"><p class="docs-card-title">Platform surface</p><p class="docs-card-copy">Datasets, training, evals, proof, models, deployments, workspaces, and commands now live under <code class="ic">/platform</code>.</p><a class="docs-card-link" href="/platform">Inspect the platform &#8594;</a></div>
+        <div class="docs-card"><p class="docs-card-title">Builders course</p><p class="docs-card-copy">/learn now teaches builders and operators across the full platform, not just syntax or the first wedge.</p><a class="docs-card-link" href="/learn">Open /learn &#8594;</a></div>
       </div>
-
-      <hr class="section-divider">
-
-      <section class="docs-syntax">
-        <header class="sec-header-sm">
-          <p class="kicker">What v4 proves</p>
-          <h2 class="h2">FastScript is now presented as a complete platform.</h2>
-        </header>
-        <div class="docs-card-grid">
-          <div class="docs-card">
-            <p class="docs-card-title">Ordinary TS in <code class="ic">.fs</code></p>
-            <p class="docs-card-copy">Authored TS and JS stay familiar. The platform value comes from the runtime, validation, deploy, and product scaffolding around that code, not from forcing a different coding identity.</p>
-          </div>
-          <div class="docs-card">
-          <p class="docs-card-title">Proof-backed platform pillars</p>
-          <p class="docs-card-copy">Auth, roles, migrations, seeds, jobs, notifications, admin patterns, tests, observability, deploy flow, and validator-backed security readiness are all exercised through FastScript's docs, proof apps, and release gates.</p>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Structured runtime moat</p>
-          <p class="docs-card-copy">FastScript still owns its own language and runtime surface, which is part of why the platform can be more controlled for validation, machine reasoning, and future model-training workflows than a generic ecosystem-only stack.</p>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Security-first contract</p>
-          <p class="docs-card-copy">v4.1 adds runtime scopes, explicit permissions policy, secret-exposure diagnostics, security-readiness reporting, and proof-app verification as public parts of the FastScript contract.</p>
-        </div>
-      </div>
-    </section>
     </section>
   `;
 }

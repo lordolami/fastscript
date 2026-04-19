@@ -764,6 +764,103 @@ const LESSONS = MODULES.flatMap(module =>
   }))
 );
 
+const MODULE_OVERRIDES = {
+  beginner: {
+    level: "Module 1",
+    title: "FastScript mental model",
+    audience: "Builders entering the substrate",
+    time: "60-90 min",
+    summary: "Understand the runtime, routes, requests, and why FastScript leads with system ownership instead of stack choreography.",
+  },
+  foundations: {
+    level: "Module 2",
+    title: "Full-stack system architecture",
+    audience: "Product builders",
+    summary: "Use pages, APIs, layouts, data boundaries, and product flows as one application contract.",
+  },
+  fullstack: {
+    level: "Module 3",
+    title: "Auth, jobs, and delivery surfaces",
+    audience: "Operators and shipping teams",
+    summary: "Work through auth, API boundaries, background work, and the shape of real production surfaces.",
+  },
+  databases: {
+    level: "Module 4",
+    title: "Data, state, and migrations",
+    audience: "Builders shipping durable systems",
+    summary: "Manage persistence, schema evolution, and data-bearing product flows without breaking the runtime contract.",
+  },
+  styling: {
+    level: "Module 5",
+    title: "Proof surfaces and interface discipline",
+    audience: "Product and platform teams",
+    summary: "Turn runtime truth into clear product surfaces, trustworthy UI, and defensible public proof.",
+  },
+  shipping: {
+    level: "Module 6",
+    title: "Deploy, security, and release discipline",
+    audience: "Teams closing the last mile",
+    summary: "Treat validation, security posture, and deploy output as part of the product system, not cleanup work.",
+  },
+  professional: {
+    level: "Module 7",
+    title: "Experiments and runs",
+    audience: "AI-system builders",
+    summary: "Use FastScript’s first public platform center to reason about run contracts, reproducibility, and iteration loops.",
+  },
+  migration: {
+    level: "Module 8",
+    title: "Eval suites and proof",
+    audience: "Adoption and proof owners",
+    summary: "Move from migration discipline into evaluation, comparison, and public proof that stays aligned with repo truth.",
+  },
+  mastery: {
+    level: "Module 9",
+    title: "AI-system platform architecture",
+    audience: "Founders and platform leads",
+    summary: "Connect the permanent platform console to datasets, training, specialization, governance, and the rest of the universe.",
+  },
+};
+
+const LESSON_TITLE_OVERRIDES = {
+  "beginner/what-is-code": "What the FastScript runtime actually owns",
+  "beginner/browser-requests-and-forms": "Requests, routes, and user actions as system contracts",
+  "foundations/routes-layouts-and-page-thinking": "Pages, layouts, and product surfaces",
+  "foundations/components-state-and-hydration": "Hydration and client behavior without stack sprawl",
+  "fullstack/forms-actions-and-apis": "APIs, mutations, and runtime-owned flows",
+  "fullstack/auth-sessions-and-roles": "Auth, sessions, and access control inside the same substrate",
+  "databases/schema-migrations-and-seeds": "Migrations, seeds, and state evolution",
+  "databases/data-loading-and-mutations": "Data reads, writes, and durable product loops",
+  "styling/design-tokens-and-primitives": "Design systems as proof surfaces",
+  "styling/accessibility-and-content-quality": "Readable interfaces and trustworthy product language",
+  "shipping/deploy-targets-and-environments": "Deploy targets and environment discipline",
+  "shipping/validation-security-and-release-proof": "Validation, security posture, and release proof",
+  "professional/reference-apps-and-delivery-shapes": "Reference apps as platform evidence",
+  "professional/delivery-checklist-and-release-readiness": "Experiment surfaces and release readiness",
+  "professional/docs-support-and-proof-packs": "Proof packs and public contract discipline",
+  "migration/when-to-migrate-and-what-to-prove": "Eval suites, support lanes, and what to prove first",
+  "migration/dry-run-convert-rollback": "Dry runs, comparisons, and rollback discipline",
+  "mastery/operating-the-platform-and-leading-adoption": "Operating the platform and leading adoption",
+  "mastery/platform-thesis-and-future-architecture": "Universe architecture beyond the first public center",
+};
+
+function transformLesson(moduleSlug, lesson) {
+  const key = getLessonKey(moduleSlug, lesson.slug);
+  return {
+    ...lesson,
+    title: LESSON_TITLE_OVERRIDES[key] || lesson.title,
+  };
+}
+
+function transformModule(module) {
+  const overrides = MODULE_OVERRIDES[module.slug] || {};
+  return {
+    ...module,
+    ...overrides,
+    lessons: module.lessons.map((lesson) => transformLesson(module.slug, lesson)),
+  };
+}
+
 function emptyLessonState(checkpointCount, assessmentCount = 2) {
   return {
     checks: Array.from({ length: checkpointCount }, () => false),
@@ -785,11 +882,12 @@ export function getSchoolStateVersion() {
 }
 
 export function getModules() {
-  return MODULES;
+  return MODULES.map(transformModule);
 }
 
 export function getModule(slug) {
-  return MODULES.find(module => module.slug === slug) || null;
+  const module = MODULES.find((entry) => entry.slug === slug) || null;
+  return module ? transformModule(module) : null;
 }
 
 export function getLesson(moduleSlug, lessonSlug) {
@@ -814,13 +912,13 @@ export function getLessonCount() {
 export function getTrackSummary() {
   return [
     {
-      title: "Beginner track",
-      copy: "Start from literal zero: code, browsers, routes, forms, CSS, APIs, persistence, and the path to your first shipped FastScript app.",
+      title: "Builder foundations",
+      copy: "Start with the runtime mental model, full-stack architecture, and the product surfaces FastScript already owns today.",
       href: "/learn/beginner"
     },
     {
-      title: "Professional track",
-      copy: "Start from governed adoption, TS/JS migration, support-lane judgment, rollback, and product-shaped release discipline.",
+      title: "Operator and proof track",
+      copy: "Jump into experiments, proof discipline, migration, and AI-system platform architecture if you already ship TS or infra work.",
       href: "/learn/professional"
     }
   ];
@@ -828,11 +926,11 @@ export function getTrackSummary() {
 
 export function getModuleStats() {
   return [
-    ["Levels", MODULES.length],
-    ["Interactive lessons", LESSONS.length],
+    ["Modules", MODULES.length],
+    ["Builder lessons", LESSONS.length],
     ["Assessment blocks", LESSONS.length * 2],
-    ["Capstone tracks", CAPSTONES.length],
-    ["Reference apps", 2]
+    ["Proof tracks", CAPSTONES.length],
+    ["Reference surfaces", 3]
   ];
 }
 
@@ -974,8 +1072,8 @@ export function getCapstonePresets() {
   return [
     {
       slug: "beginner-saas",
-      title: "Beginner SaaS",
-      copy: "Start from the stable greenfield SaaS baseline and ship one simple customer-facing workflow.",
+      title: "Reference product build",
+      copy: "Start from the stable greenfield SaaS baseline and ship one product slice with real proof discipline.",
       values: {
         stage: "beginner",
         product: "greenfield-saas",
@@ -985,8 +1083,8 @@ export function getCapstonePresets() {
     },
     {
       slug: "internal-ops",
-      title: "Internal Ops",
-      copy: "Build an authenticated operator dashboard with one mutation, one job, and a clear deploy path.",
+      title: "Operator surface",
+      copy: "Build an authenticated operator dashboard with one mutation, one job, and one defendable proof loop.",
       values: {
         stage: "intermediate",
         product: "internal-ops",
@@ -996,7 +1094,7 @@ export function getCapstonePresets() {
     },
     {
       slug: "migration-first",
-      title: "Migration First",
+      title: "Migration and proof",
       copy: "Keep the scope tight, prove a TS-to-.fs slice safely, and document rollback from the start.",
       values: {
         stage: "professional",

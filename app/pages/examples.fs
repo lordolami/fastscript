@@ -1,68 +1,15 @@
-const EXAMPLES = [{
-  title: "Agency Ops SaaS",
-  copy: "Strict-TypeScript proving-ground app with client-ops routes, billing, follow-up jobs, and Cloudflare-ready deployment. Great for showing developers that the filename can be the only obvious FastScript difference.",
-  tags: ["TypeScript", "Client Ops", "Proving Ground"]
-}, {
-  title: "Team dashboard SaaS",
-  copy: "Reference product with marketing pages, authenticated workspace flows, billing, queue jobs, admin routes, and governed compatibility across one FastScript runtime.",
-  tags: ["Full-stack", "SaaS", "Reference"]
-}, {
-  title: "Primitive UI starter",
-  copy: "Box, Stack, Row, Text, Heading, Button, token-backed semantic props, and generated primitive CSS from the first commit.",
-  tags: ["Primitives", "UI", "Starter"]
-}, {
-  title: "Internal ops dashboard",
-  copy: "Typed route loaders, filtered data tables, and auth middleware for internal tooling at scale.",
-  tags: ["Admin", "Auth", "Data"]
-}, {
-  title: "Webhook control plane",
-  copy: "Signature validation, replay protection, audit logs, and dead-letter retries in one app repository.",
-  tags: ["Security", "Webhooks", "Reliability"]
-}, {
-  title: "Content + blog engine",
-  copy: "Dynamic routes with slug params, docs search index API, and static-friendly SEO output via SSG.",
-  tags: ["Routing", "SEO", "Docs"]
-}, {
-  title: "Multi-tenant API backend",
-  copy: "Tenant-scoped DB and cache helpers with session policies and request-level observability hooks.",
-  tags: ["Tenant", "DB", "Metrics"]
-}, {
-  title: "Interop migration project",
-  copy: "Migrate incrementally from JavaScript modules while preserving full deployment parity and zero lock-in.",
-  tags: ["Migration", "Interop", "No lock-in"]
-}];
 export default function ExamplesPage() {
-  const cards = EXAMPLES.map(ex => `
-    <div class="product-card">
-      <p class="product-card-meta">${ex.tags[0]}</p>
-      <p class="product-card-title">${ex.title}</p>
-      <p class="product-card-copy">${ex.copy}</p>
-      <div class="tag-row">${ex.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
-    </div>
-  `).join("");
   return `
-    <section class="examples-page">
+    <section class="docs-latest-page">
       <header class="sec-header">
-        <p class="kicker">Example blueprints</p>
-        <h1 class="h1">Battle-tested patterns built in .fs.</h1>
-        <p class="lead">These v4.1 blueprints map directly to production concerns - auth, data integrity, security readiness, observability, and shipping speed. Not toy samples.</p>
+        <p class="kicker">Examples</p>
+        <h1 class="h1">Examples are proof categories, not side products.</h1>
+        <p class="lead">FastScript examples show what the substrate can already power: real apps, permanent platform surfaces, and product-shaped flows that keep runtime ownership visible.</p>
       </header>
-
-      <div class="cta-block">
-        <h2 class="cta-title">Start with the Team Dashboard SaaS baseline.</h2>
-        <p class="cta-copy">The stable <code class="ic">startup-mvp</code> template id now points to the first real FastScript greenfield product baseline: marketing pages, authenticated workspace flows, billing, jobs, DB state, and Cloudflare-ready deployment.</p>
-        <div class="cta-actions">
-          <a class="btn btn-primary btn-lg" href="/docs/team-dashboard-saas">Open baseline guide</a>
-          <a class="btn btn-secondary btn-lg" href="/docs/agency-ops">Open Agency Ops guide</a>
-        </div>
-      </div>
-
-      <div class="card-grid-3">${cards}</div>
-
-      <div class="action-row">
-        <a class="btn btn-secondary btn-lg" href="/docs/primitives">Read primitive guide</a>
-        <a class="btn btn-primary btn-lg" href="/docs">Open architecture docs</a>
-        <a class="btn btn-ghost btn-lg" href="https://github.com/lordolami/fastscript/tree/master/examples" target="_blank" rel="noreferrer">Browse repo examples</a>
+      <div class="docs-card-grid">
+        <div class="docs-card"><p class="docs-card-title">Platform console</p><p class="docs-card-copy">Datasets, training, evals, readiness, proof, models, deployments, and commands inside one permanent surface.</p><a class="docs-card-link" href="/platform">Open the platform &#8594;</a></div>
+        <div class="docs-card"><p class="docs-card-title">Startup MVP</p><p class="docs-card-copy">Reference SaaS baseline proving auth, billing, jobs, and launch discipline inside FastScript.</p><a class="docs-card-link" href="/docs/team-dashboard-saas">Study startup-mvp &#8594;</a></div>
+        <div class="docs-card"><p class="docs-card-title">Agency Ops</p><p class="docs-card-copy">Operational reference app proving ordinary TS authoring, migrations, jobs, and compatibility lanes.</p><a class="docs-card-link" href="/docs/agency-ops">Study agency-ops &#8594;</a></div>
       </div>
     </section>
   `;

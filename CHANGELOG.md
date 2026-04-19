@@ -3,6 +3,11 @@
 ## Unreleased
 - Release branch work for the next public line.
 
+## v5.0.0 - 2026-04-19
+- Expand FastScript from the initial experiments-and-evals center into a permanent platform console with datasets, training jobs, checkpoints, specialization, models, deployments, workspaces, audit, incidents, costs, and grounded commands
+- Shorten and sharpen the public launch story so FastScript leads as the structured substrate for AI-system workflows while the full-stack TypeScript platform remains the proof
+- Upgrade `/learn`, docs, proof surfaces, public bundles, and npm release preparation to the `5.0.0` launch line
+
 ## v4.1.0 - 2026-04-17
 - Ratify FastScript as a security-first TypeScript platform line with secure-by-default scaffolds, explicit runtime permissions policy, and validator-backed security-readiness reporting
 - Fail validation on missing production policy, non-secure preset use, obvious secret exposure, missing env-schema security keys, and missing deploy-header baseline

@@ -93,7 +93,7 @@ export default function LearnLessonPage({module, lesson, nav}) {
         <h1 class="not-found-title">Lesson not found</h1>
         <p class="not-found-copy">This lesson does not exist or has been moved.</p>
         <div class="not-found-actions">
-          <a class="btn btn-primary" href="/learn">Back to school</a>
+          <a class="btn btn-primary" href="/learn">Back to builders course</a>
         </div>
       </div>
     `;
@@ -136,7 +136,7 @@ export default function LearnLessonPage({module, lesson, nav}) {
             <p class="learn-path-note" data-school-portability-note>This lesson stores progress locally in your browser. No account is required.</p>
             <div class="docs-card" data-school-review-card hidden>
               <p class="docs-card-title">Review this first</p>
-              <p class="docs-card-copy" data-school-review-copy>Review the concept lesson before retrying the applied check.</p>
+              <p class="docs-card-copy" data-school-review-copy>Review the concept lesson before retrying the applied proof check.</p>
               <a class="docs-card-link" href="/learn" data-school-review-link>Open review lesson &#8594;</a>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function LearnLessonPage({module, lesson, nav}) {
               <p class="kicker">Interactive lab</p>
               <h2 class="h2">Try the lesson in your browser.</h2>
             </header>
-            <p class="body-copy">${lesson.exercise.prompt}</p>
+              <p class="body-copy">${lesson.exercise.prompt}</p>
             <div class="playground-wrap" data-school-lab data-school-lesson-key="${lessonKey}" data-school-last="/learn/${module.slug}/${lesson.slug}">
               <div class="playground-head">
                 <span class="playground-head-title">${lesson.exercise.title}</span>
@@ -239,7 +239,7 @@ export default function LearnLessonPage({module, lesson, nav}) {
           <section class="learn-lesson-section">
             <header class="sec-header-sm">
               <p class="kicker">Keep going</p>
-              <h2 class="h2">Use these references as you build.</h2>
+              <h2 class="h2">Use these references as you build and prove the work.</h2>
             </header>
             <div class="docs-card-grid">
               <div class="docs-card">

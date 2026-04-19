@@ -1,28 +1,15 @@
-export default function Showcase() {
+export default function ShowcasePage() {
   return `
-    <section class="showcase-page">
+    <section class="docs-latest-page showcase-page">
       <header class="sec-header">
         <p class="kicker">Showcase</p>
-        <h1 class="h1">Proof apps and production-shaped references.</h1>
-        <p class="lead">FastScript v4.1 shows its platform story through visible product shapes: a greenfield SaaS baseline, an operations proving ground, the public website itself, and smaller platform patterns that demonstrate the full-stack and security-first contract in practice.</p>
+        <h1 class="h1">Proof surfaces exercising the FastScript contract.</h1>
+        <p class="lead">We are not marketing a constellation of products. We are showing the surfaces that prove FastScript already owns the substrate beneath real product work.</p>
       </header>
-
       <div class="docs-card-grid">
-        <div class="docs-card">
-          <p class="docs-card-title">Team Dashboard SaaS</p>
-          <p class="docs-card-copy">The canonical greenfield reference app proving auth, teams, billing, notifications, admin, tests, and deploy flow.</p>
-          <a class="docs-card-link" href="/docs/team-dashboard-saas">Open SaaS proof &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">Agency Ops</p>
-          <p class="docs-card-copy">The canonical operational proving-ground app showing ordinary TypeScript inside <code class="ic">.fs</code> with jobs, billing reminders, and Cloudflare-ready deployment.</p>
-          <a class="docs-card-link" href="/docs/agency-ops">Open ops proof &#8594;</a>
-        </div>
-        <div class="docs-card">
-          <p class="docs-card-title">FastScript website</p>
-          <p class="docs-card-copy">The site you are viewing proves routing, docs search, SSR, learning surfaces, blog routes, and release storytelling on FastScript itself.</p>
-          <a class="docs-card-link" href="/docs">Open docs &#8594;</a>
-        </div>
+        <div class="docs-card"><p class="docs-card-title">Public website</p><p class="docs-card-copy">This site is built and shipped with FastScript, including the full platform, docs, and builders course.</p></div>
+        <div class="docs-card"><p class="docs-card-title">Platform console</p><p class="docs-card-copy">The full AI-system workflow surface now lives under /platform.</p><a class="docs-card-link" href="/platform">Open /platform &#8594;</a></div>
+        <div class="docs-card"><p class="docs-card-title">Reference applications</p><p class="docs-card-copy">startup-mvp and agency-ops prove the runtime can deliver serious application work while the AI-substrate story grows from the same core.</p><a class="docs-card-link" href="/docs/adoption">Read the adoption guide &#8594;</a></div>
       </div>
     </section>
   `;

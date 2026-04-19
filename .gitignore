@@ -18,3 +18,5 @@ dist-public/
 yomiru/
 yomiru/.fastscript/
 yomiru/dist/
+
+.private-docs/

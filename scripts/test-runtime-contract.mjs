@@ -45,14 +45,40 @@ if (!assetManifest.mapping?.[logicalKey(manifest.layout)]) throw new Error("layo
 if (!assetManifest.mapping?.[logicalKey(manifest.notFound)]) throw new Error("notFound missing asset-manifest mapping");
 if (manifest.middleware && !assetManifest.mapping?.[logicalKey(manifest.middleware)]) throw new Error("middleware missing asset-manifest mapping");
 
-const requiredRoutes = ["/", "/docs", "/learn", "/benchmarks", "/showcase", "/blog"];
+const requiredRoutes = [
+  "/",
+  "/docs",
+  "/learn",
+  "/benchmarks",
+  "/showcase",
+  "/blog",
+  "/platform",
+  "/platform/datasets",
+  "/platform/experiments",
+  "/platform/training",
+  "/platform/evals",
+  "/platform/models",
+  "/platform/workspaces",
+  "/platform/commands",
+];
 for (const path of requiredRoutes) {
   if (!manifest.routes.some((route) => route.path === path)) {
     throw new Error(`required route missing: ${path}`);
   }
 }
 
-const requiredApis = ["/api/hello", "/api/upload", "/api/webhook", "/api/docs-search", "/api/auth"];
+const requiredApis = [
+  "/api/hello",
+  "/api/upload",
+  "/api/webhook",
+  "/api/docs-search",
+  "/api/auth",
+  "/api/platform/datasets",
+  "/api/platform/training/jobs",
+  "/api/platform/models",
+  "/api/platform/workspaces",
+  "/api/platform/commands",
+];
 for (const path of requiredApis) {
   if (!manifest.apiRoutes.some((route) => route.path === path)) {
     throw new Error(`required api route missing: ${path}`);

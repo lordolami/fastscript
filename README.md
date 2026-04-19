@@ -1,10 +1,10 @@
 # FastScript
 
-FastScript is the complete TypeScript full-stack platform.
+FastScript is the structured substrate for AI-system workflows.
 
-It keeps ordinary JavaScript and TypeScript authoring familiar by treating `.fs` as the runtime-native source surface, then brings compiler, framework, runtime, validation, and deployment into one system.
+It already owns a complete full-stack TypeScript platform underneath that thesis: `.fs` as the runtime-native source surface, one compiler and runtime contract, pages, APIs, jobs, validation, security posture, and deploy-ready output in the same system.
 
-## FastScript v4.1 contract
+## Current contract
 
 - Write ordinary JS, TS, JSX, and TSX in `.fs`
 - Build pages, APIs, middleware, migrations, seeds, jobs, and workers in one project
@@ -12,14 +12,20 @@ It keeps ordinary JavaScript and TypeScript authoring familiar by treating `.fs`
 - Use one quality gate for formatting, linting, typecheck, validation, tests, smoke checks, benchmarks, and proof artifacts
 - Start new apps with secure-by-default permissions policy and validator-backed security readiness
 - Deploy the same app to Node, Vercel, or Cloudflare
-- Learn the platform through `/learn` and inspect product-shaped proof apps before you ship
+- Inspect the permanent platform console under `/platform` for datasets, training, experiments, runs, evals, readiness, proof packs, models, deployments, workspaces, and grounded commands
+- Learn the platform through a builders course at `/learn`
 - Benefit from a structured FastScript language/runtime layer that stays better aligned for machine reasoning, validation, and future model-training workflows without forcing a new day-to-day coding style
 
-## What v4.1 ratifies
+## Why this positioning changed
 
-FastScript now presents itself as a batteries-included TypeScript platform, not just a compatibility line.
+Current AI tooling is still fragmented. Teams glue together product delivery, proof, evaluation, deploy logic, and future training-adjacent workflows from separate systems, then try to reason about them as one stack.
 
-Core platform pillars exercised in the repo include:
+FastScript now leads with the larger claim:
+
+- FastScript is the structured substrate for AI-system workflows
+- the full-stack TypeScript platform is the proof that this is already credible
+
+Core product pillars already exercised in the repo include:
 
 - app creation and templates
 - auth and session flows
@@ -32,9 +38,22 @@ Core platform pillars exercised in the repo include:
 - security-readiness validation, explicit permissions policy, and secure deploy baseline
 - deploy adapters and runtime observability
 
-## Two canonical proof apps
+## Platform console
 
-FastScript v4 ships with two visible product-shaped references:
+FastScript now exposes its public platform universe at `/platform`:
+
+- datasets and lineage
+- training jobs and checkpoints
+- experiments and runs
+- eval suites and results
+- readiness assessments and proof packs
+- specialization, adapters, and synthetic data
+- models and deployments
+- workspaces, audit, incidents, costs, and grounded commands
+
+## Reference proof apps
+
+FastScript keeps two visible product-shaped references, but they are proof surfaces for the main product, not separate public products:
 
 1. `startup-mvp`
 - the greenfield SaaS reference app
@@ -141,9 +160,10 @@ npm run pack:check
 
 Public proof surfaces:
 
-- `/learn` - browser-first FastScript school
+- `/platform` - permanent platform console for the full universe
+- `/learn` - builder-first FastScript course
 - `/docs` - documentation entrypoint
-- `/docs/latest` - current v4.1 platform track
+- `/docs/latest` - current v5.0 platform track
 - `/docs/support` - governed support matrix
 - `/benchmarks` - proof-backed performance and artifact trail
 - `/showcase` - visible project and reference-app surface

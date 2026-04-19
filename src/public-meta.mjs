@@ -4,11 +4,11 @@ import { resolve } from "node:path";
 const DIST_INDEX_PATH = resolve("dist", "index.html");
 const DIST_WORKER_PATH = resolve("dist", "worker.js");
 
-export const PUBLIC_TITLE = "FastScript v4.1.0 - Security-first TypeScript full-stack platform";
-export const PUBLIC_DESCRIPTION = "Write ordinary TS and JS in .fs, then ship pages, APIs, jobs, auth, and deploy-ready builds through one secure-by-default, validator-backed FastScript platform.";
-export const PUBLIC_OG_DESCRIPTION = "FastScript v4.1 adds the security-first platform contract: secure-by-default scaffolds, runtime boundaries, validation discipline, and a structured runtime for machine reasoning.";
-export const PUBLIC_TWITTER_DESCRIPTION = "FastScript 4.1.0 is the security-first TypeScript platform release: ordinary TS in .fs, validator-backed readiness, secure scaffolds, proof apps, and deploy-ready output.";
-export const PUBLIC_SSR_SHELL_DESCRIPTION = "FastScript v4.1.0 serves a security-first TypeScript full-stack runtime: ordinary TS in .fs, validator-backed security readiness, and deploy-ready pages, APIs, jobs, and data flows.";
+export const PUBLIC_TITLE = "FastScript - Structured substrate for AI-system workflows";
+export const PUBLIC_DESCRIPTION = "FastScript is the structured substrate for AI-system workflows: experiments, evaluation, proof, deploy-ready product surfaces, and a complete full-stack TypeScript platform underneath.";
+export const PUBLIC_OG_DESCRIPTION = "Build AI-native systems on a runtime that already owns compilation, validation, routing, APIs, jobs, security, proof, and deploy discipline.";
+export const PUBLIC_TWITTER_DESCRIPTION = "FastScript launches as AI-system workflow infrastructure first: a structured substrate for experiments, evals, proof, and product delivery.";
+export const PUBLIC_SSR_SHELL_DESCRIPTION = "FastScript is an AI-system workflow substrate backed by a complete full-stack TypeScript platform and a proof-driven runtime contract.";
 
 function rewriteTag(html, pattern, replacement) {
   return html.replace(pattern, replacement);

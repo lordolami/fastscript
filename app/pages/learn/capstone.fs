@@ -34,25 +34,25 @@ export default function LearnCapstonePage() {
   return `
     <section class="learn-school">
       <header class="sec-header learn-hero">
-        <p class="kicker">Capstone hub</p>
-        <h1 class="h1">Turn the school into real product work.</h1>
-        <p class="lead">Choose a capstone, pick a baseline, and leave with a practical build plan.</p>
+        <p class="kicker">Capstone and proof hub</p>
+        <h1 class="h1">Turn the builders course into real platform work.</h1>
+        <p class="lead">Choose a capstone track, pick a reference surface, and leave with a practical build plan tied to proof and runtime discipline.</p>
       </header>
 
       <div class="docs-card-grid">
         <div class="docs-card">
-          <p class="docs-card-title">Stable greenfield baseline</p>
-          <p class="docs-card-copy"><code class="ic">startup-mvp</code> is the steady starting point for greenfield full-stack SaaS work.</p>
+          <p class="docs-card-title">Reference product baseline</p>
+          <p class="docs-card-copy"><code class="ic">startup-mvp</code> is the stable starting point for product delivery work inside the FastScript runtime contract.</p>
           <a class="docs-card-link" href="/docs/team-dashboard-saas">Study startup-mvp &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">Strict TS proving-ground</p>
-          <p class="docs-card-copy"><code class="ic">agency-ops</code> proves ordinary TypeScript inside <code class="ic">.fs</code> for product-shaped work.</p>
+          <p class="docs-card-title">Operational proving ground</p>
+          <p class="docs-card-copy"><code class="ic">agency-ops</code> proves ordinary TypeScript inside <code class="ic">.fs</code> for ops, migrations, and adoption-sensitive work.</p>
           <a class="docs-card-link" href="/docs/agency-ops">Study agency-ops &#8594;</a>
         </div>
         <div class="docs-card">
-          <p class="docs-card-title">Mastery loop</p>
-          <p class="docs-card-copy">The mastery lessons point here, and this hub points back into the final mastery module when you want the planning checklist first.</p>
+          <p class="docs-card-title">Platform loop</p>
+          <p class="docs-card-copy">The later course modules point here when you are ready to translate platform understanding into shipped work and proof artifacts.</p>
           <a class="docs-card-link" href="/learn/mastery/capstone-product-architecture">Back to mastery lesson &#8594;</a>
           <a class="docs-card-link" href="/learn/mastery/delivery-checklist-and-release-readiness">Open release-readiness lesson &#8594;</a>
           <a class="docs-card-link" href="/learn/mastery-summary">Open mastery summary &#8594;</a>

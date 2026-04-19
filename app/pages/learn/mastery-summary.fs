@@ -14,7 +14,7 @@ export default function LearnMasterySummaryPage() {
       <header class="sec-header learn-hero">
         <p class="kicker">Mastery summary</p>
         <h1 class="h1">Print or export your FastScript progress.</h1>
-        <p class="lead">See completed lessons, earned badges, your next capstone, and the lesson to resume next, all from local browser state.</p>
+        <p class="lead">See completed modules, earned badges, your next capstone, and the lesson to resume next, all from local browser state.</p>
       </header>
 
       <div class="docs-card-grid" data-school-summary-stats>
@@ -31,7 +31,7 @@ export default function LearnMasterySummaryPage() {
           <p class="h3" data-school-summary-badges>0 / 0</p>
         </div>
         <div class="docs-card">
-          <p class="kicker">Capstone</p>
+          <p class="kicker">Proof track</p>
           <p class="h3" data-school-summary-capstone>Loading…</p>
         </div>
       </div>
@@ -40,7 +40,7 @@ export default function LearnMasterySummaryPage() {
         <aside class="learn-sidebar">
           <div class="learn-sidebar-card">
             <p class="learn-sidebar-title">Actions</p>
-            <p class="learn-sidebar-copy">Keep this browser-only summary as a printable study record and next-step guide.</p>
+            <p class="learn-sidebar-copy">Keep this browser-only summary as a printable build record and next-step guide.</p>
             <div class="cta-actions">
               <a class="btn btn-primary btn-lg" href="/learn" data-school-summary-resume>Resume learning</a>
               <a class="btn btn-secondary btn-lg" href="/learn/capstone" data-school-summary-capstone-link>Open capstone hub</a>

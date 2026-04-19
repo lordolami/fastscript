@@ -29,7 +29,7 @@ export default function LearnModulePage({module}) {
         <h1 class="not-found-title">Learning level not found</h1>
         <p class="not-found-copy">This level does not exist or has been moved.</p>
         <div class="not-found-actions">
-          <a class="btn btn-primary" href="/learn">Back to school</a>
+          <a class="btn btn-primary" href="/learn">Back to builders course</a>
         </div>
       </div>
     `;
@@ -60,10 +60,10 @@ export default function LearnModulePage({module}) {
             </div>
             <p class="learn-path-note" data-module-badge-callout>Finish both lessons to earn this module badge.</p>
             <div class="cta-actions">
-              <a class="btn btn-primary btn-lg" href="/learn/${module.slug}/${firstLesson.slug}">Start level</a>
-              <a class="btn btn-secondary btn-lg" href="/learn/capstone">Capstone hub</a>
+              <a class="btn btn-primary btn-lg" href="/learn/${module.slug}/${firstLesson.slug}">Start module</a>
+              <a class="btn btn-secondary btn-lg" href="/learn/capstone">Capstone and proof hub</a>
               <a class="btn btn-ghost btn-lg" href="/learn/mastery-summary">Mastery summary</a>
-              <a class="btn btn-ghost btn-lg" href="/learn">Back to school</a>
+              <a class="btn btn-ghost btn-lg" href="/learn">Back to builders course</a>
             </div>
           </div>
         </aside>
@@ -72,7 +72,7 @@ export default function LearnModulePage({module}) {
           <section class="learn-next">
             <header class="sec-header-sm">
               <p class="kicker">What you will master</p>
-              <h2 class="h2">This level now has two linked lessons: concept first, application second.</h2>
+              <h2 class="h2">This module pairs concept work with application work.</h2>
             </header>
             <div class="story-grid">
               <div class="story-cell">
@@ -91,7 +91,7 @@ export default function LearnModulePage({module}) {
               </div>
               <div class="story-cell">
                 <p class="story-cell-title">Why this matters</p>
-                <p class="story-cell-copy">FastScript mastery means learning the concept and then applying it in one runtime boundary with pages, APIs, styling, data, and shipping discipline.</p>
+                <p class="story-cell-copy">FastScript mastery means learning the concept and then applying it inside one runtime boundary with pages, APIs, proof, data, and shipping discipline.</p>
               </div>
             </div>
           </section>
@@ -101,7 +101,7 @@ export default function LearnModulePage({module}) {
           <section class="learn-next">
             <header class="sec-header-sm">
               <p class="kicker">Lessons</p>
-              <h2 class="h2">Work through both lessons before moving to the next level.</h2>
+              <h2 class="h2">Work through both lessons before moving to the next module.</h2>
             </header>
             <div class="docs-card-grid">${lessonCards}</div>
           </section>

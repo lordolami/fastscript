@@ -1,4 +1,7 @@
 const NAV = [{
+  href: "/platform",
+  label: "Platform"
+}, {
   href: "/docs",
   label: "Docs"
 }, {
@@ -6,62 +9,45 @@ const NAV = [{
   label: "Learn"
 }, {
   href: "/why-fastscript",
-  label: "Why FS"
+  label: "Why FastScript"
+}, {
+  href: "/benchmarks",
+  label: "Proof"
 }, {
   href: "/examples",
   label: "Examples"
 }, {
-  href: "/benchmarks",
-  label: "Benchmarks"
-}, {
-  href: "/showcase",
-  label: "Showcase"
-}, {
-  href: "/blog",
-  label: "Blog"
-}, {
-  href: "/changelog",
-  label: "Changelog"
-}, {
   href: "/roadmap",
   label: "Roadmap"
+}, {
+  href: "/contact",
+  label: "Contact"
 }];
 const FOOTER_COLS = [{
-  title: "Platform",
-  links: [["Overview", "/"], ["Why FastScript", "/why-fastscript"], ["Learn", "/learn"], ["Examples", "/examples"], ["Showcase", "/showcase"], ["Benchmarks", "/benchmarks"]]
+  title: "Product",
+  links: [["Overview", "/"], ["Platform", "/platform"], ["Why FastScript", "/why-fastscript"], ["Builders course", "/learn"]]
 }, {
-  title: "Docs",
-  links: [["Documentation", "/docs"], ["Current line", "/docs/latest"], ["Support matrix", "/docs/support"], ["Interop", "/docs/interop"], ["Changelog", "/changelog"], ["Roadmap", "/roadmap"]]
+  title: "Reference",
+  links: [["Docs", "/docs"], ["Current line", "/docs/latest"], ["Benchmarks and proof", "/benchmarks"], ["Showcase", "/showcase"]]
 }, {
-  title: "Community",
-  links: [["Blog", "/blog"], ["Contact", "/contact"], ["Contribute", "/contribute"], ["GitHub", "https://github.com/lordolami/fastscript"], ["Discord", "https://discord.gg/fastscript"]]
+  title: "Adoption",
+  links: [["Examples", "/examples"], ["Adoption guide", "/docs/adoption"], ["Support matrix", "/docs/support"], ["Interop", "/docs/interop"]]
 }, {
-  title: "Built on FastScript",
-  links: [["Studio (coming soon)", "https://studio.fastscript.dev"], ["Agent (coming soon)", "https://agent.fastscript.dev"]]
+  title: "Company",
+  links: [["Roadmap", "/roadmap"], ["Contact", "/contact"], ["GitHub", "https://github.com/lordolami/fastscript"], ["Discord", "https://discord.gg/fastscript"]]
 }, {
   title: "Legal",
   links: [["License", "/license"], ["Privacy", "/privacy"], ["Terms", "/terms"], ["Security", "/security"]]
 }];
-function navLinkActive(href, label) {
-  return `<a class="nav-link is-active" href="${href}" aria-current="page">${label}</a>`;
-}
-function navLinkInactive(href, label) {
-  return `<a class="nav-link" href="${href}">${label}</a>`;
-}
-function mobileLinkActive(href, label) {
-  return `<a class="mobile-link is-active" href="${href}" aria-current="page">${label}</a>`;
-}
-function mobileLinkInactive(href, label) {
-  return `<a class="mobile-link" href="${href}">${label}</a>`;
-}
-function isActive(pathname, href) {
+function navLink(pathname, href, label, mobile = false) {
   const p = String(pathname || "/");
-  if (href === "/") return p === "/";
-  return p === href || p.startsWith(href + "/");
+  const active = href === "/" ? p === "/" : p === href || p.startsWith(href + "/");
+  const cls = mobile ? "mobile-link" : "nav-link";
+  return `<a class="${cls}${active ? " is-active" : ""}" href="${href}"${active ? ' aria-current="page"' : ""}>${label}</a>`;
 }
 export default function Layout({content, pathname}) {
-  const navLinks = NAV.map(({href, label}) => isActive(pathname, href) ? navLinkActive(href, label) : navLinkInactive(href, label)).join("");
-  const mobileLinks = NAV.map(({href, label}) => isActive(pathname, href) ? mobileLinkActive(href, label) : mobileLinkInactive(href, label)).join("");
+  const navLinks = NAV.map(entry => navLink(pathname, entry.href, entry.label)).join("");
+  const mobileLinks = NAV.map(entry => navLink(pathname, entry.href, entry.label, true)).join("");
   const footerCols = FOOTER_COLS.map(col => {
     const links = col.links.map(([label, href]) => {
       const ext = href.startsWith("http");
@@ -77,7 +63,7 @@ export default function Layout({content, pathname}) {
         <a class="brand" href="/" aria-label="FastScript home">
           <span class="brand-mark" aria-hidden="true">FS</span>
           <span class="brand-name">FastScript</span>
-          <span class="brand-ver">v4.1</span>
+          <span class="brand-ver">5.0.0</span>
         </a>
 
         <nav class="nav-links" aria-label="Primary navigation">
@@ -88,8 +74,9 @@ export default function Layout({content, pathname}) {
           <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle colour theme" title="Toggle theme">
             <span class="theme-icon" aria-hidden="true">&#9790;</span>
           </button>
-          <a class="btn btn-ghost btn-sm" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="FastScript on GitHub">GitHub</a>
-          <a class="btn btn-primary btn-sm" href="/learn">Start learning</a>
+          <a class="btn btn-ghost btn-sm" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn btn-secondary btn-sm" href="/platform">Open platform</a>
+          <a class="btn btn-primary btn-sm" href="/learn">Start the builders course</a>
           <button type="button" class="menu-toggle" id="menu-toggle" data-nav-toggle aria-expanded="false" aria-label="Open menu" aria-controls="mobile-panel">&#9776;</button>
         </div>
       </div>
@@ -115,25 +102,23 @@ export default function Layout({content, pathname}) {
               <span class="brand-mark footer-brand-mark" aria-hidden="true">FS</span>
               FastScript
             </div>
-            <p class="footer-brand-copy">FastScript is the complete TypeScript full-stack platform: ordinary TS and JS in <code class="ic">.fs</code>, one runtime for pages, APIs, middleware, jobs, and data flows, secure-by-default policy files, validator-backed proof discipline, and deploy-ready output for serious product teams. This site is built and shipped with FastScript itself.</p>
-            <p class="footer-brand-copy">FastScript also keeps its own structured language and runtime surface so the platform can stay simpler for machine reasoning, stronger in validation, and structurally harder to misuse without changing everyday TS authoring.</p>
+            <p class="footer-brand-copy">FastScript is the structured substrate for AI-system workflows. It is being built to keep experiments, evaluation, proof, validation, product delivery, and future training infrastructure inside one owned runtime contract.</p>
+            <p class="footer-brand-copy">The full-stack TypeScript platform is the proof that this thesis is real now: FastScript already owns compilation, routing, APIs, jobs, data flows, security posture, and deploy discipline instead of outsourcing the hard parts to a stack pile.</p>
             <div class="footer-social">
               <a class="footer-social-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
               <a class="footer-social-link" href="https://discord.gg/fastscript" target="_blank" rel="noreferrer" aria-label="Discord">DC</a>
             </div>
           </div>
-          <div class="footer-links">
-            ${footerCols}
-          </div>
+          <div class="footer-links">${footerCols}</div>
         </div>
         <div class="footer-bottom">
           <p class="footer-copyright">&#169; 2026 Lakesbim Infotechnology - <a class="footer-bottom-link" href="/license">Source-Available License</a></p>
           <div class="footer-bottom-links">
+            <a class="footer-bottom-link" href="/platform">Platform</a>
             <a class="footer-bottom-link" href="/docs">Docs</a>
             <a class="footer-bottom-link" href="/learn">Learn</a>
-            <a class="footer-bottom-link" href="/changelog">Changelog</a>
+            <a class="footer-bottom-link" href="/benchmarks">Proof</a>
             <a class="footer-bottom-link" href="/security">Security</a>
-            <a class="footer-bottom-link" href="https://github.com/lordolami/fastscript" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
       </div>
@@ -148,33 +133,21 @@ export function hydrate() {
       const open = panel.classList.toggle("is-open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
-    panel.querySelectorAll("a").forEach(a => {
-      a.addEventListener("click", () => {
+    panel.querySelectorAll("a").forEach(anchor => {
+      anchor.addEventListener("click", () => {
         panel.classList.remove("is-open");
         toggle.setAttribute("aria-expanded", "false");
       });
     });
-    if (!window.__fsEscapeBound) {
-      window.__fsEscapeBound = true;
-      document.addEventListener("keydown", e => {
-        const livePanel = document.getElementById("mobile-panel");
-        const liveToggle = document.getElementById("menu-toggle");
-        if (e.key === "Escape" && livePanel && liveToggle && livePanel.classList.contains("is-open")) {
-          livePanel.classList.remove("is-open");
-          liveToggle.setAttribute("aria-expanded", "false");
-          liveToggle.focus();
-        }
-      });
-    }
   }
   const themeBtn = document.getElementById("theme-toggle");
   const themeIcon = themeBtn && themeBtn.querySelector(".theme-icon");
-  const applyTheme = t => {
-    document.documentElement.setAttribute("data-theme", t);
+  const applyTheme = theme => {
+    document.documentElement.setAttribute("data-theme", theme);
     try {
-      window.localStorage.setItem("fs-theme", t);
+      window.localStorage.setItem("fs-theme", theme);
     } catch (_) {}
-    if (themeIcon) themeIcon.innerHTML = t === "light" ? "&#9788;" : "&#9790;";
+    if (themeIcon) themeIcon.innerHTML = theme === "light" ? "&#9788;" : "&#9790;";
   };
   if (themeBtn) {
     let saved = null;
@@ -193,7 +166,6 @@ export function hydrate() {
     area.setAttribute("readonly", "true");
     area.style.position = "fixed";
     area.style.opacity = "0";
-    area.style.pointerEvents = "none";
     document.body.appendChild(area);
     area.focus();
     area.select();
@@ -207,119 +179,25 @@ export function hydrate() {
   if (!window.__fsCopyBound) {
     window.__fsCopyBound = true;
     document.addEventListener("click", async event => {
-      const btn = event.target && event.target.closest ? event.target.closest("[data-copy]") : null;
-      if (!btn) return;
-      const text = btn.getAttribute("data-copy") || "";
-      if (!text) return;
+      const button = event.target && event.target.closest ? event.target.closest("[data-copy]") : null;
+      if (!button) return;
       event.preventDefault();
-      if (btn.dataset.copyBusy === "true") return;
-      btn.dataset.copyBusy = "true";
+      const text = button.getAttribute("data-copy") || "";
+      if (!text) return;
+      let copied = false;
       try {
-        let copied = false;
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-            copied = true;
-          }
-        } catch (_) {}
-        if (!copied) copied = fallbackCopy(text);
-        if (!copied) return;
-        btn.classList.add("copied");
-        const prev = btn.innerHTML;
-        btn.innerHTML = "&#10003; Copied";
-        window.setTimeout(() => {
-          btn.innerHTML = prev;
-          btn.classList.remove("copied");
-          delete btn.dataset.copyBusy;
-        }, 1500);
-      } finally {
-        if (btn.dataset.copyBusy === "true") {
-          delete btn.dataset.copyBusy;
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          copied = true;
         }
-      }
+      } catch (_) {}
+      if (!copied) copied = fallbackCopy(text);
+      if (!copied) return;
+      const prev = button.innerHTML;
+      button.innerHTML = "&#10003; Copied";
+      window.setTimeout(() => {
+        button.innerHTML = prev;
+      }, 1400);
     });
-  }
-  if (window.IntersectionObserver) {
-    const revealObserver = new window.IntersectionObserver((entries, observer) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add("revealed");
-          observer.unobserve(e.target);
-        }
-      });
-    }, {
-      threshold: 0.08,
-      rootMargin: "0px 0px -40px 0px"
-    });
-    document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
-    const childRevealObserver = new window.IntersectionObserver((entries, observer) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add("revealed-children");
-          observer.unobserve(e.target);
-        }
-      });
-    }, {
-      threshold: 0.06,
-      rootMargin: "0px 0px -40px 0px"
-    });
-    document.querySelectorAll(".reveal-children").forEach(el => childRevealObserver.observe(el));
-  } else {
-    document.querySelectorAll(".reveal").forEach(el => el.classList.add("revealed"));
-    document.querySelectorAll(".reveal-children").forEach(el => el.classList.add("revealed-children"));
-  }
-  const homeScene = document.querySelector("[data-home-3d]");
-  const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const finePointer = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
-  if (homeScene && !reducedMotion) {
-    let frame = 0;
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    function applySceneMotion() {
-      currentX += (targetX - currentX) * 0.14;
-      currentY += (targetY - currentY) * 0.14;
-      homeScene.style.setProperty("--hero-tilt-x", `${-currentY * 7}deg`);
-      homeScene.style.setProperty("--hero-tilt-y", `${currentX * 9}deg`);
-      homeScene.style.setProperty("--hero-pan-x", `${currentX * 18}px`);
-      homeScene.style.setProperty("--hero-pan-y", `${currentY * 14}px`);
-      if (Math.abs(targetX - currentX) > 0.001 || Math.abs(targetY - currentY) > 0.001) {
-        frame = window.requestAnimationFrame(applySceneMotion);
-      } else {
-        frame = 0;
-      }
-    }
-    const queueFrame = () => {
-      if (!frame) frame = window.requestAnimationFrame(applySceneMotion);
-    };
-    if (finePointer) {
-      homeScene.addEventListener("pointermove", event => {
-        const rect = homeScene.getBoundingClientRect();
-        const px = (event.clientX - rect.left) / rect.width;
-        const py = (event.clientY - rect.top) / rect.height;
-        targetX = (px - 0.5) * 2;
-        targetY = (py - 0.5) * 2;
-        queueFrame();
-      });
-      homeScene.addEventListener("pointerleave", () => {
-        targetX = 0;
-        targetY = 0;
-        queueFrame();
-      });
-    } else {
-      const onScroll = () => {
-        const rect = homeScene.getBoundingClientRect();
-        const viewport = window.innerHeight || 1;
-        const progress = Math.max(-1, Math.min(1, (rect.top + rect.height * 0.5 - viewport * 0.5) / viewport));
-        targetX = progress * -0.12;
-        targetY = progress * 0.2;
-        queueFrame();
-      };
-      window.addEventListener("scroll", onScroll, {
-        passive: true
-      });
-      onScroll();
-    }
   }
 }

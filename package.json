@@ -1,7 +1,7 @@
 {
   "name": "fastscript",
-  "version": "4.1.0",
-  "description": "FastScript v4.1 complete TypeScript full-stack platform with secure-by-default scaffolds, validator-backed readiness, and ordinary TS/JS in .fs.",
+  "version": "5.0.0",
+  "description": "FastScript is the structured substrate for AI-system workflows, backed by a complete full-stack TypeScript platform and a proof-driven runtime.",
   "keywords": [
     "fastscript",
     "javascript",
@@ -11,6 +11,10 @@
     "full-stack",
     "runtime",
     "framework",
+    "ai-infrastructure",
+    "evaluation",
+    "experiments",
+    "proof",
     "compatibility",
     "interop",
     "npm"
@@ -96,6 +100,7 @@
     "test:compatibility-matrix": "node ./scripts/test-compatibility-matrix.mjs",
     "test:real-world-adoption": "node ./scripts/test-real-world-adoption.mjs",
     "test:learn-school": "node ./scripts/test-learn-school.mjs",
+    "test:platform-alpha": "node ./scripts/test-platform-alpha.mjs",
     "test:startup-mvp-saas": "node ./scripts/test-startup-mvp-saas.mjs",
     "test:agency-ops": "node ./scripts/test-agency-ops.mjs",
     "test:release-discipline": "node ./scripts/test-release-discipline.mjs",

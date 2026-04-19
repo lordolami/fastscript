@@ -64,34 +64,34 @@ try {
   const learn = await fetch(`${baseUrl}/learn`);
   const learnHtml = await learn.text();
   assert.equal(learn.status, 200);
-  assert.match(learnHtml, /FastScript school/);
-  assert.match(learnHtml, /From zero knowledge to FastScript mastery/);
+  assert.match(learnHtml, /Builders course/);
+  assert.match(learnHtml, /AI-system workflow substrate/);
   assert.match(learnHtml, /data-school-progress/);
 
   const beginner = await fetch(`${baseUrl}/learn/beginner`);
   const beginnerHtml = await beginner.text();
   assert.equal(beginner.status, 200);
-  assert.match(beginnerHtml, /Programming and web basics/);
-  assert.match(beginnerHtml, /What code, the browser, and the web actually do/);
-  assert.match(beginnerHtml, /Browser requests, forms, and user actions/);
+  assert.match(beginnerHtml, /FastScript mental model/);
+  assert.match(beginnerHtml, /What the FastScript runtime actually owns/);
+  assert.match(beginnerHtml, /Requests, routes, and user actions as system contracts/);
   assert.match(beginnerHtml, /data-module-assessment-progress/);
   assert.match(beginnerHtml, /data-module-lesson-status/);
 
   const capstone = await fetch(`${baseUrl}/learn/capstone`);
   const capstoneHtml = await capstone.text();
   assert.equal(capstone.status, 200);
-  assert.match(capstoneHtml, /Capstone hub/);
+  assert.match(capstoneHtml, /Capstone and proof hub/);
   assert.match(capstoneHtml, /startup-mvp/);
   assert.match(capstoneHtml, /agency-ops/);
   assert.match(capstoneHtml, /data-capstone-generator/);
   assert.match(capstoneHtml, /data-capstone-build/);
-  assert.match(capstoneHtml, /Beginner SaaS/);
-  assert.match(capstoneHtml, /Migration First/);
+  assert.match(capstoneHtml, /Reference product build/);
+  assert.match(capstoneHtml, /Migration and proof/);
 
   const migration = await fetch(`${baseUrl}/learn/migration/dry-run-convert-rollback`);
   const migrationHtml = await migration.text();
   assert.equal(migration.status, 200);
-  assert.match(migrationHtml, /Dry-run, convert, rollback/);
+  assert.match(migrationHtml, /Dry runs, comparisons, and rollback discipline/);
   assert.match(migrationHtml, /data-school-lab/);
   assert.match(migrationHtml, /data-school-complete/);
   assert.match(migrationHtml, /data-school-share/);
@@ -111,7 +111,7 @@ try {
   const mastery = await fetch(`${baseUrl}/learn/mastery/delivery-checklist-and-release-readiness`);
   const masteryHtml = await mastery.text();
   assert.equal(mastery.status, 200);
-  assert.match(masteryHtml, /delivery checklist/i);
+  assert.match(masteryHtml, /delivery checklist.*release readiness/i);
   assert.match(masteryHtml, /Capstone hub/);
   assert.match(masteryHtml, /data-school-review-card/);
 

@@ -1,4 +1,8 @@
 const RELEASES = [{
+  version: "v5.0.0",
+  date: "April 2026",
+  copy: "Full-universe stable platform release: FastScript expands the platform console from experiments-and-evals into datasets, training jobs, checkpoints, specialization, model registry, deployments, workspaces, audit, incidents, costs, grounded commands, and a launch-ready builders course, then ships the release surface as one aligned product story."
+}, {
   version: "v4.1.0",
   date: "April 2026",
   copy: "Security-first platform release: FastScript adds validator-backed security readiness, secure-by-default policy scaffolds, explicit permissions baselines, secret-exposure diagnostics, proof-app webhook verification, and public docs/site alignment around trust as a core platform pillar."
